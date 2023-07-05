@@ -1,0 +1,121 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
+body {
+  font-family: "Poppins", sans-serif;
+}
+
+/* Navbar - Start*/
+
+.navbar{
+    font-size: 18px;
+    top: 0;
+    left: 0;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+.navbar-light .navbar-nav .nav-link{
+    padding: 0 20px;
+    color: black;
+    transition: 0.3s ease;
+}
+.navbar-light .navbar-nav .nav-link:hover,
+.navbari:hover,
+.navbar-light .navbar-nav .nav-link.active,
+.nnavbari.active{
+    color: coral;
+}
+
+.navbar-light .navbar-toggler{
+    outline: none;
+    border: none;
+}
+/* Navbar - end*/
+
+*{
+	margin: 0;
+  	padding: 0;
+    box-sizing: border-box;
+}
+
+.container-register{
+    display: block;
+    background-color: #f4f4f4;
+    max-width: 850px;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px 40px;
+    text-align: center;
+    position: relative;
+    font-family: sans-serif;
+    font-size: 15px;
+}
+
+
+.textintro h1{
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 100%;
+    padding-top: 10px;
+    font-family: sans-serif;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    color: #555459;
+}
+
+.textintro p{
+    font-style: normal;
+}
+
+input{
+    width: 100%;
+    display: inline-block;
+    font-weight: 100;
+    padding: 15px;
+    margin: 5px 0;
+    font-size: 1rem;
+    color: #3f3f3f;
+}
+
+/* Form - Start*/
+form{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 15px;
+}
+
+form select{
+    width: 770px;
+    padding: 15px;
+    padding-left: 10px;
+    background-color: #fff;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    font-size: 1.2rem;
+    box-shadow: 0 5px 10px 0 rgb(0,0,0,0.25);
+    cursor: pointer;
+}
+/* Form - End*/
+
+.btn{
+    display: inline-block;
+    padding: 12px 24px;
+    margin-bottom: 0;
+    font-size: 1.4rem;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    color: #f5f5f5;
+    min-width: 26px;
+    min-height: 26px;
+    background-color: #555459;
+}
+.btn:hover{
+    background-color: #555459ad;
+}
+
+.error{
+    margin-top: 0px;
+    color: red;
+}
