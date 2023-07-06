@@ -16,8 +16,8 @@
 		
 	<style>
             .product img{
-                width: 100%;
-                height: auto;
+                width: 230px;
+                height: 200px;
                 box-sizing: border-box;
                 object-fit: cover;
             }
@@ -42,7 +42,7 @@
 	<!-- Navbar -->
 	<nav class="navbar navbar-expand-lg navbar-light bg-light py-3 fixed-top">
 		<div class="container">
-			<a class="navbar-brand text-black" href="#">SBM</a>
+			<a class="navbar-brand text-black" href="/">SBM</a>
 			<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
 				data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
 				aria-label="Toggle navigation">
@@ -51,16 +51,16 @@
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 					<li class="nav-item">
-						<a class="nav-link active" href="/">Home</a>
+						<a class="nav-link" href="/customerList">See Customer List</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="/form">Registration Form</a>
+						<a class="nav-link" href="/customerRegisterForm">New Customer Register</a>
 					</li>
 				</ul>
-
 			</div>
 		</div>
 	</nav>
+	<!--End Navbar-->
 	
 	<section id="featured" class="my-5 py-5">
         <div class="container mt-5 py-5">
@@ -89,7 +89,7 @@
             </div>
             <div onclick="window.location.href='/form'" class="product text-center col-lg-3 col-md-4 col-12">
                 <img class="img-fluid mb-3" src="img/dask.jpg" alt="">
-                <h5 class="p-name">Earthquake insurance</h5>
+                <h5 class="p-name">Earthquake Insurance</h5>
                 <button class="buy-btn">Register Now</button>
                 
             </div>           

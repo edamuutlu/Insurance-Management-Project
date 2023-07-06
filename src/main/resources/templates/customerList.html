@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en" xmlns:th="https://www.thymeleaf.com">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>SBM Home</title>
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js"
+		integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"
+		integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+		crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+	<script src="https://unpkg.com/@phosphor-icons/web"></script>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+	<link rel="stylesheet" href="" th:href="@{/css/style.css}">
+	<link href="https://css.gg/css" rel="stylesheet" />
+	<style>
+		#icon-trash {
+			color: red;
+		}
+
+		#icon-trash:hover {
+			color: rgb(255, 62, 62);
+		}
+
+		#icon-edit {
+			color: blue;
+			font-size: 20px;
+		}
+
+		#icon-edit:hover {
+			color: rgb(69, 112, 222);
+		}
+
+		button {
+			border: none;
+			background: none;
+			margin-left: 50px;
+		}
+	</style>
+
+</head>
+
+<body>
+	<!-- Navbar -->
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<div class="container">
+			<a class="navbar-brand text-black" href="/">SBM</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+				data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span id="bar" data-lucide="menu"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+					<li class="nav-item">
+						<a class="nav-link active" href="/customerList">See Customer List</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/customerRegisterForm">New Customer Register</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<!--End Navbar-->
+
+
+	<div class="container mt-5">
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th scope="col">TC</th>
+					<th scope="col">Birth-Date</th>
+					<th scope="col">Email</th>
+					<th scope="col">First Name</th>
+					<th cope="col">Last Name</th>
+					<th cope="col">Province</th>
+					<th cope="col">District</th>					
+					<th scope="col">Insurance Type</th>
+					<th scope="col">Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="c :${customer}">
+					<td th:text="${c.tc}"></td>
+					<td th:text="${c.birth}"></td>
+					<td th:text="${c.email}"></td>
+					<td th:text="${c.firstname}"></td>
+					<td th:text="${c.lastname}"></td>
+					<td th:text="${c.province}"></td>
+					<td th:text="${c.district}"></td>					
+					<td><select name="format" onchange="location = this.value;">
+							<option>Select</option>
+							<option value="/trafficInsuranceForm">Traffic Insurance</option>
+							<option value="">Comprehensive Insurance</option>
+							<option value="">Health Insurance</option>
+							<option value="">Earthquake Insurance</option>
+						</select>
+					</td>
+					<td><button><a th:href="@{/deleteCustomer/{id}(id=${c.id})}"><i id="icon-trash"
+									class="gg-trash"></i></a></button></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+		integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"
+		integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS"
+		crossorigin="anonymous"></script>
+</body>
+
+</html>
