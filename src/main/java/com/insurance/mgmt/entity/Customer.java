@@ -12,7 +12,7 @@ public class Customer {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private int customer_id;
 	private String tc;
 	private String birth;
 	private String email;
@@ -25,11 +25,16 @@ public class Customer {
 		super();
 		// TODO Auto-generated constructor stub
 	}	
+	
+	public Customer(int customer_id) {
+		super();
+		this.customer_id = customer_id;
+	}	
 
-	public Customer(int id, String tc, String birth, String email, String firstname, String lastname, String province,
+	public Customer(int customer_id, String tc, String birth, String email, String firstname, String lastname, String province,
 			String district) {
 		super();
-		this.id = id;
+		this.customer_id = customer_id;
 		this.tc = tc;
 		this.birth = birth;
 		this.email = email;
@@ -37,14 +42,14 @@ public class Customer {
 		this.lastname = lastname;
 		this.province = province;
 		this.district = district;
-	}
+	}		
 	
-	public int getId() {
-		return id;
+	public int getCustomer_id() {
+		return customer_id;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setCustomer_id(int customer_id) {
+		this.customer_id = customer_id;
 	}
 
 	public String getTc() {
@@ -102,6 +107,9 @@ public class Customer {
 	public void setDistrict(String district) {
 		this.district = district;
 	}
-	
-	
+
+
+//	@OneToMany(targetEntity = Customer.class, cascade = CascadeType.ALL)
+//	@JoinColumn(name = "customer_id", referencedColumnName = "customer_id", nullable = true)
+//	private List<Car> cars;
 }

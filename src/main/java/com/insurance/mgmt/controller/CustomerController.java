@@ -1,7 +1,6 @@
 package com.insurance.mgmt.controller;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +18,9 @@ public class CustomerController {
 	
 	@Autowired
 	CustomerService customerService;
+	
+//	@Autowired
+//	CarService carService;
 
 	@GetMapping("/")
 	public String home() {
@@ -35,10 +37,6 @@ public class CustomerController {
 		return "customerRegisterForm";
 	}
 	
-	@GetMapping("/trafficInsuranceForm")
-	public String trafficInsurance() {
-		return "trafficInsuranceForm";
-	}
 	
 	@GetMapping("/customerList")
 	public ModelAndView getAllCustomer() {
@@ -53,10 +51,18 @@ public class CustomerController {
 		return "redirect:/customerList";
 	}
 	
-	@RequestMapping("/deleteCustomer/{id}")
-	public String deleteCustomer(@PathVariable("id") int id) {
-		customerService.deleteById(id);
+	@RequestMapping("/deleteCustomer/{customer_id}")
+	public String deleteCustomer(@PathVariable("customer_id") int customer_id) {
+		customerService.deleteById(customer_id);
 		return "redirect:/customerList";
 	}
+	
+//	@RequestMapping("/trafficInsuranceForm/{id}")
+//	public String getMyList(@PathVariable("id") int id) {
+//		Car car = carService.getCarById(id);
+//		Customer customer = new Customer(car.getId(),car.getCustomer_id());
+//		customerService.save(customer);
+//		return "redirect:/trafficInsuranceForm";
+//	}
 
 }

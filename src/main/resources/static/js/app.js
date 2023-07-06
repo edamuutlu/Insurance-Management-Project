@@ -149,14 +149,36 @@ myApp.controller("registerCustomerFormController", ["$scope", function($scope) {
 
 }]);
 
-var myApp = angular.module("myApp", []);
-
 myApp.controller("trafficInsuranceFormController", ["$scope", function($scope) {
 
 	$scope.register = function() {
 		$scope.msg = "Welcome " + $scope.firstname + "! You have signed in.";
 					
 	};
+	
+	//Select Usage Type
+	var types = ["Car", "Truck", "Van",]; 
+
+	var selectType = document.getElementById("type"); // Select elementini seçiyoruz
+
+	for (var i = 0; i < types.length; i++) {
+		var option = document.createElement("option");
+		option.value = types[i];
+		option.text = types[i];
+		selectType.appendChild(option);
+	}
+	
+	//Select Purpose of Usage
+	var purposes = ["Private", "Commercial"]; 
+
+	var selectPurpose = document.getElementById("purpose"); // Select elementini seçiyoruz
+
+	for (var i = 0; i < purposes.length; i++) {
+		var option = document.createElement("option");
+		option.value = purposes[i];
+		option.text = purposes[i];
+		selectPurpose.appendChild(option);
+	}
 	
 	//Select Brand 
 	var brands = ["Audi", "BMW", "Citroen", "Dacia", "Fiat", "Hyundai", "Jeep", "Kia", "Lamborghini", "Mercedes", "Nissan", "Opel", "Renault", "Skoda", "Volvo"]; // Markaların listesi
@@ -171,7 +193,16 @@ myApp.controller("trafficInsuranceFormController", ["$scope", function($scope) {
 		selectBrand.appendChild(option);
 	}
 	
-	
+	//Select Fuel Type
+	var fuelTypes = ["Petrol", "Diesel", "LPG", "Electric"]; 
+
+	var selectFuelType = document.getElementById("fuel_type"); // Select elementini seçiyoruz
+
+	for (var i = 0; i < fuelTypes.length; i++) {
+		var option = document.createElement("option");
+		option.value = fuelTypes[i];
+		option.text = fuelTypes[i];
+		selectFuelType.appendChild(option);
+	}
 
 }]);
-

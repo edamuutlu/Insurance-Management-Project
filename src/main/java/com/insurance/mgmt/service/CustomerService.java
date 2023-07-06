@@ -20,10 +20,10 @@ public class CustomerService {
 		return customerRepository.findAll();
 	}
 	
-//	public Customer getBookById(int id) {
-//		return customerRepository.findById(id).get();
-//	}
-//	
+	public Customer getCustomerById(int id) {
+		return customerRepository.findById(id).get();
+	}
+	
 	public void deleteById(int id) {
 		customerRepository.deleteById(id);
 	}
