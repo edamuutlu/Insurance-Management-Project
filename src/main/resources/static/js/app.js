@@ -158,6 +158,8 @@ myApp.controller("trafficInsuranceFormController", ["$scope", function($scope) {
 	
 	//Select Usage Type
 	var types = ["Car", "Truck", "Van",]; 
+	$scope.options = ["Seçenek 1", "Seçenek 2", "Seçenek 3"];
+	$scope.selectedOption = "";
 
 	var selectType = document.getElementById("type"); // Select elementini seçiyoruz
 

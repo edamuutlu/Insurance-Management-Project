@@ -20,8 +20,8 @@ public class CustomerService {
 		return customerRepository.findAll();
 	}
 	
-	public Customer getCustomerById(int id) {
-		return customerRepository.findById(id).get();
+	public Customer getCustomerById(int customer_id) {
+		return customerRepository.findById(customer_id).get();
 	}
 	
 	public void deleteById(int id) {

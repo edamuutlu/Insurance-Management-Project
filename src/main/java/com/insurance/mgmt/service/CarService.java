@@ -1,5 +1,7 @@
 package com.insurance.mgmt.service;
 
+import java.util.List;
+
 //import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +22,9 @@ public class CarService {
 //		return carRepository.getById(customer_id);
 //	}
 	
-//	public List<Car> getAllCars(){
-//		return carRepository.findAll();
-//	}
+	public List<Car> getAllCars(){
+		return carRepository.findAll();
+	}
 //	
 //	public void deleteById(int id) {
 //		carRepository.deleteById(id);

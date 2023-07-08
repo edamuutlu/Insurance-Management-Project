@@ -72,7 +72,7 @@
 	<!--End Navbar-->
 
 
-	<div class="container mt-5">
+	<div class="container mt-5">		
 		<table class="table table-hover">
 			<thead>
 				<tr>
@@ -85,11 +85,13 @@
 					<th cope="col">Province</th>
 					<th cope="col">District</th>					
 					<th scope="col">Insurance Type</th>
-					<th scope="col">Action</th>
+					<th scope="col">Update</th>
+					<th scope="col">Delete</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="c :${customer}">
+				<tr th:each="c :${customer}">  <!--th:object="${car}"-->
+<!--					<input type="hidden" name="customer_id" th:value="${car.customer_id}"/>-->
 					<td th:text="${c.customer_id}"></td>
 					<td th:text="${c.tc}"></td>
 					<td th:text="${c.birth}"></td>
@@ -98,20 +100,23 @@
 					<td th:text="${c.lastname}"></td>
 					<td th:text="${c.province}"></td>
 					<td th:text="${c.district}"></td>					
-					<td><select name="format" onchange="location = this.value;">
-							<option>Select</option>
-<!--							<option><a th:href="@{/trafficInsuranceForm/{customer_id}(customer_id=${c.customer_id})}">Traffic Insurance</a></option>  -->
-							<option value="/trafficInsuranceForm">Traffic Insurance</option>
+					<td><select name="format" onchange="location = this.value;">						
+							<option>Select</option>						
+<!--							<option th:value="@{/trafficInsuranceForm/{customer_id}(customer_id=${c.customer_id})}">Traffic Insurance</option>-->
+							<option th:value="@{/trafficInsuranceForm(customer_id = ${c.customer_id})}">Traffic Insurance</option>
 							<option value="">Comprehensive Insurance</option>
 							<option value="">Health Insurance</option>
 							<option value="">Earthquake Insurance</option>
 						</select>
 					</td>
+<!--					<td><a th:href="@{/trafficInsuranceForm/{customer_id}(customer_id=${c.customer_id})}">Traffic Insurance</a></td>-->
+					<td><button><a th:href="@{/editCustomer/{customer_id}(customer_id=${c.customer_id})}"><i id="icon-edit"
+									class="fa-regular fa-pen-to-square"></i></a></button></td>
 					<td><button><a th:href="@{/deleteCustomer/{customer_id}(customer_id=${c.customer_id})}"><i id="icon-trash"
-									class="gg-trash"></i></a></button></td>
+									class="gg-trash"></i></a></button></td>														
 				</tr>
 			</tbody>
-		</table>
+		</table>		
 	</div>
 
 

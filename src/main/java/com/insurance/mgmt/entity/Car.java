@@ -16,7 +16,7 @@ public class Car {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@Column(name ="customer_id") //, insertable = false, nullable = true
+	@Column(name ="customer_id") //insertable = false, nullable = true
 	private int customer_id;
 	
 	@Column(name ="license_plate1")
@@ -47,8 +47,24 @@ public class Car {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+		
 
-	
+	public Car(int license_plate1, String license_plate2, int license_plate3, String type,
+			String purpose, String brand, String fuel_type, int engine_size, int seat_capacity, int customer_id) {
+		super();
+		this.customer_id = customer_id;
+		this.license_plate1 = license_plate1;
+		this.license_plate2 = license_plate2;
+		this.license_plate3 = license_plate3;
+		this.type = type;
+		this.purpose = purpose;
+		this.brand = brand;
+		this.fuel_type = fuel_type;
+		this.engine_size = engine_size;
+		this.seat_capacity = seat_capacity;
+	}
+
+
 	public Car(int id, int customer_id, int license_plate1, String license_plate2, int license_plate3, String type,
 			String purpose, String brand, String fuel_type, int engine_size, int seat_capacity) {
 		super();

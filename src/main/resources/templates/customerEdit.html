@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en" xmlns:th"http://www.thymeLeaf.org">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Customer Edit</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+	<link rel="stylesheet" href="" th:href="@{/css/style.css}">
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+
+</head>
+
+<body ng-app="myApp">
+
+	<!--Navbar-->
+	<nav class="navbar navbar-expand-lg navbar-light bg-light py-3 fixed-top">
+		<div class="container">
+			<a class="navbar-brand text-black" href="/">SBM</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+				data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span id="bar" data-lucide="menu"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+					<li class="nav-item">
+						<a class="nav-link" href="/customerList">See Customer List</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/customerRegisterForm">New Customer Register</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+<!--	End Navbar-->
+
+
+	<section id="featured" class="my-5 pt-5">
+		<div class="container-register mt-5 py-5" ng-controller="registerCustomerFormController">
+			<div class="textIntro">
+				<h1 class="text-center">Customer Edit</h1>
+				<p ng-show="msg">{{msg}}</p>
+			</div>
+
+			<form th:action="@{/save}" th:object="${customer}" method="post" name="myForm">
+				
+				<input type="hidden" name="customer_id" th:value="${customer.customer_id}"/>
+				<input type="text" name="tc" placeholder="TC Number" ng-required="true" minlength="11"
+					maxlength="11" th:value="${customer.tc}">
+				<p class="error" ng-show="myForm.tc.$invalid && myForm.tc.$touched">Fill out your TC number.</p>
+
+				<input type="date" name="birth" placeholder="Birth Date" ng-required="true" th:value="${customer.birth}">
+				<p class="error" ng-show="myForm.birth.$invalid && myForm.birth.$touched">Fill out your Birth Date.</p>
+				<!--<p class="error" ng-show="myForm.birth.$error.date">Incorrect date selection</p>-->
+
+				<input type="text" name="email" placeholder="Email" ng-required="true" th:value="${customer.email}">
+				<p class="error" ng-show="myForm.email.$invalid && myForm.email.$touched">Enter your corrent email.</p>
+
+				<input type="text" name="firstname" placeholder="First Name" ng-required="true" th:value="${customer.firstname}">
+				<p class="error" ng-show="myForm.firstname.$invalid && myForm.firstname.$touched">Fill out your first
+					name.</p>
+
+				<input type="text" name="lastname" placeholder="Last Name" ng-required="true" th:value="${customer.lastname}">
+				<p class="error" ng-show="myForm.lastname.$invalid && myForm.lastname.$touched">Fill out your last name.
+				</p>
+
+				<select name="province" id="province">
+					<option th:value="${customer.province}" th:text="${customer.province}">-- Select Province --</option>
+				</select>
+				<select name="district" id="district">
+					<option th:value="${customer.district}" th:text="${customer.district}">-- Select District --</option>
+				</select>							
+
+				<button type="submit" class="btn" ng-disabled="myForm.$invalid">Submit</button>
+			</form>
+		</div>
+	</section>
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+		integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"
+		integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS"
+		crossorigin="anonymous"></script>
+
+	<script src="/js/app.js"></script>
+</body>
+
+</html>

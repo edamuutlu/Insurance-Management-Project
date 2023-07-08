@@ -24,12 +24,7 @@ public class Customer {
 	public Customer() {
 		super();
 		// TODO Auto-generated constructor stub
-	}	
-	
-	public Customer(int customer_id) {
-		super();
-		this.customer_id = customer_id;
-	}	
+	}		
 
 	public Customer(int customer_id, String tc, String birth, String email, String firstname, String lastname, String province,
 			String district) {

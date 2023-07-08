@@ -45,45 +45,77 @@
 				<p ng-show="msg">{{msg}}</p>
 			</div>
 
-			<form th:action="@{/carRegister}" th:objects="${car}" method="post" name="myForm" ng-submit="register()">
-				
-				<div class="d-flex justify-content-between mt-3">					
-					<label>Enter your licence plate number: </label>
-					<div>					
-						<input type="number" name="license_plate1" ng-model="license_plate1" ng-required="true">
-						<p class="error" ng-show="myForm.license_plate1.$invalid && myForm.license_plate1.$touched">Invalid input.</p>
-					</div>
-					<div>
-						<input type="text" name="license_plate2" ng-model="license_plate2" ng-required="true" minlength="1" maxlength="3">
-						<p class="error" ng-show="myForm.license_plate2.$invalid && myForm.license_plate2.$touched">Invalid input.</p>
-					</div>
-					<div>
-						<input type="number" name="license_plate3" ng-model="license_plate3" ng-required="true">
-						<p class="error" ng-show="myForm.license_plate3.$invalid && myForm.license_plate3.$touched">Invalid input.</p>
-					</div>					
-				</div>				
+			<!--			<form class="col-md-4 offset-md-4" th:action="@{/carRegister}" method="post" th:object="${customer}"-->
+			<!--				name="myForm" ng-submit="register()">-->
+			<!--				<input type="hidden" name="customer_id" th:value="${customer.customer_id}" />-->
+			<!--				<div>-->
+			<!--					<label for="customer_id">Customer Id</label>-->
+			<!--					<input type="number" name="customer_id" th:value="${customer.customer_id}">-->
+			<!--				</div>-->
+			<!--			</form>-->
 
-				<select name="type" id="type">
-					<option value="">-- Select Usage Type --</option>
+			<form th:action="@{/carRegister}" th:object="${car}" method="post" name="myForm" ng-submit="register()">
+
+				<input type="hidden" name="customer_id" th:value="${customer_id}" />
+				<div style=" display: flex; flex-direction: row;">
+					<h4 class="mr-2">Customer Id : </h4>
+					<h4 th:text="${customer_id}">idParam</h4>
+				</div>
+
+				<div class="d-flex justify-content-between mt-3">
+					<label>Enter your licence plate number: </label>
+					<div>
+						<input type="number" name="license_plate1" ng-model="license_plate1" ng-required="true"
+							onKeyPress="if(this.value.length==2) return false;">
+						<p class="error" ng-show="myForm.license_plate1.$invalid && myForm.license_plate1.$touched">
+							Invalid input.</p>
+					</div>
+					<div>
+						<input type="text" name="license_plate2" ng-model="license_plate2" ng-required="true"
+							ng-pattern="/^[a-zA-Z]*$/" minlength="1" maxlength="3">
+						<p class="error" ng-show="myForm.license_plate2.$invalid && myForm.license_plate2.$touched">
+							Invalid input.</p>
+					</div>
+					<div>
+						<input type="number" name="license_plate3" ng-model="license_plate3" ng-required="true"
+							onKeyPress="if(this.value.length==4) return false;">
+						<p class="error" ng-show="myForm.license_plate3.$invalid && myForm.license_plate3.$touched">
+							Invalid input.</p>
+					</div>
+				</div>
+
+					<select ng-model="selectedOption" ng-required="true">
+						<option value="">Seçenek Seçin*</option>
+						<option ng-repeat="option in options" value="{{option}}">{{option}}</option>
+					</select>
+					<p class="error" ng-show="myForm.selectedOption.$invalid && myForm.selectedOption.$touched">Fill out your options.</p>
+
+				<select name="type" id="type" ng-required="true">
+					<option value="">Select Usage Type*</option>
 				</select>
-				<select name="purpose" id="purpose">
-					<option value="">-- Select Purpose of Usage --</option>
+				<select name="purpose" id="purpose" ng-required="true">
+					<option value="">Select Purpose of Usage*</option>
 				</select>
-				<select name="brand" id="brand">
-					<option value="">-- Select Brand --</option>
+				<select name="brand" id="brand" ng-required="true">
+					<option value="">Select Brand*</option>
 				</select>
-				<select name="fuel_type" id="fuel_type">
-					<option value="">-- Select Fuel Type --</option>
+				<select name="fuel_type" id="fuel_type" ng-required="true">
+					<option value="">Select Fuel Type*</option>
 				</select>
-				
-				<input type="number" name="engine_size" placeholder="Engine Size" ng-model="engine_size" ng-required="true">
-				<p class="error" ng-show="myForm.engine_size.$invalid && myForm.engine_size.$touched">Fill out your engine size.</p>	
-				
-				<input type="number" name="seat_capacity" placeholder="Seating Capacity" ng-model="seat_capacity" ng-required="true" minlength="1">
-				<p class="error" ng-show="myForm.seat_capacity.$invalid && myForm.seat_capacity.$touched">Fill out your seating capacity.</p>											
+
+				<input type="number" name="engine_size" placeholder="Engine Size" ng-model="engine_size"
+					ng-required="true">
+				<p class="error" ng-show="myForm.engine_size.$invalid && myForm.engine_size.$touched">Fill out your
+					engine size.</p>
+
+				<input type="number" name="seat_capacity" placeholder="Seating Capacity" ng-model="seat_capacity"
+					ng-required="true" minlength="1">
+				<p class="error" ng-show="myForm.seat_capacity.$invalid && myForm.seat_capacity.$touched">Fill out your
+					seating capacity.</p>
 
 				<button type="submit" class="btn" ng-disabled="myForm.$invalid">Submit</button>
 			</form>
+
 		</div>
 	</section>
 
