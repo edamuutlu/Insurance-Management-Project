@@ -10,9 +10,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+
 import com.insurance.mgmt.entity.Customer;
 import com.insurance.mgmt.service.CarService;
 import com.insurance.mgmt.service.CustomerService;
+import com.insurance.mgmt.service.adress.ProvinceService;
 
 
 @Controller
@@ -23,6 +25,9 @@ public class CustomerController {
 	
 	@Autowired
 	CarService carService;
+	
+	@Autowired
+	ProvinceService provinceService;
 	
 	@GetMapping("/")
 	public String home() {
@@ -71,14 +76,5 @@ public class CustomerController {
 		customerService.deleteById(customer_id);
 		return "redirect:/customerList";
 	}
-	
-//	@RequestMapping("/trafficInsuranceForm/{customer_id}")
-//	public String getMyList(@PathVariable("customer_id") int customer_id, ModelAttribute model) {
-//		Customer customer = customerService.getCustomerById(customer_id);
-//		Car car = new Car(customer.getCustomer_id());         
-//		carService.save(car);
-//		return "redirect:/trafficInsuranceForm";
-//	}
 		
-
 }

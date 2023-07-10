@@ -105,17 +105,18 @@ myApp.controller("registerCustomerFormController", ["$scope", function($scope) {
 	//	};	
 
 	/* Select Province and District */
-	var provinceDistrictinfo = {
-		Ankara: {
-			cities: ["Akyurt", "Altındağ", "Ayaş", "Bala", "Beypazarı", "Çamlıdere", "Çankaya", "Çubuk", "Elmadağ", "Eti̇mesgut", "Evren", "Gölbaşı", "Güdül", "Haymana", "Kahramankazan", "Kaleci̇k", "Keçi̇ören", "Kizilcahamam", "Mamak", "Nallihan", "Polatlı", "Pursaklar", "Si̇ncan", "Şerefli̇koçhi̇sar", "Yeni̇mahalle"],
-		},
-		Bursa: {
-			cities: ["Osmangazi", "Nilüfer", "Yıldırım", "Büyükorhan", "Gemlik", "Gürsu", "Harmancık", "İnegöl", "İznik", "Karacabey", "Keles", "Kestel", "Mudanya", "Mustafakemalpaşa", "Orhaneli", "Orhangazi", "Yenişehir"],
-		},
-		İstanbul: {
-			cities: ["Adalar", "Arnavutköy", "Ataşehir", "Avcılar", "Bağcılar", "Bahçelievler", "Bakırköy", "Başakşehir", "Bayrampaşa", "Beşiktaş", "Beykoz", "Beylikdüzü", "Beyoğlu", "Büyükçekmece", "Çatalca", "Çekmeköy", "Esenler", "Esenyurt", "Eyüpsultan", "Fatih", "Gaziosmanpaşa", "Güngören", "Kadıköy", "Kağıthane", "Kartal", "Küçükçekmece", "Maltepe", "Pendik", "Sancaktepe", "Sarıyer", "Silivri", "Sultanbeyli", "Sultangazi", "Şile", "Şişli", "Tuzla", "Ümraniye", "Üsküdar", "Zeytinburnu"],
-		},
-	};
+//	var provinceDistrictinfo = {
+//		Ankara: {
+//			cities: ["Akyurt", "Altındağ", "Ayaş", "Bala", "Beypazarı", "Çamlıdere", "Çankaya", "Çubuk", "Elmadağ", "Eti̇mesgut", "Evren", "Gölbaşı", "Güdül", "Haymana", "Kahramankazan", "Kaleci̇k", "Keçi̇ören", "Kizilcahamam", "Mamak", "Nallihan", "Polatlı", "Pursaklar", "Si̇ncan", "Şerefli̇koçhi̇sar", "Yeni̇mahalle"],
+//		},
+//		Bursa: {
+//			cities: ["Osmangazi", "Nilüfer", "Yıldırım", "Büyükorhan", "Gemlik", "Gürsu", "Harmancık", "İnegöl", "İznik", "Karacabey", "Keles", "Kestel", "Mudanya", "Mustafakemalpaşa", "Orhaneli", "Orhangazi", "Yenişehir"],
+//		},
+//		İstanbul: {
+//			cities: ["Adalar", "Arnavutköy", "Ataşehir", "Avcılar", "Bağcılar", "Bahçelievler", "Bakırköy", "Başakşehir", "Bayrampaşa", "Beşiktaş", "Beykoz", "Beylikdüzü", "Beyoğlu", "Büyükçekmece", "Çatalca", "Çekmeköy", "Esenler", "Esenyurt", "Eyüpsultan", "Fatih", "Gaziosmanpaşa", "Güngören", "Kadıköy", "Kağıthane", "Kartal", "Küçükçekmece", "Maltepe", "Pendik", "Sancaktepe", "Sarıyer", "Silivri", "Sultanbeyli", "Sultangazi", "Şile", "Şişli", "Tuzla", "Ümraniye", "Üsküdar", "Zeytinburnu"],
+//		},
+//	};
+	
 
 	window.onload = function() {
 		const selectProvince = document.getElementById('province');
@@ -157,54 +158,19 @@ myApp.controller("trafficInsuranceFormController", ["$scope", function($scope) {
 	};
 	
 	//Select Usage Type
-	var types = ["Car", "Truck", "Van",]; 
-	$scope.options = ["Seçenek 1", "Seçenek 2", "Seçenek 3"];
-	$scope.selectedOption = "";
-
-	var selectType = document.getElementById("type"); // Select elementini seçiyoruz
-
-	for (var i = 0; i < types.length; i++) {
-		var option = document.createElement("option");
-		option.value = types[i];
-		option.text = types[i];
-		selectType.appendChild(option);
-	}
+	$scope.types = ["Car", "Truck", "Van"];
+	$scope.type = "";
 	
 	//Select Purpose of Usage
-	var purposes = ["Private", "Commercial"]; 
-
-	var selectPurpose = document.getElementById("purpose"); // Select elementini seçiyoruz
-
-	for (var i = 0; i < purposes.length; i++) {
-		var option = document.createElement("option");
-		option.value = purposes[i];
-		option.text = purposes[i];
-		selectPurpose.appendChild(option);
-	}
-	
+	$scope.purposes = ["Private", "Commercial"];
+	$scope.purpose = "";
+		
 	//Select Brand 
-	var brands = ["Audi", "BMW", "Citroen", "Dacia", "Fiat", "Hyundai", "Jeep", "Kia", "Lamborghini", "Mercedes", "Nissan", "Opel", "Renault", "Skoda", "Volvo"]; // Markaların listesi
-
-	var selectBrand = document.getElementById("brand"); // Select elementini seçiyoruz
-
-	// Markaları dropdown listesine ekleme
-	for (var i = 0; i < brands.length; i++) {
-		var option = document.createElement("option");
-		option.value = brands[i];
-		option.text = brands[i];
-		selectBrand.appendChild(option);
-	}
+	$scope.brands = ["Audi", "BMW", "Citroen", "Dacia", "Fiat", "Hyundai", "Jeep", "Kia", "Lamborghini", "Mercedes", "Nissan", "Opel", "Renault", "Skoda", "Volvo"];
+	$scope.brand = "";
 	
 	//Select Fuel Type
-	var fuelTypes = ["Petrol", "Diesel", "LPG", "Electric"]; 
-
-	var selectFuelType = document.getElementById("fuel_type"); // Select elementini seçiyoruz
-
-	for (var i = 0; i < fuelTypes.length; i++) {
-		var option = document.createElement("option");
-		option.value = fuelTypes[i];
-		option.text = fuelTypes[i];
-		selectFuelType.appendChild(option);
-	}
+	$scope.fuelTypes = ["Petrol", "Diesel", "LPG", "Electric"]; 
+	$scope.fuel_type = "";
 
 }]);

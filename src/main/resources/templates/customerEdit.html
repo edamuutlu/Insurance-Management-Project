@@ -48,30 +48,34 @@
 			<form th:action="@{/save}" th:object="${customer}" method="post" name="myForm">
 				
 				<input type="hidden" name="customer_id" th:value="${customer.customer_id}"/>
-				<input type="text" name="tc" placeholder="TC Number" ng-required="true" minlength="11"
+				<input type="text" name="tc" placeholder="TC Number*" ng-required="true" ng-pattern="/^[0-9]*$/" minlength="11"
 					maxlength="11" th:value="${customer.tc}">
-				<p class="error" ng-show="myForm.tc.$invalid && myForm.tc.$touched">Fill out your TC number.</p>
+				<p class="error" ng-show="myForm.tc.$invalid && myForm.tc.$touched">Fill out your TC number correctly.</p>
 
-				<input type="date" name="birth" placeholder="Birth Date" ng-required="true" th:value="${customer.birth}">
+				<input type="date" name="birth" placeholder="Birth Date*" ng-required="true" th:value="${customer.birth}"id="birthdate">
+				<script>
+				 	var today = new Date().toISOString().split("T")[0];
+				 	document.getElementById("birthdate").setAttribute("max", today);
+				</script>
 				<p class="error" ng-show="myForm.birth.$invalid && myForm.birth.$touched">Fill out your Birth Date.</p>
 				<!--<p class="error" ng-show="myForm.birth.$error.date">Incorrect date selection</p>-->
 
-				<input type="text" name="email" placeholder="Email" ng-required="true" th:value="${customer.email}">
+				<input type="text" name="email" placeholder="Email*" ng-required="true" th:value="${customer.email}">
 				<p class="error" ng-show="myForm.email.$invalid && myForm.email.$touched">Enter your corrent email.</p>
 
-				<input type="text" name="firstname" placeholder="First Name" ng-required="true" th:value="${customer.firstname}">
+				<input type="text" name="firstname" placeholder="First Name*" ng-required="true" th:value="${customer.firstname}">
 				<p class="error" ng-show="myForm.firstname.$invalid && myForm.firstname.$touched">Fill out your first
 					name.</p>
 
-				<input type="text" name="lastname" placeholder="Last Name" ng-required="true" th:value="${customer.lastname}">
+				<input type="text" name="lastname" placeholder="Last Name*" ng-required="true" th:value="${customer.lastname}">
 				<p class="error" ng-show="myForm.lastname.$invalid && myForm.lastname.$touched">Fill out your last name.
 				</p>
 
 				<select name="province" id="province">
-					<option th:value="${customer.province}" th:text="${customer.province}">-- Select Province --</option>
+					<option th:value="${customer.province}" th:text="${customer.province}">Select Province*</option>
 				</select>
 				<select name="district" id="district">
-					<option th:value="${customer.district}" th:text="${customer.district}">-- Select District --</option>
+					<option th:value="${customer.district}" th:text="${customer.district}">Select District*</option>
 				</select>							
 
 				<button type="submit" class="btn" ng-disabled="myForm.$invalid">Submit</button>

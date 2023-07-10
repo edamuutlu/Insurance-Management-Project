@@ -76,44 +76,37 @@
 		<table class="table table-hover">
 			<thead>
 				<tr>
-					<th scope="col">Id</th>
-					<th scope="col">TC</th>
-					<th scope="col">Birth-Date</th>
-					<th scope="col">Email</th>
-					<th scope="col">First Name</th>
-					<th cope="col">Last Name</th>
-					<th cope="col">Province</th>
-					<th cope="col">District</th>					
-					<th scope="col">Insurance Type</th>
-					<th scope="col">Car List</th>
-					<th scope="col">Update</th>
-					<th scope="col">Delete</th>
+					<th scope="col">Customer Id</th>
+					<th scope="col">License Plate</th>
+					<th scope="col">Usage Type</th>
+					<th scope="col">Purpose of Usage</th>
+					<th cope="col">Brand</th>
+					<th cope="col">Fuel Type</th>
+					<th cope="col">Engine Size</th>					
+					<th scope="col">Seating Capacity</th>
+					<th scope="col">Offer</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="c :${customer}">  <!--th:object="${car}"-->
-<!--					<input type="hidden" name="customer_id" th:value="${car.customer_id}"/>-->
+				<tr th:each="c :${car}"> 
 					<td th:text="${c.customer_id}"></td>
-					<td th:text="${c.tc}"></td>
-					<td th:text="${c.birth}"></td>
-					<td th:text="${c.email}"></td>
-					<td th:text="${c.firstname}"></td>
-					<td th:text="${c.lastname}"></td>
-					<td th:text="${c.province}"></td>
-					<td th:text="${c.district}"></td>					
-					<td><select name="format" onchange="location = this.value;">						
-							<option>Select</option>		
-							<option th:value="@{/trafficInsuranceForm(customer_id = ${c.customer_id})}">Traffic Insurance</option>
-							<option value="">Comprehensive Insurance</option>
-							<option value="">Health Insurance</option>
-							<option value="">Earthquake Insurance</option>
-						</select>
+					<td>
+						<span th:text="${c.license_plate1}"></span> 
+  						<span th:text="${c.license_plate2}"></span>
+  						<span th:text="${c.license_plate3}"></span>
 					</td>
-					<td><button><a th:href="@{/carList/{customer_id}(customer_id=${c.customer_id})}"><i class="fa-solid fa-car"></i></a></button></td>	
-					<td><button><a th:href="@{/editCustomer/{customer_id}(customer_id=${c.customer_id})}"><i id="icon-edit"
-									class="fa-regular fa-pen-to-square"></i></a></button></td>
-					<td><button><a th:href="@{/deleteCustomer/{customer_id}(customer_id=${c.customer_id})}"><i id="icon-trash"
-									class="gg-trash"></i></a></button></td>																							
+					<td th:text="${c.type}"></td>
+					<td th:text="${c.purpose}"></td>
+					<td th:text="${c.brand}"></td>
+					<td th:text="${c.fuel_type}"></td>
+					<td th:text="${c.engine_size}"></td>
+					<td th:text="${c.seat_capacity}"></td>
+					<td th:text="${c.offer}"></td>
+						
+<!--					<td><button><a th:href="@{/editCustomer/{customer_id}(customer_id=${c.customer_id})}"><i id="icon-edit"-->
+<!--									class="fa-regular fa-pen-to-square"></i></a></button></td>-->
+<!--					<td><button><a th:href="@{/deleteCustomer/{customer_id}(customer_id=${c.customer_id})}"><i id="icon-trash"-->
+<!--									class="gg-trash"></i></a></button></td>																							-->
 				</tr>
 			</tbody>
 		</table>		

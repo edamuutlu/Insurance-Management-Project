@@ -43,6 +43,9 @@ public class Car {
 	@Column(name ="seat_capacity")
 	private int seat_capacity;
 	
+	@Column(name ="offer") //insertable = false, nullable = true
+	private int offer;
+	
 	public Car() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -50,7 +53,7 @@ public class Car {
 		
 
 	public Car(int license_plate1, String license_plate2, int license_plate3, String type,
-			String purpose, String brand, String fuel_type, int engine_size, int seat_capacity, int customer_id) {
+			String purpose, String brand, String fuel_type, int engine_size, int seat_capacity, int customer_id, int offer) {
 		super();
 		this.customer_id = customer_id;
 		this.license_plate1 = license_plate1;
@@ -62,25 +65,8 @@ public class Car {
 		this.fuel_type = fuel_type;
 		this.engine_size = engine_size;
 		this.seat_capacity = seat_capacity;
+		this.offer=offer;
 	}
-
-
-	public Car(int id, int customer_id, int license_plate1, String license_plate2, int license_plate3, String type,
-			String purpose, String brand, String fuel_type, int engine_size, int seat_capacity) {
-		super();
-		this.id = id;
-		this.customer_id = customer_id;
-		this.license_plate1 = license_plate1;
-		this.license_plate2 = license_plate2;
-		this.license_plate3 = license_plate3;
-		this.type = type;
-		this.purpose = purpose;
-		this.brand = brand;
-		this.fuel_type = fuel_type;
-		this.engine_size = engine_size;
-		this.seat_capacity = seat_capacity;
-	}
-
 
 	public int getId() {
 		return id;
@@ -190,6 +176,18 @@ public class Car {
 	public void setSeat_capacity(int seat_capacity) {
 		this.seat_capacity = seat_capacity;
 	}
+
+
+	public int getOffer() {
+		return offer;
+	}
+
+
+	public void setOffer(int offer) {
+		this.offer = offer;
+	}
+	
+	
 	
 	
 }

@@ -18,18 +18,14 @@ public class CarService {
 		carRepository.save(car);
 	}
 	
-//	public Car getCarById(int id) {
-//		return carRepository.getById(customer_id);
-//	}
-	
 	public List<Car> getAllCars(){
 		return carRepository.findAll();
 	}
-//	
+	
 //	public void deleteById(int id) {
 //		carRepository.deleteById(id);
 //	}
-//	
+	
 	public Car getCarId(int id) {
 		return carRepository.findById(id).get();
 	}

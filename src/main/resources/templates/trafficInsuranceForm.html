@@ -45,15 +45,6 @@
 				<p ng-show="msg">{{msg}}</p>
 			</div>
 
-			<!--			<form class="col-md-4 offset-md-4" th:action="@{/carRegister}" method="post" th:object="${customer}"-->
-			<!--				name="myForm" ng-submit="register()">-->
-			<!--				<input type="hidden" name="customer_id" th:value="${customer.customer_id}" />-->
-			<!--				<div>-->
-			<!--					<label for="customer_id">Customer Id</label>-->
-			<!--					<input type="number" name="customer_id" th:value="${customer.customer_id}">-->
-			<!--				</div>-->
-			<!--			</form>-->
-
 			<form th:action="@{/carRegister}" th:object="${car}" method="post" name="myForm" ng-submit="register()">
 
 				<input type="hidden" name="customer_id" th:value="${customer_id}" />
@@ -84,31 +75,32 @@
 					</div>
 				</div>
 
-					<select ng-model="selectedOption" ng-required="true">
-						<option value="">Seçenek Seçin*</option>
-						<option ng-repeat="option in options" value="{{option}}">{{option}}</option>
-					</select>
-					<p class="error" ng-show="myForm.selectedOption.$invalid && myForm.selectedOption.$touched">Fill out your options.</p>
-
-				<select name="type" id="type" ng-required="true">
+				<select name="type" ng-model="type" ng-required="true">
 					<option value="">Select Usage Type*</option>
+					<option ng-repeat="option in types" value="{{option}}">{{option}}</option>
 				</select>
-				<select name="purpose" id="purpose" ng-required="true">
+				
+				<select name="purpose" ng-model="purpose" ng-required="true">
 					<option value="">Select Purpose of Usage*</option>
+					<option ng-repeat="option in purposes" value="{{option}}">{{option}}</option>
 				</select>
-				<select name="brand" id="brand" ng-required="true">
+				
+				<select name="brand" ng-model="brand" ng-required="true">
 					<option value="">Select Brand*</option>
+					<option ng-repeat="option in brands" value="{{option}}">{{option}}</option>
 				</select>
-				<select name="fuel_type" id="fuel_type" ng-required="true">
+				
+				<select name="fuel_type" ng-model="fuel_type" ng-required="true">
 					<option value="">Select Fuel Type*</option>
+					<option ng-repeat="option in fuelTypes" value="{{option}}">{{option}}</option>
 				</select>
 
-				<input type="number" name="engine_size" placeholder="Engine Size" ng-model="engine_size"
+				<input type="number" name="engine_size" placeholder="Engine Size*" ng-model="engine_size"
 					ng-required="true">
 				<p class="error" ng-show="myForm.engine_size.$invalid && myForm.engine_size.$touched">Fill out your
 					engine size.</p>
 
-				<input type="number" name="seat_capacity" placeholder="Seating Capacity" ng-model="seat_capacity"
+				<input type="number" name="seat_capacity" placeholder="Seating Capacity*" ng-model="seat_capacity"
 					ng-required="true" minlength="1">
 				<p class="error" ng-show="myForm.seat_capacity.$invalid && myForm.seat_capacity.$touched">Fill out your
 					seating capacity.</p>
