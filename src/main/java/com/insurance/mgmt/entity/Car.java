@@ -46,6 +46,8 @@ public class Car {
 	@Column(name ="offer") //insertable = false, nullable = true
 	private int offer;
 	
+	private String result;
+	
 	public Car() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -53,7 +55,7 @@ public class Car {
 		
 
 	public Car(int license_plate1, String license_plate2, int license_plate3, String type,
-			String purpose, String brand, String fuel_type, int engine_size, int seat_capacity, int customer_id, int offer) {
+			String purpose, String brand, String fuel_type, int engine_size, int seat_capacity, int customer_id, int offer, String result) {
 		super();
 		this.customer_id = customer_id;
 		this.license_plate1 = license_plate1;
@@ -66,6 +68,7 @@ public class Car {
 		this.engine_size = engine_size;
 		this.seat_capacity = seat_capacity;
 		this.offer=offer;
+		this.result=result;
 	}
 
 	public int getId() {
@@ -185,6 +188,16 @@ public class Car {
 
 	public void setOffer(int offer) {
 		this.offer = offer;
+	}
+
+
+	public String getResult() {
+		return result;
+	}
+
+
+	public void setResult(String result) {
+		this.result = result;
 	}
 	
 	

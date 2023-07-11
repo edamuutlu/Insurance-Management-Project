@@ -115,9 +115,34 @@ form select{
     color: red;
 }
 
+.invalid-feedback {
+	font-size:14px;
+	font-weight: 600;
+	text-align: left;
+}
+
 label{
 	font-weight: 600;
 	font-size: 18px;
 	padding-top: 6px;
 	justify-content: center;
 }
+
+/* Traffic Insurance Calculate Page */
+.button-group {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+.accept-btn {
+  background-color: green;
+  color: white;
+}
+
+.reject-btn {
+  background-color: red;
+  color: white;
+}
+

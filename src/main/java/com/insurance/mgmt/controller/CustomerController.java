@@ -1,20 +1,31 @@
 package com.insurance.mgmt.controller;
 
 import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.insurance.mgmt.entity.Customer;
 import com.insurance.mgmt.service.CarService;
 import com.insurance.mgmt.service.CustomerService;
 import com.insurance.mgmt.service.adress.ProvinceService;
+
+import jakarta.validation.Valid;
 
 
 @Controller
@@ -29,18 +40,43 @@ public class CustomerController {
 	@Autowired
 	ProvinceService provinceService;
 	
+//	@Autowired
+//	private IProvinceRepository provinceRepository;
+//	
+//	@Autowired
+//	private IDistrictRepository districtRepository;
+	
+private static final Logger log =  LoggerFactory.getLogger(CustomerController.class);
+	
+	@InitBinder
+	public void initBinder(WebDataBinder dataBinder) {
+		StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
+		dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
+	}
+	
+	
 	@GetMapping("/")
 	public String home() {
 		return "home";
 	}
 	
-	@GetMapping("/form")
-	public String customerForm() {
-		return "form";
+	@RequestMapping(path = "/selectType", method = RequestMethod.GET )
+	public String selectType(@RequestParam(value = "customer_id", required = false) int id, Model model){
+		model.addAttribute("customer_id",id);
+		return "home";
 	}
 	
+	
 	@GetMapping("/customerRegisterForm")
-	public String registerCustomer() {
+	public String registerCustomer(@ModelAttribute Customer customer, Model model) { // Model model
+	
+//	    List<Province> getAllProvinces = provinceRepository.findAll();
+//	    
+//	    List<District> getDistrictsByProvinceId = districtRepository.findAll();
+//
+//        model.addAttribute("getAllProvinces", getAllProvinces);
+//        model.addAttribute("getDistrictsByProvinceId", getDistrictsByProvinceId);
+    
 		return "customerRegisterForm";
 	}
 	
@@ -51,18 +87,33 @@ public class CustomerController {
 		return new ModelAndView("customerList","customer",list);
 	}
 	
-	@PostMapping("/register")
-	public String register(@ModelAttribute Customer customer) { 
-		System.out.println(customer);
-		customerService.save(customer);
-		return "redirect:/customerList";
+//	@PostMapping("/register")
+//	public String register(@ModelAttribute Customer customer) { 	
+//		customerService.save(customer);
+//		return "redirect:/customerList";
+//	}
+		
+	
+	@PostMapping("/customerRegisterForm")
+	public String register (@Valid @ModelAttribute Customer customer, BindingResult bindingResult, Model model) { 
+		//customerService.save(customer);
+		System.out.println(bindingResult);
+		if(bindingResult.hasErrors()) {
+			log.info(">> Customer : {}",customer.toString());
+			return "customerRegisterForm";
+		}		
+		//log.info(">> Customer : {}",customer.toString());
+		model.addAttribute("customers",customerService.getAllCustomer());
+		return "redirect:customerList";	
 	}
+	
+
 	
 	@PostMapping("/save")
 	public String addCustomer(@ModelAttribute Customer customer) {
 		customerService.save(customer);
 		return "redirect:/customerList";
-	}
+	}	
 	
 	@RequestMapping("/editCustomer/{customer_id}")
 	public String editCustomer(@PathVariable("customer_id") int id, Model model) {

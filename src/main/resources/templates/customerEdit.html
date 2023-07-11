@@ -52,7 +52,7 @@
 					maxlength="11" th:value="${customer.tc}">
 				<p class="error" ng-show="myForm.tc.$invalid && myForm.tc.$touched">Fill out your TC number correctly.</p>
 
-				<input type="date" name="birth" placeholder="Birth Date*" ng-required="true" th:value="${customer.birth}"id="birthdate">
+				<input type="date" name="birth" placeholder="Birth Date*" ng-required="true" th:value="${customer.birth}" id="birthdate">
 				<script>
 				 	var today = new Date().toISOString().split("T")[0];
 				 	document.getElementById("birthdate").setAttribute("max", today);
@@ -71,10 +71,10 @@
 				<p class="error" ng-show="myForm.lastname.$invalid && myForm.lastname.$touched">Fill out your last name.
 				</p>
 
-				<select name="province" id="province">
+				<select name="province" id="province" ng-required="true">
 					<option th:value="${customer.province}" th:text="${customer.province}">Select Province*</option>
 				</select>
-				<select name="district" id="district">
+				<select name="district" id="district" ng-required="true">
 					<option th:value="${customer.district}" th:text="${customer.district}">Select District*</option>
 				</select>							
 

@@ -76,6 +76,7 @@
 		<table class="table table-hover">
 			<thead>
 				<tr>
+					<th scope="col">Id</th>
 					<th scope="col">Customer Id</th>
 					<th scope="col">License Plate</th>
 					<th scope="col">Usage Type</th>
@@ -85,10 +86,14 @@
 					<th cope="col">Engine Size</th>					
 					<th scope="col">Seating Capacity</th>
 					<th scope="col">Offer</th>
+					<th scope="col">Result</th>
+					<th scope="col">Update</th>
+					<th scope="col">Delete</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr th:each="c :${car}"> 
+					<td th:text="${c.id}"></td>
 					<td th:text="${c.customer_id}"></td>
 					<td>
 						<span th:text="${c.license_plate1}"></span> 
@@ -102,11 +107,12 @@
 					<td th:text="${c.engine_size}"></td>
 					<td th:text="${c.seat_capacity}"></td>
 					<td th:text="${c.offer}"></td>
-						
-<!--					<td><button><a th:href="@{/editCustomer/{customer_id}(customer_id=${c.customer_id})}"><i id="icon-edit"-->
-<!--									class="fa-regular fa-pen-to-square"></i></a></button></td>-->
-<!--					<td><button><a th:href="@{/deleteCustomer/{customer_id}(customer_id=${c.customer_id})}"><i id="icon-trash"-->
-<!--									class="gg-trash"></i></a></button></td>																							-->
+				    <td th:text="${c.result}"></td>
+				    
+					<td><button><a th:href="@{/editCar/{id}(id=${c.id})}"><i id="icon-edit"
+									class="fa-regular fa-pen-to-square"></i></a></button></td>
+					<td><button><a th:href="@{/deleteCar/{id}(id=${c.id})}"><i id="icon-trash"
+									class="gg-trash"></i></a></button></td>																							
 				</tr>
 			</tbody>
 		</table>		

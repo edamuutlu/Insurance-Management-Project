@@ -30,109 +30,113 @@ public class CarController {
 	@Autowired
 	CarService carService;
 	
+	public int calculate(Car car) {
+		// Sigorta teklifi için hesaplamalar
+				int offer=0;
+				
+				switch (car.getType()) {
+				    case "Car":
+				        offer += 4000;
+				        break;
+				    case "Truck":
+				        offer += 5000;
+				        break;
+				    case "Van":
+				        offer += 3000;
+				        break;
+				    default:
+						break;
+				}
+			
+				switch (car.getPurpose()) {
+				    case "Private":
+				        offer += 4000;
+				        break;
+				    case "Commercial":
+				        offer += 5000;
+				        break;
+				    default:
+						break;
+				}
+				
+				switch (car.getBrand()) {
+					case "Audi":
+					case "BMW":
+					case "Lamborghini":
+					case "Mercedes":
+					case "Volvo":
+						offer+=1000;
+						break;
+					case "Citroen":
+					case "Dacia":
+					case "Hyundai":
+					case "Kia":
+					case "Jeep":
+						offer+=2000;
+						break;
+					case "Fiat":
+					case "Nissan":
+					case "Opel":
+					case "Renault":
+					case "Skoda":
+						offer+=3000;
+						break;
+					default:
+						break;
+				}
+				
+				switch (car.getFuel_type()) {
+					case "Petrol":
+						offer+=3000;
+						break;
+					case "Diesel":
+						offer+=2000;
+						break;
+					case "LPG":
+						offer+=2000;
+						break;
+					case "Electric":
+						offer+=2000;
+						break;
+					default:
+						break;
+				}
+				
+				if(car.getEngine_size()<2) {
+					offer+=3500;
+				}else if(car.getEngine_size()>2) {
+					offer+=4000;
+				}
+				
+				switch (car.getLicense_plate1()) {
+				case 06:
+					offer+=4000;
+					break;
+				case 16:
+					offer+=3000;
+					break;
+				case 34:
+					offer+=5000;
+					break;
+			    default:
+					System.out.println("Geçerli olmayan il");
+					break;
+				}
+				
+				if(car.getSeat_capacity()<=2) {
+					offer+=3000;
+				}else if(car.getSeat_capacity()>2 && car.getSeat_capacity()<=5) {
+					offer+=3500;
+				}else if(car.getSeat_capacity()>5) { 
+					offer+=4000;
+				}
+				return offer;
+	}
+	
 	@PostMapping("/carRegister")
 	public String register(@ModelAttribute Car car, Model model, RedirectAttributes redirectAttributes) { 
 			
-		
-		// Sigorta teklifi için hesaplamalar
-		int offer=0;
-		
-		switch (car.getType()) {
-		    case "Car":
-		        offer += 4000;
-		        break;
-		    case "Truck":
-		        offer += 5000;
-		        break;
-		    case "Van":
-		        offer += 3000;
-		        break;
-		    default:
-				break;
-		}
-	
-		switch (car.getPurpose()) {
-		    case "Private":
-		        offer += 4000;
-		        break;
-		    case "Commercial":
-		        offer += 5000;
-		        break;
-		    default:
-				break;
-		}
-		
-		switch (car.getBrand()) {
-			case "Audi":
-			case "BMW":
-			case "Lamborghini":
-			case "Mercedes":
-			case "Volvo":
-				offer+=1000;
-				break;
-			case "Citroen":
-			case "Dacia":
-			case "Hyundai":
-			case "Kia":
-			case "Jeep":
-				offer+=2000;
-				break;
-			case "Fiat":
-			case "Nissan":
-			case "Opel":
-			case "Renault":
-			case "Skoda":
-				offer+=3000;
-				break;
-			default:
-				break;
-		}
-		
-		switch (car.getFuel_type()) {
-			case "Petrol":
-				offer+=3000;
-				break;
-			case "Diesel":
-				offer+=2000;
-				break;
-			case "LPG":
-				offer+=2000;
-				break;
-			case "Electric":
-				offer+=2000;
-				break;
-			default:
-				break;
-		}
-		
-		if(car.getEngine_size()<2) {
-			offer+=3500;
-		}else if(car.getEngine_size()>2) {
-			offer+=4000;
-		}
-		
-		switch (car.getLicense_plate1()) {
-		case 06:
-			offer+=4000;
-			break;
-		case 16:
-			offer+=3000;
-			break;
-		case 34:
-			offer+=5000;
-			break;
-	    default:
-			System.out.println("Geçerli olmayan il");
-			break;
-		}
-		
-		if(car.getSeat_capacity()<=2) {
-			offer+=3000;
-		}else if(car.getSeat_capacity()>2 && car.getSeat_capacity()<=5) {
-			offer+=3500;
-		}else if(car.getSeat_capacity()>5) {
-			offer+=4000;
-		}
+		int offer = calculate(car);		
 		
 		car.setOffer(offer);
 		carService.save(car);
@@ -176,5 +180,42 @@ public class CarController {
 	    }
 		return new ModelAndView("carList","car",list);
 	}	
+	
+	@PostMapping("/saveCar")
+	public String saveCar(@ModelAttribute Car car) {
+		int offer = calculate(car);
+		car.setOffer(offer);
+		carService.save(car);
+		return "redirect:/customerList";
+	}
+	
+	@RequestMapping("/editCar/{id}")
+	public String editCustomer(@PathVariable("id") int id, Model model) {
+		Car car= carService.getCarId(id);
+		model.addAttribute("car", car);
+		return "carEdit";
+	}
+	
+	@RequestMapping("/deleteCar/{id}")
+	public String deleteCustomer(@PathVariable("id") int id) {
+		carService.deleteById(id);
+		return "redirect:/customerList";
+	}
+	
+	@PostMapping("/result")
+    public String updateCar(@RequestParam("carId") int carId,
+                            @RequestParam("result") String result) {
+        // carId'ye göre veritabanında aracı bulun
+        Car car = carService.getCarId(carId);
+        
+        if (car != null) {
+            // result değerine göre result sütununu güncelle
+            car.setResult(result);
+            carService.save(car);
+        }
+        
+        // Sayfayı yeniden yönlendir veya başka bir işlem yap
+        return "redirect:/customerList";
+    }
 
 }

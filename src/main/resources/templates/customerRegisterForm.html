@@ -9,8 +9,13 @@
 		integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 	<link rel="stylesheet" href="" th:href="@{/css/style.css}">
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+	<style>
+		.error {
+			color: red;
+		}
+	</style>
 
-</head> 
+</head>
 
 <body ng-app="myApp">
 
@@ -35,7 +40,7 @@
 			</div>
 		</div>
 	</nav>
-<!--	End Navbar-->
+	<!--	End Navbar-->
 
 
 	<section id="featured" class="my-5 pt-5">
@@ -45,39 +50,71 @@
 				<p ng-show="msg">{{msg}}</p>
 			</div>
 
-			<form th:action="@{/register}" th:objects="${customer}" method="post" name="myForm" ng-submit="register()">
+			<!--			<form th:action="@{/register}" th:object="${customer}" method="post" name="myForm" ng-submit="register()">-->
 
-				<input type="text" name="tc" placeholder="TC Number*" ng-model="tc" ng-required="true" ng-pattern="/^[0-9]*$/" minlength="11"
-					maxlength="11">
-				<p class="error" ng-show="myForm.tc.$invalid && myForm.tc.$touched">Fill out your TC number correctly.</p>
+			<!--				<input type="text" name="tc" placeholder="TC Number*" ng-model="tc" ng-required="true" ng-pattern="/^[0-9]*$/" minlength="11"-->
+			<!--					maxlength="11">-->
+			<!--				<p class="error" ng-show="myForm.tc.$invalid && myForm.tc.$touched">Fill out your TC number.</p>-->
 
-				<input type="date" name="birth" placeholder="Birth Date*" ng-model="birth" ng-required="true" id="birthdate">
-				<script>
-				 	var today = new Date().toISOString().split("T")[0];
-				 	document.getElementById("birthdate").setAttribute("max", today);
-				</script>
-				<p class="error" ng-show="myForm.birth.$invalid && myForm.birth.$touched">Fill out your Birth Date.</p>
-				<!--<p class="error" ng-show="myForm.birth.$error.date">Incorrect date selection</p>-->
+			<!--				<input type="date" name="birth" placeholder="Birth Date*" ng-model="birth" ng-required="true" id="birthdate">-->
+			<!--				<script>-->
+			<!--				 	var today = new Date().toISOString().split("T")[0];-->
+			<!--				 	document.getElementById("birthdate").setAttribute("max", today);-->
+			<!--				</script>-->
+			<!--				<p class="error" ng-show="myForm.birth.$invalid && myForm.birth.$touched">Fill out your Birth Date.</p>-->
+			<!--				<p class="error" ng-show="myForm.birth.$error.date">Incorrect date selection</p>-->
 
-				<input type="text" name="email" placeholder="Email*" ng-model="email" ng-required="true">
-				<p class="error" ng-show="myForm.email.$invalid && myForm.email.$touched">Enter your corrent email.</p>
+			<!--				<input type="text" name="email" placeholder="Email*" ng-model="email" ng-required="true">-->
+			<!--				<p class="error" ng-show="myForm.email.$invalid && myForm.email.$touched">Enter your corrent email.</p>-->
 
-				<input type="text" name="firstname" placeholder="First Name*" ng-model="firstname" ng-required="true">
-				<p class="error" ng-show="myForm.firstname.$invalid && myForm.firstname.$touched">Fill out your first
-					name.</p>
+			<!--				<input type="text" name="firstname" placeholder="First Name*" ng-model="firstname" ng-required="true">-->
+			<!--				<p class="error" ng-show="myForm.firstname.$invalid && myForm.firstname.$touched">Fill out your first-->
+			<!--					name.</p>-->
 
-				<input type="text" name="lastname" placeholder="Last Name*" ng-model="lastname" ng-required="true">
-				<p class="error" ng-show="myForm.lastname.$invalid && myForm.lastname.$touched">Fill out your last name.
-				</p>
+			<!--				<input type="text" name="lastname" placeholder="Last Name*" ng-model="lastname" ng-required="true">-->
+			<!--				<p class="error" ng-show="myForm.lastname.$invalid && myForm.lastname.$touched">Fill out your last name.-->
+			<!--				</p>-->
 
-				<select name="province" id="province">
-					<option value="">Select Province*</option>					
-				</select>
-				<select name="district" id="district">
-					<option value="">Select District*</option>
-				</select>							
+			<!--				<select name="province" id="province">-->
+			<!--					<option th:each="province : {$province}"-->
+			<!--							th:value="${province.id}"-->
+			<!--							th:text="${province.sehiradi}"-->
+			<!--					<option value="">Select Province*</option>					-->
+			<!--				</select>-->
+			<!--				<select name="district" id="district">-->
+			<!--					<option value="">Select District*</option>-->
+			<!--				</select>							-->
 
-				<button type="submit" class="btn" ng-disabled="myForm.$invalid">Submit</button>
+			<!--				<button type="submit" class="btn" ng-disabled="myForm.$invalid">Submit</button>-->
+			<!--			</form>-->
+			<form th:action="@{/customerRegisterForm}" th:object="${customer}" method="post">
+
+				<input type="text" id="tc" th:field="*{tc}" placeholder="TC Number*">
+				<p th:if="${#fields.hasErrors('tc')}" th:errorclass="error" th:errors="*{tc}" />
+ 
+				<input type="date" id="birth" th:field="*{birth}" placeholder="Birth Date*">
+				<p th:if="${#fields.hasErrors('birth')}" th:errorclass="error" th:errors="*{birth}" />
+
+				<input type="text" id="email" th:field="*{email}" placeholder="Email*">
+				<p th:if="${#fields.hasErrors('email')}" th:errorclass="error" th:errors="*{email}" />
+
+				<input type="text" id="firstname" th:field="*{firstname}" placeholder="First Name*">
+				<p th:if="${#fields.hasErrors('firstname')}" th:errorclass="error" th:errors="*{firstname}" />
+
+				<input type="text" id="lastname" th:field="*{lastname}" placeholder="Last Name*">
+				<p th:if="${#fields.hasErrors('lastname')}" th:errorclass="error" th:errors="*{lastname}" />
+
+<!--				<select name="province" id="province">-->
+<!--										<option th:each="province : {$province}"-->
+<!--												th:value="${province.id}"-->
+<!--												th:text="${province.sehiradi}"-->
+<!--					<option value="">Select Province*</option>-->
+<!--				</select>-->
+<!--				<select name="district" id="district">-->
+<!--					<option value="">Select District*</option>-->
+<!--				</select>-->
+
+				<button type="submit" class="btn">Submit</button>
 			</form>
 		</div>
 	</section>

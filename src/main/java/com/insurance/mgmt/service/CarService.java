@@ -22,9 +22,9 @@ public class CarService {
 		return carRepository.findAll();
 	}
 	
-//	public void deleteById(int id) {
-//		carRepository.deleteById(id);
-//	}
+	public void deleteById(int id) {
+		carRepository.deleteById(id);
+	}
 	
 	public Car getCarId(int id) {
 		return carRepository.findById(id).get();

@@ -5,29 +5,44 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "CUSTOMER")
 public class Customer {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int customer_id;
+
+	@NotEmpty(message = "Enter your tc number!")
 	private String tc;
+
+	@NotBlank(message = "Enter your birth")
 	private String birth;
+
+	@NotBlank(message = "Enter your email")
+	@Email(message = "Enter a valid email address")
 	private String email;
+
+	@NotBlank(message = "Enter your first name")
 	private String firstname;
+	@NotBlank(message = "Enter your last name")
 	private String lastname;
+	@NotBlank(message = "Enter your province")
 	private String province;
+	@NotBlank(message = "Enter your district")
 	private String district;
-	
+
 	public Customer() {
 		super();
 		// TODO Auto-generated constructor stub
-	}		
+	}
 
-	public Customer(int customer_id, String tc, String birth, String email, String firstname, String lastname, String province,
-			String district) {
+	public Customer(int customer_id, String tc, String birth, String email, String firstname, String lastname,
+			String province, String district) {
 		super();
 		this.customer_id = customer_id;
 		this.tc = tc;
@@ -37,8 +52,8 @@ public class Customer {
 		this.lastname = lastname;
 		this.province = province;
 		this.district = district;
-	}		
-	
+	}
+
 	public int getCustomer_id() {
 		return customer_id;
 	}
@@ -103,6 +118,12 @@ public class Customer {
 		this.district = district;
 	}
 
+	@Override
+	public String toString() {
+		return "Customer [customer_id=" + customer_id + ", tc=" + tc + ", birth=" + birth + ", email=" + email
+				+ ", firstname=" + firstname + ", lastname=" + lastname + ", province=" + province + ", district="
+				+ district + "]";
+	}
 
 //	@OneToMany(targetEntity = Customer.class, cascade = CascadeType.ALL)
 //	@JoinColumn(name = "customer_id", referencedColumnName = "customer_id", nullable = true)

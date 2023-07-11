@@ -54,6 +54,11 @@ button:hover{
     background-color: #3f3e3e;
 }
 
+a{
+	text-decoration: none;
+	color: white;
+}
+
 hr {
   width: 30px;
   height: 2px;

@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en" xmlns:th"http://www.thymeLeaf.org">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Traffic Insurance Form</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+	<link rel="stylesheet" href="" th:href="@{/css/style.css}">
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+
+</head>
+
+<body ng-app="myApp">
+
+	<!--Navbar-->
+	<nav class="navbar navbar-expand-lg navbar-light bg-light py-3 fixed-top">
+		<div class="container">
+			<a class="navbar-brand text-black" href="/">SBM</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+				data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span id="bar" data-lucide="menu"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+					<li class="nav-item">
+						<a class="nav-link" href="/customerList">See Customer List</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/customerRegisterForm">New Customer Register</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<!--End Navbar-->
+
+
+	<section id="featured" class="my-5 pt-5">
+		<div class="container-register mt-5 py-5" ng-controller="trafficInsuranceFormController">
+			
+			<div class="textIntro">
+				<h1 class="text-center">Traffic Insurance Form</h1>
+				<p ng-show="msg">{{msg}}</p>
+			</div>
+
+			<form th:action="@{/saveCar}" th:object="${car}" method="post" name="myForm" ng-submit="register()">
+				<input type="hidden" name="customer_id" th:value="${car.customer_id}" />
+				<input type="hidden" name="id" th:value="${car.id}" />
+				<div style=" display: flex; flex-direction: row;">
+					<h4 class="mr-2">Customer Id : </h4>
+					<h4 th:text="${car.customer_id}">idParam</h4>
+				</div>
+
+				<div class="d-flex justify-content-between mt-3">
+					<label>Enter your licence plate number: </label>
+					<div>
+						<input type="number" name="license_plate1" id="license_plate1" ng-required="true"
+							onKeyPress="if(this.value.length==2) return false;" th:value="${car.license_plate1}">
+						<p class="error" ng-show="myForm.license_plate1.$invalid && myForm.license_plate1.$touched">
+							Invalid input.</p>
+					</div>
+					<div>
+						<input type="text" name="license_plate2" id="license_plate2" ng-required="true"
+							ng-pattern="/^[a-zA-Z]*$/" minlength="1" maxlength="3" th:value="${car.license_plate2}">
+						<p class="error" ng-show="myForm.license_plate2.$invalid && myForm.license_plate2.$touched">
+							Invalid input.</p>
+					</div>
+					<div>
+						<input type="number" name="license_plate3" id="license_plate3" ng-required="true"
+							onKeyPress="if(this.value.length==4) return false;" th:value="${car.license_plate3}">
+						<p class="error" ng-show="myForm.license_plate3.$invalid && myForm.license_plate3.$touched">
+							Invalid input.</p>
+					</div>
+				</div>
+
+				<select name="type" id="type" ng-required="true">
+					<option th:value="${car.type}" th:text="${car.type}">Select Usage Type*</option>
+					<option ng-repeat="option in types" value="{{option}}">{{option}}</option>
+				</select>
+				
+				<select name="purpose" id="purpose" ng-required="true">
+					<option th:value="${car.purpose}" th:text="${car.purpose}">Select Purpose of Usage*</option>
+					<option ng-repeat="option in purposes" value="{{option}}">{{option}}</option>
+				</select>
+				
+				<select name="brand" id="brand" ng-required="true">
+					<option th:value="${car.brand}" th:text="${car.brand}">Select Brand*</option>
+					<option ng-repeat="option in brands" value="{{option}}">{{option}}</option>
+				</select>
+				
+				<select name="fuel_type" id="fuel_type" ng-required="true">
+					<option th:value="${car.fuel_type}" th:text="${car.fuel_type}">Select Fuel Type*</option>
+					<option ng-repeat="option in fuelTypes" value="{{option}}">{{option}}</option>
+				</select>
+
+				<input type="number" name="engine_size" placeholder="Engine Size*" id="engine_size"
+					ng-required="true" th:value="${car.engine_size}">
+				<p class="error" ng-show="myForm.engine_size.$invalid && myForm.engine_size.$touched">Fill out your
+					engine size.</p>
+
+				<input type="number" name="seat_capacity" placeholder="Seating Capacity*" id="seat_capacity"
+					ng-required="true" minlength="1" th:value="${car.seat_capacity}">
+				<p class="error" ng-show="myForm.seat_capacity.$invalid && myForm.seat_capacity.$touched">Fill out your
+					seating capacity.</p>
+
+				<button type="submit" class="btn" ng-disabled="myForm.$invalid">Submit</button>
+			</form>
+
+		</div>
+	</section>
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+		integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"
+		integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS"
+		crossorigin="anonymous"></script>
+
+	<script src="/js/app.js"></script>
+</body>
+
+</html>

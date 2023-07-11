@@ -5,37 +5,43 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>SBM Home</title>
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js"
+		integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"
+		integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+		crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+	<script src="https://unpkg.com/@phosphor-icons/web"></script>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
 		integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 	<link rel="stylesheet" href="" th:href="@{/css/home.css}">
-		
+
 	<style>
-            .product img{
-                width: 230px;
-                height: 200px;
-                box-sizing: border-box;
-                object-fit: cover;
-            }
+		.product img {
+			width: 230px;
+			height: 200px;
+			box-sizing: border-box;
+			object-fit: cover;
+		}
 
-            #featured > div.row.mx-auto.container > nav > ul > li.page-item.active > a{
-                background-color: black;
-                border: white;
-            }
+		#featured>div.row.mx-auto.container>nav>ul>li.page-item.active>a {
+			background-color: black;
+			border: white;
+		}
 
-            #featured > div.row.mx-auto.container > nav > ul > li:nth-child(n):hover > a{
-                background-color: coral;
-                color: white;
-            }
+		#featured>div.row.mx-auto.container>nav>ul>li:nth-child(n):hover>a {
+			background-color: coral;
+			color: white;
+		}
 
-            .pagination a{
-                color: black;
-            }
-        </style>
+		.pagination a {
+			color: black;
+		}
+	</style>
 </head>
 
 <body>
@@ -61,40 +67,41 @@
 		</div>
 	</nav>
 	<!--End Navbar-->
-	
+
 	<section id="featured" class="my-5 py-5">
-        <div class="container mt-5 py-5">
-            <h2 class="font-weight-bold">Address of Trust in Insurance</h2>
-            <hr>
-            <p>Here you can check out our insurance options.</p>
-        </div>
-        <div class="row mx-auto container">
-            <div onclick="window.location.href='/form'" class="product text-center col-lg-3 col-md-4 col-12">
-                <img class="img-fluid mb-3" src="img/traffic.jpg" alt="">
-                <h5 class="p-name">Traffic Insurance</h5>
-                <button class="buy-btn">Get Offer</button>
-                
-            </div>
-            <div onclick="window.location.href='/form'" class="product text-center col-lg-3 col-md-4 col-12">
-                <img class="img-fluid mb-3" src="img/auto.jpg" alt="">
-                <h5 class="p-name">Comprehensive Insurance</h5>
-                <button class="buy-btn">Get Offer</button>
-                
-            </div>
-            <div onclick="window.location.href='/form'" class="product text-center col-lg-3 col-md-4 col-12">
-                <img class="img-fluid mb-3" src="img/health.jpg" alt="">
-                <h5 class="p-name">Health Insurance</h5>
-                <button class="buy-btn">Get Offer</button>
-                
-            </div>
-            <div onclick="window.location.href='/form'" class="product text-center col-lg-3 col-md-4 col-12">
-                <img class="img-fluid mb-3" src="img/dask.jpg" alt="">
-                <h5 class="p-name">Earthquake Insurance</h5>
-                <button class="buy-btn">Get Offer</button>
-                
-            </div>           
-        </div>
-    </section>
+		<div class="container mt-5 py-5">
+			<h2 class="font-weight-bold">Address of Trust in Insurance</h2>
+			<hr>
+			<p>Here you can check out our insurance options.</p>
+		</div>
+		<div class="row mx-auto container">
+			<input type="hidden" name="customer_id" th:value="${customer_id}" />
+			<div class="product text-center col-lg-3 col-md-4 col-12">
+				<img class="img-fluid mb-3" src="img/traffic.jpg" alt="">
+				<h5 class="p-name">Traffic Insurance</h5>
+				<button class="buy-btn"><a th:href="@{/trafficInsuranceForm(customer_id = ${customer_id})}">Get Offer</a></button>				
+			</div>			
+
+			<div onclick="window.location.href='/form'" class="product text-center col-lg-3 col-md-4 col-12">
+				<img class="img-fluid mb-3" src="img/auto.jpg" alt="">
+				<h5 class="p-name">Comprehensive Insurance</h5>
+				<button class="buy-btn">Get Offer</button>
+
+			</div>
+			<div onclick="window.location.href='/form'" class="product text-center col-lg-3 col-md-4 col-12">
+				<img class="img-fluid mb-3" src="img/health.jpg" alt="">
+				<h5 class="p-name">Health Insurance</h5>
+				<button class="buy-btn">Get Offer</button>
+
+			</div>
+			<div onclick="window.location.href='/form'" class="product text-center col-lg-3 col-md-4 col-12">
+				<img class="img-fluid mb-3" src="img/dask.jpg" alt="">
+				<h5 class="p-name">Earthquake Insurance</h5>
+				<button class="buy-btn">Get Offer</button>
+
+			</div>
+		</div>
+	</section>
 
 
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
