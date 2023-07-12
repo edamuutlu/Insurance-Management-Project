@@ -40,13 +40,13 @@ public class CarController {
 	@Autowired
 	CarService carService;
 	
-	/*private static final Logger log =  LoggerFactory.getLogger(CarController.class);
+	private static final Logger log =  LoggerFactory.getLogger(CarController.class);
 	
 	@InitBinder
 	public void initBinder(WebDataBinder dataBinder) {
 		StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
 		dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
-	} */
+	} 
 	
 	public int calculate(Car car) {
 		// Sigorta teklifi için hesaplamalar
@@ -63,7 +63,7 @@ public class CarController {
 		        	offer+= age * 4;
 		        }else if (age>25 && age<=60) {
 		        	offer+= age * 3;
-				}else if(age>60) {
+				}else {
 					offer+= age * 5;
 				}
 				
@@ -160,24 +160,25 @@ public class CarController {
 					offer+= (car.getSeat_capacity()) * 20;
 				}else if(car.getSeat_capacity()>2 && car.getSeat_capacity()<=5) {
 					offer+= (car.getSeat_capacity()) * 30;
-				}else if(car.getSeat_capacity()>5) { 
+				}else { 
 					offer+= (car.getSeat_capacity()) * 40;
 				}
 				return offer;
 	}
 	
 	@PostMapping("/carRegister")
-	public String register(@Valid @ModelAttribute Car car, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
-										
-		/*if(bindingResult.hasErrors()) {
+	public String register(@Valid @ModelAttribute Car car, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {		
+				
+		if(bindingResult.hasErrors()) {
 			log.info(">> Car : {}",car.toString());
-			redirectAttributes.addFlashAttribute("customer_id", car.getCustomer_id());
-			return "redirect:/trafficInsuranceForm";
+			model.addAttribute("customer_id",car.getCustomer_id());
+			return "trafficInsuranceForm";
 		}		
-		model.addAttribute("cars",carService.getAllCars()); */
+		model.addAttribute("cars",carService.getAllCars()); 
 			
 		int offer = calculate(car);	
 		car.setOffer(offer);
+		car.setStatus(1);
 		carService.save(car);
 		
 		redirectAttributes.addFlashAttribute("car", car);
@@ -207,7 +208,7 @@ public class CarController {
 		List<Car> cars = carService.getAllCars();
 		List<Car> list = new ArrayList<>();
 	    for (Car car : cars) {
-	        if (car.getCustomer_id() == customer_id) {
+	        if (car.getCustomer_id() == customer_id && car.getStatus() == 1) {
 	        	list.add(car);
 	        }
 	    }
@@ -231,7 +232,10 @@ public class CarController {
 	
 	@RequestMapping("/deleteCar/{id}")
 	public String deleteCar(@PathVariable("id") int id) {
-		carService.deleteById(id);
+		Car car = carService.getCarId(id);
+		car.setStatus(0);
+		carService.save(car);
+		//carService.deleteById(id);
 		return "redirect:/customerList";
 	}
 	

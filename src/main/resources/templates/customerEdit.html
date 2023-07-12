@@ -52,11 +52,7 @@
 					maxlength="11" th:value="${customer.tc}">
 				<p class="error" ng-show="myForm.tc.$invalid && myForm.tc.$touched">Fill out your TC number correctly.</p>
 
-				<input type="date" name="birth" placeholder="Birth Date*" ng-required="true" th:value="${customer.birth}" id="birthdate">
-				<script>
-				 	var today = new Date().toISOString().split("T")[0];
-				 	document.getElementById("birthdate").setAttribute("max", today);
-				</script>
+				<input type="date" name="birth" placeholder="Birth Date*" ng-required="true" th:value="${customer.birth}" id="birth">
 				<p class="error" ng-show="myForm.birth.$invalid && myForm.birth.$touched">Fill out your Birth Date.</p>
 				<!--<p class="error" ng-show="myForm.birth.$error.date">Incorrect date selection</p>-->
 

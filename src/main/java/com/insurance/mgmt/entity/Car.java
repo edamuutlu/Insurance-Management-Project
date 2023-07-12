@@ -12,7 +12,6 @@ import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "CAR")
@@ -27,45 +26,45 @@ public class Car {
 	private int customer_id;
 	
 	@Column(name ="license_plate1")
-	/*@NotNull(message = "This field must be filled.")
-	@Digits(integer=2, fraction=0, message= "Only numeric input is allowed.")
-	//@Size(min = 1, max = 2, message = "Input must be 1 or 2 digits.") */
+	@NotNull(message = "This field must be filled.")
+	//@Digits(integer=2, fraction=0, message= "Only numeric input is allowed.")
+	//@Size(min = 1, max = 2, message = "Input must be 1 or 2 digits.") 
 	private int license_plate1;
 	
 	
 	@Column(name ="license_plate2")
-	/*@NotBlank(message = "This field must be filled.")
+	@NotBlank(message = "This field must be filled.")
 	@Pattern(regexp = "[a-zA-Z\\s]+", message = "Only alphabetic characters and spaces are allowed")
-	@Length(min = 1, max=3, message = "This field must be between 1 and 3 characters") */
+	@Length(min = 1, max=3, message = "This field must be between 1 and 3 characters") 
 	private String license_plate2;
 	
 	@Column(name ="license_plate3")
-	/*@NotNull(message = "This field must be filled.")
+	@NotNull(message = "This field must be filled.")
 	@Digits(integer=4, fraction=0, message= "Only numeric input is allowed.")
-	//@Size(min = 1, max = 4, message = "Input must be 1 or 4 digits.") */
+	//@Size(min = 1, max = 4, message = "Input must be 1 or 4 digits.") 
 	private int license_plate3;
 	
-	//@NotBlank(message = "This field must be filled.")
+	@NotBlank(message = "This field must be filled.")
 	private String type;
 	
-	//@NotBlank(message = "This field must be filled.")
+	@NotBlank(message = "This field must be filled.")
 	private String purpose;
 	
-	//@NotBlank(message = "This field must be filled.")
+	@NotBlank(message = "This field must be filled.")
 	private String brand;
 	
 	@Column(name ="fuel_type")
-	//@NotBlank(message = "This field must be filled.")
+	@NotBlank(message = "This field must be filled.")
 	private String fuel_type;
 	
 	@Column(name ="engine_size")
-	/*@NotNull(message = "Enter your engine size.")
-	@Digits(integer=4, fraction=0, message= "Only numeric input is allowed.") */
+	@NotNull(message = "Enter your engine size.")
+	@Digits(integer=4, fraction=0, message= "Only numeric input is allowed.") 
 	private int engine_size;
 	
 	@Column(name ="seat_capacity")
-	/*@NotNull(message = "Enter your seating capacity.")
-	@Digits(integer=10, fraction=0, message= "Only numeric input is allowed.")*/
+	@NotNull(message = "Enter your seating capacity.")
+	@Digits(integer=10, fraction=0, message= "Only numeric input is allowed.")
 	//@Size(min = 1,  message = "Input must be at least 1 digits.")
 	private int seat_capacity;
 	
@@ -74,6 +73,8 @@ public class Car {
 	
 	private String result;
 	
+	private int status;
+	
 	public Car() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -81,7 +82,7 @@ public class Car {
 		
 
 	public Car(int license_plate1, String license_plate2, int license_plate3, String type,
-			String purpose, String brand, String fuel_type, int engine_size, int seat_capacity, int customer_id, int offer, String result) {
+			String purpose, String brand, String fuel_type, int engine_size, int seat_capacity, int customer_id, int offer, String result, int status) {
 		super();
 		this.customer_id = customer_id;
 		this.license_plate1 = license_plate1;
@@ -95,6 +96,7 @@ public class Car {
 		this.seat_capacity = seat_capacity;
 		this.offer=offer;
 		this.result=result;
+		this.status = status;
 	}
 
 	public int getId() {
@@ -225,6 +227,17 @@ public class Car {
 	public void setResult(String result) {
 		this.result = result;
 	}
+	
+	
+
+	public int getStatus() {
+		return status;
+	}
+
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
 
 
 	@Override
@@ -232,9 +245,9 @@ public class Car {
 		return "Car [id=" + id + ", customer_id=" + customer_id + ", license_plate1=" + license_plate1
 				+ ", license_plate2=" + license_plate2 + ", license_plate3=" + license_plate3 + ", type=" + type
 				+ ", purpose=" + purpose + ", brand=" + brand + ", fuel_type=" + fuel_type + ", engine_size="
-				+ engine_size + ", seat_capacity=" + seat_capacity + ", offer=" + offer + ", result=" + result + "]";
+				+ engine_size + ", seat_capacity=" + seat_capacity + ", offer=" + offer + ", result=" + result
+				+ ", status=" + status + "]";
 	}
-	
 	
 	
 	

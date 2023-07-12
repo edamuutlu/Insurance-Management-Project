@@ -51,6 +51,8 @@ public class Customer {
 	
 	@NotBlank(message = "Enter your district.")
 	private String district;
+	
+	private int status;
 
 	public Customer() {
 		super();
@@ -58,7 +60,7 @@ public class Customer {
 	}
 
 	public Customer(int customer_id, String tc, String birth, String email, String firstname, String lastname,
-			String province, String district) {
+			String province, String district, int status) {
 		super();
 		this.customer_id = customer_id;
 		this.tc = tc;
@@ -68,6 +70,7 @@ public class Customer {
 		this.lastname = lastname;
 		this.province = province;
 		this.district = district;
+		this.status = status;
 	}
 
 	public int getCustomer_id() {
@@ -132,14 +135,24 @@ public class Customer {
 
 	public void setDistrict(String district) {
 		this.district = district;
+	}		
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
 	}
 
 	@Override
 	public String toString() {
 		return "Customer [customer_id=" + customer_id + ", tc=" + tc + ", birth=" + birth + ", email=" + email
 				+ ", firstname=" + firstname + ", lastname=" + lastname + ", province=" + province + ", district="
-				+ district + "]";
+				+ district + ", status=" + status + "]";
 	}
+
+	
 
 //	@OneToMany(targetEntity = Customer.class, cascade = CascadeType.ALL)
 //	@JoinColumn(name = "customer_id", referencedColumnName = "customer_id", nullable = true)

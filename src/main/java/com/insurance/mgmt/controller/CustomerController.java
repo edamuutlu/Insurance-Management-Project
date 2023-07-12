@@ -1,6 +1,10 @@
 package com.insurance.mgmt.controller;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.insurance.mgmt.entity.Car;
 import com.insurance.mgmt.entity.Customer;
 import com.insurance.mgmt.service.CarService;
 import com.insurance.mgmt.service.CustomerService;
@@ -81,17 +86,26 @@ public class CustomerController {
 	@GetMapping("/customerList")
 	public ModelAndView getAllCustomer() {
 		List<Customer> list = customerService.getAllCustomer();
-		return new ModelAndView("customerList","customer",list);
+		List<Customer> customerList = new ArrayList<>();
+		for (Customer customer : list) {
+			if(customer.getStatus() == 1) {
+				customerList.add(customer);
+			}
+		}
+		
+		return new ModelAndView("customerList","customer",customerList);
 	}		
 	
 	@PostMapping("/customerRegisterForm")
-	public String register (@Valid @ModelAttribute Customer customer, BindingResult bindingResult, Model model) { 		
+	public String register (@Valid @ModelAttribute Customer customer, BindingResult bindingResult, Model model) {		
 		if(bindingResult.hasErrors()) {
 			log.info(">> Customer : {}",customer.toString());
 			return "customerRegisterForm";
 		}		
 		//log.info(">> Customer : {}",customer.toString());
 		model.addAttribute("customers",customerService.getAllCustomer());
+		
+		customer.setStatus(1);
 		customerService.save(customer);
 		return "redirect:customerList";	
 	}
@@ -111,7 +125,16 @@ public class CustomerController {
 	
 	@RequestMapping("/deleteCustomer/{customer_id}")
 	public String deleteCustomer(@PathVariable("customer_id") int customer_id) {
-		customerService.deleteById(customer_id);
+		
+		// Müşterinin araçlarının listelenmemesi için
+		Car car = carService.getCarId(customer_id);
+		car.setStatus(0);
+		carService.save(car);
+		
+		Customer customer = customerService.getCustomerById(customer_id);
+		customer.setStatus(0);
+		customerService.save(customer);
+		//customerService.deleteById(customer_id);
 		return "redirect:/customerList";
 	}
 		
