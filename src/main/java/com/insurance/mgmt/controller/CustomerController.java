@@ -46,15 +46,14 @@ public class CustomerController {
 //	@Autowired
 //	private IDistrictRepository districtRepository;
 	
-private static final Logger log =  LoggerFactory.getLogger(CustomerController.class);
+	private static final Logger log =  LoggerFactory.getLogger(CustomerController.class);
 	
 	@InitBinder
 	public void initBinder(WebDataBinder dataBinder) {
 		StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
 		dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
 	}
-	
-	
+		
 	@GetMapping("/")
 	public String home() {
 		return "home";
@@ -65,8 +64,7 @@ private static final Logger log =  LoggerFactory.getLogger(CustomerController.cl
 		model.addAttribute("customer_id",id);
 		return "home";
 	}
-	
-	
+		
 	@GetMapping("/customerRegisterForm")
 	public String registerCustomer(@ModelAttribute Customer customer, Model model) { // Model model
 	
@@ -79,35 +77,24 @@ private static final Logger log =  LoggerFactory.getLogger(CustomerController.cl
     
 		return "customerRegisterForm";
 	}
-	
-	
+		
 	@GetMapping("/customerList")
 	public ModelAndView getAllCustomer() {
 		List<Customer> list = customerService.getAllCustomer();
 		return new ModelAndView("customerList","customer",list);
-	}
-	
-//	@PostMapping("/register")
-//	public String register(@ModelAttribute Customer customer) { 	
-//		customerService.save(customer);
-//		return "redirect:/customerList";
-//	}
-		
+	}		
 	
 	@PostMapping("/customerRegisterForm")
-	public String register (@Valid @ModelAttribute Customer customer, BindingResult bindingResult, Model model) { 
-		//customerService.save(customer);
-		System.out.println(bindingResult);
+	public String register (@Valid @ModelAttribute Customer customer, BindingResult bindingResult, Model model) { 		
 		if(bindingResult.hasErrors()) {
 			log.info(">> Customer : {}",customer.toString());
 			return "customerRegisterForm";
 		}		
 		//log.info(">> Customer : {}",customer.toString());
 		model.addAttribute("customers",customerService.getAllCustomer());
+		customerService.save(customer);
 		return "redirect:customerList";	
 	}
-	
-
 	
 	@PostMapping("/save")
 	public String addCustomer(@ModelAttribute Customer customer) {

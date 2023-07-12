@@ -1,12 +1,20 @@
 package com.insurance.mgmt.controller;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +29,8 @@ import com.insurance.mgmt.entity.Customer;
 import com.insurance.mgmt.service.CarService;
 import com.insurance.mgmt.service.CustomerService;
 
+import jakarta.validation.Valid;
+
 @Controller
 public class CarController {
 	
@@ -30,11 +40,34 @@ public class CarController {
 	@Autowired
 	CarService carService;
 	
+	/*private static final Logger log =  LoggerFactory.getLogger(CarController.class);
+	
+	@InitBinder
+	public void initBinder(WebDataBinder dataBinder) {
+		StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
+		dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
+	} */
+	
 	public int calculate(Car car) {
 		// Sigorta teklifi için hesaplamalar
-				int offer=0;
+				int offer=500; // Sabit bir başlangıç teklifi-primi
 				
-				switch (car.getType()) {
+				Customer customer = customerService.getCustomerById(car.getCustomer_id());				
+				// String'i LocalDate nesnesine dönüştürme
+		        LocalDate birthDate = LocalDate.parse(customer.getBirth());
+		        // Bugünkü tarihi al
+		        LocalDate currentDate = LocalDate.now();
+		        // Yaşı hesapla
+		        int age = Period.between(birthDate, currentDate).getYears();
+		        if(age>18 && age<=25) {
+		        	offer+= age * 4;
+		        }else if (age>25 && age<=60) {
+		        	offer+= age * 3;
+				}else if(age>60) {
+					offer+= age * 5;
+				}
+				
+				switch (car.getType()) {	// Araç tipi için ek prim
 				    case "Car":
 				        offer += 4000;
 				        break;
@@ -48,7 +81,7 @@ public class CarController {
 						break;
 				}
 			
-				switch (car.getPurpose()) {
+				switch (car.getPurpose()) {	// Kullanım amacı için ek prim
 				    case "Private":
 				        offer += 4000;
 				        break;
@@ -59,13 +92,13 @@ public class CarController {
 						break;
 				}
 				
-				switch (car.getBrand()) {
+				switch (car.getBrand()) {	// Araç modeli için ek prim
 					case "Audi":
 					case "BMW":
 					case "Lamborghini":
 					case "Mercedes":
 					case "Volvo":
-						offer+=1000;
+						offer+=3000;
 						break;
 					case "Citroen":
 					case "Dacia":
@@ -79,13 +112,13 @@ public class CarController {
 					case "Opel":
 					case "Renault":
 					case "Skoda":
-						offer+=3000;
+						offer+=1000;
 						break;
 					default:
 						break;
 				}
 				
-				switch (car.getFuel_type()) {
+				switch (car.getFuel_type()) {	// Araç yakıt tipi için ek prim
 					case "Petrol":
 						offer+=3000;
 						break;
@@ -102,13 +135,13 @@ public class CarController {
 						break;
 				}
 				
-				if(car.getEngine_size()<2) {
-					offer+=3500;
+				if(car.getEngine_size()<2) {	// Motor hacmine göre ek prim
+					offer+= (car.getEngine_size()) * 100;
 				}else if(car.getEngine_size()>2) {
-					offer+=4000;
+					offer+=(car.getEngine_size()) * 200;
 				}
 				
-				switch (car.getLicense_plate1()) {
+				switch (car.getLicense_plate1()) {	// Aracın kayıtlı olduğu ilin trafik yoğunluğuna göre ek prim
 				case 06:
 					offer+=4000;
 					break;
@@ -123,21 +156,27 @@ public class CarController {
 					break;
 				}
 				
-				if(car.getSeat_capacity()<=2) {
-					offer+=3000;
+				if(car.getSeat_capacity()<=2) {	// Aracın koltuk kapasitesine göre ek prim
+					offer+= (car.getSeat_capacity()) * 20;
 				}else if(car.getSeat_capacity()>2 && car.getSeat_capacity()<=5) {
-					offer+=3500;
+					offer+= (car.getSeat_capacity()) * 30;
 				}else if(car.getSeat_capacity()>5) { 
-					offer+=4000;
+					offer+= (car.getSeat_capacity()) * 40;
 				}
 				return offer;
 	}
 	
 	@PostMapping("/carRegister")
-	public String register(@ModelAttribute Car car, Model model, RedirectAttributes redirectAttributes) { 
+	public String register(@Valid @ModelAttribute Car car, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+										
+		/*if(bindingResult.hasErrors()) {
+			log.info(">> Car : {}",car.toString());
+			redirectAttributes.addFlashAttribute("customer_id", car.getCustomer_id());
+			return "redirect:/trafficInsuranceForm";
+		}		
+		model.addAttribute("cars",carService.getAllCars()); */
 			
-		int offer = calculate(car);		
-		
+		int offer = calculate(car);	
 		car.setOffer(offer);
 		carService.save(car);
 		
@@ -151,20 +190,14 @@ public class CarController {
 	}
 	
 	@GetMapping("/trafficInsuranceCalculate")
-	public String trafficInsurance(RedirectAttributes redirectAttributes, Model model) {
+	public String trafficInsurance(Model model) { // RedirectAttributes redirectAttributes
 		
 		return "trafficInsuranceCalculate";
 	}
 	
-//	@RequestMapping("/editCar/{id}")
-//	public String editBook(@PathVariable("id") int id, Model model) {
-//		Car car= carService.getCarId(id);
-//		model.addAttribute("car", car);
-//		return "editCar";
-//	}
 	
 	@RequestMapping(path = "/trafficInsuranceForm", method = RequestMethod.GET )
-	public String getMyList(@RequestParam(value = "customer_id", required = false) int idParam, Model model){
+	public String getMyList(@RequestParam(value = "customer_id", required = false) int idParam, Model model, @ModelAttribute Car car, RedirectAttributes redirectAttributes){
 		model.addAttribute("customer_id",idParam);
 		return "trafficInsuranceForm";
 	}
@@ -181,7 +214,7 @@ public class CarController {
 		return new ModelAndView("carList","car",list);
 	}	
 	
-	@PostMapping("/saveCar")
+	@PostMapping("/saveCar") // carEdit.html de kullanılmaktadır
 	public String saveCar(@ModelAttribute Car car) {
 		int offer = calculate(car);
 		car.setOffer(offer);
@@ -190,20 +223,20 @@ public class CarController {
 	}
 	
 	@RequestMapping("/editCar/{id}")
-	public String editCustomer(@PathVariable("id") int id, Model model) {
+	public String editCar(@PathVariable("id") int id, Model model) {
 		Car car= carService.getCarId(id);
 		model.addAttribute("car", car);
 		return "carEdit";
 	}
 	
 	@RequestMapping("/deleteCar/{id}")
-	public String deleteCustomer(@PathVariable("id") int id) {
+	public String deleteCar(@PathVariable("id") int id) {
 		carService.deleteById(id);
 		return "redirect:/customerList";
 	}
 	
 	@PostMapping("/result")
-    public String updateCar(@RequestParam("carId") int carId,
+    public String result(@RequestParam("carId") int carId,
                             @RequestParam("result") String result) {
         // carId'ye göre veritabanında aracı bulun
         Car car = carService.getCarId(carId);

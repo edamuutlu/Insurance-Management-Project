@@ -91,7 +91,7 @@
 
 				<input type="text" id="tc" th:field="*{tc}" placeholder="TC Number*">
 				<p th:if="${#fields.hasErrors('tc')}" th:errorclass="error" th:errors="*{tc}" />
- 
+
 				<input type="date" id="birth" th:field="*{birth}" placeholder="Birth Date*">
 				<p th:if="${#fields.hasErrors('birth')}" th:errorclass="error" th:errors="*{birth}" />
 
@@ -104,15 +104,15 @@
 				<input type="text" id="lastname" th:field="*{lastname}" placeholder="Last Name*">
 				<p th:if="${#fields.hasErrors('lastname')}" th:errorclass="error" th:errors="*{lastname}" />
 
-<!--				<select name="province" id="province">-->
-<!--										<option th:each="province : {$province}"-->
-<!--												th:value="${province.id}"-->
-<!--												th:text="${province.sehiradi}"-->
-<!--					<option value="">Select Province*</option>-->
-<!--				</select>-->
-<!--				<select name="district" id="district">-->
-<!--					<option value="">Select District*</option>-->
-<!--				</select>-->
+				<select name="province" id="province">
+						<option value="" th:selected="${#fields.hasErrors('province')}">Select Province*</option>
+				</select>
+				<p th:if="${#fields.hasErrors('province')}" th:errorclass="error" th:errors="*{province}" />
+				
+				<select name="district" id="district">
+					<option value="" th:selected="${#fields.hasErrors('district')}">Select District*</option>
+				</select>
+				<p th:if="${#fields.hasErrors('district')}" th:errorclass="error" th:errors="*{district}" />
 
 				<button type="submit" class="btn">Submit</button>
 			</form>

@@ -146,3 +146,129 @@ label{
   color: white;
 }
 
+.section-header {
+  background-color: #ECF0F1;
+  padding: 0;
+  margin-bottom: 20px;
+}
+
+.page-header {
+  padding-bottom: 9px;
+  margin: 40px 0 20px;
+  border-bottom: 1px solid #eeeeee;
+}
+
+.panel-heading {
+  padding: 10px 15px;
+  border-bottom: 1px solid transparent;
+  border-top-right-radius: 3px;
+  border-top-left-radius: 3px;
+}
+
+.pricing-table .panel-default > .panel-heading{
+  background-color: rgb(255, 128, 64);
+  color: #FFF;
+  border-radius: 0;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border: none;
+}
+
+.pricing-table .panel-default > .panel-body{
+  background-color: coral;
+  color: #FFF;
+  border-radius: 2px;
+}
+
+.panel-title {
+  font-size: 14px;
+}
+
+.panel-default {
+  border-color: #EBEBEB;
+  border: none;
+  border-radius: 0;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+}
+
+.panel-group .panel {
+  border-radius: 0px;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+}
+
+.panel-default > .panel-heading {
+  color: #666;
+  background-color: #F8FAFA;
+}
+
+.price {
+  font-size: 45px;
+}
+
+.price-cents {
+  vertical-align: super;
+  font-size: 50%;
+}
+
+.price-month {
+  font-size: 35%;
+  font-style: italic;
+}
+.list-group-item {
+  background-color: #FAFAFA;
+  border: 1px solid #ECEBEB;
+}
+
+/* Footer - Start */
+footer{
+    background-color: #0f0f0fcb;
+}
+
+footer h5{
+    color: #d8d8d8;
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
+footer li{
+    padding-bottom: 4px;
+}
+
+footer li a{
+    font-size: 0.8rem;
+    color: #999;
+}
+
+footer li a:hover{
+    color: #d8d8d8;
+}
+
+footer p{
+    color: #999;
+    font-size: 0.8rem;
+}
+
+footer .copyright a{
+    color: black;
+    width: 38px;
+    height: 38px;
+    background-color: white;
+    display: inline-block;
+    text-align: center;
+    line-height: 38px;
+    border-radius: 50%;
+    transition: 0.3 ease;
+    margin: 0 5px;
+}
+
+footer .copyright a:hover{
+    color: white;
+    background-color: #fb774b;
+}
+
