@@ -1,10 +1,7 @@
 package com.insurance.mgmt.controller;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.insurance.mgmt.entity.Car;
 import com.insurance.mgmt.entity.Customer;
 import com.insurance.mgmt.service.CarService;
 import com.insurance.mgmt.service.CustomerService;
@@ -45,12 +41,6 @@ public class CustomerController {
 	@Autowired
 	ProvinceService provinceService;
 	
-//	@Autowired
-//	private IProvinceRepository provinceRepository;
-//	
-//	@Autowired
-//	private IDistrictRepository districtRepository;
-	
 	private static final Logger log =  LoggerFactory.getLogger(CustomerController.class);
 	
 	@InitBinder
@@ -62,6 +52,11 @@ public class CustomerController {
 	@GetMapping("/")
 	public String home() {
 		return "home";
+	}
+	
+	@GetMapping("/index")
+	public String index() {
+		return "index";
 	}
 	
 	@RequestMapping(path = "/selectType", method = RequestMethod.GET )
@@ -102,7 +97,7 @@ public class CustomerController {
 			log.info(">> Customer : {}",customer.toString());
 			return "customerRegisterForm";
 		}		
-		//log.info(">> Customer : {}",customer.toString());
+	
 		model.addAttribute("customers",customerService.getAllCustomer());
 		
 		customer.setStatus(1);
@@ -112,13 +107,14 @@ public class CustomerController {
 	
 	@PostMapping("/save")
 	public String addCustomer(@ModelAttribute Customer customer) {
+		customer.setStatus(1);
 		customerService.save(customer);
 		return "redirect:/customerList";
 	}	
 	
 	@RequestMapping("/editCustomer/{customer_id}")
 	public String editCustomer(@PathVariable("customer_id") int id, Model model) {
-		Customer customer= customerService.getCustomerById(id);
+		Customer customer= customerService.getCustomerById(id);		
 		model.addAttribute("customer", customer);
 		return "customerEdit";
 	}
@@ -126,11 +122,13 @@ public class CustomerController {
 	@RequestMapping("/deleteCustomer/{customer_id}")
 	public String deleteCustomer(@PathVariable("customer_id") int customer_id) {
 		
-		// Müşterinin araçlarının listelenmemesi için
-		Car car = carService.getCarId(customer_id);
-		car.setStatus(0);
-		carService.save(car);
-		
+		// Müşterinin varsa araçlarının listelenmemesi için		
+//		if((carService.getCarId(customer_id))!=null) {
+//			Car car = carService.getCarId(customer_id);
+//			car.setStatus(0);
+//			carService.save(car);
+//		}
+				
 		Customer customer = customerService.getCustomerById(customer_id);
 		customer.setStatus(0);
 		customerService.save(customer);

@@ -1,7 +1,9 @@
 package com.insurance.mgmt.controller;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -175,10 +177,15 @@ public class CarController {
 			return "trafficInsuranceForm";
 		}		
 		model.addAttribute("cars",carService.getAllCars()); 
-			
+		
+		// Form doldurulurkenki tarih ve saat bilgisi hesaplanmaktadır
+		LocalDateTime now = LocalDateTime.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+		car.setStarting_date(now.format(formatter));
+		
 		int offer = calculate(car);	
 		car.setOffer(offer);
-		car.setStatus(1);
+		car.setStatus(1);	
 		carService.save(car);
 		
 		redirectAttributes.addFlashAttribute("car", car);
@@ -198,7 +205,7 @@ public class CarController {
 	
 	
 	@RequestMapping(path = "/trafficInsuranceForm", method = RequestMethod.GET )
-	public String getMyList(@RequestParam(value = "customer_id", required = false) int idParam, Model model, @ModelAttribute Car car, RedirectAttributes redirectAttributes){
+	public String getForm(@RequestParam(value = "customer_id", required = false) int idParam, Model model, @ModelAttribute Car car, RedirectAttributes redirectAttributes){
 		model.addAttribute("customer_id",idParam);
 		return "trafficInsuranceForm";
 	}
@@ -211,25 +218,10 @@ public class CarController {
 	        if (car.getCustomer_id() == customer_id && car.getStatus() == 1) {
 	        	list.add(car);
 	        }
-	    }
+	    }	    
 		return new ModelAndView("carList","car",list);
 	}	
-	
-	@PostMapping("/saveCar") // carEdit.html de kullanılmaktadır
-	public String saveCar(@ModelAttribute Car car) {
-		int offer = calculate(car);
-		car.setOffer(offer);
-		carService.save(car);
-		return "redirect:/customerList";
-	}
-	
-	@RequestMapping("/editCar/{id}")
-	public String editCar(@PathVariable("id") int id, Model model) {
-		Car car= carService.getCarId(id);
-		model.addAttribute("car", car);
-		return "carEdit";
-	}
-	
+			
 	@RequestMapping("/deleteCar/{id}")
 	public String deleteCar(@PathVariable("id") int id) {
 		Car car = carService.getCarId(id);

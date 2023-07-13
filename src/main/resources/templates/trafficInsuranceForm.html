@@ -17,7 +17,7 @@
 	<!--Navbar-->
 	<nav class="navbar navbar-expand-lg navbar-light bg-light py-3 fixed-top">
 		<div class="container">
-			<a class="navbar-brand text-black" href="/">SBM</a>
+			<a class="navbar-brand text-black" href="/index">SBM</a>
 			<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
 				data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
 				aria-label="Toggle navigation">
@@ -45,125 +45,130 @@
 				<p ng-show="msg">{{msg}}</p>
 			</div>
 
-						<form th:action="@{/carRegister}" th:object="${car}" method="post" name="myForm" ng-submit="register()">
+			<form th:action="@{/carRegister}" th:object="${car}" method="post" name="myForm" ng-submit="register()">
 
-							<input type="hidden" name="customer_id" th:value="${customer_id}" />
-							<div style=" display: flex; flex-direction: row;">
-								<h4 class="mr-2">Customer Id : </h4>
-								<h4 th:text="${customer_id}">idParam</h4>
-							</div>
+				<input type="hidden" name="customer_id" th:value="${customer_id}" />
+				<div style=" display: flex; flex-direction: row;">
+					<h4 class="mr-2">Customer Id : </h4>
+					<h4 th:text="${customer_id}">idParam</h4>
+				</div>
 
-							<div class="d-flex justify-content-between mt-3">
-								<label>Enter your licence plate number: </label>
-								<div>
-									<input type="number" name="license_plate1" ng-model="license_plate1" ng-required="true"
-										onKeyPress="if(this.value.length==2) return false;">
-									<p class="error" ng-show="myForm.license_plate1.$invalid && myForm.license_plate1.$touched">
-										Invalid input.</p>
-								</div>
-								<div>
-									<input type="text" name="license_plate2" ng-model="license_plate2" ng-required="true"
-										ng-pattern="/^[a-zA-Z]*$/" minlength="1" maxlength="3">
-									<p class="error" ng-show="myForm.license_plate2.$invalid && myForm.license_plate2.$touched">
-										Invalid input.</p>
-								</div>
-								<div>
-									<input type="number" name="license_plate3" ng-model="license_plate3" ng-required="true"
-										onKeyPress="if(this.value.length==4) return false;">
-									<p class="error" ng-show="myForm.license_plate3.$invalid && myForm.license_plate3.$touched">
-										Invalid input.</p>
-								</div>
-							</div>
+				<div class="d-flex justify-content-between mt-3">
+					<label>Enter your licence plate number: </label>
+					<div>
+						<input type="number" name="license_plate1" ng-model="license_plate1" ng-required="true"
+							onKeyPress="if(this.value.length==2) return false;">
+						<p class="error" ng-show="myForm.license_plate1.$invalid && myForm.license_plate1.$touched">
+							Invalid input.</p>
+					</div>
+					<div>
+						<input type="text" name="license_plate2" ng-model="license_plate2" ng-required="true"
+							ng-pattern="/^[a-zA-Z]*$/" minlength="1" maxlength="3">
+						<p class="error" ng-show="myForm.license_plate2.$invalid && myForm.license_plate2.$touched">
+							Invalid input.</p>
+					</div>
+					<div>
+						<input type="number" name="license_plate3" ng-model="license_plate3" ng-required="true"
+							onKeyPress="if(this.value.length==4) return false;">
+						<p class="error" ng-show="myForm.license_plate3.$invalid && myForm.license_plate3.$touched">
+							Invalid input.</p>
+					</div>
+				</div>
 
-							<select name="type" ng-model="type" ng-required="true">
-								<option value="">Select Usage Type*</option>
-								<option ng-repeat="option in types" value="{{option}}">{{option}}</option>
-							</select>
+				<select name="type" ng-model="type" ng-required="true">
+					<option value="">Select Usage Type*</option>
+					<option ng-repeat="option in types" value="{{option}}">{{option}}</option>
+				</select>
 
-							<select name="purpose" ng-model="purpose" ng-required="true">
-								<option value="">Select Purpose of Usage*</option>
-								<option ng-repeat="option in purposes" value="{{option}}">{{option}}</option>
-							</select>
+				<select name="purpose" ng-model="purpose" ng-required="true">
+					<option value="">Select Purpose of Usage*</option>
+					<option ng-repeat="option in purposes" value="{{option}}">{{option}}</option>
+				</select>
 
-							<select name="brand" ng-model="brand" ng-required="true">
-								<option value="">Select Brand*</option>
-								<option ng-repeat="option in brands" value="{{option}}">{{option}}</option>
-							</select>
+				<select name="brand" ng-model="brand" ng-required="true">
+					<option value="">Select Brand*</option>
+					<option ng-repeat="option in brands" value="{{option}}">{{option}}</option>
+				</select>
 
-							<select name="fuel_type" ng-model="fuel_type" ng-required="true">
-								<option value="">Select Fuel Type*</option>
-								<option ng-repeat="option in fuelTypes" value="{{option}}">{{option}}</option>
-							</select>
+				<select name="fuel_type" ng-model="fuel_type" ng-required="true">
+					<option value="">Select Fuel Type*</option>
+					<option ng-repeat="option in fuelTypes" value="{{option}}">{{option}}</option>
+				</select>
 
-							<input type="number" name="engine_size" placeholder="Engine Size*" ng-model="engine_size"
-								ng-required="true">
-							<p class="error" ng-show="myForm.engine_size.$invalid && myForm.engine_size.$touched">Fill out your
-								engine size.</p>
+				<input type="number" name="engine_size" placeholder="Engine Size*" ng-model="engine_size"
+					ng-required="true">
+				<p class="error" ng-show="myForm.engine_size.$invalid && myForm.engine_size.$touched">Fill out your
+					engine size.</p>
 
-							<input type="number" name="seat_capacity" placeholder="Seating Capacity*" ng-model="seat_capacity"
-								ng-required="true" minlength="1">
-							<p class="error" ng-show="myForm.seat_capacity.$invalid && myForm.seat_capacity.$touched">Fill out your
-								seating capacity.</p>
+				<input type="number" name="seat_capacity" placeholder="Seating Capacity*" ng-model="seat_capacity"
+					ng-required="true" minlength="1">
+				<p class="error" ng-show="myForm.seat_capacity.$invalid && myForm.seat_capacity.$touched">Fill out your
+					seating capacity.</p>
 
-							<button type="submit" class="btn" ng-disabled="myForm.$invalid">Submit</button>
-						</form>
+				<select name="period" ng-model="period" ng-required="true">
+					<option value="">Select Insurance Period (Day)*</option>
+					<option ng-repeat="option in periods" value="{{option}}">{{option}}</option>
+				</select>
 
-<!--			<form th:action="@{/carRegister}" th:object="${car}" method="post">-->
+				<button type="submit" class="btn" ng-disabled="myForm.$invalid">Submit</button>
+			</form>
 
-<!--				<input type="hidden" name="customer_id" th:value="${customer_id}" />-->
-<!--				<div style=" display: flex; flex-direction: row;">-->
-<!--					<h4 class="mr-2">Customer Id : </h4>-->
-<!--					<h4 th:text="${customer_id}">idParam</h4>-->
-<!--				</div>-->
+			<!--			<form th:action="@{/carRegister}" th:object="${car}" method="post">-->
 
-<!--				<div class="d-flex justify-content-between mt-3">-->
-<!--					<label>Enter your licence plate number: </label>-->
-<!--					<div>-->
-<!--						<input type="number" id="license_plate1" th:field="*{license_plate1}" th:value="*{license_plate1}">-->
-<!--						<p th:if="${#fields.hasErrors('license_plate1')}" th:errorclass="error" th:errors="*{license_plate1}" />							-->
-<!--					</div>-->
-<!--					<div>-->
-<!--						<input type="text" id="license_plate2" th:field="*{license_plate2}"> -->
-<!--						<p th:if="${#fields.hasErrors('license_plate2')}" th:errorclass="error" th:errors="*{license_plate2}" />-->
-<!--					</div>-->
-<!--					<div>-->
-<!--						<input type="number" id="license_plate3" th:field="*{license_plate3}" th:value="*{license_plate3}">-->
-<!--						<p th:if="${#fields.hasErrors('license_plate3')}" th:errorclass="error" th:errors="*{license_plate3}" />-->
-<!--					</div>-->
-<!--				</div>-->
+			<!--				<input type="hidden" name="customer_id" th:value="${customer_id}" />-->
+			<!--				<div style=" display: flex; flex-direction: row;">-->
+			<!--					<h4 class="mr-2">Customer Id : </h4>-->
+			<!--					<h4 th:text="${customer_id}">idParam</h4>-->
+			<!--				</div>-->
 
-<!--				<select id="type" ng-model="type" th:field="*{type}" th:value="*{type}">-->
-<!--					<option value="">Select Usage Type*</option>-->
-<!--					<option ng-repeat="option in types" value="{{option}}">{{option}}</option>					-->
-<!--				</select>-->
-<!--				<p th:if="${#fields.hasErrors('type')}" th:errorclass="error" th:errors="*{type}" />-->
+			<!--				<div class="d-flex justify-content-between mt-3">-->
+			<!--					<label>Enter your licence plate number: </label>-->
+			<!--					<div>-->
+			<!--						<input type="number" id="license_plate1" th:field="*{license_plate1}" th:value="*{license_plate1}">-->
+			<!--						<p th:if="${#fields.hasErrors('license_plate1')}" th:errorclass="error" th:errors="*{license_plate1}" />							-->
+			<!--					</div>-->
+			<!--					<div>-->
+			<!--						<input type="text" id="license_plate2" th:field="*{license_plate2}"> -->
+			<!--						<p th:if="${#fields.hasErrors('license_plate2')}" th:errorclass="error" th:errors="*{license_plate2}" />-->
+			<!--					</div>-->
+			<!--					<div>-->
+			<!--						<input type="number" id="license_plate3" th:field="*{license_plate3}" th:value="*{license_plate3}">-->
+			<!--						<p th:if="${#fields.hasErrors('license_plate3')}" th:errorclass="error" th:errors="*{license_plate3}" />-->
+			<!--					</div>-->
+			<!--				</div>-->
 
-<!--				<select id="purpose" ng-model="purpose" th:field="*{purpose}" th:value="*{purpose}">-->
-<!--					<option value="">Select Purpose of Usage*</option>-->
-<!--					<option ng-repeat="option in purposes" value="{{option}}">{{option}}</option>-->
-<!--				</select>-->
-<!--				<p th:if="${#fields.hasErrors('purpose')}" th:errorclass="error" th:errors="*{purpose}" />-->
+			<!--				<select id="type" ng-model="type" th:field="*{type}" th:value="*{type}">-->
+			<!--					<option value="">Select Usage Type*</option>-->
+			<!--					<option ng-repeat="option in types" value="{{option}}">{{option}}</option>					-->
+			<!--				</select>-->
+			<!--				<p th:if="${#fields.hasErrors('type')}" th:errorclass="error" th:errors="*{type}" />-->
 
-<!--				<select id="brand" ng-model="brand" th:field="*{brand}" th:value="*{brand}">-->
-<!--					<option value="">Select Brand*</option>-->
-<!--					<option ng-repeat="option in brands" value="{{option}}">{{option}}</option>-->
-<!--				</select>-->
-<!--				<p th:if="${#fields.hasErrors('brand')}" th:errorclass="error" th:errors="*{brand}" />-->
+			<!--				<select id="purpose" ng-model="purpose" th:field="*{purpose}" th:value="*{purpose}">-->
+			<!--					<option value="">Select Purpose of Usage*</option>-->
+			<!--					<option ng-repeat="option in purposes" value="{{option}}">{{option}}</option>-->
+			<!--				</select>-->
+			<!--				<p th:if="${#fields.hasErrors('purpose')}" th:errorclass="error" th:errors="*{purpose}" />-->
 
-<!--				<select id="fuel_type" ng-model="fuel_type" th:field="*{fuel_type}" th:value="*{fuel_type}">-->
-<!--					<option value="">Select Fuel Type*</option>-->
-<!--					<option ng-repeat="option in fuelTypes" value="{{option}}">{{option}}</option>-->
-<!--				</select>-->
-<!--				<p th:if="${#fields.hasErrors('fuel_type')}" th:errorclass="error" th:errors="*{fuel_type}" />-->
+			<!--				<select id="brand" ng-model="brand" th:field="*{brand}" th:value="*{brand}">-->
+			<!--					<option value="">Select Brand*</option>-->
+			<!--					<option ng-repeat="option in brands" value="{{option}}">{{option}}</option>-->
+			<!--				</select>-->
+			<!--				<p th:if="${#fields.hasErrors('brand')}" th:errorclass="error" th:errors="*{brand}" />-->
 
-<!--				<input type="number" id="engine_size" placeholder="Engine Size*" th:field="*{engine_size}" th:value="*{engine_size}">-->
-<!--				<p th:if="${#fields.hasErrors('engine_size')}" th:errorclass="error" th:errors="*{engine_size}" />-->
+			<!--				<select id="fuel_type" ng-model="fuel_type" th:field="*{fuel_type}" th:value="*{fuel_type}">-->
+			<!--					<option value="">Select Fuel Type*</option>-->
+			<!--					<option ng-repeat="option in fuelTypes" value="{{option}}">{{option}}</option>-->
+			<!--				</select>-->
+			<!--				<p th:if="${#fields.hasErrors('fuel_type')}" th:errorclass="error" th:errors="*{fuel_type}" />-->
 
-<!--				<input type="number" id="seat_capacity" placeholder="Seating Capacity*" th:field="*{seat_capacity}" th:value="*{seat_capacity}">-->
-<!--				<p th:if="${#fields.hasErrors('seat_capacity')}" th:errorclass="error" th:errors="*{seat_capacity}" />-->
+			<!--				<input type="number" id="engine_size" placeholder="Engine Size*" th:field="*{engine_size}" th:value="*{engine_size}">-->
+			<!--				<p th:if="${#fields.hasErrors('engine_size')}" th:errorclass="error" th:errors="*{engine_size}" />-->
 
-<!--				<button type="submit" class="btn">Submit</button>-->
-<!--			</form>-->
+			<!--				<input type="number" id="seat_capacity" placeholder="Seating Capacity*" th:field="*{seat_capacity}" th:value="*{seat_capacity}">-->
+			<!--				<p th:if="${#fields.hasErrors('seat_capacity')}" th:errorclass="error" th:errors="*{seat_capacity}" />-->
+
+			<!--				<button type="submit" class="btn">Submit</button>-->
+			<!--			</form>-->
 
 		</div>
 	</section>

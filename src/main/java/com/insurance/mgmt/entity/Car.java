@@ -75,6 +75,10 @@ public class Car {
 	
 	private int status;
 	
+	private int period;
+	
+	private String starting_date;
+	
 	public Car() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -82,7 +86,7 @@ public class Car {
 		
 
 	public Car(int license_plate1, String license_plate2, int license_plate3, String type,
-			String purpose, String brand, String fuel_type, int engine_size, int seat_capacity, int customer_id, int offer, String result, int status) {
+			String purpose, String brand, String fuel_type, int engine_size, int seat_capacity, int customer_id, int offer, String result, int status, int period, String starting_date) {
 		super();
 		this.customer_id = customer_id;
 		this.license_plate1 = license_plate1;
@@ -97,6 +101,8 @@ public class Car {
 		this.offer=offer;
 		this.result=result;
 		this.status = status;
+		this.period=period;
+		this.starting_date = starting_date;
 	}
 
 	public int getId() {
@@ -238,6 +244,26 @@ public class Car {
 	public void setStatus(int status) {
 		this.status = status;
 	}
+		
+
+	public int getPeriod() {
+		return period;
+	}
+
+
+	public void setPeriod(int period) {
+		this.period = period;
+	}
+		
+
+	public String getStarting_date() {
+		return starting_date;
+	}
+
+
+	public void setStarting_date(String starting_date) {
+		this.starting_date = starting_date;
+	}
 
 
 	@Override
@@ -246,9 +272,8 @@ public class Car {
 				+ ", license_plate2=" + license_plate2 + ", license_plate3=" + license_plate3 + ", type=" + type
 				+ ", purpose=" + purpose + ", brand=" + brand + ", fuel_type=" + fuel_type + ", engine_size="
 				+ engine_size + ", seat_capacity=" + seat_capacity + ", offer=" + offer + ", result=" + result
-				+ ", status=" + status + "]";
+				+ ", status=" + status + ", period=" + period + ", starting_date=" + starting_date + "]";
 	}
 	
-	
-	
+		
 }
