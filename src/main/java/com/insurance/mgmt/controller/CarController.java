@@ -1,5 +1,6 @@
 package com.insurance.mgmt.controller;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
@@ -120,6 +121,9 @@ public class CarController {
 						break;
 				}
 				
+				// Sigortanın kapsadığı süreye bağlı olarak ek prim
+				offer += car.getPeriod() * 20; 
+				
 				switch (car.getFuel_type()) {	// Araç yakıt tipi için ek prim
 					case "Petrol":
 						offer+=3000;
@@ -211,14 +215,42 @@ public class CarController {
 	}
 	
 	@GetMapping("/carList/{customer_id}")
-	public ModelAndView getAllCar(@PathVariable("customer_id") int customer_id) {
+	public ModelAndView getAllCar(@PathVariable("customer_id") int customer_id, Model model) {	
 		List<Car> cars = carService.getAllCars();
 		List<Car> list = new ArrayList<>();
+		ArrayList<Car> expiredCars = new ArrayList<>();
+		boolean showText = false;
+		
+	    // Poliçenin süresinin bitip bitmediğini kontrol etme
+	    for(Car car : cars) {
+	    	if (car.getCustomer_id() == customer_id && car.getStatus() == 1 && car.getResult().equals("Accepted")) {
+	    		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+	    		LocalDateTime startingDateTime = LocalDateTime.parse(car.getStarting_date(), formatter);
+	    		LocalDateTime endDateTime = startingDateTime.plusDays(2);
+	    			    		
+	    		LocalDateTime now = LocalDateTime.now();
+	    		
+	    		Duration duration = Duration.between(now, endDateTime);
+	    		int dayCheck = (int) duration.toDays();
+	    		
+	    		if(dayCheck<0) {
+	    			car.setResult("Expired");
+	    			expiredCars.add(car);
+	    			showText = true;
+	    			car.setStatus(0);
+	    			carService.save(car);
+	    		}
+	    	}
+	    }
+	    	    
 	    for (Car car : cars) {
 	        if (car.getCustomer_id() == customer_id && car.getStatus() == 1) {
-	        	list.add(car);
+	        	list.add(car);	        	
 	        }
-	    }	    
+	    }
+	    //System.out.println(expiredCars.get(0).getBrand());
+	    model.addAttribute("showText", showText);
+	    model.addAttribute("expiredCars", expiredCars);
 		return new ModelAndView("carList","car",list);
 	}	
 			
@@ -229,6 +261,32 @@ public class CarController {
 		carService.save(car);
 		//carService.deleteById(id);
 		return "redirect:/customerList";
+	}
+	
+	@GetMapping("/insuranceRefund/{id}")
+	public String insuranceRefund(@PathVariable("id") int id, Model model) {		
+		Car car = carService.getCarId(id);
+		
+		LocalDateTime now = LocalDateTime.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+		String end_date = now.format(formatter);
+		LocalDateTime startingDateTime = LocalDateTime.parse(car.getStarting_date(), formatter);
+		LocalDateTime endDateTime = LocalDateTime.parse(end_date, formatter);
+
+		Duration duration = Duration.between(startingDateTime, endDateTime);
+		int daysDiff = (int) duration.toDays();	// daysDiff, poliçeyi ne kadar kullandığı
+
+		//System.out.println("Fark: " + daysDiff + " gün");
+		car.setDays_diff(daysDiff);
+		int remainingDay = car.getPeriod() - daysDiff;	// remainingDay, poliçenin bitimine ne kadar kaldığı			
+		int refund = (car.getOffer() / car.getPeriod()) * remainingDay;	// refund, iade edilecek miktar
+		car.setRefund(refund);
+		//System.out.println("İade: "+ refund);
+		model.addAttribute(refund);
+		carService.save(car);
+		
+		model.addAttribute(car);
+		return "insuranceRefund";
 	}
 	
 	@PostMapping("/result")

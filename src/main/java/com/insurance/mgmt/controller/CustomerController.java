@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.insurance.mgmt.entity.Car;
 import com.insurance.mgmt.entity.Customer;
 import com.insurance.mgmt.service.CarService;
 import com.insurance.mgmt.service.CustomerService;
@@ -121,13 +122,17 @@ public class CustomerController {
 	
 	@RequestMapping("/deleteCustomer/{customer_id}")
 	public String deleteCustomer(@PathVariable("customer_id") int customer_id) {
+		List<Car> cars = carService.getAllCars();
 		
-		// Müşterinin varsa araçlarının listelenmemesi için		
-//		if((carService.getCarId(customer_id))!=null) {
-//			Car car = carService.getCarId(customer_id);
-//			car.setStatus(0);
-//			carService.save(car);
-//		}
+		// Müşterinin varsa araçlarının listelenmemesi için	
+		for(Car car : cars) {
+			if(car.getCustomer_id() == customer_id) {
+				car.setStatus(0);
+				carService.save(car);
+			}else {
+				continue;
+			}
+		}
 				
 		Customer customer = customerService.getCustomerById(customer_id);
 		customer.setStatus(0);

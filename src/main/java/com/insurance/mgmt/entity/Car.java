@@ -79,6 +79,11 @@ public class Car {
 	
 	private String starting_date;
 	
+	@Column(name ="days_diff")
+	private Integer days_diff;
+	
+	private Integer refund;
+	
 	public Car() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -86,7 +91,8 @@ public class Car {
 		
 
 	public Car(int license_plate1, String license_plate2, int license_plate3, String type,
-			String purpose, String brand, String fuel_type, int engine_size, int seat_capacity, int customer_id, int offer, String result, int status, int period, String starting_date) {
+			String purpose, String brand, String fuel_type, int engine_size, int seat_capacity, int customer_id, int offer, String result, 
+			int status, int period, String starting_date, Integer days_diff, Integer refund) {
 		super();
 		this.customer_id = customer_id;
 		this.license_plate1 = license_plate1;
@@ -103,6 +109,8 @@ public class Car {
 		this.status = status;
 		this.period=period;
 		this.starting_date = starting_date;
+		this.days_diff = days_diff;
+		this.refund = refund;
 	}
 
 	public int getId() {
@@ -264,6 +272,26 @@ public class Car {
 	public void setStarting_date(String starting_date) {
 		this.starting_date = starting_date;
 	}
+	
+
+	public Integer getDays_diff() {
+		return days_diff;
+	}
+
+
+	public void setDays_diff(Integer days_diff) {
+		this.days_diff = days_diff;
+	}
+
+
+	public Integer getRefund() {
+		return refund;
+	}
+
+
+	public void setRefund(Integer refund) {
+		this.refund = refund;
+	}
 
 
 	@Override
@@ -272,7 +300,8 @@ public class Car {
 				+ ", license_plate2=" + license_plate2 + ", license_plate3=" + license_plate3 + ", type=" + type
 				+ ", purpose=" + purpose + ", brand=" + brand + ", fuel_type=" + fuel_type + ", engine_size="
 				+ engine_size + ", seat_capacity=" + seat_capacity + ", offer=" + offer + ", result=" + result
-				+ ", status=" + status + ", period=" + period + ", starting_date=" + starting_date + "]";
+				+ ", status=" + status + ", period=" + period + ", starting_date=" + starting_date + ", days_diff="
+				+ days_diff + ", refund=" + refund + "]";
 	}
 	
 		

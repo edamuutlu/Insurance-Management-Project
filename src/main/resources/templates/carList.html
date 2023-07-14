@@ -45,6 +45,17 @@
 		}
 	</style>
 
+	<script>
+		
+		window.onload = function () {
+			$(document).ready(function () {
+				$('#myModal').modal('show');
+			});
+		};
+
+	</script>
+
+
 </head>
 
 <body>
@@ -73,7 +84,32 @@
 
 
 	<div class="container mt-5">
-		<table class="table table-hover">
+
+		<div class="modal fade" id="myModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myModalTitle"
+			aria-hidden="true" th:if="${showText}">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="myModalTitle">Bildirim</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<p>Listelenen Plakalı Araçlarınızın Sigorta Süresi Bitmiştir:</p>
+						<ul>
+							<li th:each="data : ${expiredCars}" th:text="${data.getLicense_plate1() + ' ' + data.getLicense_plate2()+ ' ' + data.getLicense_plate3()}"></li>
+						</ul>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<table class="table table-hover text-center">
 			<thead>
 				<tr>
 					<th scope="col">Id</th>
@@ -86,6 +122,7 @@
 					<th cope="col">Engine Size</th>
 					<th scope="col">Seating Capacity</th>
 					<th scope="col">Offer</th>
+					<th scope="col">Period</th>
 					<th scope="col">Result</th>
 					<th scope="col">Delete</th>
 				</tr>
@@ -106,41 +143,66 @@
 					<td th:text="${c.engine_size}"></td>
 					<td th:text="${c.seat_capacity}"></td>
 					<td th:text="${c.offer}"></td>
+					<td th:text="${c.period}"></td>
 					<td th:text="${c.result}"></td>
 
-					<td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">
-							<a th:href="@{/deleteCar/{id}(id=${c.id})}"><i id="icon-trash" class="gg-trash"></i></a>
-						</button></td>
-					<!--					<td><button><a th:href="@{/deleteCar/{id}(id=${c.id})}"><i id="icon-trash"-->
-					<!--									class="gg-trash"></i></a></button></td>	
-					
-					<!-- Modal -->
-					<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false"
-						tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" th:object="${car}">
-						<div class="modal-dialog">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
-									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-										<span aria-hidden="true">&times;</span>
-									</button>
-								</div>
-								<div class="modal-body">
-									<h1 class="panel-title price" th:text="${c.starting_date}"></h1>
-								</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-primary">Understood</button>
-								</div>
-							</div>
-						</div>
-					</div>
+					<!--					<td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">-->
+					<!--							<a th:href="@{/deleteCar/{id}(id=${c.id})}"><i id="icon-trash" class="gg-trash"></i></a></button></td>-->
+					<!--						<td><button><a th:href="@{/deleteCar/{id}(id=${c.id})}"><i id="icon-trash" class="gg-trash"></i></a></button></td>	-->
+					<td><button class="mx-auto"><a th:href="@{/insuranceRefund/{id}(id=${c.id})}"><i id="icon-trash"
+									class="gg-trash"></i></a></button></td>
+
+					<!--					 Modal -->
+					<!--					<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false"-->
+					<!--						tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">-->
+					<!--						<div class="modal-dialog">-->
+					<!--							<div class="modal-content">-->
+					<!--								<div class="modal-header">-->
+					<!--									<h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>-->
+					<!--									<button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+					<!--										<span aria-hidden="true">&times;</span>-->
+					<!--									</button>-->
+					<!--								</div>-->
+					<!--									<div class="modal-body">-->
+					<!--										<h1 class="panel-title price" th:text="${c.starting_date}"></h1>-->
+					<!--										<h1 class="panel-title price" id="date-difference"></h1>-->
+
+
+					<!--										<script>-->
+					<!--											const myModal = new bootstrap.Modal('#staticBackdrop');-->
+					<!--											window.addEventListener('DOMContentLoaded', () => {-->
+					<!--												var startingDate = new Date(-->
+					<!--													$scope.starting_date-->
+					<!--												);-->
+
+					<!--												var currentDate = new Date();-->
+
+					<!--												var timeDiff = Math.abs(currentDate.getTime() - startingDate.getTime());-->
+					<!--												var daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));-->
+
+					<!--												var dateDifferenceElement = document.getElementById("date-difference");-->
+					<!--												var spanElement = document.createElement("span");-->
+					<!--												spanElement.textContent = daysDiff + " gün";-->
+					<!--												dateDifferenceElement.appendChild(spanElement);-->
+					<!--												myModal.show();-->
+					<!--											});												-->
+					<!--										</script>-->
+
+
+					<!--									</div>								-->
+					<!--								<div class="modal-footer">-->
+					<!--									<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
+					<!--								</div>-->
+					<!--							</div>-->
+					<!--						</div>-->
+					<!--					</div>-->
 
 				</tr>
 			</tbody>
 		</table>
 	</div>
 
-
+	
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
 		crossorigin="anonymous"></script>
