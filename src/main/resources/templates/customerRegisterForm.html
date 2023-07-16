@@ -42,12 +42,13 @@
 	</nav>
 	<!--	End Navbar-->
 
-
 	<section id="featured" class="my-5 pt-5">
 		<div class="container-register mt-5 py-5" ng-controller="registerCustomerFormController">
 			<div class="textIntro">
 				<h1 class="text-center">Registration Form</h1>
 				<p ng-show="msg">{{msg}}</p>
+				<div class="alert alert-warning" role="alert" th:if="${showTcAlert}"> This TC number is already registered! </div>
+				<div class="alert alert-warning" role="alert" th:if="${showEmailAlert}"> This Email address is already registered! </div>
 			</div>
 
 			<!--			<form th:action="@{/register}" th:object="${customer}" method="post" name="myForm" ng-submit="register()">-->
@@ -105,10 +106,10 @@
 				<p th:if="${#fields.hasErrors('lastname')}" th:errorclass="error" th:errors="*{lastname}" />
 
 				<select name="province" id="province">
-						<option value="" th:selected="${#fields.hasErrors('province')}">Select Province*</option>
+					<option value="" th:selected="${#fields.hasErrors('province')}">Select Province*</option>
 				</select>
 				<p th:if="${#fields.hasErrors('province')}" th:errorclass="error" th:errors="*{province}" />
-				
+
 				<select name="district" id="district">
 					<option value="" th:selected="${#fields.hasErrors('district')}">Select District*</option>
 				</select>

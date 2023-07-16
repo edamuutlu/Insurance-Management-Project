@@ -43,6 +43,7 @@
 			<div class="textIntro">
 				<h1 class="text-center">Traffic Insurance Form</h1>
 				<p ng-show="msg">{{msg}}</p>
+				<div class="alert alert-warning" role="alert" th:if="${showPlateAlert}"> This license plate number is already registered! </div>
 			</div>
 
 			<form th:action="@{/carRegister}" th:object="${car}" method="post" name="myForm" ng-submit="register()">

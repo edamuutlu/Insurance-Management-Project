@@ -173,7 +173,7 @@ public class CarController {
 	}
 	
 	@PostMapping("/carRegister")
-	public String register(@Valid @ModelAttribute Car car, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {		
+	public String register(@Valid @ModelAttribute Car car, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes, @RequestParam(value = "customer_id", required = false) int idParam) {		
 				
 		if(bindingResult.hasErrors()) {
 			log.info(">> Car : {}",car.toString());
@@ -190,20 +190,31 @@ public class CarController {
 		int offer = calculate(car);	
 		car.setOffer(offer);
 		car.setStatus(1);	
-		carService.save(car);
 		
-		redirectAttributes.addFlashAttribute("car", car);
+		// Aynı plaka kontrolü
+		boolean showPlateAlert = false;
 		
-		Customer customer = customerService.getCustomerById(car.getCustomer_id());
-		
-		redirectAttributes.addFlashAttribute("customer",customer);		
-		
-		return "redirect:/trafficInsuranceCalculate";
+		List<Car> list = carService.getAllCars();
+		for (Car c : list) {
+			if(c.getStatus() == 1 && c.getLicense_plate1() == car.getLicense_plate1() && c.getLicense_plate2().equals(car.getLicense_plate2()) 
+					&& c.getLicense_plate3() == car.getLicense_plate3() && c.getResult().equals("Accepted")) {
+				showPlateAlert = true;	
+				model.addAttribute("showPlateAlert",showPlateAlert);				
+				model.addAttribute("customer_id",idParam);
+				return "trafficInsuranceForm";
+			}			
+		}
+		car.setResult("Canceled");	// Default olarak canceled yazdırılmaktadır
+		carService.save(car);				
+		redirectAttributes.addFlashAttribute("car", car);			
+		Customer customer = customerService.getCustomerById(car.getCustomer_id());				
+		redirectAttributes.addFlashAttribute("customer",customer);	
+		return "redirect:/trafficInsuranceCalculate";	
+				
 	}
 	
 	@GetMapping("/trafficInsuranceCalculate")
-	public String trafficInsurance(Model model) { // RedirectAttributes redirectAttributes
-		
+	public String trafficInsurance() { 
 		return "trafficInsuranceCalculate";
 	}
 	
@@ -297,8 +308,8 @@ public class CarController {
         
         if (car != null) {
             // result değerine göre result sütununu güncelle
-            car.setResult(result);
-            carService.save(car);
+        	car.setResult(result);  
+        	carService.save(car);
         }
         
         // Sayfayı yeniden yönlendir veya başka bir işlem yap

@@ -67,7 +67,7 @@ public class CustomerController {
 	}
 		
 	@GetMapping("/customerRegisterForm")
-	public String registerCustomer(@ModelAttribute Customer customer, Model model) { // Model model
+	public String registerCustomer(@ModelAttribute Customer customer) {
 	
 //	    List<Province> getAllProvinces = provinceRepository.findAll();
 //	    
@@ -75,7 +75,7 @@ public class CustomerController {
 //
 //        model.addAttribute("getAllProvinces", getAllProvinces);
 //        model.addAttribute("getDistrictsByProvinceId", getDistrictsByProvinceId);
-    
+				
 		return "customerRegisterForm";
 	}
 		
@@ -98,12 +98,29 @@ public class CustomerController {
 			log.info(">> Customer : {}",customer.toString());
 			return "customerRegisterForm";
 		}		
-	
-		model.addAttribute("customers",customerService.getAllCustomer());
 		
-		customer.setStatus(1);
-		customerService.save(customer);
-		return "redirect:customerList";	
+		// Aynı TC numaralı ve email adresli kullanıcı kontrolü
+		boolean showTcAlert = false;
+		boolean showEmailAlert = false;
+		
+		List<Customer> list = customerService.getAllCustomer();
+		for (Customer c : list) {
+			if(c.getStatus() == 1 && c.getTc().equals(customer.getTc())) {
+				showTcAlert = true;
+			}if(c.getStatus() == 1 && c.getEmail().equals(customer.getEmail())) {
+				showEmailAlert = true;
+			}				
+		}
+		if(showTcAlert==true || showEmailAlert==true) {
+			model.addAttribute("showTcAlert",showTcAlert);
+			model.addAttribute("showEmailAlert",showEmailAlert);
+			return "customerRegisterForm";
+		}else {
+			model.addAttribute("customers",customerService.getAllCustomer());		
+			customer.setStatus(1);
+			customerService.save(customer);
+			return "redirect:customerList";
+		}									
 	}
 	
 	@PostMapping("/save")
