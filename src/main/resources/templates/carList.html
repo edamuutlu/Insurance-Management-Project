@@ -97,7 +97,7 @@
 					<div class="modal-body">
 						<p>Listelenen Plakalı Araçlarınızın Sigorta Süresi Bitmiştir:</p>
 						<ul>
-							<li th:each="data : ${expiredCars}" th:text="${data.getLicense_plate1() + ' ' + data.getLicense_plate2()+ ' ' + data.getLicense_plate3()}"></li>
+							<li th:each="data : ${expiredCars}" th:text="${data.getPlate1() + ' ' + data.getPlate2()+ ' ' + data.getPlate3()}"></li>
 						</ul>
 					</div>
 					<div class="modal-footer">
@@ -122,6 +122,8 @@
 					<th scope="col">Seating Capacity</th>
 					<th scope="col">Offer</th>
 					<th scope="col">Period</th>
+					<th scope="col">Start Date</th>
+					<th scope="col">End Date</th>
 					<th scope="col">Result</th>
 					<th scope="col">Delete</th>
 				</tr>
@@ -131,9 +133,9 @@
 					<td th:text="${c.id}"></td>
 					<td th:text="${c.customer_id}"></td>
 					<td>
-						<span th:text="${c.license_plate1}"></span>
-						<span th:text="${c.license_plate2}"></span>
-						<span th:text="${c.license_plate3}"></span>
+						<span th:text="${c.plate1}"></span>
+						<span th:text="${c.plate2}"></span>
+						<span th:text="${c.plate3}"></span>
 					</td>
 					<td th:text="${c.type}"></td>
 					<td th:text="${c.purpose}"></td>
@@ -143,6 +145,8 @@
 					<td th:text="${c.seat_capacity}"></td>
 					<td th:text="${c.offer}"></td>
 					<td th:text="${c.period}"></td>
+					<td th:text="${c.start_date}"></td>
+					<td th:text="${c.end_date}"></td>
 					<td th:text="${c.result}"></td>
 
 					<!--					<td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">-->

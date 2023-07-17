@@ -144,6 +144,7 @@ public class CustomerController {
 		// Müşterinin varsa araçlarının listelenmemesi için	
 		for(Car car : cars) {
 			if(car.getCustomer_id() == customer_id) {
+				car.setResult("Canceled");
 				car.setStatus(0);
 				carService.save(car);
 			}else {
@@ -154,7 +155,7 @@ public class CustomerController {
 		Customer customer = customerService.getCustomerById(customer_id);
 		customer.setStatus(0);
 		customerService.save(customer);
-		//customerService.deleteById(customer_id);
+		//customerService.deleteById(customer_id);	// database den de kalıcı olarak silmek için
 		return "redirect:/customerList";
 	}
 		

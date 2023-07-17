@@ -57,21 +57,21 @@
 				<div class="d-flex justify-content-between mt-3">
 					<label>Enter your licence plate number: </label>
 					<div>
-						<input type="number" name="license_plate1" ng-model="license_plate1" ng-required="true"
+						<input type="number" name="plate1" ng-model="plate1" ng-required="true"
 							onKeyPress="if(this.value.length==2) return false;">
-						<p class="error" ng-show="myForm.license_plate1.$invalid && myForm.license_plate1.$touched">
+						<p class="error" ng-show="myForm.plate1.$invalid && myForm.plate1.$touched">
 							Invalid input.</p>
 					</div>
 					<div>
-						<input type="text" name="license_plate2" ng-model="license_plate2" ng-required="true"
+						<input type="text" name="plate2" ng-model="plate2" ng-required="true"
 							ng-pattern="/^[a-zA-Z]*$/" minlength="1" maxlength="3">
-						<p class="error" ng-show="myForm.license_plate2.$invalid && myForm.license_plate2.$touched">
+						<p class="error" ng-show="myForm.plate2.$invalid && myForm.plate2.$touched">
 							Invalid input.</p>
 					</div>
 					<div>
-						<input type="number" name="license_plate3" ng-model="license_plate3" ng-required="true"
+						<input type="number" name="plate3" ng-model="plate3" ng-required="true"
 							onKeyPress="if(this.value.length==4) return false;">
-						<p class="error" ng-show="myForm.license_plate3.$invalid && myForm.license_plate3.$touched">
+						<p class="error" ng-show="myForm.plate3.$invalid && myForm.plate3.$touched">
 							Invalid input.</p>
 					</div>
 				</div>

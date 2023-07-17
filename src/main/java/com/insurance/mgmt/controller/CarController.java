@@ -29,6 +29,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.insurance.mgmt.entity.Car;
 import com.insurance.mgmt.entity.Customer;
+import com.insurance.mgmt.repository.ICarRepository;
 import com.insurance.mgmt.service.CarService;
 import com.insurance.mgmt.service.CustomerService;
 
@@ -43,6 +44,9 @@ public class CarController {
 	@Autowired
 	CarService carService;
 	
+	@Autowired
+	ICarRepository carRepository;
+	
 	private static final Logger log =  LoggerFactory.getLogger(CarController.class);
 	
 	@InitBinder
@@ -55,20 +59,20 @@ public class CarController {
 		// Sigorta teklifi için hesaplamalar
 				int offer=500; // Sabit bir başlangıç teklifi-primi
 				
-				Customer customer = customerService.getCustomerById(car.getCustomer_id());				
-				// String'i LocalDate nesnesine dönüştürme
-		        LocalDate birthDate = LocalDate.parse(customer.getBirth());
-		        // Bugünkü tarihi al
-		        LocalDate currentDate = LocalDate.now();
-		        // Yaşı hesapla
-		        int age = Period.between(birthDate, currentDate).getYears();
-		        if(age>18 && age<=25) {
-		        	offer+= age * 4;
-		        }else if (age>25 && age<=60) {
-		        	offer+= age * 3;
-				}else {
-					offer+= age * 5;
-				}
+//				Customer customer = customerService.getCustomerById(car.getCustomer_id());				
+//				// String'i LocalDate nesnesine dönüştürme
+//		        LocalDate birthDate = LocalDate.parse(customer.getBirth());
+//		        // Bugünkü tarihi al
+//		        LocalDate currentDate = LocalDate.now();
+//		        // Yaşı hesapla
+//		        int age = Period.between(birthDate, currentDate).getYears();
+//		        if(age>18 && age<=25) {
+//		        	offer+= age * 4;
+//		        }else if (age>25 && age<=60) {
+//		        	offer+= age * 3;
+//				}else {
+//					offer+= age * 5;
+//				}
 				
 				switch (car.getType()) {	// Araç tipi için ek prim
 				    case "Car":
@@ -147,7 +151,7 @@ public class CarController {
 					offer+=(car.getEngine_size()) * 200;
 				}
 				
-				switch (car.getLicense_plate1()) {	// Aracın kayıtlı olduğu ilin trafik yoğunluğuna göre ek prim
+				switch (car.getPlate1()) {	// Aracın kayıtlı olduğu ilin trafik yoğunluğuna göre ek prim
 				case 06:
 					offer+=4000;
 					break;
@@ -182,23 +186,23 @@ public class CarController {
 		}		
 		model.addAttribute("cars",carService.getAllCars()); 
 		
-		// Form doldurulurkenki tarih ve saat bilgisi hesaplanmaktadır
+		// Form doldurulurkenki tarih ve sigortanın biteceği tarih hesaplanmaktadır
 		LocalDateTime now = LocalDateTime.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-		car.setStarting_date(now.format(formatter));
+		car.setStart_date(now.format(formatter));
+		LocalDateTime endDate = now.plusDays(car.getPeriod());
+		car.setEnd_date(endDate.format(formatter));
 		
 		int offer = calculate(car);	
 		car.setOffer(offer);
 		car.setStatus(1);	
 		
-		// Aynı plaka kontrolü
-		boolean showPlateAlert = false;
-		
-		List<Car> list = carService.getAllCars();
+		// Aynı plaka kontrolü		
+		List<Car> list = carRepository.findByStatus(1);		
 		for (Car c : list) {
-			if(c.getStatus() == 1 && c.getLicense_plate1() == car.getLicense_plate1() && c.getLicense_plate2().equals(car.getLicense_plate2()) 
-					&& c.getLicense_plate3() == car.getLicense_plate3() && c.getResult().equals("Accepted")) {
-				showPlateAlert = true;	
+			if(c.getPlate1() == car.getPlate1() && c.getPlate2().equals(car.getPlate2()) 
+					&& c.getPlate3() == car.getPlate3() && c.getResult().equals("Accepted")) {
+				boolean showPlateAlert = true;	
 				model.addAttribute("showPlateAlert",showPlateAlert);				
 				model.addAttribute("customer_id",idParam);
 				return "trafficInsuranceForm";
@@ -220,24 +224,23 @@ public class CarController {
 	
 	
 	@RequestMapping(path = "/trafficInsuranceForm", method = RequestMethod.GET )
-	public String getForm(@RequestParam(value = "customer_id", required = false) int idParam, Model model, @ModelAttribute Car car, RedirectAttributes redirectAttributes){
+	public String getForm(@RequestParam(value = "customer_id", required = false) int idParam, Model model, @ModelAttribute Car car){
 		model.addAttribute("customer_id",idParam);
 		return "trafficInsuranceForm";
 	}
 	
 	@GetMapping("/carList/{customer_id}")
 	public ModelAndView getAllCar(@PathVariable("customer_id") int customer_id, Model model) {	
-		List<Car> cars = carService.getAllCars();
+		List<Car> cars = carRepository.findByStatus(1);
 		List<Car> list = new ArrayList<>();
 		ArrayList<Car> expiredCars = new ArrayList<>();
 		boolean showText = false;
 		
-	    // Poliçenin süresinin bitip bitmediğini kontrol etme
+	    // Poliçenin süresinin bitip bitmediğini kontrol etme				
 	    for(Car car : cars) {
-	    	if (car.getCustomer_id() == customer_id && car.getStatus() == 1 && car.getResult().equals("Accepted")) {
+	    	if (car.getCustomer_id() == customer_id  && car.getResult().equals("Accepted")) { 
 	    		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-	    		LocalDateTime startingDateTime = LocalDateTime.parse(car.getStarting_date(), formatter);
-	    		LocalDateTime endDateTime = startingDateTime.plusDays(2);
+	    		LocalDateTime endDateTime = LocalDateTime.parse(car.getEnd_date(), formatter);
 	    			    		
 	    		LocalDateTime now = LocalDateTime.now();
 	    		
@@ -255,11 +258,11 @@ public class CarController {
 	    }
 	    	    
 	    for (Car car : cars) {
-	        if (car.getCustomer_id() == customer_id && car.getStatus() == 1) {
+	        if (car.getCustomer_id() == customer_id) {
 	        	list.add(car);	        	
 	        }
 	    }
-	    //System.out.println(expiredCars.get(0).getBrand());
+	    
 	    model.addAttribute("showText", showText);
 	    model.addAttribute("expiredCars", expiredCars);
 		return new ModelAndView("carList","car",list);
@@ -268,9 +271,10 @@ public class CarController {
 	@RequestMapping("/deleteCar/{id}")
 	public String deleteCar(@PathVariable("id") int id) {
 		Car car = carService.getCarId(id);
+		car.setResult("Canceled");
 		car.setStatus(0);
 		carService.save(car);
-		//carService.deleteById(id);
+		//carService.deleteById(id);	// database den de kalıcı olarak silmek için
 		return "redirect:/customerList";
 	}
 	
@@ -281,7 +285,7 @@ public class CarController {
 		LocalDateTime now = LocalDateTime.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 		String end_date = now.format(formatter);
-		LocalDateTime startingDateTime = LocalDateTime.parse(car.getStarting_date(), formatter);
+		LocalDateTime startingDateTime = LocalDateTime.parse(car.getStart_date(), formatter);
 		LocalDateTime endDateTime = LocalDateTime.parse(end_date, formatter);
 
 		Duration duration = Duration.between(startingDateTime, endDateTime);
@@ -309,6 +313,14 @@ public class CarController {
         if (car != null) {
             // result değerine göre result sütununu güncelle
         	car.setResult(result);  
+        	
+        	//Poliçeyi iptal ettiyse iptal etme tarihi yazdırılmaktadır
+        	if(car.getResult().equals("Canceled")) {
+        		LocalDateTime now = LocalDateTime.now();
+        		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        		String end_date = now.format(formatter);
+        		car.setEnd_date(end_date);
+        	}
         	carService.save(car);
         }
         
