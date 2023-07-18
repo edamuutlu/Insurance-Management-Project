@@ -1,9 +1,9 @@
 package com.insurance.mgmt.controller;
 
 import java.time.Duration;
-import java.time.LocalDate;
+//import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.Period;
+//import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -76,13 +76,13 @@ public class CarController {
 				
 				switch (car.getType()) {	// Araç tipi için ek prim
 				    case "Car":
-				        offer += 4000;
+				        offer += 400;
 				        break;
 				    case "Truck":
-				        offer += 5000;
+				        offer += 500;
 				        break;
 				    case "Van":
-				        offer += 3000;
+				        offer += 300;
 				        break;
 				    default:
 						break;
@@ -90,10 +90,10 @@ public class CarController {
 			
 				switch (car.getPurpose()) {	// Kullanım amacı için ek prim
 				    case "Private":
-				        offer += 4000;
+				        offer += 400;
 				        break;
 				    case "Commercial":
-				        offer += 5000;
+				        offer += 500;
 				        break;
 				    default:
 						break;
@@ -130,16 +130,16 @@ public class CarController {
 				
 				switch (car.getFuel_type()) {	// Araç yakıt tipi için ek prim
 					case "Petrol":
-						offer+=3000;
+						offer+=300;
 						break;
 					case "Diesel":
-						offer+=2000;
+						offer+=200;
 						break;
 					case "LPG":
-						offer+=2000;
+						offer+=200;
 						break;
 					case "Electric":
-						offer+=2000;
+						offer+=200;
 						break;
 					default:
 						break;
@@ -153,13 +153,13 @@ public class CarController {
 				
 				switch (car.getPlate1()) {	// Aracın kayıtlı olduğu ilin trafik yoğunluğuna göre ek prim
 				case 06:
-					offer+=4000;
+					offer+=400;
 					break;
 				case 16:
-					offer+=3000;
+					offer+=300;
 					break;
 				case 34:
-					offer+=5000;
+					offer+=500;
 					break;
 			    default:
 					System.out.println("Geçerli olmayan il");

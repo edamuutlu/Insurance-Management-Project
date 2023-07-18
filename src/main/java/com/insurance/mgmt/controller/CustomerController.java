@@ -25,7 +25,6 @@ import com.insurance.mgmt.entity.Car;
 import com.insurance.mgmt.entity.Customer;
 import com.insurance.mgmt.service.CarService;
 import com.insurance.mgmt.service.CustomerService;
-import com.insurance.mgmt.service.adress.ProvinceService;
 
 import jakarta.validation.Valid;
 
@@ -39,8 +38,8 @@ public class CustomerController {
 	@Autowired
 	CarService carService;
 	
-	@Autowired
-	ProvinceService provinceService;
+//	@Autowired
+//	ProvinceService provinceService;
 	
 	private static final Logger log =  LoggerFactory.getLogger(CustomerController.class);
 	
