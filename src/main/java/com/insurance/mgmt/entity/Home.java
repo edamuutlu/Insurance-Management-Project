@@ -11,26 +11,27 @@ import jakarta.persistence.Table;
 @Table(name = "HOME")
 public class Home {
 	@Id
+	@Column(name ="homeId")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int home_id;
+	private int homeId;
 	
 	@Column(name ="customer_id") 
 	private int customerId;
 	
 	@Column(name ="type") 
-	private int type;
+	private String type;
 	
 	@Column(name ="usage") 
-	private int usage;
+	private String usage;
 	
 	@Column(name ="province") 
-	private int province;
+	private String province;
 	
 	@Column(name ="district") 
-	private int district;
+	private String district;
 	
 	@Column(name ="neighbourhood") 
-	private int neighbourhood;
+	private String neighbourhood;
 	
 	@Column(name ="building_number") 
 	private int buildingNumber;
@@ -55,10 +56,10 @@ public class Home {
 		// TODO Auto-generated constructor stub
 	}		
 
-	public Home(int home_id, int customerId, int type, int usage, int province, int district, int neighbourhood,
+	public Home(int homeId, int customerId, String type, String usage, String province, String district, String neighbourhood,
 			int buildingNumber, int apartment, int floor, int buildingAge, int ownerTitle, int status) {
 		super();
-		this.home_id = home_id;
+		this.homeId = homeId;
 		this.customerId = customerId;
 		this.type = type;
 		this.usage = usage;
@@ -74,12 +75,12 @@ public class Home {
 	}
 
 
-	public int getHome_id() {
-		return home_id;
+	public int getHomeId() {
+		return homeId;
 	}
 
-	public void setHome_id(int home_id) {
-		this.home_id = home_id;
+	public void setHomeId(int homeId) {
+		this.homeId = homeId;
 	}
 
 	public int getCustomerId() {
@@ -90,43 +91,43 @@ public class Home {
 		this.customerId = customerId;
 	}
 
-	public int getType() {
+	public String getType() {
 		return type;
 	}
 
-	public void setType(int type) {
+	public void setType(String type) {
 		this.type = type;
 	}
 
-	public int getUsage() {
+	public String getUsage() {
 		return usage;
 	}
 
-	public void setUsage(int usage) {
+	public void setUsage(String usage) {
 		this.usage = usage;
 	}
 
-	public int getProvince() {
+	public String getProvince() {
 		return province;
 	}
 
-	public void setProvince(int province) {
+	public void setProvince(String province) {
 		this.province = province;
 	}
 
-	public int getDistrict() {
+	public String getDistrict() {
 		return district;
 	}
 
-	public void setDistrict(int district) {
+	public void setDistrict(String district) {
 		this.district = district;
 	}
 
-	public int getNeighbourhood() {
+	public String getNeighbourhood() {
 		return neighbourhood;
 	}
 
-	public void setNeighbourhood(int neighbourhood) {
+	public void setNeighbourhood(String neighbourhood) {
 		this.neighbourhood = neighbourhood;
 	}
 
@@ -180,7 +181,7 @@ public class Home {
 
 	@Override
 	public String toString() {
-		return "Home [home_id=" + home_id + ", customerId=" + customerId + ", type=" + type + ", usage=" + usage
+		return "Home [homeId=" + homeId + ", customerId=" + customerId + ", type=" + type + ", usage=" + usage
 				+ ", province=" + province + ", district=" + district + ", neighbourhood=" + neighbourhood
 				+ ", buildingNumber=" + buildingNumber + ", apartment=" + apartment + ", floor=" + floor
 				+ ", buildingAge=" + buildingAge + ", ownerTitle=" + ownerTitle + ", status=" + status + "]";

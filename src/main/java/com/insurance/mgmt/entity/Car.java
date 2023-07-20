@@ -44,12 +44,15 @@ public class Car {
 	//@Size(min = 1, max = 4, message = "Input must be 1 or 4 digits.") 
 	private int plate3;
 	
+	@Column(name ="type")
 	@NotBlank(message = "This field must be filled.")
 	private String type;
 	
+	@Column(name ="purpose")
 	@NotBlank(message = "This field must be filled.")
 	private String purpose;
 	
+	@Column(name ="brand")
 	@NotBlank(message = "This field must be filled.")
 	private String brand;
 	
@@ -71,10 +74,13 @@ public class Car {
 	@Column(name ="offer") //insertable = false, nullable = true
 	private int offer;
 	
+	@Column(name ="result")
 	private String result;
 	
+	@Column(name ="status")
 	private int status;
 	
+	@Column(name ="period")
 	private int period;
 	
 	@Column(name ="startDate")
@@ -83,6 +89,7 @@ public class Car {
 	@Column(name ="days_diff")
 	private Integer daysDiff;
 	
+	@Column(name ="refund")
 	private Integer refund;
 	
 	@Column(name ="end_date")
