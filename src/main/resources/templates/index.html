@@ -76,7 +76,6 @@
 			<p>Here you can check out our insurance options.</p>
 		</div>
 		<div class="row mx-auto container">
-			<input type="hidden" name="customer_id" th:value="${customer_id}" />
 			<div class="product text-center col-lg-3 col-md-4 col-12">
 				<img class="img-fluid mb-3" src="img/traffic.jpg" alt="">
 				<h5 class="p-name">Traffic Insurance</h5>
@@ -84,18 +83,18 @@
 			</div>
 
 			<div  class="product text-center col-lg-3 col-md-4 col-12">
-				<img class="img-fluid mb-3" src="img/auto.jpg" alt="">
-				<h5 class="p-name">Comprehensive Insurance</h5>
-				<button class="buy-btn"><a th:href="@{/customerRegisterForm}">Register Now</a></button>
-
-			</div>
-			<div onclick="window.location.href='/customerRegisterForm'" class="product text-center col-lg-3 col-md-4 col-12">
 				<img class="img-fluid mb-3" src="img/health.jpg" alt="">
 				<h5 class="p-name">Health Insurance</h5>
 				<button class="buy-btn"><a th:href="@{/customerRegisterForm}">Register Now</a></button>
 
 			</div>
-			<div onclick="window.location.href='/customerRegisterForm'" class="product text-center col-lg-3 col-md-4 col-12">
+			<div class="product text-center col-lg-3 col-md-4 col-12">
+				<img class="img-fluid mb-3" src="img/travel.jpg" alt="">
+				<h5 class="p-name">Travel Health Insurance</h5>
+				<button class="buy-btn"><a th:href="@{/customerRegisterForm}">Register Now</a></button>
+
+			</div>
+			<div class="product text-center col-lg-3 col-md-4 col-12">
 				<img class="img-fluid mb-3" src="img/dask.jpg" alt="">
 				<h5 class="p-name">Earthquake Insurance</h5>
 				<button class="buy-btn"><a th:href="@{/customerRegisterForm}">Register Now</a></button>

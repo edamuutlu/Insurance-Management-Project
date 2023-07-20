@@ -48,10 +48,10 @@
 
 			<form th:action="@{/carRegister}" th:object="${car}" method="post" name="myForm" ng-submit="register()">
 
-				<input type="hidden" name="customer_id" th:value="${customer_id}" />
+				<input type="hidden" name="customerId" th:value="${customerId}" />
 				<div style=" display: flex; flex-direction: row;">
 					<h4 class="mr-2">Customer Id : </h4>
-					<h4 th:text="${customer_id}">idParam</h4>
+					<h4 th:text="${customerId}">idParam</h4>
 				</div>
 
 				<div class="d-flex justify-content-between mt-3">
@@ -91,19 +91,19 @@
 					<option ng-repeat="option in brands" value="{{option}}">{{option}}</option>
 				</select>
 
-				<select name="fuel_type" ng-model="fuel_type" ng-required="true">
+				<select name="fuelType" ng-model="fuelType" ng-required="true">
 					<option value="">Select Fuel Type*</option>
 					<option ng-repeat="option in fuelTypes" value="{{option}}">{{option}}</option>
 				</select>
 
-				<input type="number" name="engine_size" placeholder="Engine Size*" ng-model="engine_size"
+				<input type="number" name="engineSize" placeholder="Engine Size*" ng-model="engineSize"
 					ng-required="true">
-				<p class="error" ng-show="myForm.engine_size.$invalid && myForm.engine_size.$touched">Fill out your
+				<p class="error" ng-show="myForm.engineSize.$invalid && myForm.engineSize.$touched">Fill out your
 					engine size.</p>
 
-				<input type="number" name="seat_capacity" placeholder="Seating Capacity*" ng-model="seat_capacity"
+				<input type="number" name="seatCapacity" placeholder="Seating Capacity*" ng-model="seatCapacity"
 					ng-required="true" minlength="1">
-				<p class="error" ng-show="myForm.seat_capacity.$invalid && myForm.seat_capacity.$touched">Fill out your
+				<p class="error" ng-show="myForm.seatCapacity.$invalid && myForm.seatCapacity.$touched">Fill out your
 					seating capacity.</p>
 
 				<select name="period" ng-model="period" ng-required="true">
@@ -116,10 +116,10 @@
 
 			<!--			<form th:action="@{/carRegister}" th:object="${car}" method="post">-->
 
-			<!--				<input type="hidden" name="customer_id" th:value="${customer_id}" />-->
+			<!--				<input type="hidden" name="customerId" th:value="${customerId}" />-->
 			<!--				<div style=" display: flex; flex-direction: row;">-->
 			<!--					<h4 class="mr-2">Customer Id : </h4>-->
-			<!--					<h4 th:text="${customer_id}">idParam</h4>-->
+			<!--					<h4 th:text="${customerId}">idParam</h4>-->
 			<!--				</div>-->
 
 			<!--				<div class="d-flex justify-content-between mt-3">-->

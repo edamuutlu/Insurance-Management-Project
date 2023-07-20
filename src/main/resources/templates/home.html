@@ -76,23 +76,23 @@
 			<p>Here you can check out our insurance options.</p>
 		</div>
 		<div class="row mx-auto container">
-			<input type="hidden" name="customer_id" th:value="${customer_id}" />
+			<input type="hidden" name="customerId" th:value="${customerId}" />
 			<div class="product text-center col-lg-3 col-md-4 col-12">
 				<img class="img-fluid mb-3" src="img/traffic.jpg" alt="">
 				<h5 class="p-name">Traffic Insurance</h5>
-				<button class="buy-btn"><a th:href="@{/trafficInsuranceForm(customer_id = ${customer_id})}">Get
+				<button class="buy-btn"><a th:href="@{/trafficInsuranceForm(customerId = ${customerId})}">Get
 						Offer</a></button>
 			</div>
 
 			<div onclick="window.location.href='/form'" class="product text-center col-lg-3 col-md-4 col-12">
-				<img class="img-fluid mb-3" src="img/auto.jpg" alt="">
-				<h5 class="p-name">Comprehensive Insurance</h5>
+				<img class="img-fluid mb-3" src="img/health.jpg" alt="">
+				<h5 class="p-name">Health Insurance</h5>
 				<button class="buy-btn">Get Offer</button>
 
 			</div>
 			<div onclick="window.location.href='/form'" class="product text-center col-lg-3 col-md-4 col-12">
-				<img class="img-fluid mb-3" src="img/health.jpg" alt="">
-				<h5 class="p-name">Health Insurance</h5>
+				<img class="img-fluid mb-3" src="img/travel.jpg" alt="">
+				<h5 class="p-name">Travel Health Insurance</h5> 
 				<button class="buy-btn">Get Offer</button>
 
 			</div>

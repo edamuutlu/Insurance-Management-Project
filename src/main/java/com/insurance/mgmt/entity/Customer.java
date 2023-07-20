@@ -20,7 +20,7 @@ public class Customer {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int customer_id;
+	private int customerId;
 
 	@NotEmpty(message = "Enter your tc number.")
 	@Digits(integer=11, fraction=0, message= "Only numeric input is allowed.")
@@ -59,10 +59,10 @@ public class Customer {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Customer(int customer_id, String tc, String birth, String email, String firstname, String lastname,
+	public Customer(int customerId, String tc, String birth, String email, String firstname, String lastname,
 			String province, String district, int status) {
 		super();
-		this.customer_id = customer_id;
+		this.customerId = customerId;
 		this.tc = tc;
 		this.birth = birth;
 		this.email = email;
@@ -73,12 +73,12 @@ public class Customer {
 		this.status = status;
 	}
 
-	public int getCustomer_id() {
-		return customer_id;
+	public int getCustomerId() {
+		return customerId;
 	}
 
-	public void setCustomer_id(int customer_id) {
-		this.customer_id = customer_id;
+	public void setCustomerId(int customerId) {
+		this.customerId = customerId;
 	}
 
 	public String getTc() {
@@ -147,7 +147,7 @@ public class Customer {
 
 	@Override
 	public String toString() {
-		return "Customer [customer_id=" + customer_id + ", tc=" + tc + ", birth=" + birth + ", email=" + email
+		return "Customer [customerId=" + customerId + ", tc=" + tc + ", birth=" + birth + ", email=" + email
 				+ ", firstname=" + firstname + ", lastname=" + lastname + ", province=" + province + ", district="
 				+ district + ", status=" + status + "]";
 	}

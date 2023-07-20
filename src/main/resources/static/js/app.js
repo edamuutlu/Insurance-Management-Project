@@ -85,7 +85,7 @@ myApp.controller("trafficInsuranceFormController", ["$scope", function($scope) {
 
 	//Select Fuel Type
 	$scope.fuelTypes = ["Petrol", "Diesel", "LPG", "Electric"];
-	$scope.fuel_type = "";
+	$scope.fuelType = "";
 	
 	//Select the Insurance Period
 	$scope.periods = [30, 60];

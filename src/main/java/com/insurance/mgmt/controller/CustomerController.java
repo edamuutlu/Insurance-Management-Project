@@ -60,8 +60,8 @@ public class CustomerController {
 	}
 	
 	@RequestMapping(path = "/selectType", method = RequestMethod.GET )
-	public String selectType(@RequestParam(value = "customer_id", required = false) int id, Model model){
-		model.addAttribute("customer_id",id);
+	public String selectType(@RequestParam(value = "customerId", required = false) int id, Model model){
+		model.addAttribute("customerId",id);
 		return "home";
 	}
 		
@@ -129,20 +129,20 @@ public class CustomerController {
 		return "redirect:/customerList";
 	}	
 	
-	@RequestMapping("/editCustomer/{customer_id}")
-	public String editCustomer(@PathVariable("customer_id") int id, Model model) {
+	@RequestMapping("/editCustomer/{customerId}")
+	public String editCustomer(@PathVariable("customerId") int id, Model model) {
 		Customer customer= customerService.getCustomerById(id);		
 		model.addAttribute("customer", customer);
 		return "customerEdit";
 	}
 	
-	@RequestMapping("/deleteCustomer/{customer_id}")
-	public String deleteCustomer(@PathVariable("customer_id") int customer_id) {
+	@RequestMapping("/deleteCustomer/{customerId}")
+	public String deleteCustomer(@PathVariable("customerId") int customerId) {
 		List<Car> cars = carService.getAllCars();
 		
 		// Müşterinin varsa araçlarının listelenmemesi için	
 		for(Car car : cars) {
-			if(car.getCustomer_id() == customer_id) {
+			if(car.getCustomerId() == customerId) {
 				car.setResult("Canceled");
 				car.setStatus(0);
 				carService.save(car);
@@ -151,10 +151,10 @@ public class CustomerController {
 			}
 		}
 				
-		Customer customer = customerService.getCustomerById(customer_id);
+		Customer customer = customerService.getCustomerById(customerId);
 		customer.setStatus(0);
 		customerService.save(customer);
-		//customerService.deleteById(customer_id);	// database den de kalıcı olarak silmek için
+		//customerService.deleteById(customerId);	// database den de kalıcı olarak silmek için
 		return "redirect:/customerList";
 	}
 		

@@ -18,12 +18,12 @@ import jakarta.validation.constraints.Pattern;
 public class Car {
 	
 	@Id
-	@Column(name="id")
+	@Column(name="car_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
 	@Column(name ="customer_id") //insertable = false, nullable = true
-	private int customer_id;
+	private int customerId;
 	
 	@Column(name ="plate1")
 	@NotNull(message = "This field must be filled.")
@@ -55,18 +55,18 @@ public class Car {
 	
 	@Column(name ="fuel_type")
 	@NotBlank(message = "This field must be filled.")
-	private String fuel_type;
+	private String fuelType;
 	
 	@Column(name ="engine_size")
 	@NotNull(message = "Enter your engine size.")
 	@Digits(integer=4, fraction=0, message= "Only numeric input is allowed.") 
-	private int engine_size;
+	private int engineSize;
 	
 	@Column(name ="seat_capacity")
 	@NotNull(message = "Enter your seating capacity.")
 	@Digits(integer=10, fraction=0, message= "Only numeric input is allowed.")
 	//@Size(min = 1,  message = "Input must be at least 1 digits.")
-	private int seat_capacity;
+	private int seatCapacity;
 	
 	@Column(name ="offer") //insertable = false, nullable = true
 	private int offer;
@@ -77,15 +77,16 @@ public class Car {
 	
 	private int period;
 	
-	private String start_date;
+	@Column(name ="startDate")
+	private String startDate;
 	
 	@Column(name ="days_diff")
-	private Integer days_diff;
+	private Integer daysDiff;
 	
 	private Integer refund;
 	
 	@Column(name ="end_date")
-	private String end_date;
+	private String endDate;
 	
 	public Car() {
 		super();
@@ -94,27 +95,27 @@ public class Car {
 		
 
 	public Car(int plate1, String plate2, int plate3, String type,
-			String purpose, String brand, String fuel_type, int engine_size, int seat_capacity, int customer_id, int offer, String result, 
-			int status, int period, String start_date, Integer days_diff, Integer refund, String end_date) {
+			String purpose, String brand, String fuelType, int engineSize, int seatCapacity, int customerId, int offer, String result, 
+			int status, int period, String startDate, Integer daysDiff, Integer refund, String endDate) {
 		super();
-		this.customer_id = customer_id;
+		this.customerId = customerId;
 		this.plate1 = plate1;
 		this.plate2 = plate2;
 		this.plate3 = plate3;
 		this.type = type;
 		this.purpose = purpose;
 		this.brand = brand;
-		this.fuel_type = fuel_type;
-		this.engine_size = engine_size;
-		this.seat_capacity = seat_capacity;
+		this.fuelType = fuelType;
+		this.engineSize = engineSize;
+		this.seatCapacity = seatCapacity;
 		this.offer=offer;
 		this.result=result;
 		this.status = status;
 		this.period=period;
-		this.start_date = start_date;
-		this.days_diff = days_diff;
+		this.startDate = startDate;
+		this.daysDiff = daysDiff;
 		this.refund = refund;
-		this.end_date = end_date;
+		this.endDate = endDate;
 	}
 
 	public int getId() {
@@ -127,13 +128,13 @@ public class Car {
 	}
 
 
-	public int getCustomer_id() {
-		return customer_id;
+	public int getCustomerId() {
+		return customerId;
 	}
 
 
-	public void setCustomer_id(int customer_id) {
-		this.customer_id = customer_id;
+	public void setCustomerId(int customerId) {
+		this.customerId = customerId;
 	}
 
 
@@ -197,33 +198,33 @@ public class Car {
 	}
 
 
-	public String getFuel_type() {
-		return fuel_type;
+	public String getFuelType() {
+		return fuelType;
 	}
 
 
-	public void setFuel_type(String fuel_type) {
-		this.fuel_type = fuel_type;
+	public void setFuelType(String fuelType) {
+		this.fuelType = fuelType;
 	}
 
  
-	public int getEngine_size() {
-		return engine_size;
+	public int getEngineSize() {
+		return engineSize;
 	}
 
 
-	public void setEngine_size(int engine_size) {
-		this.engine_size = engine_size;
+	public void setEngineSize(int engineSize) {
+		this.engineSize = engineSize;
 	}
 
 
-	public int getSeat_capacity() {
-		return seat_capacity;
+	public int getSeatCapacity() {
+		return seatCapacity;
 	}
 
 
-	public void setSeat_capacity(int seat_capacity) {
-		this.seat_capacity = seat_capacity;
+	public void setSeatCapacity(int seatCapacity) {
+		this.seatCapacity = seatCapacity;
 	}
 
 
@@ -268,23 +269,23 @@ public class Car {
 	}
 		
 
-	public String getStart_date() {
-		return start_date;
+	public String getStartDate() {
+		return startDate;
 	}
 
 
-	public void setStart_date(String start_date) {
-		this.start_date = start_date;
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
 	}
 	
 
-	public Integer getDays_diff() {
-		return days_diff;
+	public Integer getDaysDiff() {
+		return daysDiff;
 	}
 
 
-	public void setDays_diff(Integer days_diff) {
-		this.days_diff = days_diff;
+	public void setDaysDiff(Integer daysDiff) {
+		this.daysDiff = daysDiff;
 	}
 
 
@@ -298,24 +299,24 @@ public class Car {
 	}
 		
 
-	public String getEnd_date() {
-		return end_date;
+	public String getEndDate() {
+		return endDate;
 	}
 
 
-	public void setEnd_date(String end_date) {
-		this.end_date = end_date;
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
 	}
 
 
 	@Override
 	public String toString() {
-		return "Car [id=" + id + ", customer_id=" + customer_id + ", license_plate1=" + plate1
+		return "Car [id=" + id + ", customerId=" + customerId + ", license_plate1=" + plate1
 				+ ", license_plate2=" + plate2 + ", license_plate3=" + plate3 + ", type=" + type
-				+ ", purpose=" + purpose + ", brand=" + brand + ", fuel_type=" + fuel_type + ", engine_size="
-				+ engine_size + ", seat_capacity=" + seat_capacity + ", offer=" + offer + ", result=" + result
-				+ ", status=" + status + ", period=" + period + ", starting_date=" + start_date + ", days_diff="
-				+ days_diff + ", refund=" + refund + ", endDate=" + end_date + "]";
+				+ ", purpose=" + purpose + ", brand=" + brand + ", fuelType=" + fuelType + ", engineSize="
+				+ engineSize + ", seatCapacity=" + seatCapacity + ", offer=" + offer + ", result=" + result
+				+ ", status=" + status + ", period=" + period + ", starting_date=" + startDate + ", daysDiff="
+				+ daysDiff + ", refund=" + refund + ", endDate=" + endDate + "]";
 	}	
 	
 		

@@ -47,7 +47,7 @@
 
 			<form th:action="@{/save}" th:object="${customer}" method="post" name="myForm">
 				
-				<input type="hidden" name="customer_id" th:value="${customer.customer_id}"/>
+				<input type="hidden" name="customerId" th:value="${customer.customerId}"/>
 				<input type="text" name="tc" placeholder="TC Number*" ng-required="true" ng-pattern="/^[0-9]*$/" minlength="11"
 					maxlength="11" th:value="${customer.tc}">
 				<p class="error" ng-show="myForm.tc.$invalid && myForm.tc.$touched">Fill out your TC number correctly.</p>

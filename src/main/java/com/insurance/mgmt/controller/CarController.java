@@ -1,8 +1,10 @@
 package com.insurance.mgmt.controller;
 
 import java.time.Duration;
+import java.time.LocalDate;
 //import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Period;
 //import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -32,6 +34,7 @@ import com.insurance.mgmt.entity.Customer;
 import com.insurance.mgmt.repository.ICarRepository;
 import com.insurance.mgmt.service.CarService;
 import com.insurance.mgmt.service.CustomerService;
+import com.insurance.mgmt.util.CalculateMethods;
 
 import jakarta.validation.Valid;
 
@@ -55,133 +58,14 @@ public class CarController {
 		dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
 	} 
 	
-	public int calculate(Car car) {
-		// Sigorta teklifi için hesaplamalar
-				int offer=500; // Sabit bir başlangıç teklifi-primi
-				
-//				Customer customer = customerService.getCustomerById(car.getCustomer_id());				
-//				// String'i LocalDate nesnesine dönüştürme
-//		        LocalDate birthDate = LocalDate.parse(customer.getBirth());
-//		        // Bugünkü tarihi al
-//		        LocalDate currentDate = LocalDate.now();
-//		        // Yaşı hesapla
-//		        int age = Period.between(birthDate, currentDate).getYears();
-//		        if(age>18 && age<=25) {
-//		        	offer+= age * 4;
-//		        }else if (age>25 && age<=60) {
-//		        	offer+= age * 3;
-//				}else {
-//					offer+= age * 5;
-//				}
-				
-				switch (car.getType()) {	// Araç tipi için ek prim
-				    case "Car":
-				        offer += 400;
-				        break;
-				    case "Truck":
-				        offer += 500;
-				        break;
-				    case "Van":
-				        offer += 300;
-				        break;
-				    default:
-						break;
-				}
-			
-				switch (car.getPurpose()) {	// Kullanım amacı için ek prim
-				    case "Private":
-				        offer += 400;
-				        break;
-				    case "Commercial":
-				        offer += 500;
-				        break;
-				    default:
-						break;
-				}
-				
-				switch (car.getBrand()) {	// Araç modeli için ek prim
-					case "Audi":
-					case "BMW":
-					case "Lamborghini":
-					case "Mercedes":
-					case "Volvo":
-						offer+=3000;
-						break;
-					case "Citroen":
-					case "Dacia":
-					case "Hyundai":
-					case "Kia":
-					case "Jeep":
-						offer+=2000;
-						break;
-					case "Fiat":
-					case "Nissan":
-					case "Opel":
-					case "Renault":
-					case "Skoda":
-						offer+=1000;
-						break;
-					default:
-						break;
-				}
-				
-				// Sigortanın kapsadığı süreye bağlı olarak ek prim
-				offer += car.getPeriod() * 20; 
-				
-				switch (car.getFuel_type()) {	// Araç yakıt tipi için ek prim
-					case "Petrol":
-						offer+=300;
-						break;
-					case "Diesel":
-						offer+=200;
-						break;
-					case "LPG":
-						offer+=200;
-						break;
-					case "Electric":
-						offer+=200;
-						break;
-					default:
-						break;
-				}
-				
-				if(car.getEngine_size()<2) {	// Motor hacmine göre ek prim
-					offer+= (car.getEngine_size()) * 100;
-				}else if(car.getEngine_size()>2) {
-					offer+=(car.getEngine_size()) * 200;
-				}
-				
-				switch (car.getPlate1()) {	// Aracın kayıtlı olduğu ilin trafik yoğunluğuna göre ek prim
-				case 06:
-					offer+=400;
-					break;
-				case 16:
-					offer+=300;
-					break;
-				case 34:
-					offer+=500;
-					break;
-			    default:
-					System.out.println("Geçerli olmayan il");
-					break;
-				}
-				
-				if(car.getSeat_capacity()<=2) {	// Aracın koltuk kapasitesine göre ek prim
-					offer+= (car.getSeat_capacity()) * 20;
-				}else if(car.getSeat_capacity()>2 && car.getSeat_capacity()<=5) {
-					offer+= (car.getSeat_capacity()) * 30;
-				}else { 
-					offer+= (car.getSeat_capacity()) * 40;
-				}
-				return offer;
-	}
+	
 	
 	@PostMapping("/carRegister")
-	public String register(@Valid @ModelAttribute Car car, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes, @RequestParam(value = "customer_id", required = false) int idParam) {		
+	public String register(@Valid @ModelAttribute Car car, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes, @RequestParam(value = "customerId", required = false) int idParam) {		
 				
 		if(bindingResult.hasErrors()) {
 			log.info(">> Car : {}",car.toString());
-			model.addAttribute("customer_id",car.getCustomer_id());
+			model.addAttribute("customerId",car.getCustomerId());
 			return "trafficInsuranceForm";
 		}		
 		model.addAttribute("cars",carService.getAllCars()); 
@@ -189,11 +73,20 @@ public class CarController {
 		// Form doldurulurkenki tarih ve sigortanın biteceği tarih hesaplanmaktadır
 		LocalDateTime now = LocalDateTime.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-		car.setStart_date(now.format(formatter));
+		car.setStartDate(now.format(formatter));
 		LocalDateTime endDate = now.plusDays(car.getPeriod());
-		car.setEnd_date(endDate.format(formatter));
+		car.setEndDate(endDate.format(formatter));
 		
-		int offer = calculate(car);	
+		Customer customer = customerService.getCustomerById(car.getCustomerId());				
+		// String'i LocalDate nesnesine dönüştürme
+        LocalDate birthDate = LocalDate.parse(customer.getBirth());
+        // Bugünkü tarihi al
+        LocalDate currentDate = LocalDate.now();
+        // Yaşı hesapla
+        int age = Period.between(birthDate, currentDate).getYears();
+        
+        CalculateMethods calculateMethods = new CalculateMethods();	// public olan calculate metodunu çağırmak için util'den nesne oluşturulmaktadır
+		int offer = calculateMethods.calculate(car, age);	
 		car.setOffer(offer);
 		car.setStatus(1);	
 		
@@ -204,14 +97,13 @@ public class CarController {
 					&& c.getPlate3() == car.getPlate3() && c.getResult().equals("Accepted")) {
 				boolean showPlateAlert = true;	
 				model.addAttribute("showPlateAlert",showPlateAlert);				
-				model.addAttribute("customer_id",idParam);
+				model.addAttribute("customerId",idParam);
 				return "trafficInsuranceForm";
 			}			
 		}
 		car.setResult("Canceled");	// Default olarak canceled yazdırılmaktadır
 		carService.save(car);				
-		redirectAttributes.addFlashAttribute("car", car);			
-		Customer customer = customerService.getCustomerById(car.getCustomer_id());				
+		redirectAttributes.addFlashAttribute("car", car);				
 		redirectAttributes.addFlashAttribute("customer",customer);	
 		return "redirect:/trafficInsuranceCalculate";	
 				
@@ -224,13 +116,13 @@ public class CarController {
 	
 	
 	@RequestMapping(path = "/trafficInsuranceForm", method = RequestMethod.GET )
-	public String getForm(@RequestParam(value = "customer_id", required = false) int idParam, Model model, @ModelAttribute Car car){
-		model.addAttribute("customer_id",idParam);
+	public String getForm(@RequestParam(value = "customerId", required = false) int idParam, Model model, @ModelAttribute Car car){
+		model.addAttribute("customerId",idParam);
 		return "trafficInsuranceForm";
 	}
 	
-	@GetMapping("/carList/{customer_id}")
-	public ModelAndView getAllCar(@PathVariable("customer_id") int customer_id, Model model) {	
+	@GetMapping("/carList/{customerId}")
+	public ModelAndView getAllCar(@PathVariable("customerId") int customerId, Model model) {	
 		List<Car> cars = carRepository.findByStatus(1);
 		List<Car> list = new ArrayList<>();
 		ArrayList<Car> expiredCars = new ArrayList<>();
@@ -238,9 +130,9 @@ public class CarController {
 		
 	    // Poliçenin süresinin bitip bitmediğini kontrol etme				
 	    for(Car car : cars) {
-	    	if (car.getCustomer_id() == customer_id  && car.getResult().equals("Accepted")) { 
+	    	if (car.getCustomerId() == customerId  && car.getResult().equals("Accepted")) { 
 	    		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-	    		LocalDateTime endDateTime = LocalDateTime.parse(car.getEnd_date(), formatter);
+	    		LocalDateTime endDateTime = LocalDateTime.parse(car.getEndDate(), formatter);
 	    			    		
 	    		LocalDateTime now = LocalDateTime.now();
 	    		
@@ -258,7 +150,7 @@ public class CarController {
 	    }
 	    	    
 	    for (Car car : cars) {
-	        if (car.getCustomer_id() == customer_id) {
+	        if (car.getCustomerId() == customerId) {
 	        	list.add(car);	        	
 	        }
 	    }
@@ -285,14 +177,14 @@ public class CarController {
 		LocalDateTime now = LocalDateTime.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 		String end_date = now.format(formatter);
-		LocalDateTime startingDateTime = LocalDateTime.parse(car.getStart_date(), formatter);
+		LocalDateTime startingDateTime = LocalDateTime.parse(car.getStartDate(), formatter);
 		LocalDateTime endDateTime = LocalDateTime.parse(end_date, formatter);
 
 		Duration duration = Duration.between(startingDateTime, endDateTime);
 		int daysDiff = (int) duration.toDays();	// daysDiff, poliçeyi ne kadar kullandığı
 
 		//System.out.println("Fark: " + daysDiff + " gün");
-		car.setDays_diff(daysDiff);
+		car.setDaysDiff(daysDiff);
 		int remainingDay = car.getPeriod() - daysDiff;	// remainingDay, poliçenin bitimine ne kadar kaldığı			
 		int refund = (car.getOffer() / car.getPeriod()) * remainingDay;	// refund, iade edilecek miktar
 		car.setRefund(refund);
@@ -319,7 +211,7 @@ public class CarController {
         		LocalDateTime now = LocalDateTime.now();
         		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
         		String end_date = now.format(formatter);
-        		car.setEnd_date(end_date);
+        		car.setEndDate(end_date);
         	}
         	carService.save(car);
         }

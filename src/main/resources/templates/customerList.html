@@ -96,8 +96,8 @@
 			</thead>
 			<tbody>
 				<tr th:each="c :${customer}">  <!--th:object="${car}"-->
-<!--					<input type="hidden" name="customer_id" th:value="${car.customer_id}"/>-->
-					<td th:text="${c.customer_id}"></td>
+<!--					<input type="hidden" name="customerId" th:value="${car.customerId}"/>-->
+					<td th:text="${c.customerId}"></td>
 					<td th:text="${c.tc}"></td>
 					<td th:text="${c.birth}"></td>
 					<td th:text="${c.email}"></td>
@@ -107,17 +107,17 @@
 					<td th:text="${c.district}"></td>					
 <!--					<td><select name="format" onchange="location = this.value;">						-->
 <!--							<option>Select</option>		-->
-<!--							<option th:value="@{/trafficInsuranceForm(customer_id = ${c.customer_id})}">Traffic Insurance</option>-->
+<!--							<option th:value="@{/trafficInsuranceForm(customerId = ${c.customerId})}">Traffic Insurance</option>-->
 <!--							<option value="">Comprehensive Insurance</option>-->
 <!--							<option value="">Health Insurance</option>-->
 <!--							<option value="">Earthquake Insurance</option>-->
 <!--						</select>-->
 <!--					</td>-->						
-					<td><a th:href="@{/selectType(customer_id=${c.customer_id})}"><span class="badge text-bg-primary fs-6">Select Type</span></a></td>
-					<td><button class="mx-auto"><a th:href="@{/carList/{customer_id}(customer_id=${c.customer_id})}"><i class="fa-solid fa-car" id="icon-car"></i></a></button></td>	
-					<td><button class="mx-auto"><a th:href="@{/editCustomer/{customer_id}(customer_id=${c.customer_id})}"><i id="icon-edit"
+					<td><a th:href="@{/selectType(customerId=${c.customerId})}"><span class="badge text-bg-primary fs-6">Select Type</span></a></td>
+					<td><button class="mx-auto"><a th:href="@{/carList/{customerId}(customerId=${c.customerId})}"><i class="fa-solid fa-car" id="icon-car"></i></a></button></td>	
+					<td><button class="mx-auto"><a th:href="@{/editCustomer/{customerId}(customerId=${c.customerId})}"><i id="icon-edit"
 									class="fa-regular fa-pen-to-square"></i></a></button></td>
-					<td><button class="mx-auto"><a th:href="@{/deleteCustomer/{customer_id}(customer_id=${c.customer_id})}"><i id="icon-trash"
+					<td><button class="mx-auto"><a th:href="@{/deleteCustomer/{customerId}(customerId=${c.customerId})}"><i id="icon-trash"
 									class="gg-trash"></i></a></button></td>																							
 				</tr>
 			</tbody>
