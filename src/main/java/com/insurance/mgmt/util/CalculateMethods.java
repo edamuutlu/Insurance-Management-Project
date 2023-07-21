@@ -1,6 +1,7 @@
 package com.insurance.mgmt.util;
 
 import com.insurance.mgmt.entity.Car;
+import com.insurance.mgmt.entity.Home;
 
 public class CalculateMethods {
 	
@@ -116,5 +117,10 @@ public class CalculateMethods {
 					offer+= (car.getSeatCapacity()) * 40;
 				}
 				return offer;
+	}
+	
+	public int calculateHomeInsurance(Home home) {
+		int offer = 10;
+		return offer;
 	}
 }

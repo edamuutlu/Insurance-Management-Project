@@ -19,7 +19,7 @@ public class Insurance {
 	private String insuranceType;
 	
 	@Column(name ="customer_id") 
-	private int customerId;
+	private int customer_id;
 	
 	@Column(name ="car_id") 
 	private int carId;
@@ -56,12 +56,12 @@ public class Insurance {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Insurance(int insuranceId, String insuranceType, int customerId, int carId, int homeId, int offer,
+	public Insurance(int insuranceId, String insuranceType, int customer_id, int carId, int homeId, int offer,
 			String result, String startDate, String endDate, int period, int daysDiff, int refund, int status) {
 		super();
 		this.insuranceId = insuranceId;
 		this.insuranceType = insuranceType;
-		this.customerId = customerId;
+		this.customer_id = customer_id;
 		this.carId = carId;
 		this.homeId = homeId;
 		this.offer = offer;
@@ -91,11 +91,11 @@ public class Insurance {
 	}
 
 	public int getCustomerId() {
-		return customerId;
+		return customer_id;
 	}
 
-	public void setCustomerId(int customerId) {
-		this.customerId = customerId;
+	public void setCustomerId(int customer_id) {
+		this.customer_id = customer_id;
 	}
 
 	public int getCarId() {
@@ -181,7 +181,7 @@ public class Insurance {
 	@Override
 	public String toString() {
 		return "Insurance [insuranceId=" + insuranceId + ", insuranceType=" + insuranceType + ", customerId="
-				+ customerId + ", carId=" + carId + ", homeId=" + homeId + ", offer=" + offer + ", result=" + result
+				+ customer_id + ", carId=" + carId + ", homeId=" + homeId + ", offer=" + offer + ", result=" + result
 				+ ", startDate=" + startDate + ", endDate=" + endDate + ", period=" + period + ", daysDiff=" + daysDiff
 				+ ", refund=" + refund + ", status=" + status + "]";
 	}

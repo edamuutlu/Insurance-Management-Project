@@ -93,4 +93,13 @@ myApp.controller("trafficInsuranceFormController", ["$scope", function($scope) {
 		
 
 }]);
+
+myApp.controller("homeInsuranceFormController", ["$scope", function($scope) {
+
+	$scope.register = function() {
+		$scope.msg = "Welcome " + $scope.firstname + "! You have signed in.";
+
+	};
+	
+}]);
   

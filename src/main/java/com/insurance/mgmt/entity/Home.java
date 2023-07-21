@@ -11,7 +11,7 @@ import jakarta.persistence.Table;
 @Table(name = "HOME")
 public class Home {
 	@Id
-	@Column(name ="homeId")
+	@Column(name ="home_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int homeId;
 	
@@ -21,8 +21,8 @@ public class Home {
 	@Column(name ="type") 
 	private String type;
 	
-	@Column(name ="usage") 
-	private String usage;
+	@Column(name ="usage_type") 
+	private String typeOfUse;
 	
 	@Column(name ="province") 
 	private String province;
@@ -46,7 +46,7 @@ public class Home {
 	private int buildingAge;
 	
 	@Column(name ="owner_title") 
-	private int ownerTitle;
+	private String ownerTitle;
 	
 	@Column(name ="status") 
 	private int status;
@@ -56,13 +56,13 @@ public class Home {
 		// TODO Auto-generated constructor stub
 	}		
 
-	public Home(int homeId, int customerId, String type, String usage, String province, String district, String neighbourhood,
-			int buildingNumber, int apartment, int floor, int buildingAge, int ownerTitle, int status) {
+	public Home(int homeId, int customerId, String type, String typeOfUse, String province, String district, String neighbourhood,
+			int buildingNumber, int apartment, int floor, int buildingAge, String ownerTitle, int status) {
 		super();
 		this.homeId = homeId;
 		this.customerId = customerId;
 		this.type = type;
-		this.usage = usage;
+		this.typeOfUse = typeOfUse;
 		this.province = province;
 		this.district = district;
 		this.neighbourhood = neighbourhood;
@@ -99,12 +99,12 @@ public class Home {
 		this.type = type;
 	}
 
-	public String getUsage() {
-		return usage;
+	public String getTypeOfUse() {
+		return typeOfUse;
 	}
 
-	public void setUsage(String usage) {
-		this.usage = usage;
+	public void setTypeOfUse(String typeOfUse) {
+		this.typeOfUse = typeOfUse;
 	}
 
 	public String getProvince() {
@@ -163,11 +163,11 @@ public class Home {
 		this.buildingAge = buildingAge;
 	}
 
-	public int getOwnerTitle() {
+	public String getOwnerTitle() {
 		return ownerTitle;
 	}
 
-	public void setOwnerTitle(int ownerTitle) {
+	public void setOwnerTitle(String ownerTitle) {
 		this.ownerTitle = ownerTitle;
 	}
 
@@ -181,7 +181,7 @@ public class Home {
 
 	@Override
 	public String toString() {
-		return "Home [homeId=" + homeId + ", customerId=" + customerId + ", type=" + type + ", usage=" + usage
+		return "Home [homeId=" + homeId + ", customerId=" + customerId + ", type=" + type + ", usage=" + typeOfUse
 				+ ", province=" + province + ", district=" + district + ", neighbourhood=" + neighbourhood
 				+ ", buildingNumber=" + buildingNumber + ", apartment=" + apartment + ", floor=" + floor
 				+ ", buildingAge=" + buildingAge + ", ownerTitle=" + ownerTitle + ", status=" + status + "]";

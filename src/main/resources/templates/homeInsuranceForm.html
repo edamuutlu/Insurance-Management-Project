@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en" xmlns:th"http://www.thymeLeaf.org">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Home Insurance Form</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+	<link rel="stylesheet" href="" th:href="@{/css/style.css}">
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+
+</head>
+
+<body ng-app="myApp">
+
+	<!--Navbar-->
+	<nav class="navbar navbar-expand-lg navbar-light bg-light py-3 fixed-top">
+		<div class="container">
+			<a class="navbar-brand text-black" href="/index">SBM</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+				data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span id="bar" data-lucide="menu"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+					<li class="nav-item">
+						<a class="nav-link" href="/customerList">See Customer List</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/customerRegisterForm">New Customer Register</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<!--End Navbar-->
+
+
+	<section id="featured" class="my-5 pt-5">
+		<div class="container-register mt-5 py-5" ng-controller="homeInsuranceFormController">
+			<div class="textIntro">
+				<h1 class="text-center">Home Insurance Form</h1>
+				<p ng-show="msg">{{msg}}</p>
+<!--				<div class="alert alert-warning" role="alert" th:if="${showAlert}"> This license plate number is already registered! </div>-->
+			</div>
+
+			<form th:action="@{/homeRegister}" th:object="${home}" method="post" name="myForm" ng-submit="register()">
+
+				<input type="hidden" name="customerId" th:value="${customerId}"/>
+				<div style=" display: flex; flex-direction: row;">
+					<h4 class="mr-2">Customer Id : </h4>
+					<h4 th:text="${customerId}">idParam</h4>
+				</div>
+
+				<input type="text" name="type" placeholder="Type*" ng-model="type" ng-required="true" ng-pattern="/^[a-zA-Z]*$/">
+				<p class="error" ng-show="myForm.type.$invalid && myForm.type.$touched">Fill out your
+					type.</p>
+					
+				<input type="text" name="typeOfUse" placeholder="Usage Type*" ng-model="typeOfUse" ng-required="true">
+				<p class="error" ng-show="myForm.typeOfUse.$invalid && myForm.typeOfUse.$touched">Fill out your
+					usage type.</p>	
+					
+				<input type="text" name="province" placeholder="Province*" ng-model="province" ng-required="true" ng-pattern="/^[a-zA-Z]*$/">
+				<p class="error" ng-show="myForm.province.$invalid && myForm.province.$touched">Fill out your
+					usage.</p>	
+					
+				<input type="text" name="district" placeholder="District*" ng-model="district" ng-required="true" ng-pattern="/^[a-zA-Z]*$/">
+				<p class="error" ng-show="myForm.district.$invalid && myForm.district.$touched">Fill out your
+					usage.</p>
+					
+				<input type="text" name="neighbourhood" placeholder="Neighbourhood*" ng-model="neighbourhood" ng-required="true" ng-pattern="/^[a-zA-Z]*$/">
+				<p class="error" ng-show="myForm.neighbourhood.$invalid && myForm.neighbourhood.$touched">Fill out your
+					usage.</p>				
+
+				<input type="number" name="buildingNumber" placeholder="Building Number*" ng-model="buildingNumber"
+					ng-required="true">
+				<p class="error" ng-show="myForm.buildingNumber.$invalid && myForm.buildingNumber.$touched">Fill out
+					your
+					building number.</p>
+
+				<input type="number" name="apartment" placeholder="Apartment*" ng-model="apartment" ng-required="true">
+				<p class="error" ng-show="myForm.apartment.$invalid && myForm.apartment.$touched">Fill out your
+					apartment.</p>
+					
+				<input type="number" name="floor" placeholder="Floor*" ng-model="floor" ng-required="true">
+				<p class="error" ng-show="myForm.floor.$invalid && myForm.floor.$touched">Fill out your
+					floor.</p>
+					
+				<input type="number" name="buildingAge" placeholder="Building Age*" ng-model="buildingAge" ng-required="true">
+				<p class="error" ng-show="myForm.buildingAge.$invalid && myForm.buildingAge.$touched">Fill out your
+					building age.</p>
+				
+				<input type="text" name="ownerTitle" placeholder="Owner Title*" ng-model="ownerTitle" ng-required="true" ng-pattern="/^[a-zA-Z]*$/">
+				<p class="error" ng-show="myForm.ownerTitle.$invalid && myForm.ownerTitle.$touched">Fill out your
+					owner title.</p>
+
+				<button type="submit" class="btn" ng-disabled="myForm.$invalid">Submit</button>
+			</form>
+		</div>
+	</section>
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+		integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"
+		integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS"
+		crossorigin="anonymous"></script>
+
+	<script src="/js/app.js"></script>
+</body>
+
+</html>
