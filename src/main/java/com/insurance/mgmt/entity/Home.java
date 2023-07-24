@@ -18,8 +18,8 @@ public class Home {
 	@Column(name ="customer_id") 
 	private int customerId;
 	
-	@Column(name ="type") 
-	private String type;
+	@Column(name ="building_type") 
+	private String buildingType;
 	
 	@Column(name ="usage_type") 
 	private String typeOfUse;
@@ -40,28 +40,34 @@ public class Home {
 	private int apartment;
 	
 	@Column(name ="floor") 
-	private int floor;
+	private String floor;
 	
 	@Column(name ="building_age") 
 	private int buildingAge;
 	
-	@Column(name ="owner_title") 
-	private String ownerTitle;
+	@Column(name ="insurer_title") 
+	private String insurerTitle;
 	
 	@Column(name ="status") 
 	private int status;
+	
+	@Column(name="flat_area")
+	private int flatArea;
+	
+	@Column(name= "period")
+	private int period;
 		
 	public Home() {
 		super();
 		// TODO Auto-generated constructor stub
 	}		
 
-	public Home(int homeId, int customerId, String type, String typeOfUse, String province, String district, String neighbourhood,
-			int buildingNumber, int apartment, int floor, int buildingAge, String ownerTitle, int status) {
+	public Home(int homeId, int customerId, String buildingType, String typeOfUse, String province, String district, String neighbourhood,
+			int buildingNumber, int apartment, String floor, int buildingAge, String insurerTitle, int status, int period, int flatArea) {
 		super();
 		this.homeId = homeId;
 		this.customerId = customerId;
-		this.type = type;
+		this.buildingType = buildingType;
 		this.typeOfUse = typeOfUse;
 		this.province = province;
 		this.district = district;
@@ -70,10 +76,11 @@ public class Home {
 		this.apartment = apartment;
 		this.floor = floor;
 		this.buildingAge = buildingAge;
-		this.ownerTitle = ownerTitle;
+		this.insurerTitle = insurerTitle;
 		this.status = status;
+		this.flatArea = flatArea;
+		this.period = period;
 	}
-
 
 	public int getHomeId() {
 		return homeId;
@@ -91,12 +98,12 @@ public class Home {
 		this.customerId = customerId;
 	}
 
-	public String getType() {
-		return type;
+	public String getBuildingType() {
+		return buildingType;
 	}
 
-	public void setType(String type) {
-		this.type = type;
+	public void setBuildingType(String buildingType) {
+		this.buildingType = buildingType;
 	}
 
 	public String getTypeOfUse() {
@@ -147,11 +154,11 @@ public class Home {
 		this.apartment = apartment;
 	}
 
-	public int getFloor() {
+	public String getFloor() {
 		return floor;
 	}
 
-	public void setFloor(int floor) {
+	public void setFloor(String floor) {
 		this.floor = floor;
 	}
 
@@ -163,12 +170,12 @@ public class Home {
 		this.buildingAge = buildingAge;
 	}
 
-	public String getOwnerTitle() {
-		return ownerTitle;
+	public String getInsurerTitle() {
+		return insurerTitle;
 	}
 
-	public void setOwnerTitle(String ownerTitle) {
-		this.ownerTitle = ownerTitle;
+	public void setInsurerTitle(String insurerTitle) {
+		this.insurerTitle = insurerTitle;
 	}
 
 	public int getStatus() {
@@ -179,13 +186,33 @@ public class Home {
 		this.status = status;
 	}
 
+	public int getFlatArea() {
+		return flatArea;
+	}
+
+	public void setFlatArea(int flatArea) {
+		this.flatArea = flatArea;
+	}		
+
+	public int getPeriod() {
+		return period;
+	}
+
+	public void setPeriod(int period) {
+		this.period = period;
+	}
+
 	@Override
 	public String toString() {
-		return "Home [homeId=" + homeId + ", customerId=" + customerId + ", type=" + type + ", usage=" + typeOfUse
-				+ ", province=" + province + ", district=" + district + ", neighbourhood=" + neighbourhood
-				+ ", buildingNumber=" + buildingNumber + ", apartment=" + apartment + ", floor=" + floor
-				+ ", buildingAge=" + buildingAge + ", ownerTitle=" + ownerTitle + ", status=" + status + "]";
+		return "Home [homeId=" + homeId + ", customerId=" + customerId + ", buildingType=" + buildingType
+				+ ", typeOfUse=" + typeOfUse + ", province=" + province + ", district=" + district + ", neighbourhood="
+				+ neighbourhood + ", buildingNumber=" + buildingNumber + ", apartment=" + apartment + ", floor=" + floor
+				+ ", buildingAge=" + buildingAge + ", insurerTitle=" + insurerTitle + ", status=" + status
+				+ ", flatArea=" + flatArea + ", period=" + period + "]";
 	}
+
+
+	
 	
 	
 }

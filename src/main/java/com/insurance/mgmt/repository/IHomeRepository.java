@@ -7,4 +7,5 @@ import com.insurance.mgmt.entity.Home;
 
 public interface IHomeRepository extends JpaRepository<Home,Integer>{ //Object, id (type)
 	List<Home> findByStatus(int status);
+	List<Home> findByCustomerId(int id);
 }

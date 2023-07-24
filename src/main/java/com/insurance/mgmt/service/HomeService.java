@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.insurance.mgmt.entity.Home;
 import com.insurance.mgmt.repository.IHomeRepository;
 
@@ -21,8 +20,11 @@ public class HomeService {
 		return homeRepository.findAll();
 	}
 	
+	public Home getHomeById(int id) {
+		return homeRepository.findById(id).get();
+	}
+	
 	public void deleteById(int id) {
 		homeRepository.deleteById(id);
 	}
-	
 }

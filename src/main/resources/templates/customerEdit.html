@@ -42,6 +42,7 @@
 		<div class="container-register mt-5 py-5" ng-controller="registerCustomerFormController">
 			<div class="textIntro">
 				<h1 class="text-center">Customer Edit</h1>
+				<div class="alert alert-warning" role="alert" th:if="${showTcAlert}"> This TC number is already registered! </div>
 				<p ng-show="msg">{{msg}}</p>
 			</div>
 

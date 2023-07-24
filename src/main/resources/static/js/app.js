@@ -101,5 +101,25 @@ myApp.controller("homeInsuranceFormController", ["$scope", function($scope) {
 
 	};
 	
+	//Select the Building Type
+	$scope.buildingTypes = ["Reinforced Concrete", "Other Structures"];
+	$scope.buildingType = "";
+	
+	//Select the Building Type
+	$scope.typesOfUse = ["Summer House", "Permanent Residence"];
+	$scope.typeOfUse = "";
+	
+	//Select the Floor
+	$scope.floors = ["Basement", "Ground floor","1-10 Floor","11-20 Floor","20 or More Floors"];
+	$scope.floor = "";
+	
+	//Select the Owner Title
+	$scope.titles = ["Owner", "Tenant"];
+	$scope.title = "";
+	
+	//Select the Insurance Period
+	$scope.periods = [30, 60];
+	$scope.period = "";
+	
 }]);
   

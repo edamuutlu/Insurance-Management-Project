@@ -5,7 +5,7 @@ import com.insurance.mgmt.entity.Home;
 
 public class CalculateMethods {
 	
-	public int calculate(Car car, int age) {
+	public int calculateCarInsurance(Car car, int age) {
 		// Sigorta teklifi için hesaplamalar
 				int offer=500; // Sabit bir başlangıç teklifi-primi								
 		        
@@ -119,8 +119,97 @@ public class CalculateMethods {
 				return offer;
 	}
 	
+	
 	public int calculateHomeInsurance(Home home) {
-		int offer = 10;
+		int offer = 500;
+		
+		if(home.getFlatArea() <= 50) {	// Konutun metrekaresine göre ek prim
+			offer+= home.getFlatArea() * 3;
+		}else if(home.getFlatArea() > 50 && home.getFlatArea() <= 100) {
+			offer+= home.getFlatArea() * 4;
+		}else {
+			offer+= home.getFlatArea() * 5;
+		}
+		
+		switch (home.getBuildingType()) {	// Konutun yapı tarzına göre ek prim
+			case "Reinforced Concrete":
+				offer+= 500;
+				break;
+			case "Other Structures":
+				offer+= 1000;
+				break;
+			default:
+				break;
+		}
+		
+		switch (home.getTypeOfUse()) {	// Konutun yapı tarzına göre ek prim
+			case "Summer House":
+				offer+= 500;
+				break;
+			case "Permanent Residence":
+				offer+= 1000;
+				break;
+			default:
+				break;
+		}
+		
+		switch (home.getProvince()) {	// Konutun bulunduğu ile göre ek prim
+			case "Ankara":
+				offer+= 800;
+				break;
+			case "Bursa":
+				offer+= 500;
+				break;
+			case "Istanbul":
+			case "İstanbul":
+				offer+= 1000;
+				break;			
+			default:
+				break;
+		}
+		
+		if(home.getBuildingAge() <= 5) {	// Bina yaşına göre ek prim
+			offer+= home.getBuildingAge() * 10;
+		}else if(home.getBuildingAge() > 5 && home.getBuildingAge() <= 10) {
+			offer+= home.getBuildingAge() * 20;
+		}else {
+			offer+= home.getBuildingAge() * 30;
+		}
+		
+		switch (home.getFloor()) {	// Binanın kat sayısına göre ek prim
+			case "Basement":
+				offer+= 500;
+				break;
+			case "Ground Floor":
+				offer+= 600;
+				break;
+			case "1-10 Floor":
+				offer+= 700;
+				break;
+			case "11-20 Floor":
+				offer+= 800;
+				break;
+			case "20 or More Floors":
+				offer+= 900;
+				break;
+			default:
+				break;
+		}
+		
+		switch (home.getInsurerTitle()) {
+			case "Owner":
+				offer+= 400;
+				break;
+			case "Tenant":
+				offer+= 200;
+				break;
+			default:
+				break;
+		}
+		
+		// Sigortanın kapsadığı süreye bağlı olarak ek prim
+		offer += home.getPeriod() * 20; 
+		
 		return offer;
 	}
 }

@@ -86,7 +86,7 @@ public class CarController {
         int age = Period.between(birthDate, currentDate).getYears();
         
         CalculateMethods calculateMethods = new CalculateMethods();	// public olan calculate metodunu çağırmak için util'den nesne oluşturulmaktadır
-		int offer = calculateMethods.calculate(car, age);	
+		int offer = calculateMethods.calculateCarInsurance(car, age);	
 		car.setOffer(offer);
 		car.setStatus(1);	
 		
@@ -170,7 +170,7 @@ public class CarController {
 		return "redirect:/customerList";
 	}
 	
-	@GetMapping("/insuranceRefund/{id}")
+	@GetMapping("/trafficInsuranceRefund/{id}")
 	public String insuranceRefund(@PathVariable("id") int id, Model model) {		
 		Car car = carService.getCarId(id);
 		
@@ -193,7 +193,7 @@ public class CarController {
 		carService.save(car);
 		
 		model.addAttribute(car);
-		return "insuranceRefund";
+		return "trafficInsuranceRefund";
 	}
 	
 	@PostMapping("/result")

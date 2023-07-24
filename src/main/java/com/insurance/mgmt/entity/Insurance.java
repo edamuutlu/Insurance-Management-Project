@@ -57,7 +57,7 @@ public class Insurance {
 	}
 
 	public Insurance(int insuranceId, String insuranceType, int customer_id, int carId, int homeId, int offer,
-			String result, String startDate, String endDate, int period, int daysDiff, int refund, int status) {
+			String result, String startDate, String endDate, int daysDiff, int refund, int status, int period) {
 		super();
 		this.insuranceId = insuranceId;
 		this.insuranceType = insuranceType;

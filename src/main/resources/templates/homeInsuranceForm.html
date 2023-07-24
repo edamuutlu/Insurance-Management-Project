@@ -43,36 +43,45 @@
 			<div class="textIntro">
 				<h1 class="text-center">Home Insurance Form</h1>
 				<p ng-show="msg">{{msg}}</p>
-<!--				<div class="alert alert-warning" role="alert" th:if="${showAlert}"> This license plate number is already registered! </div>-->
+				<!--				<div class="alert alert-warning" role="alert" th:if="${showAlert}"> This license plate number is already registered! </div>-->
 			</div>
 
 			<form th:action="@{/homeRegister}" th:object="${home}" method="post" name="myForm" ng-submit="register()">
-
-				<input type="hidden" name="customerId" th:value="${customerId}"/>
+				<input type="hidden" name="customerId" th:value="${customerId}" />
 				<div style=" display: flex; flex-direction: row;">
 					<h4 class="mr-2">Customer Id : </h4>
 					<h4 th:text="${customerId}">idParam</h4>
 				</div>
 
-				<input type="text" name="type" placeholder="Type*" ng-model="type" ng-required="true" ng-pattern="/^[a-zA-Z]*$/">
-				<p class="error" ng-show="myForm.type.$invalid && myForm.type.$touched">Fill out your
-					type.</p>
-					
-				<input type="text" name="typeOfUse" placeholder="Usage Type*" ng-model="typeOfUse" ng-required="true">
-				<p class="error" ng-show="myForm.typeOfUse.$invalid && myForm.typeOfUse.$touched">Fill out your
-					usage type.</p>	
-					
-				<input type="text" name="province" placeholder="Province*" ng-model="province" ng-required="true" ng-pattern="/^[a-zA-Z]*$/">
+				<input type="number" name="flatArea" placeholder="Flat Area (m2)*" ng-model="flatArea"
+					ng-required="true">
+				<p class="error" ng-show="myForm.flatArea.$invalid && myForm.flatArea.$touched">Fill out your
+					flat area.</p>
+
+				<select name="buildingType" ng-model="buildingType" ng-required="true">
+					<option value="">Select Building Type*</option>
+					<option ng-repeat="option in buildingTypes" value="{{option}}">{{option}}</option>
+				</select>
+
+				<select name="typeOfUse" ng-model="typeOfUse" ng-required="true">
+					<option value="">Select Type Of Use*</option>
+					<option ng-repeat="option in typesOfUse" value="{{option}}">{{option}}</option>
+				</select>
+
+				<input type="text" name="province" placeholder="Province*" ng-model="province" ng-required="true"
+					ng-pattern="/^[a-zA-Z]*$/">
 				<p class="error" ng-show="myForm.province.$invalid && myForm.province.$touched">Fill out your
-					usage.</p>	
-					
-				<input type="text" name="district" placeholder="District*" ng-model="district" ng-required="true" ng-pattern="/^[a-zA-Z]*$/">
+					usage.</p>
+
+				<input type="text" name="district" placeholder="District*" ng-model="district" ng-required="true"
+					ng-pattern="/^[a-zA-Z]*$/">
 				<p class="error" ng-show="myForm.district.$invalid && myForm.district.$touched">Fill out your
 					usage.</p>
-					
-				<input type="text" name="neighbourhood" placeholder="Neighbourhood*" ng-model="neighbourhood" ng-required="true" ng-pattern="/^[a-zA-Z]*$/">
+
+				<input type="text" name="neighbourhood" placeholder="Neighbourhood*" ng-model="neighbourhood"
+					ng-required="true" ng-pattern="/^[a-zA-Z]*$/">
 				<p class="error" ng-show="myForm.neighbourhood.$invalid && myForm.neighbourhood.$touched">Fill out your
-					usage.</p>				
+					usage.</p>
 
 				<input type="number" name="buildingNumber" placeholder="Building Number*" ng-model="buildingNumber"
 					ng-required="true">
@@ -83,20 +92,28 @@
 				<input type="number" name="apartment" placeholder="Apartment*" ng-model="apartment" ng-required="true">
 				<p class="error" ng-show="myForm.apartment.$invalid && myForm.apartment.$touched">Fill out your
 					apartment.</p>
-					
-				<input type="number" name="floor" placeholder="Floor*" ng-model="floor" ng-required="true">
-				<p class="error" ng-show="myForm.floor.$invalid && myForm.floor.$touched">Fill out your
-					floor.</p>
-					
-				<input type="number" name="buildingAge" placeholder="Building Age*" ng-model="buildingAge" ng-required="true">
+
+				<input type="number" name="buildingAge" placeholder="Building Age*" ng-model="buildingAge"
+					ng-required="true" max="50">
 				<p class="error" ng-show="myForm.buildingAge.$invalid && myForm.buildingAge.$touched">Fill out your
 					building age.</p>
-				
-				<input type="text" name="ownerTitle" placeholder="Owner Title*" ng-model="ownerTitle" ng-required="true" ng-pattern="/^[a-zA-Z]*$/">
-				<p class="error" ng-show="myForm.ownerTitle.$invalid && myForm.ownerTitle.$touched">Fill out your
-					owner title.</p>
 
-				<button type="submit" class="btn" ng-disabled="myForm.$invalid">Submit</button>
+				<select name="floor" ng-model="floor" ng-required="true">
+					<option value="">Select Building Floors*</option>
+					<option ng-repeat="option in floors" value="{{option}}">{{option}}</option>
+				</select>
+
+				<select name="insurerTitle" ng-model="insurerTitle" ng-required="true">
+					<option value="">Select Title of Insurer*</option>
+					<option ng-repeat="option in titles" value="{{option}}">{{option}}</option>
+				</select>
+				
+				<select name="period" ng-model="period" ng-required="true">
+					<option value="">Select Insurance Period (Day)*</option>
+					<option ng-repeat="option in periods" value="{{option}}">{{option}}</option>
+				</select>
+
+				<button type="submit" class="btn" ng-disabled="myForm.$invalid">Prepare My Offer</button>
 			</form>
 		</div>
 	</section>
