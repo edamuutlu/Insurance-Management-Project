@@ -52,7 +52,7 @@ class CarServiceTest {
 	    car.setSeatCapacity(4);	  
 
 	    CalculateMethods calculateMethods = new CalculateMethods();
-	    int offer = calculateMethods.calculate(car, 20);	
+	    int offer = calculateMethods.calculateCarInsurance(car, 20);	
     
 	    int expectedOffer = 500 + (20 * 4) + 400 + 400 + 3000 + 600 + 300 + (2 * 200) + 500 + (4 * 30);
 	    assertEquals(expectedOffer, offer);		

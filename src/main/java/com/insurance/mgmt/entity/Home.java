@@ -6,6 +6,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 
 @Entity
 @Table(name = "HOME")
@@ -18,19 +20,25 @@ public class Home {
 	@Column(name ="customer_id") 
 	private int customerId;
 	
-	@Column(name ="building_type") 
+	@Column(name ="building_type")
+	@NotBlank(message = "Enter your building type.")
 	private String buildingType;
 	
 	@Column(name ="usage_type") 
+	@NotBlank(message = "Enter your type of use.")
 	private String typeOfUse;
 	
-	@Column(name ="province") 
+	@Column(name ="province")
+	@NotBlank(message = "Enter your province.")
 	private String province;
 	
-	@Column(name ="district") 
+	@Column(name ="district")
+	@NotBlank(message = "Enter your district.")
 	private String district;
 	
 	@Column(name ="neighbourhood") 
+	@NotBlank(message = "Enter your neighbourhood.")
+	@Pattern(regexp = "[a-zA-Z\\s]+", message = "Only alphabetic characters and spaces are allowed")
 	private String neighbourhood;
 	
 	@Column(name ="building_number") 
@@ -40,12 +48,14 @@ public class Home {
 	private int apartment;
 	
 	@Column(name ="floor") 
+	@NotBlank(message = "Enter your building floors.")
 	private String floor;
 	
 	@Column(name ="building_age") 
 	private int buildingAge;
 	
 	@Column(name ="insurer_title") 
+	@NotBlank(message = "Enter your insurer title.")
 	private String insurerTitle;
 	
 	@Column(name ="status") 

@@ -8,5 +8,6 @@ import com.insurance.mgmt.entity.Insurance;
 
 public interface IInsuranceRepository extends JpaRepository<Insurance,Integer>{ //Object, id (type)
 	List<Insurance> findByStatus(int status);
-	Optional<Insurance> findByHomeId(int homeId);
+	Optional<Insurance> findByHomeId(int homeId); 
+	//Optional<Insurance> findByCustomerId(int customerId);
 }
