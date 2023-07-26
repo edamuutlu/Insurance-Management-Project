@@ -98,7 +98,7 @@
 					<div class="modal-body">
 						<p>Listelenen Konutlarınızın Sigorta Süresi Bitmiştir:</p>
 						<ul>
-							<li th:each="data : ${expiredHomes}" th:text="${data.getHomeId()}"></li>
+							<li th:each="data : ${expiredHomes}" th:text="${data.getProvince() + ', ' +data.getDistrict()+ ' ' +data.getNeighbourhood()+ ' Mah. No: ' +data.getBuildingNumber()+ '/' +data.getApartment()}"></li>
 						</ul>
 					</div>
 					<div class="modal-footer">

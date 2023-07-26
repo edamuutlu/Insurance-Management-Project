@@ -56,7 +56,8 @@
 
 				<input type="number" id="flatArea" name="flatArea" placeholder="Flat Area (m2)*" ng-model="flatArea"
 					ng-required="true">
-				<p class="error" ng-show="myForm.flatArea.$invalid && myForm.flatArea.$touched">Fill out your flat area.</p>
+				<p class="error" ng-show="myForm.flatArea.$invalid && myForm.flatArea.$touched">Fill out your flat area.
+				</p>
 
 				<select name="buildingType" id="buildingType">
 					<option value="" th:selected="${#fields.hasErrors('buildingType')}">Select Building Type*</option>
@@ -64,12 +65,12 @@
 				</select>
 				<p th:if="${#fields.hasErrors('buildingType')}" th:errorclass="error" th:errors="*{buildingType}" />
 
-				<select name="typeOfUse" id="typeOfUse" >
+				<select name="typeOfUse" id="typeOfUse">
 					<option value="" th:selected="${#fields.hasErrors('typeOfUse')}">Select Type Of Use*</option>
 					<option ng-repeat="option in typesOfUse" value="{{option}}">{{option}}</option>
 				</select>
 				<p th:if="${#fields.hasErrors('typeOfUse')}" th:errorclass="error" th:errors="*{typeOfUse}" />
-				
+
 				<select name="province" id="province">
 					<option value="" th:selected="${#fields.hasErrors('province')}">Select Province*</option>
 				</select>
@@ -80,32 +81,37 @@
 				</select>
 				<p th:if="${#fields.hasErrors('district')}" th:errorclass="error" th:errors="*{district}" />
 
-				<input type="text" id="neighbourhood" name="neighbourhood" th:field="*{neighbourhood}" placeholder="Neighbourhood*" ng-model="neighbourhood"
-					ng-required="true" ng-pattern="/^[a-zA-Z]*$/">
+				<input type="text" id="neighbourhood" name="neighbourhood" th:field="*{neighbourhood}"
+					placeholder="Neighbourhood*" ng-model="neighbourhood" ng-required="true" ng-pattern="/^[a-zA-Z]*$/">
 				<p class="error" ng-show="myForm.neighbourhood.$invalid && myForm.neighbourhood.$touched">Fill out your
 					neighbourhood.</p>
 				<p th:if="${#fields.hasErrors('neighbourhood')}" th:errorclass="error" th:errors="*{neighbourhood}" />
 
-				<input type="number" id="buildingNumber" name="buildingNumber" placeholder="Building Number*" ng-model="buildingNumber"
-					ng-required="true">
-				<p class="error" ng-show="myForm.buildingNumber.$invalid && myForm.buildingNumber.$touched">Fill out your building number.</p>
+				<input type="number" id="buildingNumber" name="buildingNumber" placeholder="Building Number*"
+					ng-model="buildingNumber" ng-required="true">
+				<p class="error" ng-show="myForm.buildingNumber.$invalid && myForm.buildingNumber.$touched">Fill out
+					your building number.</p>
 
-				<input type="number" id="apartment" name="apartment" placeholder="Apartment*" ng-model="apartment" ng-required="true">
+				<input type="number" id="apartment" name="apartment" placeholder="Apartment*" ng-model="apartment"
+					ng-required="true">
 				<p class="error" ng-show="myForm.apartment.$invalid && myForm.apartment.$touched">Fill out your
 					apartment.</p>
 
-				<input type="number" id="buildingAge" name="buildingAge" placeholder="Building Age*" ng-model="buildingAge"
-					ng-required="true" max="50">
-				<p class="error" ng-show="myForm.buildingAge.$invalid && myForm.buildingAge.$touched">Fill out your
-					building age.</p>
+				<select name="year" id="year">
+					<option value="" th:selected="${#fields.hasErrors('year')}">Select Building Construction Year*</option>
+					<option ng-repeat="option in years" value="{{option}}">{{option}}</option>
+				</select>
+				<p th:if="${#fields.hasErrors('year')}" th:errorclass="error" th:errors="*{year}" />
 
 				<select name="floor" id="floor">
 					<option value="" th:selected="${#fields.hasErrors('floor')}">Select Building Floors*</option>
 					<option ng-repeat="option in floors" value="{{option}}">{{option}}</option>
 				</select>
+				<p th:if="${#fields.hasErrors('floor')}" th:errorclass="error" th:errors="*{floor}" />
 
 				<select name="insurerTitle" id="insurerTitle">
-					<option value="" th:selected="${#fields.hasErrors('insurerTitle')}">Select Title of Insurer*</option>
+					<option value="" th:selected="${#fields.hasErrors('insurerTitle')}">Select Title of Insurer*
+					</option>
 					<option ng-repeat="option in titles" value="{{option}}">{{option}}</option>
 				</select>
 				<p th:if="${#fields.hasErrors('insurerTitle')}" th:errorclass="error" th:errors="*{insurerTitle}" />

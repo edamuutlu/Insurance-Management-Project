@@ -68,10 +68,11 @@
 				<p class="error" ng-show="myForm.lastname.$invalid && myForm.lastname.$touched">Fill out your last name.
 				</p>
 
-				<select name="province" id="province" ng-required="true">
+				<select name="province" id="province" required>
 					<option th:value="${customer.province}" th:text="${customer.province}">Select Province*</option>
 				</select>
-				<select name="district" id="district" ng-required="true">
+				
+				<select name="district" id="district" required>
 					<option th:value="${customer.district}" th:text="${customer.district}">Select District*</option>
 				</select>							
 

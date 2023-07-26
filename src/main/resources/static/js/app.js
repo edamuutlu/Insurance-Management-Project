@@ -8,8 +8,8 @@ myApp.controller("registerCustomerFormController", ["$scope", function($scope) {
 	};
 
 	/* Birth Date Control */
-//	var today = new Date().toISOString().split("T")[0];
-//	document.getElementById("birth").setAttribute("max", today);
+	//	var today = new Date().toISOString().split("T")[0];
+	//	document.getElementById("birth").setAttribute("max", today);
 
 	var today = new Date();
 	today.setFullYear(today.getFullYear() - 18); // Bugünden 18 yıl önceki tarih
@@ -86,11 +86,11 @@ myApp.controller("trafficInsuranceFormController", ["$scope", function($scope) {
 	//Select Fuel Type
 	$scope.fuelTypes = ["Petrol", "Diesel", "LPG", "Electric"];
 	$scope.fuelType = "";
-	
+
 	//Select the Insurance Period
 	$scope.periods = [30, 60];
 	$scope.period = "";
-		
+
 
 }]);
 
@@ -100,27 +100,34 @@ myApp.controller("homeInsuranceFormController", ["$scope", function($scope) {
 		$scope.msg = "Welcome " + $scope.firstname + "! You have signed in.";
 
 	};
-	
+
 	//Select the Building Type
 	$scope.buildingTypes = ["Reinforced Concrete", "Other Structures"];
 	$scope.buildingType = "";
-	
+
 	//Select the Building Type
 	$scope.typesOfUse = ["Summer House", "Permanent Residence"];
 	$scope.typeOfUse = "";
-	
+
 	//Select the Floor
-	$scope.floors = ["Basement", "Ground floor","1-10 Floor","11-20 Floor","20 or More Floors"];
+	$scope.floors = ["Basement", "Ground floor", "1-10 Floor", "11-20 Floor", "20 or More Floors"];
 	$scope.floor = "";
-	
+
 	//Select the Owner Title
 	$scope.titles = ["Owner", "Tenant"];
 	$scope.title = "";
-	
+
 	//Select the Insurance Period
 	$scope.periods = [30, 60];
 	$scope.period = "";
-	
+
+	//Select the Building Age
+	$scope.years = [];
+	for (let year = 2023; year >= 1975; year--) { // 1975'ten 2023'e kadar olan sayıları ekleyen döngü
+		$scope.years.push(year);
+	}
+	$scope.year = "";
+
 	/* Select Province and District */
 	var provinceDistrictinfo = {
 		Ankara: {
@@ -164,6 +171,6 @@ myApp.controller("homeInsuranceFormController", ["$scope", function($scope) {
 			}
 		};
 	};
-	
+
 }]);
-  
+

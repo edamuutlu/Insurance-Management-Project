@@ -56,9 +56,7 @@ public class CarController {
 	public void initBinder(WebDataBinder dataBinder) {
 		StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
 		dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
-	} 
-	
-	
+	} 		
 	
 	@PostMapping("/carRegister")
 	public String register(@Valid @ModelAttribute Car car, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes, @RequestParam(value = "customerId", required = false) int idParam) {		
@@ -88,19 +86,16 @@ public class CarController {
         CalculateMethods calculateMethods = new CalculateMethods();	// public olan calculate metodunu çağırmak için util'den nesne oluşturulmaktadır
 		int offer = calculateMethods.calculateCarInsurance(car, age);	
 		car.setOffer(offer);
-		car.setStatus(1);	
+		car.setStatus(1);
 		
-		// Aynı plaka kontrolü		
-		List<Car> list = carRepository.findByStatus(1);		
-		for (Car c : list) {
-			if(c.getPlate1() == car.getPlate1() && c.getPlate2().equals(car.getPlate2()) 
-					&& c.getPlate3() == car.getPlate3() && c.getResult().equals("Accepted")) {
-				boolean showPlateAlert = true;	
-				model.addAttribute("showPlateAlert",showPlateAlert);				
-				model.addAttribute("customerId",idParam);
-				return "trafficInsuranceForm";
-			}			
+		List<Car> list = carRepository.findByStatusAndPlate1AndPlate2AndPlate3AndResult(1, car.getPlate1(), car.getPlate2(), car.getPlate3(), "Accepted");
+		if (list != null) {
+		    boolean showPlateAlert = true;	
+		    model.addAttribute("showPlateAlert", showPlateAlert);				
+		    model.addAttribute("customerId", idParam);
+		    return "trafficInsuranceForm";
 		}
+		
 		car.setResult("Canceled");	// Default olarak canceled yazdırılmaktadır
 		carService.save(car);				
 		redirectAttributes.addFlashAttribute("car", car);				
@@ -123,15 +118,13 @@ public class CarController {
 	
 	@GetMapping("/carList/{customerId}")
 	public ModelAndView getAllCar(@PathVariable("customerId") int customerId, Model model) {	
-		List<Car> cars = carRepository.findByStatus(1);
-		List<Car> list = new ArrayList<>();
 		ArrayList<Car> expiredCars = new ArrayList<>();
 		boolean showText = false;
 		
-	    // Poliçenin süresinin bitip bitmediğini kontrol etme				
-	    for(Car car : cars) {
-	    	if (car.getCustomerId() == customerId  && car.getResult().equals("Accepted")) { 
-	    		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+	    // Poliçenin süresinin bitip bitmediğini kontrol etme			
+		 List<Car> cars = carRepository.findByStatusAndCustomerIdAndResult(1, customerId, "Accepted");
+		 for(Car car : cars) {
+			 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 	    		LocalDateTime endDateTime = LocalDateTime.parse(car.getEndDate(), formatter);
 	    			    		
 	    		LocalDateTime now = LocalDateTime.now();
@@ -146,14 +139,9 @@ public class CarController {
 	    			car.setStatus(0);
 	    			carService.save(car);
 	    		}
-	    	}
-	    }
-	    	    
-	    for (Car car : cars) {
-	        if (car.getCustomerId() == customerId) {
-	        	list.add(car);	        	
-	        }
-	    }
+		 }
+	    
+		List<Car> list = carRepository.findByStatusAndCustomerId(1, customerId);
 	    
 	    model.addAttribute("showText", showText);
 	    model.addAttribute("expiredCars", expiredCars);
@@ -164,6 +152,10 @@ public class CarController {
 	public String deleteCar(@PathVariable("id") int id) {
 		Car car = carService.getCarId(id);
 		car.setResult("Canceled");
+		LocalDateTime now = LocalDateTime.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+		String end_date = now.format(formatter);
+		car.setEndDate(end_date);
 		car.setStatus(0);
 		carService.save(car);
 		//carService.deleteById(id);	// database den de kalıcı olarak silmek için

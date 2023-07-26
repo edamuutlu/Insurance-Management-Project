@@ -4,6 +4,9 @@
 <head>
 	<meta charset="utf-8">
 	<title>SBM Home</title>
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+		crossorigin="anonymous"></script>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
 		integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 	<link rel="stylesheet" href="" th:href="@{/css/style.css}">
@@ -17,33 +20,12 @@
 			color: rgb(255, 62, 62);
 		}
 
-		#icon-edit {
-			color: blue;
-			font-size: 20px;
-		}
-
-		#icon-edit:hover {
-			color: rgb(69, 112, 222);
-		}
-
-		button {
+		#trash {
 			border: none;
 			background: none;
 			margin-left: 50px;
 		}
 	</style>
-
-	<script>
-		
-		window.onload = function () {
-			$(document).ready(function () {
-				$('#myModal').modal('show');
-			});
-		};
-
-	</script>
-
-
 </head>
 
 <body>
@@ -69,32 +51,10 @@
 		</div>
 	</nav>
 	<!--End Navbar-->
-	
-	<div class="container mt-5">
-		<!-- Modal -->
-		<div class="modal fade" id="myModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myModalTitle"
-			aria-hidden="true" th:if="${showText}">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="myModalTitle">Bildirim</h5>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body">
-						<p>Listelenen ID'li Evlerinizin Sigorta Süresi Bitmiştir:</p>
-						<ul>
-							<li th:each="data : ${expiredHomes}" th:text="${data.getHomeId()}"></li>
-						</ul>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-					</div>
-				</div>
-			</div>
-		</div>						
 
+	<div class="container mt-4">
+		<div class="alert alert-warning" role="alert" th:if="${showText}"> An insurance for this house has already been defined! </div>
+		<button type="button" class="btn btn-info text-white mb-2"><a class="text-decoration-none" th:href="@{/newHomeInsuranceCalculate/{id}(id=${homeId})}"><strong>Create New Home Insurance</strong></a></button>
 
 		<table class="table table-hover text-center">
 			<thead>
@@ -113,7 +73,7 @@
 			</thead>
 			<tbody>
 				<tr th:each="i :${insurance}">
-<!--					<input type="hidden" name="customer_id" th:value="${customer_id}"/>-->
+					<!--					<input type="hidden" name="customer_id" th:value="${customer_id}"/>-->
 					<td th:text="${i.insuranceId}"></td>
 					<td th:text="${i.insuranceType}"></td>
 					<td th:text="${i.customerId}"></td>
@@ -123,15 +83,15 @@
 					<td th:text="${i.startDate}"></td>
 					<td th:text="${i.endDate}"></td>
 					<td th:text="${i.period}"></td>
-					<td><button class="mx-auto"><a th:href="@{/homeInsuranceRefund/{id}(id=${i.homeId})}"><i id="icon-trash"
-									class="gg-trash"></i></a></button></td>
+					<td><button id="trash" class="mx-auto"><a th:href="@{/homeInsuranceRefund/{id}(id=${i.homeId})}"><i
+									id="icon-trash" class="gg-trash"></i></a></button></td>
 				</tr>
 			</tbody>
 		</table>
 	</div>
 	</div>
 
-	
+
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
 		crossorigin="anonymous"></script>

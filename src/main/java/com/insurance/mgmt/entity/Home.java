@@ -66,6 +66,9 @@ public class Home {
 	
 	@Column(name= "period")
 	private int period;
+	
+	@Column(name= "year")
+	private int year;
 		
 	public Home() {
 		super();
@@ -73,7 +76,7 @@ public class Home {
 	}		
 
 	public Home(int homeId, int customerId, String buildingType, String typeOfUse, String province, String district, String neighbourhood,
-			int buildingNumber, int apartment, String floor, int buildingAge, String insurerTitle, int status, int period, int flatArea) {
+			int buildingNumber, int apartment, String floor, int buildingAge, String insurerTitle, int status, int period, int flatArea, int year) {
 		super();
 		this.homeId = homeId;
 		this.customerId = customerId;
@@ -90,6 +93,7 @@ public class Home {
 		this.status = status;
 		this.flatArea = flatArea;
 		this.period = period;
+		this.year = year;
 	}
 
 	public int getHomeId() {
@@ -210,6 +214,14 @@ public class Home {
 
 	public void setPeriod(int period) {
 		this.period = period;
+	}	
+
+	public int getYear() {
+		return year;
+	}
+
+	public void setYear(int year) {
+		this.year = year;
 	}
 
 	@Override
@@ -218,11 +230,7 @@ public class Home {
 				+ ", typeOfUse=" + typeOfUse + ", province=" + province + ", district=" + district + ", neighbourhood="
 				+ neighbourhood + ", buildingNumber=" + buildingNumber + ", apartment=" + apartment + ", floor=" + floor
 				+ ", buildingAge=" + buildingAge + ", insurerTitle=" + insurerTitle + ", status=" + status
-				+ ", flatArea=" + flatArea + ", period=" + period + "]";
-	}
-
-
-	
-	
+				+ ", flatArea=" + flatArea + ", period=" + period + ", year=" + year + "]";
+	}	
 	
 }

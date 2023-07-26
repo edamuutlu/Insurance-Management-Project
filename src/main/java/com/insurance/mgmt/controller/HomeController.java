@@ -4,6 +4,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -80,7 +81,11 @@ public class HomeController {
 		insurance.setStartDate(now.format(formatter));
 		LocalDateTime endDate = now.plusDays(home.getPeriod());
 		insurance.setEndDate(endDate.format(formatter));
-		System.out.println(insurance.getEndDate());
+
+		// Bina inşa yılına göre bina yaşı hesaplanmaktadır
+		int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+		int buildingAge = currentYear - home.getYear();
+		home.setBuildingAge(buildingAge);
 
 		CalculateMethods calculateMethods = new CalculateMethods(); // public olan calculate metodunu çağırmak için
 																	// util'den nesne oluşturulmaktadır
@@ -89,19 +94,19 @@ public class HomeController {
 		insurance.setStatus(1);
 
 		// Aynı ev adresi kontrolü
-		List<Home> list = homeRepository.findByStatus(1);
-		for (Home h : list) {
-			if (h.getProvince().equals(home.getProvince()) && h.getDistrict().equals(home.getDistrict()) 
-					&& h.getNeighbourhood().equals(home.getNeighbourhood()) && h.getBuildingNumber() == home.getBuildingNumber() && h.getApartment() == home.getApartment()
-					&& h.getFloor().equals(home.getFloor())) { //  && insurance.getResult().equals("Accepted")
-				boolean showHomeAlert = true;
-				model.addAttribute("showHomeAlert", showHomeAlert);
-				model.addAttribute("customerId", idParam);
-				model.addAttribute("home", home);
-				return "homeInsuranceForm";
-			}
+		List<Home> filteredList = homeRepository
+				.findByProvinceAndDistrictAndNeighbourhoodAndBuildingNumberAndApartmentAndFloorAndStatus(
+						home.getProvince(), home.getDistrict(), home.getNeighbourhood(), home.getBuildingNumber(),
+						home.getApartment(), home.getFloor(), 1);
+
+		if (!filteredList.isEmpty()) {
+			boolean showHomeAlert = true;
+			model.addAttribute("showHomeAlert", showHomeAlert);
+			model.addAttribute("customerId", idParam);
+			model.addAttribute("home", home);
+			return "homeInsuranceForm";
 		}
-		
+
 		insurance.setInsuranceType("Home");
 		insurance.setResult("Canceled"); // Default olarak canceled yazdırılmaktadır
 		insurance.setPeriod(home.getPeriod());
@@ -115,11 +120,58 @@ public class HomeController {
 		redirectAttributes.addFlashAttribute("customer", customer);
 		redirectAttributes.addFlashAttribute("home", home);
 		redirectAttributes.addFlashAttribute("insurance", insurance);
-		return "redirect:/homeInsuranceCalculate";
+		return "redirect:/homeInsuranceCalculate/" + home.getHomeId();
 	}
 
-	@GetMapping("/homeInsuranceCalculate")
-	public String trafficInsurance() {
+	@GetMapping("/homeInsuranceCalculate/{homeId}")
+	public String trafficInsurance(@PathVariable("homeId") int homeId, Model model) {
+		Home home = homeService.getHomeById(homeId);
+		Insurance insurance = insuranceService.getInsuranceByHomeId(homeId);
+		Customer customer = customerService.getCustomerById(home.getCustomerId());
+		boolean showText = false;
+		model.addAttribute("showText", showText);
+		model.addAttribute(customer);
+		model.addAttribute(insurance);
+		model.addAttribute(home);
+		return "homeInsuranceCalculate";
+	}
+
+	@GetMapping("/newHomeInsuranceCalculate/{homeId}")
+	public String homeInsuranceCalculate(@PathVariable("homeId") int homeId, Model model) {
+		Home home = homeService.getHomeById(homeId);
+		Insurance insurance = insuranceService.getInsuranceByHomeId(homeId);
+		Customer customer = customerService.getCustomerById(home.getCustomerId());
+
+		// Devam eden bir sigorta var mı kontrolü
+		List<Insurance> insurances = insuranceRepository.findByStatusAndResultAndHomeId(1, "Accepted", homeId);
+		for (Insurance i : insurances) {
+			model.addAttribute("showText", true);
+			model.addAttribute(i);
+			model.addAttribute(homeId);
+			return "seeHomeInsuranceDetails";
+		}
+
+		LocalDateTime now = LocalDateTime.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+		insurance.setStartDate(now.format(formatter));
+		LocalDateTime endDate = now.plusDays(home.getPeriod());
+		insurance.setEndDate(endDate.format(formatter));
+		insurance.setStatus(1);
+
+		// Bina inşa yılına göre bina yaşı hesaplanmaktadır
+		int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+		int buildingAge = currentYear - home.getYear();
+		home.setBuildingAge(buildingAge);
+
+		CalculateMethods calculateMethods = new CalculateMethods(); // public olan calculate metodunu çağırmak için
+																	// util'den nesne oluşturulmaktadır
+		int offer = calculateMethods.calculateHomeInsurance(home);
+		insurance.setOffer(offer);
+		insuranceService.save(insurance);
+
+		model.addAttribute(customer);
+		model.addAttribute(insurance);
+		model.addAttribute(home);
 		return "homeInsuranceCalculate";
 	}
 
@@ -131,73 +183,69 @@ public class HomeController {
 	}
 
 	@GetMapping("/homeList/{customerId}")
-	public ModelAndView getAllCar(@PathVariable("customerId") int customerId, Model model) {
+	public ModelAndView getAllHome(@PathVariable("customerId") int customerId, Model model) {
 		List<Home> homes = homeRepository.findByStatus(1);
 		List<Home> list = new ArrayList<>();
 		ArrayList<Home> expiredHomes = new ArrayList<>();
-		//Insurance insurance = insuranceService.getInsuranceByCustomerId(customerId);	
+		// Insurance insurance = insuranceService.getInsuranceByCustomerId(customerId);
 		boolean showText = false;
-		
-	    // Poliçenin süresinin bitip bitmediğini kontrol etme 				
-	    for(Home home : homes) {
-	    	if (home.getCustomerId() == customerId ) {  
-	    		Insurance insurance = insuranceService.getInsuranceByHomeId(home.getHomeId());
-	    		if(insurance.getResult().equals("Accepted")) {    			
-		    		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-		    		LocalDateTime endDateTime = LocalDateTime.parse(insurance.getEndDate(), formatter);
-		    			    		
-		    		LocalDateTime now = LocalDateTime.now();
-		    		
-		    		Duration duration = Duration.between(now, endDateTime);
-		    		int dayCheck = (int) duration.toDays();
-		    		
-		    		if(dayCheck<0) {	
-		    			expiredHomes.add(home);
-		    			showText = true;
-		    			insurance.setResult("Expired");		    			
-		    			insurance.setStatus(0);
-		    			insuranceService.save(insurance);
-		    		}
-	    		}
-	    		
-	    	}
-	    }
+
+		// Poliçenin süresinin bitip bitmediğini kontrol etme
+		for (Home home : homes) {
+			if (home.getCustomerId() == customerId) {
+				Insurance insurance = insuranceService.getInsuranceByHomeId(home.getHomeId());
+				if (insurance.getResult().equals("Accepted")) {
+					DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+					LocalDateTime endDateTime = LocalDateTime.parse(insurance.getEndDate(), formatter);
+
+					LocalDateTime now = LocalDateTime.now();
+
+					Duration duration = Duration.between(now, endDateTime);
+					int dayCheck = (int) duration.toDays();
+
+					if (dayCheck < 0) {
+						expiredHomes.add(home);
+						showText = true;
+						insurance.setResult("Expired");
+						// insurance.setStatus(0);
+						insuranceService.save(insurance);
+					}
+				}
+
+			}
+		}
 
 		for (Home home : homes) {
 			if (home.getCustomerId() == customerId) {
 				list.add(home);
 			}
 		}
-		
-		System.out.println(expiredHomes);
-		System.out.println(showText);
+
 		model.addAttribute("expiredHomes", expiredHomes);
-		model.addAttribute("showText",showText);
+		model.addAttribute("showText", showText);
 		return new ModelAndView("homeList", "home", list);
 	}
 
 	@GetMapping("/seeHomeInsuranceDetails/{id}")
-	public ModelAndView seeHomeInsuranceDetails(@PathVariable("id") int homeId, Model model) {
-		List<Insurance> insurances = insuranceRepository.findByStatus(1);
-		List<Insurance> list = new ArrayList<>();
+	public ModelAndView seeHomeInsuranceDetails(@PathVariable("id") int homeId, Model model,
+			RedirectAttributes redirectAttributes) {
 
+		List<Insurance> insurances = insuranceRepository.findByStatusAndHomeId(1, homeId);
 		for (Insurance insurance : insurances) {
-			if (insurance.getHomeId() == homeId) {
-				insuranceService.save(insurance);
-				list.add(insurance);
-			}
+			insuranceService.save(insurance);
 		}
 
-		return new ModelAndView("seeHomeInsuranceDetails", "insurance", list);
+		model.addAttribute("homeId", homeId);
+		return new ModelAndView("seeHomeInsuranceDetails", "insurance", insurances);
 	}
 
 	@RequestMapping("/deleteHome/{id}")
 	public String deleteHome(@PathVariable("id") int id, Model model) {
 		Home home = homeService.getHomeById(id);
 		Insurance insurance = insuranceService.getInsuranceByHomeId(home.getHomeId());
-		// home.setResult("Canceled");
 		home.setStatus(0);
 		insurance.setStatus(0);
+		insurance.setResult("Canceled");
 		homeService.save(home);
 		insuranceService.save(insurance);
 		return "redirect:/homeList/" + home.getCustomerId();
@@ -234,10 +282,14 @@ public class HomeController {
 	public String deleteHomeInsurance(@PathVariable("id") int id, Model model) {
 		Insurance insurance = insuranceService.getInsuranceById(id);
 		insurance.setResult("Canceled");
-		insurance.setStatus(0);
+		LocalDateTime now = LocalDateTime.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+		String end_date = now.format(formatter);
+		insurance.setEndDate(end_date);
+		// insurance.setStatus(0);
 		insuranceService.save(insurance);
 		// insuranceService.deleteById(id); // database den de kalıcı olarak silmek için
-		return "redirect:/seeHomeInsuranceDetails/" + insurance.getCustomerId();
+		return "redirect:/seeHomeInsuranceDetails/" + insurance.getHomeId();
 	}
 
 	@PostMapping("/homeResult")
@@ -259,7 +311,7 @@ public class HomeController {
 			insuranceService.save(insurance);
 		}
 
-		return "redirect:/customerList";
+		return "redirect:/seeHomeInsuranceDetails/" + insurance.getHomeId();
 	}
 
 }
