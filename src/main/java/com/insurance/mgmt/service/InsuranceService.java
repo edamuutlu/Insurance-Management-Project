@@ -31,11 +31,6 @@ public class InsuranceService {
         return optionalInsurance.orElse(null); // Eğer nesne varsa nesneyi, yoksa null dönecektir.
     }
 	
-//	public Insurance getInsuranceByCustomerId(int customerId) {
-//        Optional<Insurance> optionalInsurance = insuranceRepository.findByCustomerId(customerId);
-//        return optionalInsurance.orElse(null); // Eğer nesne varsa nesneyi, yoksa null dönecektir.
-//    }
-	
 	public void deleteById(int id) {
 		insuranceRepository.deleteById(id);
 	}

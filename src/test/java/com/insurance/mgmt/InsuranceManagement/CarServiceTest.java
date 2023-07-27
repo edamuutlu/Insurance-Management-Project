@@ -38,7 +38,7 @@ class CarServiceTest {
     ).collect(Collectors.toList());
 
 	@Test
-	public void calculateTest() {
+	public void calculateCarInsuranceTest() {
 
 		Car car = new Car();
 	    car.setCustomerId(12); // Set customer_id property
@@ -111,6 +111,33 @@ class CarServiceTest {
 	        List<Car> result = carRepository.findByStatus(status);
 	        assertEquals(dummyCars, result);
 	        verify(carRepository, times(1)).findByStatus(status);
+	    }
+	    
+	    @Test
+	    public void findByStatusAndCustomerId() {
+	        int status = 1;
+	        when(carRepository.findByStatusAndCustomerId(status, 1)).thenReturn(dummyCars);
+	        List<Car> result = carRepository.findByStatusAndCustomerId(status, 1);
+	        assertEquals(dummyCars, result);
+	        verify(carRepository, times(1)).findByStatusAndCustomerId(status, 1);
+	    }
+	    
+	    @Test
+	    public void findByStatusAndPlate1AndPlate2AndPlate3AndResult() {
+	        int status = 1;
+	        when(carRepository.findByStatusAndPlate1AndPlate2AndPlate3AndResult(status, 34, "vs", 1234, "Accepted")).thenReturn(dummyCars);
+	        List<Car> result = carRepository.findByStatusAndPlate1AndPlate2AndPlate3AndResult(status, 34, "vs", 1234, "Accepted");
+	        assertEquals(dummyCars, result);
+	        verify(carRepository, times(1)).findByStatusAndPlate1AndPlate2AndPlate3AndResult(status, 34, "vs", 1234, "Accepted");
+	    }
+	    
+	    @Test
+	    public void findByStatusAndCustomerIdAndResult() {
+	        int status = 1;
+	        when(carRepository.findByStatusAndCustomerIdAndResult(status, 1, "Accepted")).thenReturn(dummyCars);
+	        List<Car> result = carRepository.findByStatusAndCustomerIdAndResult(status, 1, "Accepted");
+	        assertEquals(dummyCars, result);
+	        verify(carRepository, times(1)).findByStatusAndCustomerIdAndResult(status, 1, "Accepted");
 	    }
 
 }
