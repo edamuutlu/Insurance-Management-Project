@@ -72,7 +72,7 @@ public class Car {
 	private int seatCapacity;
 	
 	@Column(name ="offer") //insertable = false, nullable = true
-	private int offer;
+	private double offer;
 	
 	@Column(name ="result")
 	private String result;
@@ -90,7 +90,7 @@ public class Car {
 	private Integer daysDiff;
 	
 	@Column(name ="refund")
-	private Integer refund;
+	private double refund;
 	
 	@Column(name ="end_date")
 	private String endDate;
@@ -102,8 +102,8 @@ public class Car {
 		
 
 	public Car(int plate1, String plate2, int plate3, String type,
-			String purpose, String brand, String fuelType, int engineSize, int seatCapacity, int customerId, int offer, String result, 
-			int status, int period, String startDate, Integer daysDiff, Integer refund, String endDate) {
+			String purpose, String brand, String fuelType, int engineSize, int seatCapacity, int customerId, double offer, String result, 
+			int status, int period, String startDate, Integer daysDiff, double refund, String endDate) {
 		super();
 		this.customerId = customerId;
 		this.plate1 = plate1;
@@ -235,12 +235,12 @@ public class Car {
 	}
 
 
-	public int getOffer() {
+	public double getOffer() {
 		return offer;
 	}
 
 
-	public void setOffer(int offer) {
+	public void setOffer(double offer) {
 		this.offer = offer;
 	}
 
@@ -296,12 +296,12 @@ public class Car {
 	}
 
 
-	public Integer getRefund() {
+	public double getRefund() {
 		return refund;
 	}
 
 
-	public void setRefund(Integer refund) {
+	public void setRefund(double refund) {
 		this.refund = refund;
 	}
 		
@@ -318,12 +318,11 @@ public class Car {
 
 	@Override
 	public String toString() {
-		return "Car [id=" + id + ", customerId=" + customerId + ", license_plate1=" + plate1
-				+ ", license_plate2=" + plate2 + ", license_plate3=" + plate3 + ", type=" + type
-				+ ", purpose=" + purpose + ", brand=" + brand + ", fuelType=" + fuelType + ", engineSize="
-				+ engineSize + ", seatCapacity=" + seatCapacity + ", offer=" + offer + ", result=" + result
-				+ ", status=" + status + ", period=" + period + ", starting_date=" + startDate + ", daysDiff="
-				+ daysDiff + ", refund=" + refund + ", endDate=" + endDate + "]";
+		return "Car [id=" + id + ", customerId=" + customerId + ", plate1=" + plate1 + ", plate2=" + plate2
+				+ ", plate3=" + plate3 + ", type=" + type + ", purpose=" + purpose + ", brand=" + brand + ", fuelType="
+				+ fuelType + ", engineSize=" + engineSize + ", seatCapacity=" + seatCapacity + ", offer=" + offer
+				+ ", result=" + result + ", status=" + status + ", period=" + period + ", startDate=" + startDate
+				+ ", daysDiff=" + daysDiff + ", refund=" + refund + ", endDate=" + endDate + "]";
 	}	
 	
 		

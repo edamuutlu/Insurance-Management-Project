@@ -21,10 +21,15 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.insurance.mgmt.entity.Car;
 import com.insurance.mgmt.entity.Customer;
-import com.insurance.mgmt.repository.ICarRepository;
-import com.insurance.mgmt.repository.ICustomerRepository;
+import com.insurance.mgmt.entity.Home;
+import com.insurance.mgmt.entity.Insurance;
+import com.insurance.mgmt.repository.IHomeRepository;
+import com.insurance.mgmt.repository.IInsuranceRepository;
 import com.insurance.mgmt.service.CarService;
 import com.insurance.mgmt.service.CustomerService;
+import com.insurance.mgmt.service.HomeService;
+import com.insurance.mgmt.service.InsuranceService;
+
 import jakarta.validation.Valid;
 
 @Controller
@@ -35,12 +40,18 @@ public class CustomerController {
 
 	@Autowired
 	CarService carService;
-
+	
 	@Autowired
-	ICustomerRepository customerRepository;
-
+	IHomeRepository homeRepository;
+	
 	@Autowired
-	ICarRepository carRepository;
+	HomeService homeService;
+	
+	@Autowired
+	IInsuranceRepository insuranceRepository;
+	
+	@Autowired
+	InsuranceService insuranceService;
 
 //	@Autowired
 //	ProvinceService provinceService;
@@ -84,7 +95,7 @@ public class CustomerController {
 
 	@GetMapping("/customerList")
 	public ModelAndView getAllCustomer() {
-		List<Customer> customerList = customerRepository.findByStatus(1);
+		List<Customer> customerList = customerService.findByStatus(1);
 
 		return new ModelAndView("customerList", "customer", customerList);
 	}
@@ -100,8 +111,8 @@ public class CustomerController {
 		boolean showTcAlert = false;
 		boolean showEmailAlert = false;
 
-		List<Customer> sameTcList = customerRepository.findByStatusAndTc(1, customer.getTc());
-		List<Customer> sameEmailList = customerRepository.findByStatusAndEmail(1, customer.getEmail());
+		List<Customer> sameTcList = customerService.findByStatusAndTc(1, customer.getTc());
+		List<Customer> sameEmailList = customerService.findByStatusAndEmail(1, customer.getEmail());
 
 		if (!sameTcList.isEmpty()) {
 			showTcAlert = true;
@@ -128,7 +139,7 @@ public class CustomerController {
 		// Aynı TC numaralı kullanıcı kontrolü
 		Customer myCustomer = customerService.getCustomerById(customer.getCustomerId());
 
-		List<Customer> list = customerRepository.findByStatus(1);
+		List<Customer> list = customerService.findByStatus(1);
 		for (Customer c : list) {
 			if (myCustomer.getTc().equals(customer.getTc())) {
 				customer.setStatus(1);
@@ -157,11 +168,22 @@ public class CustomerController {
 	public String deleteCustomer(@PathVariable("customerId") int customerId) {
 		
 		// Müşterinin varsa araçlarının listelenmemesi için
-		List<Car> cars = carRepository.findByStatusAndCustomerId(1, customerId);		
+		List<Car> cars = carService.findByStatusAndCustomerId(1, customerId); 
+		List<Home> homes = homeRepository.findByStatusAndCustomerId(1, customerId);
+		List<Insurance> insurances = insuranceRepository.findByStatusAndCustomerId(1, customerId);
 		for (Car car : cars) {
 			car.setResult("Canceled");
 			car.setStatus(0);
 			carService.save(car);
+		}
+		for (Home home : homes) {
+			home.setStatus(0);
+			homeService.save(home);
+		}
+		for (Insurance insurance : insurances) {
+			insurance.setResult("Canceled");
+			insurance.setStatus(0);
+			insuranceService.save(insurance);
 		}
 
 		Customer customer = customerService.getCustomerById(customerId);

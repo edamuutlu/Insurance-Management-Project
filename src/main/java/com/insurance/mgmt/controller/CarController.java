@@ -31,9 +31,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.insurance.mgmt.entity.Car;
 import com.insurance.mgmt.entity.Customer;
-import com.insurance.mgmt.repository.ICarRepository;
+import com.insurance.mgmt.entity.Kdv;
 import com.insurance.mgmt.service.CarService;
 import com.insurance.mgmt.service.CustomerService;
+import com.insurance.mgmt.service.KdvService;
 import com.insurance.mgmt.util.CalculateMethods;
 
 import jakarta.validation.Valid;
@@ -48,7 +49,7 @@ public class CarController {
 	CarService carService;
 	
 	@Autowired
-	ICarRepository carRepository;
+	KdvService kdvService;
 	
 	private static final Logger log =  LoggerFactory.getLogger(CarController.class);
 	
@@ -84,12 +85,14 @@ public class CarController {
         int age = Period.between(birthDate, currentDate).getYears();
         
         CalculateMethods calculateMethods = new CalculateMethods();	// public olan calculate metodunu çağırmak için util'den nesne oluşturulmaktadır
-		int offer = calculateMethods.calculateCarInsurance(car, age);	
+        Kdv kdv = kdvService.getKdvById(1);
+		int kdvRate = kdv.getCarKdv();
+		double offer = calculateMethods.calculateCarInsurance(car, age, kdvRate);	
 		car.setOffer(offer);
 		car.setStatus(1);
 		
-		List<Car> list = carRepository.findByStatusAndPlate1AndPlate2AndPlate3AndResult(1, car.getPlate1(), car.getPlate2(), car.getPlate3(), "Accepted");
-		if (list != null) {
+		List<Car> list = carService.findByStatusAndPlate1AndPlate2AndPlate3AndResult(1, car.getPlate1(), car.getPlate2(), car.getPlate3(), "Accepted");
+		if (!list.isEmpty()) {
 		    boolean showPlateAlert = true;	
 		    model.addAttribute("showPlateAlert", showPlateAlert);				
 		    model.addAttribute("customerId", idParam);
@@ -122,7 +125,7 @@ public class CarController {
 		boolean showText = false;
 		
 	    // Poliçenin süresinin bitip bitmediğini kontrol etme			
-		 List<Car> cars = carRepository.findByStatusAndCustomerIdAndResult(1, customerId, "Accepted");
+		 List<Car> cars = carService.findByStatusAndCustomerIdAndResult(1, customerId, "Accepted");
 		 for(Car car : cars) {
 			 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 	    		LocalDateTime endDateTime = LocalDateTime.parse(car.getEndDate(), formatter);
@@ -141,7 +144,7 @@ public class CarController {
 	    		}
 		 }
 	    
-		List<Car> list = carRepository.findByStatusAndCustomerId(1, customerId);
+		List<Car> list = carService.findByStatusAndCustomerId(1, customerId);
 	    
 	    model.addAttribute("showText", showText);
 	    model.addAttribute("expiredCars", expiredCars);
@@ -178,12 +181,15 @@ public class CarController {
 		//System.out.println("Fark: " + daysDiff + " gün");
 		car.setDaysDiff(daysDiff);
 		int remainingDay = car.getPeriod() - daysDiff;	// remainingDay, poliçenin bitimine ne kadar kaldığı			
-		int refund = (car.getOffer() / car.getPeriod()) * remainingDay;	// refund, iade edilecek miktar
+		double refund = (car.getOffer() / car.getPeriod()) * remainingDay;	// refund, iade edilecek miktar
 		car.setRefund(refund);
 		//System.out.println("İade: "+ refund);
 		model.addAttribute(refund);
 		carService.save(car);
 		
+		Kdv kdv = kdvService.getKdvById(1);
+
+		model.addAttribute(kdv);		
 		model.addAttribute(car);
 		return "trafficInsuranceRefund";
 	}

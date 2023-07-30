@@ -1,7 +1,6 @@
 package com.insurance.mgmt.service;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.insurance.mgmt.entity.Home;
@@ -27,4 +26,19 @@ public class HomeService {
 	public void deleteById(int id) {
 		homeRepository.deleteById(id);
 	}
+	
+	public List<Home> findByStatus(int status) {
+        return homeRepository.findByStatus(status);
+    }
+
+    public List<Home> findByCustomerId(int id) {
+        return homeRepository.findByCustomerId(id);
+    }
+
+    public List<Home> findByProvinceAndDistrictAndNeighbourhoodAndBuildingNumberAndApartmentAndFloorAndStatus(
+            String province, String district, String neighbourhood,
+            int buildingNumber, int apartment, String floor, int status) {
+        return homeRepository.findByProvinceAndDistrictAndNeighbourhoodAndBuildingNumberAndApartmentAndFloorAndStatus(
+                province, district, neighbourhood, buildingNumber, apartment, floor, status);
+    }
 }

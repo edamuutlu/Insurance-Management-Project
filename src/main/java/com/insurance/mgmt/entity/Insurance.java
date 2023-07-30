@@ -19,7 +19,7 @@ public class Insurance {
 	private String insuranceType;
 	
 	@Column(name ="customer_id") 
-	private int customer_id;
+	private int customerId;
 	
 	@Column(name ="car_id") 
 	private int carId;
@@ -28,7 +28,7 @@ public class Insurance {
 	private int homeId;
 	
 	@Column(name ="offer") 
-	private int offer;
+	private double offer;
 	
 	@Column(name ="result") 
 	private String result;
@@ -46,7 +46,7 @@ public class Insurance {
 	private int daysDiff;
 	
 	@Column(name ="refund") 
-	private int refund;
+	private double refund;
 	
 	@Column(name ="status") 
 	private int status;
@@ -56,12 +56,12 @@ public class Insurance {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Insurance(int insuranceId, String insuranceType, int customer_id, int carId, int homeId, int offer,
-			String result, String startDate, String endDate, int daysDiff, int refund, int status, int period) {
+	public Insurance(int insuranceId, String insuranceType, int customerId, int carId, int homeId, double offer,
+			String result, String startDate, String endDate, int daysDiff, double refund, int status, int period) {
 		super();
 		this.insuranceId = insuranceId;
 		this.insuranceType = insuranceType;
-		this.customer_id = customer_id;
+		this.customerId = customerId;
 		this.carId = carId;
 		this.homeId = homeId;
 		this.offer = offer;
@@ -91,11 +91,11 @@ public class Insurance {
 	}
 
 	public int getCustomerId() {
-		return customer_id;
+		return customerId;
 	}
 
-	public void setCustomerId(int customer_id) {
-		this.customer_id = customer_id;
+	public void setCustomerId(int customerId) {
+		this.customerId = customerId;
 	}
 
 	public int getCarId() {
@@ -114,11 +114,11 @@ public class Insurance {
 		this.homeId = homeId;
 	}
 
-	public int getOffer() {
+	public double getOffer() {
 		return offer;
 	}
 
-	public void setOffer(int offer) {
+	public void setOffer(double offer) {
 		this.offer = offer;
 	}
 
@@ -162,11 +162,11 @@ public class Insurance {
 		this.daysDiff = daysDiff;
 	}
 
-	public int getRefund() {
+	public double getRefund() {
 		return refund;
 	}
 
-	public void setRefund(int refund) {
+	public void setRefund(double refund) {
 		this.refund = refund;
 	}
 
@@ -181,7 +181,7 @@ public class Insurance {
 	@Override
 	public String toString() {
 		return "Insurance [insuranceId=" + insuranceId + ", insuranceType=" + insuranceType + ", customerId="
-				+ customer_id + ", carId=" + carId + ", homeId=" + homeId + ", offer=" + offer + ", result=" + result
+				+ customerId + ", carId=" + carId + ", homeId=" + homeId + ", offer=" + offer + ", result=" + result
 				+ ", startDate=" + startDate + ", endDate=" + endDate + ", period=" + period + ", daysDiff=" + daysDiff
 				+ ", refund=" + refund + ", status=" + status + "]";
 	}

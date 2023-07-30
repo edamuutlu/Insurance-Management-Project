@@ -27,4 +27,16 @@ public class CustomerService {
 	public void deleteById(int id) {
 		customerRepository.deleteById(id);
 	}
+	
+	public List<Customer> findByStatus(int status) {
+        return customerRepository.findByStatus(status);
+    }
+
+    public List<Customer> findByStatusAndTc(int status, String tc) {
+        return customerRepository.findByStatusAndTc(status, tc);
+    }
+
+    public List<Customer> findByStatusAndEmail(int status, String email) {
+        return customerRepository.findByStatusAndEmail(status, email);
+    }
 }

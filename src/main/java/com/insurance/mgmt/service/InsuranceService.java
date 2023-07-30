@@ -34,4 +34,24 @@ public class InsuranceService {
 	public void deleteById(int id) {
 		insuranceRepository.deleteById(id);
 	}
+	
+	public List<Insurance> findByStatus(int status) {
+        return insuranceRepository.findByStatus(status);
+    }
+
+    public Optional<Insurance> findByHomeId(int homeId) {
+        return insuranceRepository.findByHomeId(homeId);
+    }
+
+    public List<Insurance> findByStatusAndHomeId(int status, int homeId) {
+        return insuranceRepository.findByStatusAndHomeId(status, homeId);
+    }
+    
+    public List<Insurance> getInsurancesByStatusAndCustomerId(int status, int customerId) {
+        return insuranceRepository.findByStatusAndCustomerId(status, customerId);
+    }
+
+    public List<Insurance> findByStatusAndResultAndHomeId(int status, String result, int homeId) {
+        return insuranceRepository.findByStatusAndResultAndHomeId(status, result, homeId);
+    }
 }

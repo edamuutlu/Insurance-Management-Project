@@ -222,7 +222,7 @@ public class Home {
 
 	public void setYear(int year) {
 		this.year = year;
-	}
+	}	
 
 	@Override
 	public String toString() {

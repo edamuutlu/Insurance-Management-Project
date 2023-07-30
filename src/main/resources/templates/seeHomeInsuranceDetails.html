@@ -9,11 +9,14 @@
 		crossorigin="anonymous"></script>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
 		integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+	<!-- Boxicons CSS -->
+	<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 	<link rel="stylesheet" href="" th:href="@{/css/style.css}">
 	<link href="https://css.gg/css" rel="stylesheet" />
 	<style>
 		#icon-trash {
 			color: red;
+			font-size: 22px;
 		}
 
 		#icon-trash:hover {
@@ -53,8 +56,12 @@
 	<!--End Navbar-->
 
 	<div class="container mt-4">
-		<div class="alert alert-warning" role="alert" th:if="${showText}"> An insurance for this house has already been defined! </div>
-		<button type="button" class="btn btn-info text-white mb-2" style="background-color: rgb(62, 209, 221); font-size: 17px; padding: 10px 20px;">
+		<div class="alert alert-warning" role="alert" th:if="${showText}"> An insurance for this house has already been
+			defined! </div>
+		<div class="alert alert-warning" role="alert" th:if="${showAlert}"> An insurance for this house has already been
+			deleted or expired! </div>
+		<button type="button" class="btn btn-info text-white mb-2"
+			style="background-color: rgb(62, 209, 221); font-size: 17px; padding: 10px 20px;">
 			<a class="text-decoration-none" th:href="@{/newHomeInsuranceCalculate/{id}(id=${homeId})}">
 				<strong>Create New Home Insurance</strong>
 			</a>
@@ -88,7 +95,7 @@
 					<td th:text="${i.endDate}"></td>
 					<td th:text="${i.period}"></td>
 					<td><button id="trash" class="mx-auto"><a th:href="@{/homeInsuranceRefund/{id}(id=${i.homeId})}"><i
-									id="icon-trash" class="gg-trash"></i></a></button></td>
+									id="icon-trash" class="bx bx-trash"></i></a></button></td>
 				</tr>
 			</tbody>
 		</table>

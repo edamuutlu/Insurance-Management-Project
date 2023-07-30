@@ -27,11 +27,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.insurance.mgmt.entity.Customer;
 import com.insurance.mgmt.entity.Home;
 import com.insurance.mgmt.entity.Insurance;
-import com.insurance.mgmt.repository.IHomeRepository;
-import com.insurance.mgmt.repository.IInsuranceRepository;
+import com.insurance.mgmt.entity.Kdv;
 import com.insurance.mgmt.service.CustomerService;
 import com.insurance.mgmt.service.HomeService;
 import com.insurance.mgmt.service.InsuranceService;
+import com.insurance.mgmt.service.KdvService;
 import com.insurance.mgmt.util.CalculateMethods;
 
 import jakarta.validation.Valid;
@@ -43,16 +43,13 @@ public class HomeController {
 	HomeService homeService;
 
 	@Autowired
-	IHomeRepository homeRepository;
-
-	@Autowired
 	InsuranceService insuranceService;
 
 	@Autowired
-	IInsuranceRepository insuranceRepository;
-
-	@Autowired
 	CustomerService customerService;
+	
+	@Autowired
+	KdvService kdvService;
 
 	private static final Logger log = LoggerFactory.getLogger(CarController.class);
 
@@ -89,12 +86,14 @@ public class HomeController {
 
 		CalculateMethods calculateMethods = new CalculateMethods(); // public olan calculate metodunu çağırmak için
 																	// util'den nesne oluşturulmaktadır
-		int offer = calculateMethods.calculateHomeInsurance(home);
+		Kdv kdv = kdvService.getKdvById(1);
+		int kdvRate = kdv.getHomeKdv();
+		double offer = calculateMethods.calculateHomeInsurance(home, kdvRate);
 		insurance.setOffer(offer);
 		insurance.setStatus(1);
 
 		// Aynı ev adresi kontrolü
-		List<Home> filteredList = homeRepository
+		List<Home> filteredList = homeService
 				.findByProvinceAndDistrictAndNeighbourhoodAndBuildingNumberAndApartmentAndFloorAndStatus(
 						home.getProvince(), home.getDistrict(), home.getNeighbourhood(), home.getBuildingNumber(),
 						home.getApartment(), home.getFloor(), 1);
@@ -143,7 +142,7 @@ public class HomeController {
 		Customer customer = customerService.getCustomerById(home.getCustomerId());
 
 		// Devam eden bir sigorta var mı kontrolü
-		List<Insurance> insurances = insuranceRepository.findByStatusAndResultAndHomeId(1, "Accepted", homeId);
+		List<Insurance> insurances = insuranceService.findByStatusAndResultAndHomeId(1, "Accepted", homeId);
 		for (Insurance i : insurances) {
 			model.addAttribute("showText", true);
 			model.addAttribute(i);
@@ -165,7 +164,9 @@ public class HomeController {
 
 		CalculateMethods calculateMethods = new CalculateMethods(); // public olan calculate metodunu çağırmak için
 																	// util'den nesne oluşturulmaktadır
-		int offer = calculateMethods.calculateHomeInsurance(home);
+		Kdv kdv = kdvService.getKdvById(1);
+		int kdvRate = kdv.getHomeKdv();
+		double offer = calculateMethods.calculateHomeInsurance(home, kdvRate);
 		insurance.setOffer(offer);
 		insuranceService.save(insurance);
 
@@ -184,7 +185,7 @@ public class HomeController {
 
 	@GetMapping("/homeList/{customerId}")
 	public ModelAndView getAllHome(@PathVariable("customerId") int customerId, Model model) {
-		List<Home> homes = homeRepository.findByStatus(1);
+		List<Home> homes = homeService.findByStatus(1);
 		List<Home> list = new ArrayList<>();
 		ArrayList<Home> expiredHomes = new ArrayList<>();
 		// Insurance insurance = insuranceService.getInsuranceByCustomerId(customerId);
@@ -230,7 +231,7 @@ public class HomeController {
 	public ModelAndView seeHomeInsuranceDetails(@PathVariable("id") int homeId, Model model,
 			RedirectAttributes redirectAttributes) {
 
-		List<Insurance> insurances = insuranceRepository.findByStatusAndHomeId(1, homeId);
+		List<Insurance> insurances = insuranceService.findByStatusAndHomeId(1, homeId);
 		for (Insurance insurance : insurances) {
 			insuranceService.save(insurance);
 		}
@@ -252,9 +253,14 @@ public class HomeController {
 	}
 
 	@GetMapping("/homeInsuranceRefund/{id}")
-	public String insuranceRefund(@PathVariable("id") int id, Model model) {
-		Home home = homeService.getHomeById(id);
+	public String insuranceRefund(@PathVariable("id") int homeId, Model model, RedirectAttributes redirectAttributes) {
+		Home home = homeService.getHomeById(homeId);
 		Insurance insurance = insuranceService.getInsuranceByHomeId(home.getHomeId());
+		
+		if(insurance.getResult().equals("Canceled") || insurance.getResult().equals("Expired")) {
+			redirectAttributes.addFlashAttribute("showAlert", true);
+			return "redirect:/seeHomeInsuranceDetails/" + homeId;
+		}
 
 		LocalDateTime now = LocalDateTime.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
@@ -268,11 +274,14 @@ public class HomeController {
 		// System.out.println("Fark: " + daysDiff + " gün");
 		insurance.setDaysDiff(daysDiff);
 		int remainingDay = insurance.getPeriod() - daysDiff; // remainingDay, poliçenin bitimine ne kadar kaldığı
-		int refund = (insurance.getOffer() / insurance.getPeriod()) * remainingDay; // refund, iade edilecek miktar
+		double refund = (insurance.getOffer() / insurance.getPeriod()) * remainingDay; // refund, iade edilecek miktar
 		insurance.setRefund(refund);
 		model.addAttribute(refund);
 		insuranceService.save(insurance);
+		
+		Kdv kdv = kdvService.getKdvById(1);
 
+		model.addAttribute(kdv);
 		model.addAttribute(insurance);
 		model.addAttribute(home);
 		return "homeInsuranceRefund";

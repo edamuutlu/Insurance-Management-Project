@@ -29,4 +29,20 @@ public class CarService {
 	public Car getCarId(int id) {
 		return carRepository.findById(id).get();
 	}
+	
+	public List<Car> findByStatus(int status) {
+        return carRepository.findByStatus(status);
+    }
+
+    public List<Car> findByStatusAndCustomerId(int status, int customerId) {
+        return carRepository.findByStatusAndCustomerId(status, customerId);
+    }
+
+    public List<Car> findByStatusAndPlate1AndPlate2AndPlate3AndResult(int status, int plate1, String plate2, int plate3, String result) {
+        return carRepository.findByStatusAndPlate1AndPlate2AndPlate3AndResult(status, plate1, plate2, plate3, result);
+    }
+
+    public List<Car> findByStatusAndCustomerIdAndResult(int status, int customerId, String result) {
+        return carRepository.findByStatusAndCustomerIdAndResult(status, customerId, result);
+    }
 }

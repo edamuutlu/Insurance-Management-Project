@@ -13,14 +13,6 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
 
 	<style>
-		#icon-trash {
-			color: red;
-		}
-
-		#icon-trash:hover {
-			color: rgb(255, 62, 62);
-		}
-
 		button {
 			font-size: 0.8rem;
 			font-weight: 700;
@@ -77,6 +69,14 @@
 					<h5>BILLING SUMMARY</h5>
 					<div class="d-flex justify-content-between">
 						<h6>Subtotal</h6>
+						<p th:text="${car.offer - kdv.carKdv + ' ₺'}"></p>
+					</div>
+					<div class="d-flex justify-content-between">
+						<h6>KDV</h6>
+						<p th:text="${'% ' + kdv.carKdv}"></p>
+					</div>
+					<div class="d-flex justify-content-between">
+						<h6>Total Amount</h6>
 						<p th:text="${car.offer + ' ₺'}"></p>
 					</div>
 					<div class="d-flex justify-content-between">
