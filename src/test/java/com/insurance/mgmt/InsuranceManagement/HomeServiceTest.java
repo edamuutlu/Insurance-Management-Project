@@ -33,17 +33,19 @@ class HomeServiceTest {
 	private IHomeRepository homeRepository;
 
 	private List<Home> dummyHomes = Stream.of(
-            new Home(1, 1, "Reinforced Concrete", "Summer House", "Istanbul", "Kadikoy", "Acıbadem", 10, 10, "Ground Floor", 10, "Owner", 1, 30, 100, 2013),
-            new Home(2, 1, "Reinforced Concrete", "Summer House", "Istanbul", "Kadikoy", "Acıbadem", 10, 10, "Ground Floor", 13, "Tenant", 1, 30, 100, 2010)
+            new Home(1, 1, "Reinforced Concrete", "Summer House", "İSTANBUL", "KADIKÖY", "GÖZTEPE", 10, 10, "Ground Floor", 10, "Owner", 1, 30, 100, 2013),
+            new Home(2, 1, "Reinforced Concrete", "Summer House", "İSTANBUL", "KADIKÖY", "ERENKÖY", 10, 10, "Ground Floor", 13, "Tenant", 1, 30, 100, 2010)
     ).collect(Collectors.toList());
 
 	@Test
 	public void calculateHomeInsuranceTest() {
 		
 		CalculateMethods calculateMethods = new CalculateMethods();
-	    int offer = calculateMethods.calculateHomeInsurance(dummyHomes.get(0));	
+		int KdvRate = 10;
+		double offer = calculateMethods.calculateHomeInsurance(dummyHomes.get(0), KdvRate);	
     
-	    int expectedOffer = 500 + (100*4) + 500 + 500 + 1000 + (10 * 20) + 600 + 400 + (30 * 20);
+		double kdv = (((500 + (100*4) + 500 + 500 + 500 + (10 * 20) + 600 + 400 + (30 * 20)) * KdvRate) / 100);
+		double expectedOffer = 500 + (100*4) + 500 + 500 + 500 + (10 * 20) + 600 + 400 + (30 * 20) + kdv;
 	    assertEquals(expectedOffer, offer);		
 
 	}

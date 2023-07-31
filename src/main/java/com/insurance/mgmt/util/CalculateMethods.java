@@ -98,14 +98,14 @@ public class CalculateMethods {
 		case 06:
 			offer += 400;
 			break;
-		case 16:
+		case 35:
 			offer += 300;
 			break;
 		case 34:
 			offer += 500;
 			break;
 		default:
-			System.out.println("Geçerli olmayan il");
+			offer += 200;
 			break;
 		}
 
@@ -156,20 +156,22 @@ public class CalculateMethods {
 			break;
 		}
 
+		System.out.println(offer);
 		switch (home.getProvince()) { // Konutun bulunduğu ile göre ek prim
-		case "Ankara":
+		case "ANKARA":
 			offer += 800;
 			break;
-		case "Bursa":
-			offer += 500;
+		case "İZMİR":
+			offer += 700;
 			break;
-		case "Istanbul":
-		case "İstanbul":
+		case "İSTANBUL":
 			offer += 1000;
 			break;
 		default:
+			offer += 500;
 			break;
 		}
+		System.out.println(offer);
 
 		if (home.getBuildingAge() <= 5) { // Bina yaşına göre ek prim
 			offer += home.getBuildingAge() * 10;

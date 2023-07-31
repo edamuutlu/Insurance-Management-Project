@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -28,10 +27,16 @@ import com.insurance.mgmt.entity.Customer;
 import com.insurance.mgmt.entity.Home;
 import com.insurance.mgmt.entity.Insurance;
 import com.insurance.mgmt.entity.Kdv;
+import com.insurance.mgmt.entity.address.District;
+import com.insurance.mgmt.entity.address.Neighbourhood;
+import com.insurance.mgmt.entity.address.Province;
 import com.insurance.mgmt.service.CustomerService;
 import com.insurance.mgmt.service.HomeService;
 import com.insurance.mgmt.service.InsuranceService;
 import com.insurance.mgmt.service.KdvService;
+import com.insurance.mgmt.service.address.DistrictService;
+import com.insurance.mgmt.service.address.NeighbourhoodService;
+import com.insurance.mgmt.service.address.ProvinceService;
 import com.insurance.mgmt.util.CalculateMethods;
 
 import jakarta.validation.Valid;
@@ -50,6 +55,15 @@ public class HomeController {
 	
 	@Autowired
 	KdvService kdvService;
+	
+	@Autowired
+	ProvinceService provinceService;
+	
+	@Autowired
+	DistrictService districtService;
+	
+	@Autowired
+	NeighbourhoodService neighbourhoodService;
 
 	private static final Logger log = LoggerFactory.getLogger(CarController.class);
 
@@ -62,10 +76,18 @@ public class HomeController {
 	@PostMapping("/homeRegister")
 	public String register(@Valid @ModelAttribute Home home, BindingResult bindingResult, Model model,
 			RedirectAttributes redirectAttributes, @RequestParam(value = "customerId", required = false) int idParam) {
+		List<Province> getAllProvinces = provinceService.listAll();
+		List<District> getAllDistricts = districtService.listAll();
+		List<Neighbourhood> getAllNeighbourhoods = neighbourhoodService.listAll();      
 
 		if (bindingResult.hasErrors()) {
 			log.info(">> home : {}", home.toString());
 			model.addAttribute("customerId", home.getCustomerId());
+			
+			model.addAttribute("getAllProvinces", getAllProvinces);
+	        model.addAttribute("getAllDistricts", getAllDistricts);
+	        model.addAttribute("getAllNeighbourhoods", getAllNeighbourhoods);
+	        
 			return "homeInsuranceForm";
 		}
 		model.addAttribute("homes", homeService.getAllHomes());
@@ -103,6 +125,11 @@ public class HomeController {
 			model.addAttribute("showHomeAlert", showHomeAlert);
 			model.addAttribute("customerId", idParam);
 			model.addAttribute("home", home);
+			
+			model.addAttribute("getAllProvinces", getAllProvinces);
+	        model.addAttribute("getAllDistricts", getAllDistricts);
+	        model.addAttribute("getAllNeighbourhoods", getAllNeighbourhoods);
+			
 			return "homeInsuranceForm";
 		}
 
@@ -176,9 +203,16 @@ public class HomeController {
 		return "homeInsuranceCalculate";
 	}
 
-	@RequestMapping(path = "/homeInsuranceForm", method = RequestMethod.GET)
+	@GetMapping(path = "/homeInsuranceForm")
 	public String getForm(@RequestParam(value = "customerId", required = false) int idParam, Model model,
 			@ModelAttribute Home home) {
+		List<Province> getAllProvinces = provinceService.listAll();
+		List<District> getAllDistricts = districtService.listAll();
+		List<Neighbourhood> getAllNeighbourhoods = neighbourhoodService.listAll();
+
+        model.addAttribute("getAllProvinces", getAllProvinces);
+        model.addAttribute("getAllDistricts", getAllDistricts);
+        model.addAttribute("getAllNeighbourhoods", getAllNeighbourhoods);
 		model.addAttribute("customerId", idParam);
 		return "homeInsuranceForm";
 	}

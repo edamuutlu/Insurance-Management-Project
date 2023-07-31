@@ -9,11 +9,29 @@
 		integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 	<link rel="stylesheet" href="" th:href="@{/css/style.css}">
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script th:src="@{/js/custom.js}"></script>
+
 	<style>
 		.error {
 			color: red;
 		}
 	</style>
+
+	<script>
+		$(document).ready(function () {
+			$("#province").change(function () {
+				var provinceName = $("#province").val();
+				 $("#district").empty();
+				for (var i = 0; i < districtList.length; i++) {
+					if (districtList[i].sehiradi == provinceName) {
+						var option = $("<option>").val(districtList[i].ilceadi).text(districtList[i].ilceadi);
+						$("#district").append(option);
+					}
+				}
+			});
+		});
+	</script>
 
 </head>
 
@@ -47,10 +65,12 @@
 			<div class="textIntro">
 				<h1 class="text-center">Registration Form</h1>
 				<p ng-show="msg">{{msg}}</p>
-				<div class="alert alert-warning" role="alert" th:if="${showTcAlert}"> This TC number is already registered! </div>
-				<div class="alert alert-warning" role="alert" th:if="${showEmailAlert}"> This Email address is already registered! </div>
+				<div class="alert alert-warning" role="alert" th:if="${showTcAlert}"> This TC number is already
+					registered! </div>
+				<div class="alert alert-warning" role="alert" th:if="${showEmailAlert}"> This Email address is already
+					registered! </div>
 			</div>
-			
+
 			<form th:action="@{/customerRegisterForm}" th:object="${customer}" method="post">
 
 				<input type="text" id="tc" th:field="*{tc}" placeholder="TC Number*">
@@ -70,6 +90,8 @@
 
 				<select name="province" id="province">
 					<option value="" th:selected="${#fields.hasErrors('province')}">Select Province*</option>
+					<option th:each="province : ${getAllProvinces}" th:value="${province.sehiradi}"
+						th:text="${province.sehiradi}"></option>
 				</select>
 				<p th:if="${#fields.hasErrors('province')}" th:errorclass="error" th:errors="*{province}" />
 
@@ -77,6 +99,10 @@
 					<option value="" th:selected="${#fields.hasErrors('district')}">Select District*</option>
 				</select>
 				<p th:if="${#fields.hasErrors('district')}" th:errorclass="error" th:errors="*{district}" />
+
+				<script th:inline="javascript">
+					var districtList = /*[[${getAllDistricts}]]*/[];
+				</script>
 
 				<button type="submit" class="btn">Submit</button>
 			</form>

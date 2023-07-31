@@ -9,6 +9,34 @@
 		integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 	<link rel="stylesheet" href="" th:href="@{/css/style.css}">
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+	<script>
+		$(document).ready(function () {
+
+			$("#province").change(function () {
+				var provinceName = $("#province").val();
+				$("#district").empty();
+				for (var i = 0; i < districtList.length; i++) {
+					if (districtList[i].sehiradi == provinceName) {
+						var option = $("<option>").val(districtList[i].ilceadi).text(districtList[i].ilceadi);
+						$("#district").append(option);
+					}
+				}
+			});
+
+			$("#district").change(function () {
+				var districtName = $("#district").val();
+				$("#neighbourhood").empty();
+				for (var i = 0; i < neighbourhoodList.length; i++) {
+					if (neighbourhoodList[i].ilceAdi == districtName) {
+						var option = $("<option>").val(neighbourhoodList[i].mahalleAdi).text(neighbourhoodList[i].mahalleAdi);
+						$("#neighbourhood").append(option);
+					}
+				}
+			});
+		});
+	</script>
 
 </head>
 
@@ -71,8 +99,20 @@
 				</select>
 				<p th:if="${#fields.hasErrors('typeOfUse')}" th:errorclass="error" th:errors="*{typeOfUse}" />
 
+				<!--				<select name="province" id="province">-->
+				<!--					<option value="" th:selected="${#fields.hasErrors('province')}">Select Province*</option>-->
+				<!--				</select>-->
+				<!--				<p th:if="${#fields.hasErrors('province')}" th:errorclass="error" th:errors="*{province}" />-->
+
+				<!--				<select name="district" id="district">-->
+				<!--					<option value="" th:selected="${#fields.hasErrors('district')}">Select District*</option>-->
+				<!--				</select>-->
+				<!--				<p th:if="${#fields.hasErrors('district')}" th:errorclass="error" th:errors="*{district}" />-->
+
 				<select name="province" id="province">
 					<option value="" th:selected="${#fields.hasErrors('province')}">Select Province*</option>
+					<option th:each="province : ${getAllProvinces}" th:value="${province.sehiradi}"
+						th:text="${province.sehiradi}"></option>
 				</select>
 				<p th:if="${#fields.hasErrors('province')}" th:errorclass="error" th:errors="*{province}" />
 
@@ -81,11 +121,15 @@
 				</select>
 				<p th:if="${#fields.hasErrors('district')}" th:errorclass="error" th:errors="*{district}" />
 
-				<input type="text" id="neighbourhood" name="neighbourhood" th:field="*{neighbourhood}"
-					placeholder="Neighbourhood*" ng-model="neighbourhood" ng-required="true" ng-pattern="/^[a-zA-Z]*$/">
-				<p class="error" ng-show="myForm.neighbourhood.$invalid && myForm.neighbourhood.$touched">Fill out your
-					neighbourhood.</p>
+				<select name="neighbourhood" id="neighbourhood">
+					<option value="" th:selected="${#fields.hasErrors('neighbourhood')}">Select Neighbourhood*</option>
+				</select>
 				<p th:if="${#fields.hasErrors('neighbourhood')}" th:errorclass="error" th:errors="*{neighbourhood}" />
+				
+				<script th:inline="javascript">
+					var districtList = /*[[${getAllDistricts}]]*/[];
+					var neighbourhoodList = /*[[${getAllNeighbourhoods}]]*/[];
+				</script>
 
 				<input type="number" id="buildingNumber" name="buildingNumber" placeholder="Building Number*"
 					ng-model="buildingNumber" ng-required="true">
@@ -98,7 +142,8 @@
 					apartment.</p>
 
 				<select name="year" id="year">
-					<option value="" th:selected="${#fields.hasErrors('year')}">Select Building Construction Year*</option>
+					<option value="" th:selected="${#fields.hasErrors('year')}">Select Building Construction Year*
+					</option>
 					<option ng-repeat="option in years" value="{{option}}">{{option}}</option>
 				</select>
 				<p th:if="${#fields.hasErrors('year')}" th:errorclass="error" th:errors="*{year}" />

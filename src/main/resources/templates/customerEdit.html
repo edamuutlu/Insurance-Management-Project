@@ -9,6 +9,22 @@
 		integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 	<link rel="stylesheet" href="" th:href="@{/css/style.css}">
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	
+	<script>
+		$(document).ready(function () {
+			$("#province").change(function () {
+				var provinceName = $("#province").val();
+				 $("#district").empty();
+				for (var i = 0; i < districtList.length; i++) {
+					if (districtList[i].sehiradi == provinceName) {
+						var option = $("<option>").val(districtList[i].ilceadi).text(districtList[i].ilceadi);
+						$("#district").append(option);
+					}
+				}
+			});
+		});
+	</script>
 
 </head>
 
@@ -67,14 +83,22 @@
 				<input type="text" name="lastname" placeholder="Last Name*" ng-required="true" th:value="${customer.lastname}">
 				<p class="error" ng-show="myForm.lastname.$invalid && myForm.lastname.$touched">Fill out your last name.
 				</p>
-
-				<select name="province" id="province" required>
-					<option th:value="${customer.province}" th:text="${customer.province}">Select Province*</option>
-				</select>
 				
-				<select name="district" id="district" required>
-					<option th:value="${customer.district}" th:text="${customer.district}">Select District*</option>
-				</select>							
+				<select name="province" id="province">
+					<option th:value="${customer.province}" th:text="${customer.province}" th:selected="${#fields.hasErrors('province')}">Select Province*</option>
+					<option th:each="province : ${getAllProvinces}" th:value="${province.sehiradi}"
+						th:text="${province.sehiradi}"></option>
+				</select>
+				<p th:if="${#fields.hasErrors('province')}" th:errorclass="error" th:errors="*{province}" />
+
+				<select name="district" id="district">
+					<option th:value="${customer.district}" th:text="${customer.district}" th:selected="${#fields.hasErrors('district')}">Select District*</option>
+				</select>
+				<p th:if="${#fields.hasErrors('district')}" th:errorclass="error" th:errors="*{district}" />
+
+				<script th:inline="javascript">
+					var districtList = /*[[${getAllDistricts}]]*/[];
+				</script>
 
 				<button type="submit" class="btn" ng-disabled="myForm.$invalid">Submit</button>
 			</form>

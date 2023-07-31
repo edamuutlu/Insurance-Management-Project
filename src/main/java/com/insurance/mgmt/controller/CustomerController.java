@@ -23,12 +23,16 @@ import com.insurance.mgmt.entity.Car;
 import com.insurance.mgmt.entity.Customer;
 import com.insurance.mgmt.entity.Home;
 import com.insurance.mgmt.entity.Insurance;
+import com.insurance.mgmt.entity.address.District;
+import com.insurance.mgmt.entity.address.Province;
 import com.insurance.mgmt.repository.IHomeRepository;
 import com.insurance.mgmt.repository.IInsuranceRepository;
 import com.insurance.mgmt.service.CarService;
 import com.insurance.mgmt.service.CustomerService;
 import com.insurance.mgmt.service.HomeService;
 import com.insurance.mgmt.service.InsuranceService;
+import com.insurance.mgmt.service.address.DistrictService;
+import com.insurance.mgmt.service.address.ProvinceService;
 
 import jakarta.validation.Valid;
 
@@ -53,8 +57,12 @@ public class CustomerController {
 	@Autowired
 	InsuranceService insuranceService;
 
-//	@Autowired
-//	ProvinceService provinceService;
+	@Autowired
+	ProvinceService provinceService;
+	
+	@Autowired
+	DistrictService districtService;
+			
 
 	private static final Logger log = LoggerFactory.getLogger(CustomerController.class);
 
@@ -81,14 +89,13 @@ public class CustomerController {
 	}
 
 	@GetMapping("/customerRegisterForm")
-	public String registerCustomer(@ModelAttribute Customer customer) {
+	public String registerCustomer(@ModelAttribute Customer customer, Model model) {
+		
+		List<Province> getAllProvinces = provinceService.listAll();
+		List<District> getAllDistricts = districtService.listAll();
 
-//	    List<Province> getAllProvinces = provinceRepository.findAll();
-//	    
-//	    List<District> getDistrictsByProvinceId = districtRepository.findAll();
-//
-//        model.addAttribute("getAllProvinces", getAllProvinces);
-//        model.addAttribute("getDistrictsByProvinceId", getDistrictsByProvinceId);
+        model.addAttribute("getAllProvinces", getAllProvinces);
+        model.addAttribute("getAllDistricts", getAllDistricts);
 
 		return "customerRegisterForm";
 	}
@@ -101,9 +108,17 @@ public class CustomerController {
 	}
 
 	@PostMapping("/customerRegisterForm")
-	public String register(@Valid @ModelAttribute Customer customer, BindingResult bindingResult, Model model) {
+	public String register(@Valid @ModelAttribute Customer customer,
+			BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+		List<Province> getAllProvinces = provinceService.listAll();
+		List<District> getAllDistricts = districtService.listAll();
+		
 		if (bindingResult.hasErrors()) {
 			log.info(">> Customer : {}", customer.toString());
+			
+	        model.addAttribute("getAllProvinces", getAllProvinces);
+	        model.addAttribute("getAllDistricts", getAllDistricts);
+			
 			return "customerRegisterForm";
 		}
 
@@ -124,6 +139,10 @@ public class CustomerController {
 		if (showTcAlert == true || showEmailAlert == true) {
 			model.addAttribute("showTcAlert", showTcAlert);
 			model.addAttribute("showEmailAlert", showEmailAlert);
+
+	        model.addAttribute("getAllProvinces", getAllProvinces);
+	        model.addAttribute("getAllDistricts", getAllDistricts);
+			
 			return "customerRegisterForm";
 		} else {
 			model.addAttribute("customers", customerService.getAllCustomer());
@@ -159,6 +178,12 @@ public class CustomerController {
 
 	@RequestMapping("/editCustomer/{customerId}")
 	public String editCustomer(@PathVariable("customerId") int id, Model model) {
+		List<Province> getAllProvinces = provinceService.listAll();
+		List<District> getAllDistricts = districtService.listAll();
+
+        model.addAttribute("getAllProvinces", getAllProvinces);
+        model.addAttribute("getAllDistricts", getAllDistricts);
+		
 		Customer customer = customerService.getCustomerById(id);
 		model.addAttribute("customer", customer);
 		return "customerEdit";

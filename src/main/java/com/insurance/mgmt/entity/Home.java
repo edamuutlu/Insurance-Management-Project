@@ -7,7 +7,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 
 @Entity
 @Table(name = "HOME")
@@ -38,7 +37,6 @@ public class Home {
 	
 	@Column(name ="neighbourhood") 
 	@NotBlank(message = "Enter your neighbourhood.")
-	@Pattern(regexp = "[a-zA-Z\\s]+", message = "Only alphabetic characters and spaces are allowed")
 	private String neighbourhood;
 	
 	@Column(name ="building_number") 

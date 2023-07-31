@@ -8,13 +8,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "PROVİNCE")
+@Table(name = "iller")
 public class Province {
 	@Id
-	@Column(name = "id")
+	@Column(name = "il_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	@Column(name = "sehiradi")
+	@Column(name = "il_adi")
 	private String sehiradi;
 			
 	public Province() {
@@ -43,6 +43,12 @@ public class Province {
 	public void setSehiradi(String sehiradi) {
 		this.sehiradi = sehiradi;
 	}
+
+	@Override
+	public String toString() {
+		return "Province [id=" + id + ", sehiradi=" + sehiradi + "]";
+	}
+	
 	
 	
 }

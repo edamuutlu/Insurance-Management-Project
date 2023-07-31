@@ -8,29 +8,32 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "DİSTRİCT")
+@Table(name = "ilceler")
 public class District {
 	@Id
-	@Column(name = "id")
+	@Column(name = "ilce_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	@Column(name = "ilceadi")
+	@Column(name = "ilce_adi")
 	private String ilceadi;
-	@Column(name = "sehirid")
+	@Column(name = "il_id")
 	private String sehirid;
+	@Column(name = "il_adi")
+	private String sehiradi;
 	
 	public District() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	
-	public District(int id, String ilceadi, String sehirid) {
+	public District(int id, String ilceadi, String sehirid, String sehiradi) {
 		super();
 		this.id = id;
 		this.ilceadi = ilceadi;
 		this.sehirid = sehirid;
+		this.sehiradi = sehiradi;
 	}
-	
+
 	public int getId() {
 		return id;
 	}
@@ -48,6 +51,19 @@ public class District {
 	}
 	public void setSehirid(String sehirid) {
 		this.sehirid = sehirid;
+	}
+
+	public String getSehiradi() {
+		return sehiradi;
+	}
+
+	public void setSehiradi(String sehiradi) {
+		this.sehiradi = sehiradi;
+	}
+
+	@Override
+	public String toString() {
+		return "District [id=" + id + ", ilceadi=" + ilceadi + ", sehirid=" + sehirid + ", sehiradi=" + sehiradi + "]";
 	}
 	
 	
