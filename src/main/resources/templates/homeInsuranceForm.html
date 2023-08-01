@@ -15,22 +15,32 @@
 		$(document).ready(function () {
 
 			$("#province").change(function () {
-				var provinceName = $("#province").val();
+				var provinceId = $("#province").val();
 				$("#district").empty();
+
+				// İlk olarak "Select District" seçeneğini ekliyoruz
+				var defaultOption = $("<option>").val("").text("Select District*");
+				$("#district").append(defaultOption);
+
 				for (var i = 0; i < districtList.length; i++) {
-					if (districtList[i].sehiradi == provinceName) {
-						var option = $("<option>").val(districtList[i].ilceadi).text(districtList[i].ilceadi);
+					if (districtList[i].sehirid == provinceId) {
+						var option = $("<option>").val(districtList[i].id).text(districtList[i].ilceadi);
 						$("#district").append(option);
 					}
 				}
 			});
 
 			$("#district").change(function () {
-				var districtName = $("#district").val();
+				var districtId = $("#district").val();
 				$("#neighbourhood").empty();
+
+				// İlk olarak "Select Neighbourhood" seçeneğini ekliyoruz
+				var defaultOption = $("<option>").val("").text("Select Neighbourhood*");
+				$("#neighbourhood").append(defaultOption);
+
 				for (var i = 0; i < neighbourhoodList.length; i++) {
-					if (neighbourhoodList[i].ilceAdi == districtName) {
-						var option = $("<option>").val(neighbourhoodList[i].mahalleAdi).text(neighbourhoodList[i].mahalleAdi);
+					if (neighbourhoodList[i].ilceId == districtId) {
+						var option = $("<option>").val(neighbourhoodList[i].mahalleId).text(neighbourhoodList[i].mahalleAdi);
 						$("#neighbourhood").append(option);
 					}
 				}
@@ -99,19 +109,9 @@
 				</select>
 				<p th:if="${#fields.hasErrors('typeOfUse')}" th:errorclass="error" th:errors="*{typeOfUse}" />
 
-				<!--				<select name="province" id="province">-->
-				<!--					<option value="" th:selected="${#fields.hasErrors('province')}">Select Province*</option>-->
-				<!--				</select>-->
-				<!--				<p th:if="${#fields.hasErrors('province')}" th:errorclass="error" th:errors="*{province}" />-->
-
-				<!--				<select name="district" id="district">-->
-				<!--					<option value="" th:selected="${#fields.hasErrors('district')}">Select District*</option>-->
-				<!--				</select>-->
-				<!--				<p th:if="${#fields.hasErrors('district')}" th:errorclass="error" th:errors="*{district}" />-->
-
 				<select name="province" id="province">
 					<option value="" th:selected="${#fields.hasErrors('province')}">Select Province*</option>
-					<option th:each="province : ${getAllProvinces}" th:value="${province.sehiradi}"
+					<option th:each="province : ${getAllProvinces}" th:value="${province.id}"
 						th:text="${province.sehiradi}"></option>
 				</select>
 				<p th:if="${#fields.hasErrors('province')}" th:errorclass="error" th:errors="*{province}" />
@@ -125,7 +125,7 @@
 					<option value="" th:selected="${#fields.hasErrors('neighbourhood')}">Select Neighbourhood*</option>
 				</select>
 				<p th:if="${#fields.hasErrors('neighbourhood')}" th:errorclass="error" th:errors="*{neighbourhood}" />
-				
+
 				<script th:inline="javascript">
 					var districtList = /*[[${getAllDistricts}]]*/[];
 					var neighbourhoodList = /*[[${getAllNeighbourhoods}]]*/[];

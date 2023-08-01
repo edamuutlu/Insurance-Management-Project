@@ -11,55 +11,45 @@ import jakarta.persistence.Table;
 @Table(name = "KDV")
 public class Kdv {
 	@Id
-	@Column(name = "kdv_id")
+	@Column(name = "product_type")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int kdvId;
+	private int productType;
 	
-	@Column(name = "car")
-	private int carKdv;
-	
-	@Column(name = "home")
-	private int homeKdv;
+	@Column(name = "kdv_rate")
+	private int kdvRate;
 
 	public Kdv() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Kdv(int kdvId, int carKdv, int homeKdv) {
+	public Kdv(int productType, int kdvRate) {
 		super();
-		this.kdvId = kdvId;
-		this.carKdv = carKdv;
-		this.homeKdv = homeKdv;
+		this.productType = productType;
+		this.kdvRate = kdvRate;
 	}
 
-	public int getKdvId() {
-		return kdvId;
+	public int getProductType() {
+		return productType;
 	}
 
-	public void setKdvId(int kdvId) {
-		this.kdvId = kdvId;
+	public void setProductType(int productType) {
+		this.productType = productType;
 	}
 
-	public int getCarKdv() {
-		return carKdv;
+	public int getKdvRate() {
+		return kdvRate;
 	}
 
-	public void setCarKdv(int carKdv) {
-		this.carKdv = carKdv;
-	}
-
-	public int getHomeKdv() {
-		return homeKdv;
-	}
-
-	public void setHomeKdv(int homeKdv) {
-		this.homeKdv = homeKdv;
+	public void setKdvRate(int kdvRate) {
+		this.kdvRate = kdvRate;
 	}
 
 	@Override
 	public String toString() {
-		return "Kdv [kdvId=" + kdvId + ", carKdv=" + carKdv + ", homeKdv=" + homeKdv + "]";
+		return "Kdv [productType=" + productType + ", kdvRate=" + kdvRate + "]";
 	}
+
+	
 	
 }

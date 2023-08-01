@@ -158,13 +158,13 @@ public class CalculateMethods {
 
 		System.out.println(offer);
 		switch (home.getProvince()) { // Konutun bulunduğu ile göre ek prim
-		case "ANKARA":
+		case "6":
 			offer += 800;
 			break;
-		case "İZMİR":
+		case "35":
 			offer += 700;
 			break;
-		case "İSTANBUL":
+		case "34":
 			offer += 1000;
 			break;
 		default:
@@ -218,6 +218,7 @@ public class CalculateMethods {
 		// KDV oranı teklife eklenmektedir
 		System.out.println(offer);
 		offer += (offer * kdvRate) / 100;
+		System.out.println(offer);
 
 		return offer;
 	}

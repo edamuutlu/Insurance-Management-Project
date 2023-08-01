@@ -14,11 +14,16 @@
 	<script>
 		$(document).ready(function () {
 			$("#province").change(function () {
-				var provinceName = $("#province").val();
+				var provinceId = $("#province").val();
 				 $("#district").empty();
+				 
+				 // İlk olarak "Select District" seçeneğini ekliyoruz
+				var defaultOption = $("<option>").val("").text("Select District*");
+				$("#district").append(defaultOption);
+				 
 				for (var i = 0; i < districtList.length; i++) {
-					if (districtList[i].sehiradi == provinceName) {
-						var option = $("<option>").val(districtList[i].ilceadi).text(districtList[i].ilceadi);
+					if (districtList[i].sehirid == provinceId) {
+						var option = $("<option>").val(districtList[i].id).text(districtList[i].ilceadi);
 						$("#district").append(option);
 					}
 				}
@@ -86,7 +91,7 @@
 				
 				<select name="province" id="province">
 					<option th:value="${customer.province}" th:text="${customer.province}" th:selected="${#fields.hasErrors('province')}">Select Province*</option>
-					<option th:each="province : ${getAllProvinces}" th:value="${province.sehiradi}"
+					<option th:each="province : ${getAllProvinces}" th:value="${province.id}"
 						th:text="${province.sehiradi}"></option>
 				</select>
 				<p th:if="${#fields.hasErrors('province')}" th:errorclass="error" th:errors="*{province}" />

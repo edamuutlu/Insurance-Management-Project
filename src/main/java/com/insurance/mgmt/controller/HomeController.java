@@ -108,8 +108,8 @@ public class HomeController {
 
 		CalculateMethods calculateMethods = new CalculateMethods(); // public olan calculate metodunu çağırmak için
 																	// util'den nesne oluşturulmaktadır
-		Kdv kdv = kdvService.getKdvById(1);
-		int kdvRate = kdv.getHomeKdv();
+		Kdv kdv = kdvService.getProductTypeById(2);
+		int kdvRate = kdv.getKdvRate();
 		double offer = calculateMethods.calculateHomeInsurance(home, kdvRate);
 		insurance.setOffer(offer);
 		insurance.setStatus(1);
@@ -191,8 +191,8 @@ public class HomeController {
 
 		CalculateMethods calculateMethods = new CalculateMethods(); // public olan calculate metodunu çağırmak için
 																	// util'den nesne oluşturulmaktadır
-		Kdv kdv = kdvService.getKdvById(1);
-		int kdvRate = kdv.getHomeKdv();
+		Kdv kdv = kdvService.getProductTypeById(2);
+		int kdvRate = kdv.getKdvRate();
 		double offer = calculateMethods.calculateHomeInsurance(home, kdvRate);
 		insurance.setOffer(offer);
 		insuranceService.save(insurance);
@@ -313,7 +313,7 @@ public class HomeController {
 		model.addAttribute(refund);
 		insuranceService.save(insurance);
 		
-		Kdv kdv = kdvService.getKdvById(1);
+		Kdv kdv = kdvService.getProductTypeById(2);
 
 		model.addAttribute(kdv);
 		model.addAttribute(insurance);

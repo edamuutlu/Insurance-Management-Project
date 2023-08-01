@@ -85,8 +85,8 @@ public class CarController {
         int age = Period.between(birthDate, currentDate).getYears();
         
         CalculateMethods calculateMethods = new CalculateMethods();	// public olan calculate metodunu çağırmak için util'den nesne oluşturulmaktadır
-        Kdv kdv = kdvService.getKdvById(1);
-		int kdvRate = kdv.getCarKdv();
+        Kdv kdv = kdvService.getProductTypeById(1);
+		int kdvRate = kdv.getKdvRate();
 		double offer = calculateMethods.calculateCarInsurance(car, age, kdvRate);	
 		car.setOffer(offer);
 		car.setStatus(1);
@@ -187,7 +187,7 @@ public class CarController {
 		model.addAttribute(refund);
 		carService.save(car);
 		
-		Kdv kdv = kdvService.getKdvById(1);
+		Kdv kdv = kdvService.getProductTypeById(1);
 
 		model.addAttribute(kdv);		
 		model.addAttribute(car);

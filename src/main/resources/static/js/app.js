@@ -1,5 +1,45 @@
 var myApp = angular.module("myApp", []);
 
+myApp.controller("rootController", ["$scope", function($scope) {
+	$scope.openModal = function() {
+		$('#myModal').modal('show');
+	};
+	$scope.closeModal = function() {
+		$('#myModal').modal('hide');
+	};
+
+	//	$scope.carKdv = carKdv;
+	//    $scope.homeKdv = homeKdv;
+
+	myApp.controller("rootController", ["$scope", "$http", function($scope, $http) {
+		// Diğer kodlar...
+
+		$scope.updateKdvRate = function() {
+			if ($scope.selectedProductType === "Car") {
+				// API'yi çağırarak veritabanındaki carKdv nesnesini güncelle
+				$http.put('/api/kdv/updateCarKdvRate', { kdvRate: $scope.kdvRate })
+					.then(function(response) {
+						// Başarılı olursa yapılacak işlemler...
+					})
+					.catch(function(error) {
+						// Hata olursa yapılacak işlemler...
+					});
+			} else if ($scope.selectedProductType === "Home") {
+				// API'yi çağırarak veritabanındaki homeKdv nesnesini güncelle
+				$http.put('/api/kdv/updateHomeKdvRate', { kdvRate: $scope.kdvRate })
+					.then(function(response) {
+						// Başarılı olursa yapılacak işlemler...
+					})
+					.catch(function(error) {
+						// Hata olursa yapılacak işlemler...
+					});
+			}
+		};
+	}]);
+
+
+}]);
+
 myApp.controller("registerCustomerFormController", ["$scope", function($scope) {
 
 	$scope.register = function() {
@@ -19,50 +59,50 @@ myApp.controller("registerCustomerFormController", ["$scope", function($scope) {
 
 
 	/* Select Province and District */
-//	var provinceDistrictinfo = {
-//		Ankara: {
-//			cities: ["Akyurt", "Altındağ", "Ayaş", "Bala", "Beypazarı", "Çamlıdere", "Çankaya", "Çubuk", "Elmadağ", "Eti̇mesgut", "Evren", "Gölbaşı", "Güdül", "Haymana", "Kahramankazan", "Kaleci̇k", "Keçi̇ören", "Kizilcahamam", "Mamak", "Nallihan", "Polatlı", "Pursaklar", "Si̇ncan", "Şerefli̇koçhi̇sar", "Yeni̇mahalle"],
-//		},
-//		Bursa: {
-//			cities: ["Osmangazi", "Nilüfer", "Yıldırım", "Büyükorhan", "Gemlik", "Gürsu", "Harmancık", "İnegöl", "İznik", "Karacabey", "Keles", "Kestel", "Mudanya", "Mustafakemalpaşa", "Orhaneli", "Orhangazi", "Yenişehir"],
-//		},
-//		İstanbul: {
-//			cities: ["Adalar", "Arnavutköy", "Ataşehir", "Avcılar", "Bağcılar", "Bahçelievler", "Bakırköy", "Başakşehir", "Bayrampaşa", "Beşiktaş", "Beykoz", "Beylikdüzü", "Beyoğlu", "Büyükçekmece", "Çatalca", "Çekmeköy", "Esenler", "Esenyurt", "Eyüpsultan", "Fatih", "Gaziosmanpaşa", "Güngören", "Kadıköy", "Kağıthane", "Kartal", "Küçükçekmece", "Maltepe", "Pendik", "Sancaktepe", "Sarıyer", "Silivri", "Sultanbeyli", "Sultangazi", "Şile", "Şişli", "Tuzla", "Ümraniye", "Üsküdar", "Zeytinburnu"],
-//		},
-//	};
-//
-//
-//	window.onload = function() {
-//		const selectProvince = document.getElementById('province');
-//		const selectDistrict = document.getElementById('district');
-//		const selects = document.querySelectorAll('select');
-//
-//		selectDistrict.disabled = true;
-//
-//		selects.forEach(select => {
-//			select.style.cursor = select.disabled ? "auto" : "pointer";
-//		});
-//
-//		for (let province in provinceDistrictinfo) {
-//			selectProvince.options[selectProvince.options.length] = new Option(province, province);
-//		}
-//
-//		selectProvince.onchange = function(e) {
-//			selectDistrict.disabled = false;
-//
-//			selects.forEach(select => {
-//				select.style.cursor = select.disabled ? "auto" : "pointer";
-//			});
-//
-//			selectDistrict.length = 1;
-//
-//			for (let district of provinceDistrictinfo[e.target.value].cities) {
-//				selectDistrict.options[selectDistrict.options.length] = new Option(district, district);
-//			}
-//		};
-//	};
+	//	var provinceDistrictinfo = {
+	//		Ankara: {
+	//			cities: ["Akyurt", "Altındağ", "Ayaş", "Bala", "Beypazarı", "Çamlıdere", "Çankaya", "Çubuk", "Elmadağ", "Eti̇mesgut", "Evren", "Gölbaşı", "Güdül", "Haymana", "Kahramankazan", "Kaleci̇k", "Keçi̇ören", "Kizilcahamam", "Mamak", "Nallihan", "Polatlı", "Pursaklar", "Si̇ncan", "Şerefli̇koçhi̇sar", "Yeni̇mahalle"],
+	//		},
+	//		Bursa: {
+	//			cities: ["Osmangazi", "Nilüfer", "Yıldırım", "Büyükorhan", "Gemlik", "Gürsu", "Harmancık", "İnegöl", "İznik", "Karacabey", "Keles", "Kestel", "Mudanya", "Mustafakemalpaşa", "Orhaneli", "Orhangazi", "Yenişehir"],
+	//		},
+	//		İstanbul: {
+	//			cities: ["Adalar", "Arnavutköy", "Ataşehir", "Avcılar", "Bağcılar", "Bahçelievler", "Bakırköy", "Başakşehir", "Bayrampaşa", "Beşiktaş", "Beykoz", "Beylikdüzü", "Beyoğlu", "Büyükçekmece", "Çatalca", "Çekmeköy", "Esenler", "Esenyurt", "Eyüpsultan", "Fatih", "Gaziosmanpaşa", "Güngören", "Kadıköy", "Kağıthane", "Kartal", "Küçükçekmece", "Maltepe", "Pendik", "Sancaktepe", "Sarıyer", "Silivri", "Sultanbeyli", "Sultangazi", "Şile", "Şişli", "Tuzla", "Ümraniye", "Üsküdar", "Zeytinburnu"],
+	//		},
+	//	};
+	//
+	//
+	//	window.onload = function() {
+	//		const selectProvince = document.getElementById('province');
+	//		const selectDistrict = document.getElementById('district');
+	//		const selects = document.querySelectorAll('select');
+	//
+	//		selectDistrict.disabled = true;
+	//
+	//		selects.forEach(select => {
+	//			select.style.cursor = select.disabled ? "auto" : "pointer";
+	//		});
+	//
+	//		for (let province in provinceDistrictinfo) {
+	//			selectProvince.options[selectProvince.options.length] = new Option(province, province);
+	//		}
+	//
+	//		selectProvince.onchange = function(e) {
+	//			selectDistrict.disabled = false;
+	//
+	//			selects.forEach(select => {
+	//				select.style.cursor = select.disabled ? "auto" : "pointer";
+	//			});
+	//
+	//			selectDistrict.length = 1;
+	//
+	//			for (let district of provinceDistrictinfo[e.target.value].cities) {
+	//				selectDistrict.options[selectDistrict.options.length] = new Option(district, district);
+	//			}
+	//		};
+	//	};
 
-	
+
 
 }]);
 
@@ -129,50 +169,6 @@ myApp.controller("homeInsuranceFormController", ["$scope", function($scope) {
 		$scope.years.push(year);
 	}
 	$scope.year = "";
-
-	/* Select Province and District */
-//	var provinceDistrictinfo = {
-//		Ankara: {
-//			cities: ["Akyurt", "Altındağ", "Ayaş", "Bala", "Beypazarı", "Çamlıdere", "Çankaya", "Çubuk", "Elmadağ", "Eti̇mesgut", "Evren", "Gölbaşı", "Güdül", "Haymana", "Kahramankazan", "Kaleci̇k", "Keçi̇ören", "Kizilcahamam", "Mamak", "Nallihan", "Polatlı", "Pursaklar", "Si̇ncan", "Şerefli̇koçhi̇sar", "Yeni̇mahalle"],
-//		},
-//		Bursa: {
-//			cities: ["Osmangazi", "Nilüfer", "Yıldırım", "Büyükorhan", "Gemlik", "Gürsu", "Harmancık", "İnegöl", "İznik", "Karacabey", "Keles", "Kestel", "Mudanya", "Mustafakemalpaşa", "Orhaneli", "Orhangazi", "Yenişehir"],
-//		},
-//		İstanbul: {
-//			cities: ["Adalar", "Arnavutköy", "Ataşehir", "Avcılar", "Bağcılar", "Bahçelievler", "Bakırköy", "Başakşehir", "Bayrampaşa", "Beşiktaş", "Beykoz", "Beylikdüzü", "Beyoğlu", "Büyükçekmece", "Çatalca", "Çekmeköy", "Esenler", "Esenyurt", "Eyüpsultan", "Fatih", "Gaziosmanpaşa", "Güngören", "Kadıköy", "Kağıthane", "Kartal", "Küçükçekmece", "Maltepe", "Pendik", "Sancaktepe", "Sarıyer", "Silivri", "Sultanbeyli", "Sultangazi", "Şile", "Şişli", "Tuzla", "Ümraniye", "Üsküdar", "Zeytinburnu"],
-//		},
-//	};
-//
-//
-//	window.onload = function() {
-//		const selectProvince = document.getElementById('province');
-//		const selectDistrict = document.getElementById('district');
-//		const selects = document.querySelectorAll('select');
-//
-//		selectDistrict.disabled = true;
-//
-//		selects.forEach(select => {
-//			select.style.cursor = select.disabled ? "auto" : "pointer";
-//		});
-//
-//		for (let province in provinceDistrictinfo) {
-//			selectProvince.options[selectProvince.options.length] = new Option(province, province);
-//		}
-//
-//		selectProvince.onchange = function(e) {
-//			selectDistrict.disabled = false;
-//
-//			selects.forEach(select => {
-//				select.style.cursor = select.disabled ? "auto" : "pointer";
-//			});
-//
-//			selectDistrict.length = 1;
-//
-//			for (let district of provinceDistrictinfo[e.target.value].cities) {
-//				selectDistrict.options[selectDistrict.options.length] = new Option(district, district);
-//			}
-//		};
-//	};
 
 }]);
 

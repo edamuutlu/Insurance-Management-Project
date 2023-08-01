@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" xmlns:th="https://www.thymeleaf.com">
+<html lang="en" xmlns:th="https://www.thymeleaf.com" ng-app="myApp" ng-controller="rootController">
 
 <head>
 	<meta charset="utf-8">
@@ -18,6 +18,8 @@
 	<script src="https://unpkg.com/@phosphor-icons/web"></script>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
 		integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+	<!-- AngularJS -->
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
 	<!-- Boxicons CSS -->
 	<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 	<link rel="stylesheet" href="" th:href="@{/css/style.css}">
@@ -31,7 +33,7 @@
 		#icon-trash:hover {
 			color: rgb(255, 62, 62);
 		}
-		
+
 		#icon-image {
 			font-size: 20px;
 		}
@@ -49,6 +51,11 @@
 			border: none;
 			background: none;
 			margin-left: 50px;
+		}
+
+		.modal-btn {
+			padding: 10px;
+			font-size: 15px;
 		}
 	</style>
 
@@ -72,14 +79,73 @@
 					<li class="nav-item">
 						<a class="nav-link" href="/customerRegisterForm">New Customer Register</a>
 					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+							data-bs-toggle="dropdown" aria-expanded="false">
+							Taxes
+						</a>
+						<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<li><a class="dropdown-item" ng-click="openModal()" href="#">KDV Rate</a>
+							</li>
+							<li>
+								<a class="dropdown-item" href="#">
+									ÖTV Rate
+								</a>
+							</li>
+							<li>
+								<hr class="dropdown-divider">
+							</li>
+						</ul>
+					</li>
 				</ul>
 			</div>
 		</div>
 	</nav>
 	<!--End Navbar-->
 
+	<!-- Modal -->
+	<div id="myModal" class="modal fade" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Taxes</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="closeModal()">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<label for="productType">Select Product Type:</label>
+						<select class="form-control" id="productType" ng-model="selectedProductType">
+							<option value="">Select Product Type</option>
+							<option value="Car">Car</option>
+							<option value="Home">Home</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<input type="number" id="kdvRate" name="kdvRate" class="form-control" placeholder="Kdv Rate*"
+							ng-model="kdvRate" ng-required="true"
+							ng-value="selectedProductType === 'Car' ? carKdv.kdvRate : homeKdv.kdvRate">
+					</div>
 
-	<div class="container mt-5">		
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn modal-btn" data-dismiss="modal" ng-click="closeModal()">Close
+					</button>
+					<!--                <button type="button" class="btn modal-btn" ng-click="saveKdv()">Save Changes</button>-->
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		var carKdv = /*[[${carKdv}]]*/ {};
+		var homeKdv = /*[[${homeKdv}]]*/ {};
+	</script>
+
+
+
+	<div class="container mt-5">
 		<table class="table table-hover text-center">
 			<thead>
 				<tr>
@@ -90,16 +156,16 @@
 					<th scope="col">First Name</th>
 					<th cope="col">Last Name</th>
 					<th cope="col">Province</th>
-					<th cope="col">District</th>					
+					<th cope="col">District</th>
 					<th scope="col">Insurance Type</th>
 					<th scope="col">Home List</th>
-					<th scope="col">Car List</th>					
+					<th scope="col">Car List</th>
 					<th scope="col">Update</th>
 					<th scope="col">Delete</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="c :${customer}"> 
+				<tr th:each="c :${customer}">
 					<td th:text="${c.customerId}"></td>
 					<td th:text="${c.tc}"></td>
 					<td th:text="${c.birth}"></td>
@@ -107,25 +173,22 @@
 					<td th:text="${c.firstname}"></td>
 					<td th:text="${c.lastname}"></td>
 					<td th:text="${c.province}"></td>
-					<td th:text="${c.district}"></td>					
-<!--					<td><select name="format" onchange="location = this.value;">						-->
-<!--							<option>Select</option>		-->
-<!--							<option th:value="@{/trafficInsuranceForm(customerId = ${c.customerId})}">Traffic Insurance</option>-->
-<!--							<option value="">Comprehensive Insurance</option>-->
-<!--							<option value="">Health Insurance</option>-->
-<!--							<option value="">Earthquake Insurance</option>-->
-<!--						</select>-->
-<!--					</td>-->						
-					<td><a th:href="@{/selectType(customerId=${c.customerId})}"><span class="badge text-bg-primary fs-6">Select Type</span></a></td>
-					<td><button class="mx-auto"><a th:href="@{/homeList/{customerId}(customerId=${c.customerId})}"><i class="fa-solid fa-house" id="icon-image"></i></a></button></td>
-					<td><button class="mx-auto"><a th:href="@{/carList/{customerId}(customerId=${c.customerId})}"><i class="fa-solid fa-car" id="icon-image"></i></a></button></td>						
-					<td><button class="mx-auto"><a th:href="@{/editCustomer/{customerId}(customerId=${c.customerId})}"><i id="icon-edit"
+					<td th:text="${c.district}"></td>
+					<td><a th:href="@{/selectType(customerId=${c.customerId})}"><span
+								class="badge text-bg-primary fs-6">Select Type</span></a></td>
+					<td><button class="mx-auto"><a th:href="@{/homeList/{customerId}(customerId=${c.customerId})}"><i
+									class="fa-solid fa-house" id="icon-image"></i></a></button></td>
+					<td><button class="mx-auto"><a th:href="@{/carList/{customerId}(customerId=${c.customerId})}"><i
+									class="fa-solid fa-car" id="icon-image"></i></a></button></td>
+					<td><button class="mx-auto"><a
+								th:href="@{/editCustomer/{customerId}(customerId=${c.customerId})}"><i id="icon-edit"
 									class="fa-regular fa-pen-to-square"></i></a></button></td>
-					<td><button class="mx-auto"><a th:href="@{/deleteCustomer/{customerId}(customerId=${c.customerId})}"><i id="icon-trash"
-									class="bx bx-trash"></i></a></button></td>																							
+					<td><button class="mx-auto"><a
+								th:href="@{/deleteCustomer/{customerId}(customerId=${c.customerId})}"><i id="icon-trash"
+									class="bx bx-trash"></i></a></button></td>
 				</tr>
 			</tbody>
-		</table>		
+		</table>
 	</div>
 
 
@@ -138,6 +201,10 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"
 		integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS"
 		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+		integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+		crossorigin="anonymous"></script>
+	<script src="/js/app.js"></script>
 </body>
 
 </html>

@@ -47,7 +47,7 @@ public class InsuranceService {
         return insuranceRepository.findByStatusAndHomeId(status, homeId);
     }
     
-    public List<Insurance> getInsurancesByStatusAndCustomerId(int status, int customerId) {
+    public List<Insurance> findByStatusAndCustomerId(int status, int customerId) {
         return insuranceRepository.findByStatusAndCustomerId(status, customerId);
     }
 

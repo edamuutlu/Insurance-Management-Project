@@ -6,19 +6,14 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-
 import com.insurance.mgmt.entity.Car;
-import com.insurance.mgmt.repository.ICarRepository;
 import com.insurance.mgmt.service.CarService;
 import com.insurance.mgmt.util.CalculateMethods;
 
@@ -26,11 +21,8 @@ import com.insurance.mgmt.util.CalculateMethods;
 @RunWith(MockitoJUnitRunner.class)
 class CarServiceTest {
 	
-	@Autowired
-	private CarService carService;
-	
 	@MockBean
-	private ICarRepository carRepository;
+	private CarService carService;
 	
 	private List<Car> dummyCars = Stream.of(
             new Car(34, "vs", 1234, "Car", "Private", "Audi", "Petrol", 2, 5, 1, 6000, "Accepted", 1, 30, "17/05/2023 13:27:29", 0, 0, "17/06/2023 13:27:30"),
@@ -66,13 +58,13 @@ class CarServiceTest {
 		public void saveCarTest() {
 			 Car car = new Car(34, "vs", 1234, "Car", "Private", "Audi", "Petrol", 2, 5, 1, 6000, "Accepted", 1, 30, "17/05/2023 13:27:29", 0, 0, "17/06/2023 13:27:30");
 			 carService.save(car);
-			 verify(carRepository, times(1)).save(car);
+			 verify(carService, times(1)).save(car);
 		}
 		
 		// Yöntem 1
 		@Test
 		public void getAllCarsTest() {
-			when(carRepository.findAll()).thenReturn(Stream
+			when(carService.getAllCars()).thenReturn(Stream
 					.of(new Car(34, "vs", 1234, "Car", "Private", "Audi", "Petrol", 2, 5, 1, 6000, "Accepted", 1, 30, "17/05/2023 13:27:29", 0, 0, "17/06/2023 13:27:30"), 
 							(new Car(34, "vs", 5678, "Car", "Private", "Audi", "Petrol", 2, 5, 1, 8000, "Accepted", 1, 30, "17/05/2023 13:00:00", 0, 0, "17/06/2023 13:00:00"))).collect(Collectors.toList()));
 			assertEquals(2, carService.getAllCars().size());
@@ -80,11 +72,11 @@ class CarServiceTest {
 		// Yöntem 2
 		@Test
 	    public void testGetAllCars() {
-	        when(carRepository.findAll()).thenReturn(dummyCars);
+	        when(carService.getAllCars()).thenReturn(dummyCars);
 
 	        List<Car> result = carService.getAllCars();
 	        
-	        verify(carRepository, times(1)).findAll();
+	        verify(carService, times(1)).getAllCars();
 	        assertEquals(dummyCars, result);
 	    }
 
@@ -92,7 +84,7 @@ class CarServiceTest {
 	    public void testDeleteById() {
 	        int carId = 1;
 	        carService.deleteById(carId);
-	        verify(carRepository, times(1)).deleteById(carId);
+	        verify(carService, times(1)).deleteById(carId);
 	    }
 
 	    @Test
@@ -100,46 +92,46 @@ class CarServiceTest {
 	        int carId = 1;
 	        Car dummyCar = new Car();
 
-	        when(carRepository.findById(carId)).thenReturn(Optional.of(dummyCar));
+	        when(carService.getCarId(carId)).thenReturn(dummyCar);
 	        Car result = carService.getCarId(carId);
-	        verify(carRepository, times(1)).findById(carId);
+	        verify(carService, times(1)).getCarId(carId);
 	        assertEquals(dummyCar, result);
 	    }
 	    
 	    @Test
 	    public void findByStatusTest() {
 	        int status = 1;
-	        when(carRepository.findByStatus(status)).thenReturn(dummyCars);
-	        List<Car> result = carRepository.findByStatus(status);
+	        when(carService.findByStatus(status)).thenReturn(dummyCars);
+	        List<Car> result = carService.findByStatus(status);
 	        assertEquals(dummyCars, result);
-	        verify(carRepository, times(1)).findByStatus(status);
+	        verify(carService, times(1)).findByStatus(status);
 	    }
 	    
 	    @Test
 	    public void findByStatusAndCustomerId() {
 	        int status = 1;
-	        when(carRepository.findByStatusAndCustomerId(status, 1)).thenReturn(dummyCars);
-	        List<Car> result = carRepository.findByStatusAndCustomerId(status, 1);
+	        when(carService.findByStatusAndCustomerId(status, 1)).thenReturn(dummyCars);
+	        List<Car> result = carService.findByStatusAndCustomerId(status, 1);
 	        assertEquals(dummyCars, result);
-	        verify(carRepository, times(1)).findByStatusAndCustomerId(status, 1);
+	        verify(carService, times(1)).findByStatusAndCustomerId(status, 1);
 	    }
 	    
 	    @Test
 	    public void findByStatusAndPlate1AndPlate2AndPlate3AndResult() {
 	        int status = 1;
-	        when(carRepository.findByStatusAndPlate1AndPlate2AndPlate3AndResult(status, 34, "vs", 1234, "Accepted")).thenReturn(dummyCars);
-	        List<Car> result = carRepository.findByStatusAndPlate1AndPlate2AndPlate3AndResult(status, 34, "vs", 1234, "Accepted");
+	        when(carService.findByStatusAndPlate1AndPlate2AndPlate3AndResult(status, 34, "vs", 1234, "Accepted")).thenReturn(dummyCars);
+	        List<Car> result = carService.findByStatusAndPlate1AndPlate2AndPlate3AndResult(status, 34, "vs", 1234, "Accepted");
 	        assertEquals(dummyCars, result);
-	        verify(carRepository, times(1)).findByStatusAndPlate1AndPlate2AndPlate3AndResult(status, 34, "vs", 1234, "Accepted");
+	        verify(carService, times(1)).findByStatusAndPlate1AndPlate2AndPlate3AndResult(status, 34, "vs", 1234, "Accepted");
 	    }
 	    
 	    @Test
 	    public void findByStatusAndCustomerIdAndResult() {
 	        int status = 1;
-	        when(carRepository.findByStatusAndCustomerIdAndResult(status, 1, "Accepted")).thenReturn(dummyCars);
-	        List<Car> result = carRepository.findByStatusAndCustomerIdAndResult(status, 1, "Accepted");
+	        when(carService.findByStatusAndCustomerIdAndResult(status, 1, "Accepted")).thenReturn(dummyCars);
+	        List<Car> result = carService.findByStatusAndCustomerIdAndResult(status, 1, "Accepted");
 	        assertEquals(dummyCars, result);
-	        verify(carRepository, times(1)).findByStatusAndCustomerIdAndResult(status, 1, "Accepted");
+	        verify(carService, times(1)).findByStatusAndCustomerIdAndResult(status, 1, "Accepted");
 	    }
 
 }

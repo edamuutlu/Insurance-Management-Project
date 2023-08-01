@@ -23,14 +23,14 @@ import com.insurance.mgmt.entity.Car;
 import com.insurance.mgmt.entity.Customer;
 import com.insurance.mgmt.entity.Home;
 import com.insurance.mgmt.entity.Insurance;
+import com.insurance.mgmt.entity.Kdv;
 import com.insurance.mgmt.entity.address.District;
 import com.insurance.mgmt.entity.address.Province;
-import com.insurance.mgmt.repository.IHomeRepository;
-import com.insurance.mgmt.repository.IInsuranceRepository;
 import com.insurance.mgmt.service.CarService;
 import com.insurance.mgmt.service.CustomerService;
 import com.insurance.mgmt.service.HomeService;
 import com.insurance.mgmt.service.InsuranceService;
+import com.insurance.mgmt.service.KdvService;
 import com.insurance.mgmt.service.address.DistrictService;
 import com.insurance.mgmt.service.address.ProvinceService;
 
@@ -46,13 +46,7 @@ public class CustomerController {
 	CarService carService;
 	
 	@Autowired
-	IHomeRepository homeRepository;
-	
-	@Autowired
 	HomeService homeService;
-	
-	@Autowired
-	IInsuranceRepository insuranceRepository;
 	
 	@Autowired
 	InsuranceService insuranceService;
@@ -62,6 +56,9 @@ public class CustomerController {
 	
 	@Autowired
 	DistrictService districtService;
+	
+	@Autowired
+	KdvService kdvService;
 			
 
 	private static final Logger log = LoggerFactory.getLogger(CustomerController.class);
@@ -101,8 +98,13 @@ public class CustomerController {
 	}
 
 	@GetMapping("/customerList")
-	public ModelAndView getAllCustomer() {
+	public ModelAndView getAllCustomer(Model model) {
 		List<Customer> customerList = customerService.findByStatus(1);
+		
+		Kdv carKdv = kdvService.getProductTypeById(1);
+		Kdv homeKdv = kdvService.getProductTypeById(2);
+		model.addAttribute(carKdv);
+		model.addAttribute(homeKdv);
 
 		return new ModelAndView("customerList", "customer", customerList);
 	}
@@ -194,8 +196,8 @@ public class CustomerController {
 		
 		// Müşterinin varsa araçlarının listelenmemesi için
 		List<Car> cars = carService.findByStatusAndCustomerId(1, customerId); 
-		List<Home> homes = homeRepository.findByStatusAndCustomerId(1, customerId);
-		List<Insurance> insurances = insuranceRepository.findByStatusAndCustomerId(1, customerId);
+		List<Home> homes = homeService.findByStatusAndCustomerId(1, customerId);
+		List<Insurance> insurances = insuranceService.findByStatusAndCustomerId(1, customerId);
 		for (Car car : cars) {
 			car.setResult("Canceled");
 			car.setStatus(0);

@@ -69,11 +69,11 @@
 					<h5>BILLING SUMMARY</h5>
 					<div class="d-flex justify-content-between">
 						<h6>Subtotal</h6>
-						<p th:text="${insurance.offer - ((insurance.offer * kdv.homeKdv) / 100) + ' ₺'}"></p>
+						<p th:text="${((insurance.offer * 100) / ( (100 + kdv.kdvRate))) + ' ₺'}"></p>
 					</div>
 					<div class="d-flex justify-content-between">
 						<h6>KDV</h6>
-						<p th:text="${'% ' + kdv.homeKdv}"></p>
+						<p th:text="${'% ' + kdv.kdvRate}"></p>
 					</div>
 					<div class="d-flex justify-content-between">
 						<h6>Total Amount</h6>

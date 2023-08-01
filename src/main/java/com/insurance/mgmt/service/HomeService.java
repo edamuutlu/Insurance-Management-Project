@@ -34,6 +34,10 @@ public class HomeService {
     public List<Home> findByCustomerId(int id) {
         return homeRepository.findByCustomerId(id);
     }
+    
+    public List<Home> findByStatusAndCustomerId(int status, int id) {
+        return homeRepository.findByStatusAndCustomerId(status, id);
+    }
 
     public List<Home> findByProvinceAndDistrictAndNeighbourhoodAndBuildingNumberAndApartmentAndFloorAndStatus(
             String province, String district, String neighbourhood,

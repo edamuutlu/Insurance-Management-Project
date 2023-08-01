@@ -10,8 +10,12 @@ public class KdvService {
 	@Autowired
 	private IKdvRepository kdvRepository;
 	
-	public Kdv getKdvById(int kdvId) {
-		return kdvRepository.findById(kdvId).get();
+	public Kdv getProductTypeById(int productType) {
+		return kdvRepository.findById(productType).get();
+	}
+	
+	public void save(Kdv kdv) {
+		kdvRepository.save(kdv);
 	}
 
 }
