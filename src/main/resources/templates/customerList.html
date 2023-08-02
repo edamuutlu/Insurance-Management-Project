@@ -24,6 +24,7 @@
 	<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 	<link rel="stylesheet" href="" th:href="@{/css/style.css}">
 	<link href="https://css.gg/css" rel="stylesheet" />
+
 	<style>
 		#icon-trash {
 			color: red;
@@ -57,13 +58,17 @@
 			padding: 10px;
 			font-size: 15px;
 		}
+
+		.form-control {
+			width: 200px;
+		}
 	</style>
 
 </head>
 
 <body>
 	<!-- Navbar -->
-	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+	<nav class="navbar navbar-expand-lg navbar-light bg-light py-3">
 		<div class="container">
 			<a class="navbar-brand text-black" href="/index">SBM</a>
 			<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -103,7 +108,7 @@
 	</nav>
 	<!--End Navbar-->
 
-	<!-- Modal -->
+	<!--Modal-->
 	<div id="myModal" class="modal fade" tabindex="-1" role="dialog">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
@@ -114,35 +119,38 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<div class="form-group">
-						<label for="productType">Select Product Type:</label>
-						<select class="form-control" id="productType" ng-model="selectedProductType">
-							<option value="">Select Product Type</option>
-							<option value="Car">Car</option>
-							<option value="Home">Home</option>
-						</select>
-					</div>
-					<div class="form-group">
-						<input type="number" id="kdvRate" name="kdvRate" class="form-control" placeholder="Kdv Rate*"
-							ng-model="kdvRate" ng-required="true"
-							ng-value="selectedProductType === 'Car' ? carKdv.kdvRate : homeKdv.kdvRate">
-					</div>
+					<form th:action="@{/saveKdv}" method="post" name="kdvForm" novalidate>
+						<div class="d-flex justify-content-between mt-3">
+							<label style="margin-right: 20px;" for="productType">Select Product Type:</label>
+							<select class="form-control" id="productType" name="productType" ng-model="productType" required>
+								<option value="">Select Product Type</option>
+								<option value=1>Car</option>
+								<option value=2>Home</option>
+							</select>
+						</div>
+						<div class="d-flex justify-content-between mt-3">
+							<label style="margin-right: 20px;" for="productType">Enter New Kdv Rate:</label>
+							<input type="number" id="kdvRate" name="kdvRate" class="form-control"
+								placeholder="Kdv Rate*" ng-model="kdvRate" ng-required="true" min="0" max="100">
+						</div>
 
+						<div class="modal-footer">
+							<button type="button" class="btn modal-btn" data-dismiss="modal"
+								ng-click="closeModal()">Close</button>
+							<button type="submit" class="btn modal-btn" ng-disabled="kdvForm.$invalid">Save Changes</button>
+						</div>
+					</form>
 				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn modal-btn" data-dismiss="modal" ng-click="closeModal()">Close
-					</button>
-					<!--                <button type="button" class="btn modal-btn" ng-click="saveKdv()">Save Changes</button>-->
-				</div>
+
 			</div>
 		</div>
 	</div>
 
-	<script>
+	<!-- JavaScript değişkenlerini tanımlamak için Thymeleaf ile inline kod bloğu kullanın -->
+	<script th:inline="javascript">
 		var carKdv = /*[[${carKdv}]]*/ {};
 		var homeKdv = /*[[${homeKdv}]]*/ {};
 	</script>
-
 
 
 	<div class="container mt-5">

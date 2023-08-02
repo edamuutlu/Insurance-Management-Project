@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.insurance.mgmt.entity.Car;
 import com.insurance.mgmt.entity.Customer;
@@ -98,15 +97,24 @@ public class CustomerController {
 	}
 
 	@GetMapping("/customerList")
-	public ModelAndView getAllCustomer(Model model) {
+	public String getAllCustomer(Model model) {
 		List<Customer> customerList = customerService.findByStatus(1);
 		
 		Kdv carKdv = kdvService.getProductTypeById(1);
 		Kdv homeKdv = kdvService.getProductTypeById(2);
-		model.addAttribute(carKdv);
-		model.addAttribute(homeKdv);
-
-		return new ModelAndView("customerList", "customer", customerList);
+		model.addAttribute("carKdv", carKdv);
+		model.addAttribute("homeKdv", homeKdv);
+		model.addAttribute("customer",  customerList);
+		
+		return "customerList";
+	}
+	
+	@PostMapping("/saveKdv")
+	public String saveKdv(@RequestParam int kdvRate, @RequestParam int productType) {		
+		Kdv kdv = kdvService.getProductTypeById(productType);
+		kdv.setKdvRate(kdvRate);
+		kdvService.save(kdv);
+		return "redirect:/customerList";				
 	}
 
 	@PostMapping("/customerRegisterForm")

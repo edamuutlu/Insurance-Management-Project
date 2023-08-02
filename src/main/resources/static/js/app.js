@@ -1,44 +1,32 @@
 var myApp = angular.module("myApp", []);
 
-myApp.controller("rootController", ["$scope", function($scope) {
-	$scope.openModal = function() {
-		$('#myModal').modal('show');
-	};
-	$scope.closeModal = function() {
-		$('#myModal').modal('hide');
-	};
+myApp.controller("rootController", ["$scope", "$http", function($scope, $http) {
+    $scope.openModal = function() {
+        $('#myModal').modal('show');
+    };
+    $scope.closeModal = function() {
+        $('#myModal').modal('hide');
+    };
 
-	//	$scope.carKdv = carKdv;
-	//    $scope.homeKdv = homeKdv;
+    $scope.carKdv = carKdv;
+    $scope.homeKdv = homeKdv;
 
-	myApp.controller("rootController", ["$scope", "$http", function($scope, $http) {
-		// Diğer kodlar...
+    $scope.updateKdvRate = function() {
+        if ($scope.productType == 1 ) {
+            $scope.kdvRate = $scope.carKdv.kdvRate;
+        } else if ($scope.productType == 2 ) {
+            $scope.kdvRate = $scope.homeKdv.kdvRate;
+        }
+    };
 
-		$scope.updateKdvRate = function() {
-			if ($scope.selectedProductType === "Car") {
-				// API'yi çağırarak veritabanındaki carKdv nesnesini güncelle
-				$http.put('/api/kdv/updateCarKdvRate', { kdvRate: $scope.kdvRate })
-					.then(function(response) {
-						// Başarılı olursa yapılacak işlemler...
-					})
-					.catch(function(error) {
-						// Hata olursa yapılacak işlemler...
-					});
-			} else if ($scope.selectedProductType === "Home") {
-				// API'yi çağırarak veritabanındaki homeKdv nesnesini güncelle
-				$http.put('/api/kdv/updateHomeKdvRate', { kdvRate: $scope.kdvRate })
-					.then(function(response) {
-						// Başarılı olursa yapılacak işlemler...
-					})
-					.catch(function(error) {
-						// Hata olursa yapılacak işlemler...
-					});
-			}
-		};
-	}]);
-
+    // Watch fonksiyonu product type değiştiğinde updateKdvRate fonksiyonunu çağırır.
+    $scope.$watch('productType', function(newVal) {
+        console.log("4 $scope.productType:", newVal);
+        $scope.updateKdvRate();
+    });
 
 }]);
+
 
 myApp.controller("registerCustomerFormController", ["$scope", function($scope) {
 
