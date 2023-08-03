@@ -69,6 +69,22 @@ input{
     color: #3f3f3f;
 }
 
+.product{
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  padding-left: 10px;
+}
+
+.product li{
+  text-align: left;
+   margin-bottom: 5px;
+}
+
+.product i.fa-regular.fa-circle-check{
+  color: rgb(0, 128, 255);
+}
+
 
 /* Form - Start*/
 form{
@@ -374,4 +390,21 @@ footer .copyright a:hover{
 }
 
 /* Cart - end */
+
+.main-select{
+	display: flex;
+	justify-content: space-between;
+}
+
+.main-select select{
+	width: 100%;
+}
+
+.main-select .province, .main-select .district{
+	margin-right: 10px;
+}
+
+.main-select .neighbourhood{
+	width: 350px;
+}
 

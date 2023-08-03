@@ -1,6 +1,6 @@
 var myApp = angular.module("myApp", []);
 
-myApp.controller("rootController", ["$scope", "$http", function($scope, $http) {
+myApp.controller("rootController", ["$scope", "$http", function($scope) {
     $scope.openModal = function() {
         $('#myModal').modal('show');
     };
@@ -10,6 +10,12 @@ myApp.controller("rootController", ["$scope", "$http", function($scope, $http) {
 
     $scope.carKdv = carKdv;
     $scope.homeKdv = homeKdv;
+    
+    // Watch fonksiyonu product type değiştiğinde updateKdvRate fonksiyonunu çağırır.
+    $scope.$watch('productType', function(newVal) {
+        console.log("4 $scope.productType:", newVal);
+        $scope.updateKdvRate();
+    });
 
     $scope.updateKdvRate = function() {
         if ($scope.productType == 1 ) {
@@ -17,13 +23,7 @@ myApp.controller("rootController", ["$scope", "$http", function($scope, $http) {
         } else if ($scope.productType == 2 ) {
             $scope.kdvRate = $scope.homeKdv.kdvRate;
         }
-    };
-
-    // Watch fonksiyonu product type değiştiğinde updateKdvRate fonksiyonunu çağırır.
-    $scope.$watch('productType', function(newVal) {
-        console.log("4 $scope.productType:", newVal);
-        $scope.updateKdvRate();
-    });
+    };   
 
 }]);
 
@@ -34,10 +34,6 @@ myApp.controller("registerCustomerFormController", ["$scope", function($scope) {
 		$scope.msg = "Welcome " + $scope.firstname + "! You have signed in.";
 
 	};
-
-	/* Birth Date Control */
-	//	var today = new Date().toISOString().split("T")[0];
-	//	document.getElementById("birth").setAttribute("max", today);
 
 	var today = new Date();
 	today.setFullYear(today.getFullYear() - 18); // Bugünden 18 yıl önceki tarih

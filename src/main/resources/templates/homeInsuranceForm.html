@@ -109,22 +109,32 @@
 				</select>
 				<p th:if="${#fields.hasErrors('typeOfUse')}" th:errorclass="error" th:errors="*{typeOfUse}" />
 
-				<select name="province" id="province">
-					<option value="" th:selected="${#fields.hasErrors('province')}">Select Province*</option>
-					<option th:each="province : ${getAllProvinces}" th:value="${province.id}"
-						th:text="${province.sehiradi}"></option>
-				</select>
-				<p th:if="${#fields.hasErrors('province')}" th:errorclass="error" th:errors="*{province}" />
+				<div class="main-select">
+					<div class="province">
+						<select name="province" id="province">
+							<option value="" th:selected="${#fields.hasErrors('province')}">Select Province*</option>
+							<option th:each="province : ${getAllProvinces}" th:value="${province.id}"
+								th:text="${province.sehiradi}"></option>
+						</select>
+						<p th:if="${#fields.hasErrors('province')}" th:errorclass="error" th:errors="*{province}" />
+					</div>
 
-				<select name="district" id="district">
-					<option value="" th:selected="${#fields.hasErrors('district')}">Select District*</option>
-				</select>
-				<p th:if="${#fields.hasErrors('district')}" th:errorclass="error" th:errors="*{district}" />
+					<div class="district">
+						<select name="district" id="district">
+							<option value="" th:selected="${#fields.hasErrors('district')}">Select District*</option>
+						</select>
+						<p th:if="${#fields.hasErrors('district')}" th:errorclass="error" th:errors="*{district}" />
+					</div>
 
-				<select name="neighbourhood" id="neighbourhood">
-					<option value="" th:selected="${#fields.hasErrors('neighbourhood')}">Select Neighbourhood*</option>
-				</select>
-				<p th:if="${#fields.hasErrors('neighbourhood')}" th:errorclass="error" th:errors="*{neighbourhood}" />
+					<div class="neighbourhood">
+						<select name="neighbourhood" id="neighbourhood">
+							<option value="" th:selected="${#fields.hasErrors('neighbourhood')}">Select Neighbourhood*
+							</option>
+						</select>
+						<p th:if="${#fields.hasErrors('neighbourhood')}" th:errorclass="error"
+							th:errors="*{neighbourhood}" />
+					</div>
+				</div>
 
 				<script th:inline="javascript">
 					var districtList = /*[[${getAllDistricts}]]*/[];

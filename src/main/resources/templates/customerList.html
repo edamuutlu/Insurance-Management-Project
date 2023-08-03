@@ -97,9 +97,6 @@
 									ÖTV Rate
 								</a>
 							</li>
-							<li>
-								<hr class="dropdown-divider">
-							</li>
 						</ul>
 					</li>
 				</ul>
@@ -159,7 +156,7 @@
 				<tr>
 					<th scope="col">Id</th>
 					<th scope="col">TC</th>
-					<th scope="col">Birth-Date</th>
+					<th scope="col">Birth Date</th>
 					<th scope="col">Email</th>
 					<th scope="col">First Name</th>
 					<th cope="col">Last Name</th>
@@ -176,7 +173,7 @@
 				<tr th:each="c :${customer}">
 					<td th:text="${c.customerId}"></td>
 					<td th:text="${c.tc}"></td>
-					<td th:text="${c.birth}"></td>
+					<td style="width: 112px;" th:text="${c.birth}"></td>
 					<td th:text="${c.email}"></td>
 					<td th:text="${c.firstname}"></td>
 					<td th:text="${c.lastname}"></td>
