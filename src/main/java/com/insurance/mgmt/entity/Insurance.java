@@ -50,6 +50,9 @@ public class Insurance {
 	
 	@Column(name ="status") 
 	private int status;
+	
+	@Column(name= "kdv")
+	private int kdv;
 
 	public Insurance() {
 		super();
@@ -57,7 +60,7 @@ public class Insurance {
 	}
 
 	public Insurance(int insuranceId, String insuranceType, int customerId, int carId, int homeId, double offer,
-			String result, String startDate, String endDate, int daysDiff, double refund, int status, int period) {
+			String result, String startDate, String endDate, int daysDiff, double refund, int status, int period, int kdv) {
 		super();
 		this.insuranceId = insuranceId;
 		this.insuranceType = insuranceType;
@@ -72,6 +75,7 @@ public class Insurance {
 		this.daysDiff = daysDiff;
 		this.refund = refund;
 		this.status = status;
+		this.kdv = kdv;
 	}
 
 	public int getInsuranceId() {
@@ -177,13 +181,21 @@ public class Insurance {
 	public void setStatus(int status) {
 		this.status = status;
 	}
+	
+	public int getKdv() {
+		return kdv;
+	}
+
+	public void setKdv(int kdv) {
+		this.kdv = kdv;
+	}
 
 	@Override
 	public String toString() {
 		return "Insurance [insuranceId=" + insuranceId + ", insuranceType=" + insuranceType + ", customerId="
 				+ customerId + ", carId=" + carId + ", homeId=" + homeId + ", offer=" + offer + ", result=" + result
 				+ ", startDate=" + startDate + ", endDate=" + endDate + ", period=" + period + ", daysDiff=" + daysDiff
-				+ ", refund=" + refund + ", status=" + status + "]";
+				+ ", refund=" + refund + ", status=" + status + "kdv=" + kdv + "]";
 	}
 	
 	

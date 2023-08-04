@@ -111,6 +111,7 @@ public class HomeController {
 		Kdv kdv = kdvService.getProductTypeById(2);
 		int kdvRate = kdv.getKdvRate();
 		double offer = calculateMethods.calculateHomeInsurance(home, kdvRate);
+		insurance.setKdv(kdvRate);
 		insurance.setOffer(offer);
 		insurance.setStatus(1);
 
@@ -194,6 +195,7 @@ public class HomeController {
 		Kdv kdv = kdvService.getProductTypeById(2);
 		int kdvRate = kdv.getKdvRate();
 		double offer = calculateMethods.calculateHomeInsurance(home, kdvRate);
+		insurance.setKdv(kdvRate);
 		insurance.setOffer(offer);
 		insuranceService.save(insurance);
 
@@ -262,8 +264,7 @@ public class HomeController {
 	}
 
 	@GetMapping("/seeHomeInsuranceDetails/{id}")
-	public ModelAndView seeHomeInsuranceDetails(@PathVariable("id") int homeId, Model model,
-			RedirectAttributes redirectAttributes) {
+	public ModelAndView seeHomeInsuranceDetails(@PathVariable("id") int homeId, Model model) {
 
 		List<Insurance> insurances = insuranceService.findByStatusAndHomeId(1, homeId);
 		for (Insurance insurance : insurances) {

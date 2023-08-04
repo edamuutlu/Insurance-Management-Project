@@ -74,6 +74,7 @@
 					<th scope="col">Insurance Type</th>
 					<th scope="col">Customer Id</th>
 					<th scope="col">Home Id</th>
+					<th cope="col">Kdv</th>
 					<th cope="col">Offer</th>
 					<th cope="col">Result</th>
 					<th cope="col">Start Date</th>
@@ -89,6 +90,7 @@
 					<td th:text="${i.insuranceType}"></td>
 					<td th:text="${i.customerId}"></td>
 					<td th:text="${i.homeId}"></td>
+					<td th:text="${'% ' + i.kdv}"></td>
 					<td th:text="${i.offer}"></td>
 					<td th:text="${i.result}"></td>
 					<td th:text="${i.startDate}"></td>

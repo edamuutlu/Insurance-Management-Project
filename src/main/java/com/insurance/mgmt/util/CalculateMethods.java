@@ -156,7 +156,6 @@ public class CalculateMethods {
 			break;
 		}
 
-		System.out.println(offer);
 		switch (home.getProvince()) { // Konutun bulunduğu ile göre ek prim
 		case "6":
 			offer += 800;
@@ -171,7 +170,6 @@ public class CalculateMethods {
 			offer += 500;
 			break;
 		}
-		System.out.println(offer);
 
 		if (home.getBuildingAge() <= 5) { // Bina yaşına göre ek prim
 			offer += home.getBuildingAge() * 10;
@@ -216,9 +214,7 @@ public class CalculateMethods {
 		offer += home.getPeriod() * 20;
 
 		// KDV oranı teklife eklenmektedir
-		System.out.println(offer);
 		offer += (offer * kdvRate) / 100;
-		System.out.println(offer);
 
 		return offer;
 	}

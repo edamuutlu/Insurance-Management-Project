@@ -69,15 +69,15 @@
 					<h5>BILLING SUMMARY</h5>
 					<div class="d-flex justify-content-between">
 						<h6>Subtotal</h6>
-						<p th:text="${((car.offer * 100) / ( (100 + kdv.kdvRate))) + ' ₺'}"></p>	
+						<p th:text="${#numbers.formatDecimal(((car.offer * 100) / ( (100 + car.kdv))), 0, 'COMMA', 2, 'POINT') + ' ₺'}"></p>
 					</div>
 					<div class="d-flex justify-content-between">
 						<h6>KDV</h6>
-						<p th:text="${'% ' + kdv.kdvRate}"></p>
+						<p th:text="${'% ' + car.kdv}"></p>
 					</div>
 					<div class="d-flex justify-content-between">
 						<h6>Total Amount</h6>
-						<p th:text="${car.offer + ' ₺'}"></p>
+						<p th:text="${#numbers.formatDecimal(car.offer, 0, 'COMMA', 2, 'POINT') + ' ₺'}"></p>
 					</div>
 					<div class="d-flex justify-content-between">
 						<h6>Total Usage Time (Day)</h6>
@@ -86,10 +86,13 @@
 					<hr class="second-hr">
 					<div class="d-flex justify-content-between">
 						<h6>Total Refund</h6>
-						<p th:text="${car.refund + ' ₺'}"></p>
+						<p th:text="${#numbers.formatDecimal(car.refund, 0, 'COMMA', 2, 'POINT') + ' ₺'}"></p>
 					</div>
-										
-					<button class="ms-auto"><a th:href="@{/deleteCar/{id}(id=${car.id})}">Delete</a></button>
+
+					<div class="d-flex justify-content-between">
+						<button class="ms-auto"><a th:href="@{/carList/{id}(id=${car.customerId})}">Cancel</a></button>
+						<button class="ms-2"><a th:href="@{/deleteCar/{id}(id=${car.id})}">Delete</a></button>
+					</div>
 				</div>
 			</div>
 		</div>

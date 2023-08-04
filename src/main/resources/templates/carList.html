@@ -123,6 +123,7 @@
 					<th cope="col">Fuel Type</th>
 					<th cope="col">Engine Size</th>
 					<th scope="col">Seating Capacity</th>
+					<th scope="col">Kdv</th>
 					<th scope="col">Offer</th>
 					<th scope="col">Period</th>
 					<th scope="col">Start Date</th>
@@ -146,6 +147,7 @@
 					<td th:text="${c.fuelType}"></td>
 					<td th:text="${c.engineSize}"></td>
 					<td th:text="${c.seatCapacity}"></td>
+					<td th:text="${'% ' + c.kdv}"></td>
 					<td th:text="${c.offer}"></td>
 					<td th:text="${c.period}"></td>
 					<td th:text="${c.startDate}"></td>

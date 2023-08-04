@@ -88,6 +88,7 @@ public class CarController {
         Kdv kdv = kdvService.getProductTypeById(1);
 		int kdvRate = kdv.getKdvRate();
 		double offer = calculateMethods.calculateCarInsurance(car, age, kdvRate);	
+		car.setKdv(kdvRate);
 		car.setOffer(offer);
 		car.setStatus(1);
 		

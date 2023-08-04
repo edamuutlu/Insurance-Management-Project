@@ -29,7 +29,7 @@ public class Car {
 	@NotNull(message = "This field must be filled.")
 	//@Digits(integer=2, fraction=0, message= "Only numeric input is allowed.")
 	//@Size(min = 1, max = 2, message = "Input must be 1 or 2 digits.") 
-	private int plate1;
+	private Integer plate1;
 	
 	
 	@Column(name ="plate2")
@@ -39,10 +39,10 @@ public class Car {
 	private String plate2;
 	
 	@Column(name ="plate3")
-	@NotNull(message = "This field must be filled.")
-	@Digits(integer=4, fraction=0, message= "Only numeric input is allowed.")
+	//@NotNull(message = "This field must be filled.")
+	//@Digits(integer=4, fraction=0, message= "Only numeric input is allowed.")
 	//@Size(min = 1, max = 4, message = "Input must be 1 or 4 digits.") 
-	private int plate3;
+	private Integer plate3;
 	
 	@Column(name ="type")
 	@NotBlank(message = "This field must be filled.")
@@ -63,13 +63,13 @@ public class Car {
 	@Column(name ="engine_size")
 	@NotNull(message = "Enter your engine size.")
 	@Digits(integer=4, fraction=0, message= "Only numeric input is allowed.") 
-	private int engineSize;
+	private Integer engineSize;
 	
 	@Column(name ="seat_capacity")
 	@NotNull(message = "Enter your seating capacity.")
 	@Digits(integer=10, fraction=0, message= "Only numeric input is allowed.")
 	//@Size(min = 1,  message = "Input must be at least 1 digits.")
-	private int seatCapacity;
+	private Integer seatCapacity;
 	
 	@Column(name ="offer") //insertable = false, nullable = true
 	private double offer;
@@ -95,15 +95,18 @@ public class Car {
 	@Column(name ="end_date")
 	private String endDate;
 	
+	@Column(name= "kdv")
+	private int kdv;
+	
 	public Car() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 		
 
-	public Car(int plate1, String plate2, int plate3, String type,
-			String purpose, String brand, String fuelType, int engineSize, int seatCapacity, int customerId, double offer, String result, 
-			int status, int period, String startDate, Integer daysDiff, double refund, String endDate) {
+	public Car(Integer plate1, String plate2, Integer plate3, String type,
+			String purpose, String brand, String fuelType, Integer engineSize, Integer seatCapacity, int customerId, double offer, String result, 
+			int status, int period, String startDate, Integer daysDiff, double refund, String endDate, int kdv) {
 		super();
 		this.customerId = customerId;
 		this.plate1 = plate1;
@@ -123,6 +126,7 @@ public class Car {
 		this.daysDiff = daysDiff;
 		this.refund = refund;
 		this.endDate = endDate;
+		this.kdv = kdv;
 	}
 
 	public int getId() {
@@ -145,12 +149,12 @@ public class Car {
 	}
 
 
-	public int getPlate1() {
+	public Integer getPlate1() {
 		return plate1;
 	}
 
 
-	public void setPlate1(int plate1) {
+	public void setPlate1(Integer plate1) {
 		this.plate1 = plate1;
 	}
 
@@ -165,12 +169,12 @@ public class Car {
 	}
 
 
-	public int getPlate3() {
+	public Integer getPlate3() {
 		return plate3;
 	}
 
 
-	public void setPlate3(int plate3) {
+	public void setPlate3(Integer plate3) {
 		this.plate3 = plate3;
 	}
 
@@ -215,22 +219,22 @@ public class Car {
 	}
 
  
-	public int getEngineSize() {
+	public Integer getEngineSize() {
 		return engineSize;
 	}
 
 
-	public void setEngineSize(int engineSize) {
+	public void setEngineSize(Integer engineSize) {
 		this.engineSize = engineSize;
 	}
 
 
-	public int getSeatCapacity() {
+	public Integer getSeatCapacity() {
 		return seatCapacity;
 	}
 
 
-	public void setSeatCapacity(int seatCapacity) {
+	public void setSeatCapacity(Integer seatCapacity) {
 		this.seatCapacity = seatCapacity;
 	}
 
@@ -255,7 +259,6 @@ public class Car {
 	}
 	
 	
-
 	public int getStatus() {
 		return status;
 	}
@@ -314,6 +317,16 @@ public class Car {
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
 	}
+	
+	
+	public int getKdv() {
+		return kdv;
+	}
+
+	
+	public void setKdv(int kdv) {
+		this.kdv = kdv;
+	}
 
 
 	@Override
@@ -322,7 +335,7 @@ public class Car {
 				+ ", plate3=" + plate3 + ", type=" + type + ", purpose=" + purpose + ", brand=" + brand + ", fuelType="
 				+ fuelType + ", engineSize=" + engineSize + ", seatCapacity=" + seatCapacity + ", offer=" + offer
 				+ ", result=" + result + ", status=" + status + ", period=" + period + ", startDate=" + startDate
-				+ ", daysDiff=" + daysDiff + ", refund=" + refund + ", endDate=" + endDate + "]";
+				+ ", daysDiff=" + daysDiff + ", refund=" + refund + ", endDate=" + endDate + "kdv=" + kdv + "]";
 	}	
 	
 		
