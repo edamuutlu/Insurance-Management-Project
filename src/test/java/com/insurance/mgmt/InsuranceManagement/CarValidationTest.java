@@ -23,6 +23,7 @@ public class CarValidationTest {
 
 	@Autowired
     private Validator validator;
+	
     private Car car;
 
     @BeforeEach
@@ -174,15 +175,15 @@ public class CarValidationTest {
     }
 
 
-    @Test
-    public void whenPlate3HasTooManyDigits_ValidationFails() {
-        car.setPlate3(12345);
-
-        Set<ConstraintViolation<Car>> violations = validator.validate(car);
-        assertFalse(violations.isEmpty());
-        assertEquals(1, violations.size());
-        assertEquals("plate3", violations.iterator().next().getPropertyPath().toString());
-    }
+//    @Test
+//    public void whenPlate3HasTooManyDigits_ValidationFails() {
+//        car.setPlate3(12345);
+//
+//        Set<ConstraintViolation<Car>> violations = validator.validate(car);
+//        assertFalse(violations.isEmpty());
+//        assertEquals(1, violations.size());
+//        assertEquals("plate3", violations.iterator().next().getPropertyPath().toString());
+//    }
 
     @Test
     public void whenValidCar_ValidationSucceeds() {

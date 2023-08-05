@@ -39,9 +39,9 @@ public class Car {
 	private String plate2;
 	
 	@Column(name ="plate3")
-	//@NotNull(message = "This field must be filled.")
+	@NotNull(message = "This field must be filled.")
 	//@Digits(integer=4, fraction=0, message= "Only numeric input is allowed.")
-	//@Size(min = 1, max = 4, message = "Input must be 1 or 4 digits.") 
+	//@Size(min = 1, max = 4, message = "Input must be 1 or 4 digits.")
 	private Integer plate3;
 	
 	@Column(name ="type")
