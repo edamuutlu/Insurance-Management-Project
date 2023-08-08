@@ -1,6 +1,7 @@
 package com.insurance.mgmt.util;
 
 import com.insurance.mgmt.entity.Car;
+import com.insurance.mgmt.entity.Health;
 import com.insurance.mgmt.entity.Home;
 
 public class CalculateMethods {
@@ -212,6 +213,68 @@ public class CalculateMethods {
 
 		// Sigortanın kapsadığı süreye bağlı olarak ek prim
 		offer += home.getPeriod() * 20;
+
+		// KDV oranı teklife eklenmektedir
+		offer += (offer * kdvRate) / 100;
+
+		return offer;
+	}
+
+	public double calculateHealthInsurance(Health health, int kdvRate) {
+		double offer = 500;
+
+		switch (health.getJob()) {
+		case "Askeri Personel":
+		case "Emniyet Mensubu":
+		case "Sağlık Sektörü Çalışanı":
+		case "Uçuş Personeli":
+			offer += 400;
+			break;
+		case "Çiftçi":
+		case "Veteriner":
+			offer += 200;
+			break;
+		default:
+			break;
+		}
+
+		switch (health.getForWho()) {
+		case "Me":
+			offer += 200;
+			break;
+		case "My Family":
+			offer += 400;
+			break;
+		case "My Children":
+			offer += 400;
+			break;
+		default:
+			break;
+		}
+		
+		if(health.getSgk() == 1) {
+			offer += 200;
+		}else {
+			offer += 400;
+		}
+		
+		// Beden Kütle İndeksine göre ek prim
+		double bki = (Integer.parseInt(health.getWeight()) / Math.pow(Integer.parseInt(health.getHeight()),2));
+		
+		if(bki < 18.5 || bki > 25) {
+			offer += 400;
+		}else {
+			offer += 200;
+		}
+		
+		if(health.getSmokingOrAlcohol() == 1) {
+			offer += 400;
+		}else {
+			offer += 200;
+		}
+
+		// Sigortanın kapsadığı süreye bağlı olarak ek prim
+		offer += health.getPeriod() * 20;
 
 		// KDV oranı teklife eklenmektedir
 		offer += (offer * kdvRate) / 100;

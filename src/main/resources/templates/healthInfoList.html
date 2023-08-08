@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en" xmlns:th="https://www.thymeleaf.com">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js"
+		integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+		crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+	<script src="https://unpkg.com/@phosphor-icons/web"></script>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+	<!-- Boxicons CSS -->
+	<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+	<link rel="stylesheet" href="" th:href="@{/css/style.css}">
+	<link href="https://css.gg/css" rel="stylesheet" />
+	
+	<title>SBM Home</title>
+
+	<style>
+		#icon-trash {
+			color: red;
+			font-size: 22px;
+		}
+
+		#icon-trash:hover {
+			color: rgb(255, 62, 62);
+		}
+
+		#icon-edit {
+			color: blue;
+			font-size: 20px;
+		}
+
+		#icon-edit:hover {
+			color: rgb(69, 112, 222);
+		}
+
+		button {
+			border: none;
+			background: none;
+			margin-left: 50px;
+		}
+	</style>
+
+	<script>
+
+		window.onload = function () {
+			$(document).ready(function () {
+				$('#myModal').modal('show');
+			});
+		};
+
+	</script>
+
+
+</head>
+
+<body>
+	<!-- Navbar -->
+	<nav class="navbar navbar-expand-lg navbar-light bg-light py-3">
+		<div class="container">
+			<a class="navbar-brand text-black" href="/index">SBM</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+				data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span id="bar" data-lucide="menu"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+					<li class="nav-item">
+						<a class="nav-link active" href="/customerList">See Customer List</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/customerRegisterForm">New Customer Register</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<!--End Navbar-->
+
+	<div class="container mt-5">
+		<div class="modal fade" id="myModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"
+			aria-labelledby="myModalTitle" aria-hidden="true" th:if="${showText}">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="myModalTitle">Bildirim</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<p>Listelenen Sağlık Sigortalarınızın Sigorta Süresi Bitmiştir:</p>
+						<ul>
+							<li th:each="data : ${expiredHealthInsurance}" th:text="${data.getHealthId()}"></li>
+						</ul>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<table class="table table-hover text-center">
+			<thead>
+				<tr>
+					<th scope="col">Health Id</th>
+					<th scope="col">Customer Id</th>
+					<th scope="col">Job</th>
+					<th scope="col">For Who</th>
+					<th scope="col">SGK</th>
+					<th cope="col">Height</th>
+					<th cope="col">Weight</th>
+					<th cope="col">Lifestyle Habits</th>
+					<th scope="col">Past Operation</th>
+					<th cope="col">Period</th>
+					<th scope="col">Delete</th>
+					<th scope="col">See Insurance Details</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="h :${health}">
+					<td th:text="${h.healthId}"></td>
+					<td th:text="${h.customerId}"></td>
+					<td th:text="${h.job}"></td>
+					<td th:text="${h.forWho}"></td>
+					<td th:text="${h.sgk}"></td>
+					<td th:text="${h.height}"></td>
+					<td th:text="${h.weight}"></td>
+					<td th:text="${h.smokingOrAlcohol}"></td>
+					<td th:text="${h.pastOperation}"></td>
+					<td th:text="${h.period}"></td>
+					<td><button class="mx-auto"><a th:href="@{/deleteHealthInfo/{id}(id=${h.healthId})}"><i id="icon-trash"
+									class="bx bx-trash"></i></a></button></td>
+					<td><button class="mx-auto"><a th:href="@{/seeHealthInsuranceDetails/{id}(id=${h.healthId})}"><i
+									class="fa-solid fa-ellipsis"></i></a></button></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	</div>
+
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+		integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"
+		integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS"
+		crossorigin="anonymous"></script>
+</body>
+
+</html>

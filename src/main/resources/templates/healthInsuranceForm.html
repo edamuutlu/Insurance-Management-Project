@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en" xmlns:th"http://www.thymeLeaf.org">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Health Insurance Form</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+	<link rel="stylesheet" href="" th:href="@{/css/style.css}">
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+	<style>
+		.health-details {
+			width: 100%;
+			padding-left: 4px;
+			justify-content: space-between;
+			display: flex;
+			margin-top: 10px;
+		}
+
+		.health-details .details-questions {
+			display: flex;
+			align-items: center;
+			background-color: #efefef;
+			padding: 8px;
+			border-radius: 12px;
+			box-shadow: 0 5px 10px 0 rgb(0, 0, 0, 0.25);
+		}
+
+		.radio-buttons {
+			display: flex;
+			align-items: center;
+		}
+
+		.radio-buttons label {
+			display: flex;
+			margin-right: 20px;
+		}
+
+		.radio-buttons label input {
+			margin-right: 3px;
+		}
+		
+		button{
+			margin-top: 20px;
+		}
+	</style>
+
+</head>
+
+<body ng-app="myApp">
+
+	<!--Navbar-->
+	<nav class="navbar navbar-expand-lg navbar-light bg-light py-3 fixed-top">
+		<div class="container">
+			<a class="navbar-brand text-black" href="/index">SBM</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+				data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span id="bar" data-lucide="menu"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+					<li class="nav-item">
+						<a class="nav-link" href="/customerList">See Customer List</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/customerRegisterForm">New Customer Register</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<!--End Navbar-->
+
+
+	<section id="featured" class="my-5 pt-5">
+		<div class="container-register mt-5 py-5" ng-controller="healthInsuranceFormController">
+			<div class="textIntro">
+				<h1 class="text-center">Health Insurance Form</h1>
+				<p ng-show="msg">{{msg}}</p>
+				<!--				<div class="alert alert-warning" role="alert" th:if="${showHomeAlert}"> This home address is-->
+				<!--					already registered! </div>-->
+			</div>
+
+			<form th:action="@{/healthInfoRegister}" th:object="${health}" method="post" name="myForm"
+				ng-submit="register()">
+				<input type="hidden" name="customerId" th:value="${customerId}" />
+				<div style=" display: flex; flex-direction: row;">
+					<h4 class="mr-2">Customer Id : </h4>
+					<h4 th:text="${customerId}">idParam</h4>
+				</div>
+
+				<select name="period" id="period" ng-model="period" ng-required="true">
+					<option value="">Select Insurance Period (Day)*</option>
+					<option ng-repeat="option in periods" value="{{option}}">{{option}}</option>
+				</select>
+
+				<select name="job" id="job" ng-model="job">
+					<option value="">Select Your Job*</option>
+					<option ng-repeat="option in jobs" value="{{option}}">{{option}}</option>
+				</select>
+
+				<select name="forWho" id="forWho" ng-model="forWho">
+					<option value="">Select For Who*</option>
+					<option ng-repeat="option in forWhose" value="{{option}}">{{option}}</option>
+				</select>
+
+				<input type="text" id="height" name="height" placeholder="Height (cm)*" ng-model="height"
+					ng-required="true">
+				<p class="error" ng-show="myForm.height.$invalid && myForm.height.$touched">Fill out
+					your height.</p>
+
+				<input type="text" id="weight" name="weight" placeholder="Weight (m)*" ng-model="weight"
+					ng-required="true">
+				<p class="error" ng-show="myForm.weight.$invalid && myForm.weight.$touched">Fill out your
+					weight.</p>
+
+				<div class="health-details">
+					<div class="details-questions">
+						<label>Do you have habits such as alcohol or smoking?</label>
+					</div>
+					<div class="radio-buttons">
+						<label>
+							<input type="radio" name="smokingOrAlcohol" ng-model="smokingOrAlcohol" ng-required="true" th:value=1> Yes
+						</label>
+						<label>
+							<input type="radio" name="smokingOrAlcohol" ng-model="smokingOrAlcohol" ng-required="true" th:value=0> No
+						</label>
+					</div>
+				</div>
+
+				<div class="health-details">
+					<div class="details-questions">
+						<label>Do you have SGK?</label>
+					</div>
+					<div class="radio-buttons">
+						<label>
+							<input type="radio" name="sgk" ng-model="sgk" ng-required="true" th:value=1> Yes, I have SGK
+						</label>
+						<label>
+							<input type="radio" name="sgk" ng-model="sgk" ng-required="true" th:value=0> No, I don't have SGK
+						</label>
+					</div>
+				</div>
+
+				<div class="health-details">
+					<div class="details-questions">
+						<label>Have you ever had a surgical operation?</label>
+					</div>
+					<div class="radio-buttons">
+						<label>
+							<input type="radio" name="pastOperation" ng-model="pastOperation" ng-required="true" ng-value=1> Yes
+						</label>
+						<label>
+							<input type="radio" name="pastOperation" ng-model="pastOperation" ng-required="true" ng-value=0> No
+						</label>
+					</div>
+				</div>
+
+
+				<button type="submit" class="btn" ng-disabled="myForm.$invalid">Prepare My Offer</button>
+			</form>
+		</div>
+	</section>
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+		integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"
+		integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS"
+		crossorigin="anonymous"></script>
+
+	<script src="/js/app.js"></script>
+</body>
+
+</html>

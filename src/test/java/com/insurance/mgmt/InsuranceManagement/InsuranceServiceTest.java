@@ -26,8 +26,8 @@ class InsuranceServiceTest {
 	private InsuranceService insuranceService;
 
 	private List<Insurance> dummyInsurances = Stream.of(
-            new Insurance(1, "Home", 1, 1, 1, 1000, "Accepted", "26/07/2023 16:00:00", "26/07/2023 16:00:00", 0, 0, 1, 30, 10),
-            new Insurance(2, "Home", 2, 2, 2, 2000, "Accepted", "26/10/2023 12:00:00", "26/10/2023 12:00:00", 0, 0, 1, 60, 10)
+            new Insurance(1, "Home", 1, 1, 1, 1, 1000, "Accepted", "26/07/2023 16:00:00", "26/07/2023 16:00:00", 0, 0, 1, 30, 10),
+            new Insurance(2, "Home", 2, 2, 2, 2, 2000, "Accepted", "26/10/2023 12:00:00", "26/10/2023 12:00:00", 0, 0, 1, 60, 10)
     ).collect(Collectors.toList());
 	
 	@Test

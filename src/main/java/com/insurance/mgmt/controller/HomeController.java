@@ -338,7 +338,6 @@ public class HomeController {
 
 	@PostMapping("/homeResult")
 	public String result(@RequestParam("insuranceId") int insuranceId, @RequestParam("result") String result) {
-		// carId'ye göre veritabanında aracı bulun
 		Insurance insurance = insuranceService.getInsuranceById(insuranceId);
 
 		if (insurance != null) {

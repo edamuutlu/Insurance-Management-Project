@@ -7,12 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.insurance.mgmt.entity.Insurance;
+import com.insurance.mgmt.repository.IHealthRepository;
 import com.insurance.mgmt.repository.IInsuranceRepository;
 
 @Service
 public class InsuranceService {
 	@Autowired
 	IInsuranceRepository insuranceRepository;
+	
+	@Autowired
+	IHealthRepository healthRepository;
 	
 	public void save(Insurance insurance) {
 		insuranceRepository.save(insurance);
@@ -28,6 +32,11 @@ public class InsuranceService {
 	
 	public Insurance getInsuranceByHomeId(int homeId) {
         Optional<Insurance> optionalInsurance = insuranceRepository.findByHomeId(homeId);
+        return optionalInsurance.orElse(null); // Eğer nesne varsa nesneyi, yoksa null dönecektir.
+    }
+	
+	public Insurance getInsuranceByHealthId(int healthId) {
+        Optional<Insurance> optionalInsurance = insuranceRepository.findByHealthId(healthId);
         return optionalInsurance.orElse(null); // Eğer nesne varsa nesneyi, yoksa null dönecektir.
     }
 	
@@ -54,4 +63,8 @@ public class InsuranceService {
     public List<Insurance> findByStatusAndResultAndHomeId(int status, String result, int homeId) {
         return insuranceRepository.findByStatusAndResultAndHomeId(status, result, homeId);
     }
+
+	public List<Insurance> findByStatusAndHealthId(int status, int healthId) {
+		return insuranceRepository.findByStatusAndHealthId(status, healthId);
+	}
 }

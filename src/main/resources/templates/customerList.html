@@ -164,6 +164,7 @@
 					<th cope="col">Province</th>
 					<th cope="col">District</th>
 					<th scope="col">Insurance Type</th>
+					<th scope="col">Health Info List</th>
 					<th scope="col">Home List</th>
 					<th scope="col">Car List</th>
 					<th scope="col">Update</th>
@@ -182,6 +183,8 @@
 					<td th:text="${c.district}"></td>
 					<td><a th:href="@{/selectType(customerId=${c.customerId})}"><span
 								class="badge text-bg-primary fs-6">Select Type</span></a></td>
+					<td><button class="mx-auto"><a th:href="@{/healthInfoList/{customerId}(customerId=${c.customerId})}"><i id="icon-image" style="color: #bd0000"
+					 class="fa-solid fa-heart-circle-plus"></i></a></button></td>			
 					<td><button class="mx-auto"><a th:href="@{/homeList/{customerId}(customerId=${c.customerId})}"><i
 									class="fa-solid fa-house" id="icon-image"></i></a></button></td>
 					<td><button class="mx-auto"><a th:href="@{/carList/{customerId}(customerId=${c.customerId})}"><i

@@ -84,10 +84,11 @@
 						Offer</a></button>
 			</div>
 
-			<div onclick="window.location.href='/form'" class="product text-center col-lg-3 col-md-4 col-12">
+			<div class="product text-center col-lg-3 col-md-4 col-12">
 				<img class="img-fluid mb-3" src="img/health.jpg" alt="">
 				<h5 class="p-name">Health Insurance</h5>
-				<button class="buy-btn">Get Offer</button>
+				<button class="buy-btn"><a th:href="@{/healthInsuranceForm(customerId = ${customerId})}">Get
+						Offer</a></button>
 
 			</div>
 			<div onclick="window.location.href='/form'" class="product text-center col-lg-3 col-md-4 col-12">

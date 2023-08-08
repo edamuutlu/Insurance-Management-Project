@@ -156,3 +156,26 @@ myApp.controller("homeInsuranceFormController", ["$scope", function($scope) {
 
 }]);
 
+myApp.controller("healthInsuranceFormController", ["$scope", function($scope) {
+
+	$scope.register = function() {
+		$scope.msg = "Welcome " + $scope.firstname + "! You have signed in.";
+
+	};
+	
+	//Select the Insurance Period
+	$scope.periods = [30, 60];
+	$scope.period = "";
+	
+	//Select Job
+	$scope.jobs = ["Askeri Personel", "Banka ve Finans Kurumu Çalışanı", "Çiftçi", "Diğer", "Din Adamları", "Eczacı", "Eğitim Sektörü Çalışanı", "Emekli", "Emniyet Mensubu", "Esnaf", "Ev Hanımı", "Kamu Çalışanı",  "Öğrenci", "Özel Sektör Çalışanı", "Sağlık Sektörü Çalışanı", "Uçuş Personeli", "Yargı Mensubu"];
+	$scope.job = "";
+
+	//Select the For Who
+	$scope.forWhose = ["Me", "My Family", "My Children"];
+	$scope.forWho = "";
+
+
+}]);
+
+
