@@ -40,4 +40,8 @@ public class HealthService {
     public List<Health> findByStatusAndCustomerId(int status, int id) {
         return healthRepository.findByStatusAndCustomerId(status, id);
     }
+
+	public List<Health> findByForWhoAndStatus(String forWho, int status) {
+		return healthRepository.findByForWhoAndStatus(forWho, status);
+	}
 }

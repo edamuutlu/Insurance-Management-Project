@@ -42,8 +42,8 @@
 		.radio-buttons label input {
 			margin-right: 3px;
 		}
-		
-		button{
+
+		button {
 			margin-top: 20px;
 		}
 	</style>
@@ -81,8 +81,7 @@
 			<div class="textIntro">
 				<h1 class="text-center">Health Insurance Form</h1>
 				<p ng-show="msg">{{msg}}</p>
-				<!--				<div class="alert alert-warning" role="alert" th:if="${showHomeAlert}"> This home address is-->
-				<!--					already registered! </div>-->
+				<div class="alert alert-warning" role="alert" th:if="${showHealthAlert}">The person with this health information already has health insurance! </div>
 			</div>
 
 			<form th:action="@{/healthInfoRegister}" th:object="${health}" method="post" name="myForm"
@@ -124,10 +123,12 @@
 					</div>
 					<div class="radio-buttons">
 						<label>
-							<input type="radio" name="smokingOrAlcohol" ng-model="smokingOrAlcohol" ng-required="true" th:value=1> Yes
+							<input type="radio" name="smokingOrAlcohol" ng-model="smokingOrAlcohol" ng-required="true"
+								th:value=1> Yes
 						</label>
 						<label>
-							<input type="radio" name="smokingOrAlcohol" ng-model="smokingOrAlcohol" ng-required="true" th:value=0> No
+							<input type="radio" name="smokingOrAlcohol" ng-model="smokingOrAlcohol" ng-required="true"
+								th:value=0> No
 						</label>
 					</div>
 				</div>
@@ -141,7 +142,8 @@
 							<input type="radio" name="sgk" ng-model="sgk" ng-required="true" th:value=1> Yes, I have SGK
 						</label>
 						<label>
-							<input type="radio" name="sgk" ng-model="sgk" ng-required="true" th:value=0> No, I don't have SGK
+							<input type="radio" name="sgk" ng-model="sgk" ng-required="true" th:value=0> No, I don't
+							have SGK
 						</label>
 					</div>
 				</div>
@@ -152,10 +154,12 @@
 					</div>
 					<div class="radio-buttons">
 						<label>
-							<input type="radio" name="pastOperation" ng-model="pastOperation" ng-required="true" ng-value=1> Yes
+							<input type="radio" name="pastOperation" ng-model="pastOperation" ng-required="true"
+								ng-value=1> Yes
 						</label>
 						<label>
-							<input type="radio" name="pastOperation" ng-model="pastOperation" ng-required="true" ng-value=0> No
+							<input type="radio" name="pastOperation" ng-model="pastOperation" ng-required="true"
+								ng-value=0> No
 						</label>
 					</div>
 				</div>

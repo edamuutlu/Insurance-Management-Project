@@ -67,4 +67,8 @@ public class InsuranceService {
 	public List<Insurance> findByStatusAndHealthId(int status, int healthId) {
 		return insuranceRepository.findByStatusAndHealthId(status, healthId);
 	}
+
+	public List<Insurance> findByStatusAndResultAndHealthId(int status, String result, int healthId) {
+		return insuranceRepository.findByStatusAndResultAndHealthId(status, result, healthId);
+	}
 }

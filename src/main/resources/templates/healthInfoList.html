@@ -96,7 +96,7 @@
 						</button>
 					</div>
 					<div class="modal-body">
-						<p>Listelenen Sağlık Sigortalarınızın Sigorta Süresi Bitmiştir:</p>
+						<p>Listelenen ID ye Sahip Sağlık Sigortalarınızın Sigorta Süresi Bitmiştir:</p>
 						<ul>
 							<li th:each="data : ${expiredHealthInsurance}" th:text="${data.getHealthId()}"></li>
 						</ul>

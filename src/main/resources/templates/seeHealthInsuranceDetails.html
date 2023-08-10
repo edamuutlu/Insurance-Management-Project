@@ -56,16 +56,16 @@
 	<!--End Navbar-->
 
 	<div class="container mt-4">
-<!--		<div class="alert alert-warning" role="alert" th:if="${showText}"> An insurance for this house has already been-->
-<!--			defined! </div>-->
-<!--		<div class="alert alert-warning" role="alert" th:if="${showAlert}"> An insurance for this house has already been-->
-<!--			deleted or expired! </div>-->
-<!--		<button type="button" class="btn btn-info text-white mb-2"-->
-<!--			style="background-color: rgb(62, 209, 221); font-size: 17px; padding: 10px 20px;">-->
-<!--			<a class="text-decoration-none" th:href="@{/newHomeInsuranceCalculate/{id}(id=${homeId})}">-->
-<!--				<strong>Create New Home Insurance</strong>-->
-<!--			</a>-->
-<!--		</button>-->
+		<div class="alert alert-warning" role="alert" th:if="${showText}"> This health insurance has already been
+			defined! </div>
+		<div class="alert alert-warning" role="alert" th:if="${showAlert}"> This health insurance has already been
+			deleted or expired! </div>
+		<button type="button" class="btn btn-info text-white mb-2"
+			style="background-color: rgb(62, 209, 221); font-size: 17px; padding: 10px 20px;">
+			<a class="text-decoration-none" th:href="@{/newHealthInsuranceCalculate/{id}(id=${healthId})}">
+				<strong>Renew Health Insurance</strong>
+			</a>
+		</button>
 
 		<table class="table table-hover text-center">
 			<thead>

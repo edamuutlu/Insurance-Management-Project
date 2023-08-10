@@ -16,4 +16,6 @@ public interface IHealthRepository  extends JpaRepository<Health,Integer>{
 
 	List<Health> findByStatusAndCustomerId(int status, int id);
 
+	List<Health> findByForWhoAndStatus(String forWho, int status);
+
 }
