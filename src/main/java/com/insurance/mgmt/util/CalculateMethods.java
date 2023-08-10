@@ -258,6 +258,12 @@ public class CalculateMethods {
 			offer += 400;
 		}
 		
+		if(health.getPastOperation() == 1) {
+			offer += 200;
+		}else {
+			offer += 400;
+		}
+		
 		// Beden Kütle İndeksine göre ek prim
 		double bki = (Integer.parseInt(health.getWeight()) / Math.pow(Integer.parseInt(health.getHeight()),2));
 		
