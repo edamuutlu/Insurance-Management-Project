@@ -106,11 +106,9 @@ public class HomeController {
 		int buildingAge = currentYear - home.getYear();
 		home.setBuildingAge(buildingAge);
 
-		CalculateMethods calculateMethods = new CalculateMethods(); // public olan calculate metodunu çağırmak için
-																	// util'den nesne oluşturulmaktadır
 		Kdv kdv = kdvService.getProductTypeById(2);
 		int kdvRate = kdv.getKdvRate();
-		double offer = calculateMethods.calculateHomeInsurance(home, kdvRate);
+		double offer = CalculateMethods.calculateHomeInsurance(home, kdvRate);
 		insurance.setKdv(kdvRate);
 		insurance.setOffer(offer);
 		insurance.setStatus(1);
@@ -190,11 +188,9 @@ public class HomeController {
 		int buildingAge = currentYear - home.getYear();
 		home.setBuildingAge(buildingAge);
 
-		CalculateMethods calculateMethods = new CalculateMethods(); // public olan calculate metodunu çağırmak için
-																	// util'den nesne oluşturulmaktadır
 		Kdv kdv = kdvService.getProductTypeById(2);
 		int kdvRate = kdv.getKdvRate();
-		double offer = calculateMethods.calculateHomeInsurance(home, kdvRate);
+		double offer = CalculateMethods.calculateHomeInsurance(home, kdvRate);
 		insurance.setKdv(kdvRate);
 		insurance.setOffer(offer);
 		insuranceService.save(insurance);

@@ -27,10 +27,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.insurance.mgmt.entity.Customer;
 import com.insurance.mgmt.entity.Health;
 import com.insurance.mgmt.entity.Insurance;
+import com.insurance.mgmt.entity.Jobs;
 import com.insurance.mgmt.entity.Kdv;
 import com.insurance.mgmt.service.CustomerService;
 import com.insurance.mgmt.service.HealthService;
 import com.insurance.mgmt.service.InsuranceService;
+import com.insurance.mgmt.service.JobsService;
 import com.insurance.mgmt.service.KdvService;
 import com.insurance.mgmt.util.CalculateMethods;
 
@@ -50,6 +52,9 @@ public class HealthController {
 
 	@Autowired
 	KdvService kdvService;
+	
+	@Autowired
+	private JobsService jobsService;
 
 	private static final Logger log = LoggerFactory.getLogger(CarController.class);
 
@@ -86,11 +91,11 @@ public class HealthController {
 		LocalDateTime endDate = now.plusDays(health.getPeriod());
 		insurance.setEndDate(endDate.format(formatter));
 
-		CalculateMethods calculateMethods = new CalculateMethods(); // public olan calculate metodunu çağırmak için
-																	// util'den nesne oluşturulmaktadır
 		Kdv kdv = kdvService.getProductTypeById(3);
 		int kdvRate = kdv.getKdvRate();
-		double offer = calculateMethods.calculateHealthInsurance(health, kdvRate);
+		Jobs job = jobsService.getJobById(health.getJob());
+		int riskFactor = job.getRiskFactor();
+		double offer = CalculateMethods.calculateHealthInsurance(health, kdvRate, riskFactor);
 		insurance.setKdv(kdvRate);
 		insurance.setOffer(offer);
 		insurance.setStatus(1);
@@ -202,11 +207,12 @@ public class HealthController {
 		insurance.setEndDate(endDate.format(formatter));
 		insurance.setStatus(1);
 
-		CalculateMethods calculateMethods = new CalculateMethods(); // public olan calculate metodunu çağırmak için
-																	// util'den nesne oluşturulmaktadır
+		//CalculateMethods calculateMethods = new CalculateMethods(); 
 		Kdv kdv = kdvService.getProductTypeById(3);
 		int kdvRate = kdv.getKdvRate();
-		double offer = calculateMethods.calculateHealthInsurance(health, kdvRate);
+		Jobs job = jobsService.getJobById(health.getJob());
+		int riskFactor = job.getRiskFactor();
+		double offer = CalculateMethods.calculateHealthInsurance(health, kdvRate, riskFactor);
 		insurance.setKdv(kdvRate);
 		insurance.setOffer(offer);
 		insuranceService.save(insurance);

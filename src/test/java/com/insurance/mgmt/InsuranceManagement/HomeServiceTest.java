@@ -34,10 +34,8 @@ class HomeServiceTest {
 
 	@Test
 	public void calculateHomeInsuranceTest() {
-		
-		CalculateMethods calculateMethods = new CalculateMethods();
 		int KdvRate = 10;
-		double offer = calculateMethods.calculateHomeInsurance(dummyHomes.get(0), KdvRate);	
+		double offer = CalculateMethods.calculateHomeInsurance(dummyHomes.get(0), KdvRate);	
     
 		double kdv = (((500 + (100*4) + 500 + 500 + 1000 + (10 * 20) + 600 + 400 + (30 * 20)) * KdvRate) / 100);
 		double expectedOffer = 500 + (100*4) + 500 + 500 + 1000 + (10 * 20) + 600 + 400 + (30 * 20) + kdv;

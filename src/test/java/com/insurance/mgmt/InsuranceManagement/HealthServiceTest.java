@@ -39,12 +39,12 @@ class HealthServiceTest {
 	public void testCalculateHealthInsurance() {
 		Health health = new Health(1, 1, "Askeri Personel", "Me", (byte) 1, "200", "80", (byte) 1, (byte) 0, 1, 6);
 		int kdvRate = 18;
+		int riskFactor = 3;
 
 		double baseOffer = 500 + 400 + 200 + 200 + 400 + 400 + 400 + 120; // KDV hariç beklenen teklif
         double expectedOffer = baseOffer + ((baseOffer * kdvRate) / 100); // KDV dahil beklenen teklif
 
-		CalculateMethods calculateMethods = new CalculateMethods();
-		double calculatedOffer = calculateMethods.calculateHealthInsurance(health, kdvRate);
+		double calculatedOffer = CalculateMethods.calculateHealthInsurance(health, kdvRate, riskFactor);
 
 		assertEquals(expectedOffer, calculatedOffer, 0.001); // 0.001 toleransla doğrulama
 	}

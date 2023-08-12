@@ -10,6 +10,7 @@ myApp.controller("rootController", ["$scope", "$http", function($scope) {
 
     $scope.carKdv = carKdv;
     $scope.homeKdv = homeKdv;
+    $scope.healthKdv = healthKdv;
     
     // Watch fonksiyonu product type değiştiğinde updateKdvRate fonksiyonunu çağırır.
     $scope.$watch('productType', function(newVal) {
@@ -22,6 +23,8 @@ myApp.controller("rootController", ["$scope", "$http", function($scope) {
             $scope.kdvRate = $scope.carKdv.kdvRate;
         } else if ($scope.productType == 2 ) {
             $scope.kdvRate = $scope.homeKdv.kdvRate;
+        } else if ($scope.productType == 3 ) {
+            $scope.kdvRate = $scope.healthKdv.kdvRate;
         }
     };   
 
@@ -168,7 +171,7 @@ myApp.controller("healthInsuranceFormController", ["$scope", function($scope) {
 	$scope.period = "";
 	
 	//Select Job
-	$scope.jobs = ["Askeri Personel", "Banka ve Finans Kurumu Çalışanı", "Çiftçi", "Diğer", "Din Adamları", "Eczacı", "Eğitim Sektörü Çalışanı", "Emekli", "Emniyet Mensubu", "Esnaf", "Ev Hanımı", "Kamu Çalışanı",  "Öğrenci", "Özel Sektör Çalışanı", "Sağlık Sektörü Çalışanı", "Uçuş Personeli", "Yargı Mensubu"];
+	$scope.jobs = ["Askeri Personel", "Banka ve Finans Kurumu Çalışanı", "Çiftçi", "Diğer", "Din Adamları", "Eczacı", "Eğitim Sektörü Çalışanı", "Emekli", "Emniyet Mensubu", "Esnaf", "Ev Hanımı", "Kamu Çalışanı",  "Öğrenci", "Özel Sektör Çalışanı", "Sağlık Sektörü Çalışanı", "Uçuş Personeli", "Veteriner", "Yargı Mensubu"];
 	$scope.job = "";
 
 	//Select the For Who

@@ -43,9 +43,8 @@ class CarServiceTest {
 	    car.setPlate1(34);
 	    car.setSeatCapacity(4);	  
 
-	    CalculateMethods calculateMethods = new CalculateMethods();
 	    int KdvRate = 10;
-	    double offer = calculateMethods.calculateCarInsurance(car, 20, KdvRate);	
+	    double offer = CalculateMethods.calculateCarInsurance(car, 20, KdvRate);	
     
 	    double kdv = (((500 + (20 * 4) + 400 + 400 + 3000 + 600 + 300 + (2 * 200) + 500 + (4 * 30)) * KdvRate) / 100);
 	    double expectedOffer = 500 + (20 * 4) + 400 + 400 + 3000 + 600 + 300 + (2 * 200) + 500 + (4 * 30) + kdv;

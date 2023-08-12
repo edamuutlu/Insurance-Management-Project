@@ -18,7 +18,7 @@ public class HealthService {
 	}
 	
 	public List<Health> getAllHealths(){
-		return healthRepository.findAll();
+		return healthRepository.findAll(); 
 	}
 	
 	public Health getHealthById(int id) {

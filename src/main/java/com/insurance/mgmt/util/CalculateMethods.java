@@ -6,7 +6,7 @@ import com.insurance.mgmt.entity.Home;
 
 public class CalculateMethods {
 
-	public double calculateCarInsurance(Car car, int age, int kdvRate) {
+	public static double calculateCarInsurance(Car car, int age, int kdvRate) {
 		// Sigorta teklifi için hesaplamalar
 		double offer = 500; // Sabit bir başlangıç teklifi-primi
 
@@ -124,7 +124,7 @@ public class CalculateMethods {
 		return offer;
 	}
 
-	public double calculateHomeInsurance(Home home, int kdvRate) {
+	public static double calculateHomeInsurance(Home home, int kdvRate) {
 		double offer = 500;
 
 		if (home.getFlatArea() <= 50) { // Konutun metrekaresine göre ek prim
@@ -219,19 +219,16 @@ public class CalculateMethods {
 
 		return offer;
 	}
+	
 
-	public double calculateHealthInsurance(Health health, int kdvRate) {
+	public static double calculateHealthInsurance(Health health, int kdvRate, int riskFactor) {
 		double offer = 500;
-
-		switch (health.getJob()) {
-		case "Askeri Personel":
-		case "Emniyet Mensubu":
-		case "Sağlık Sektörü Çalışanı":
-		case "Uçuş Personeli":
+		
+		switch (riskFactor) {
+		case 3:
 			offer += 400;
 			break;
-		case "Çiftçi":
-		case "Veteriner":
+		case 2:
 			offer += 200;
 			break;
 		default:

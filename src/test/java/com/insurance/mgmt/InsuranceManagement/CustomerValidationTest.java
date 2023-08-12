@@ -35,8 +35,8 @@ public class CustomerValidationTest {
 		customer.setEmail("test@example.com");
 		customer.setFirstname("John");
 		customer.setLastname("Doe");
-		customer.setProvince("Istanbul");
-		customer.setDistrict("Kadikoy");
+		customer.setProvince("34");
+		customer.setDistrict("1852");
 		customer.setStatus(1);
 	}
 
@@ -53,7 +53,7 @@ public class CustomerValidationTest {
 		// Doğru tarih formatında max değeri elde ettik mi?
 		assertTrue(customer.getBirth().matches("\\d{4}-\\d{2}-\\d{2}"));
 
-		// 18 yaşın altında mı?
+		// 18 yaşın üstünde mü?
 		assertTrue(isUnderage());
 	}
 

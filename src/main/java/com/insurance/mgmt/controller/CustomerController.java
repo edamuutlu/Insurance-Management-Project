@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.insurance.mgmt.entity.Car;
 import com.insurance.mgmt.entity.Customer;
+import com.insurance.mgmt.entity.Health;
 import com.insurance.mgmt.entity.Home;
 import com.insurance.mgmt.entity.Insurance;
 import com.insurance.mgmt.entity.Kdv;
@@ -27,6 +28,7 @@ import com.insurance.mgmt.entity.address.District;
 import com.insurance.mgmt.entity.address.Province;
 import com.insurance.mgmt.service.CarService;
 import com.insurance.mgmt.service.CustomerService;
+import com.insurance.mgmt.service.HealthService;
 import com.insurance.mgmt.service.HomeService;
 import com.insurance.mgmt.service.InsuranceService;
 import com.insurance.mgmt.service.KdvService;
@@ -46,6 +48,9 @@ public class CustomerController {
 	
 	@Autowired
 	HomeService homeService;
+	
+	@Autowired
+	HealthService healthService;
 	
 	@Autowired
 	InsuranceService insuranceService;
@@ -102,8 +107,10 @@ public class CustomerController {
 		
 		Kdv carKdv = kdvService.getProductTypeById(1);
 		Kdv homeKdv = kdvService.getProductTypeById(2);
+		Kdv healthKdv = kdvService.getProductTypeById(3);
 		model.addAttribute("carKdv", carKdv);
 		model.addAttribute("homeKdv", homeKdv);
+		model.addAttribute("healthKdv", healthKdv);
 		model.addAttribute("customer",  customerList);
 		
 		return "customerList";
@@ -205,6 +212,7 @@ public class CustomerController {
 		// Müşterinin varsa araçlarının listelenmemesi için
 		List<Car> cars = carService.findByStatusAndCustomerId(1, customerId); 
 		List<Home> homes = homeService.findByStatusAndCustomerId(1, customerId);
+		List<Health> healthInfos = healthService.findByStatusAndCustomerId(1, customerId);
 		List<Insurance> insurances = insuranceService.findByStatusAndCustomerId(1, customerId);
 		for (Car car : cars) {
 			car.setResult("Canceled");
@@ -214,6 +222,10 @@ public class CustomerController {
 		for (Home home : homes) {
 			home.setStatus(0);
 			homeService.save(home);
+		}
+		for (Health health : healthInfos) {
+			health.setStatus(0);
+			healthService.save(health);
 		}
 		for (Insurance insurance : insurances) {
 			insurance.setResult("Canceled");
