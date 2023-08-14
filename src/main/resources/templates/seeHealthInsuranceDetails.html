@@ -62,7 +62,7 @@
 			deleted or expired! </div>
 		<button type="button" class="btn btn-info text-white mb-2"
 			style="background-color: rgb(62, 209, 221); font-size: 17px; padding: 10px 20px;">
-			<a class="text-decoration-none" th:href="@{/newHealthInsuranceCalculate/{id}(id=${healthId})}">
+			<a class="text-decoration-none" th:href="@{/newHealthInsuranceCalculate/{id}(id=${insuranceId})}">
 				<strong>Renew Health Insurance</strong>
 			</a>
 		</button>
@@ -95,7 +95,7 @@
 					<td th:text="${i.startDate}"></td>
 					<td th:text="${i.endDate}"></td>
 					<td th:text="${i.period}"></td>
-					<td><button id="trash" class="mx-auto"><a th:href="@{/healthInsuranceRefund/{id}(id=${i.healthId})}"><i
+					<td><button id="trash" class="mx-auto"><a th:href="@{/healthInsuranceRefund/{id}(id=${i.insuranceId})}"><i
 									id="icon-trash" class="bx bx-trash"></i></a></button></td>
 				</tr>
 			</tbody>

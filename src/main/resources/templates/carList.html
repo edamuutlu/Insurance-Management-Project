@@ -153,57 +153,9 @@
 					<td th:text="${c.startDate}"></td>
 					<td th:text="${c.endDate}"></td>
 					<td th:text="${c.result}"></td>
-
-					<!--					<td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">-->
-					<!--							<a th:href="@{/deleteCar/{id}(id=${c.id})}"><i id="icon-trash" class="gg-trash"></i></a></button></td>-->
-					<!--						<td><button><a th:href="@{/deleteCar/{id}(id=${c.id})}"><i id="icon-trash" class="gg-trash"></i></a></button></td>	-->
+					
 					<td><button class="mx-auto"><a th:href="@{/trafficInsuranceRefund/{id}(id=${c.id})}"><i id="icon-trash"
 									class="bx bx-trash"></i></a></button></td>
-
-					<!--					 Modal -->
-					<!--					<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false"-->
-					<!--						tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">-->
-					<!--						<div class="modal-dialog">-->
-					<!--							<div class="modal-content">-->
-					<!--								<div class="modal-header">-->
-					<!--									<h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>-->
-					<!--									<button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
-					<!--										<span aria-hidden="true">&times;</span>-->
-					<!--									</button>-->
-					<!--								</div>-->
-					<!--									<div class="modal-body">-->
-					<!--										<h1 class="panel-title price" th:text="${c.starting_date}"></h1>-->
-					<!--										<h1 class="panel-title price" id="date-difference"></h1>-->
-
-
-					<!--										<script>-->
-					<!--											const myModal = new bootstrap.Modal('#staticBackdrop');-->
-					<!--											window.addEventListener('DOMContentLoaded', () => {-->
-					<!--												var startingDate = new Date(-->
-					<!--													$scope.starting_date-->
-					<!--												);-->
-
-					<!--												var currentDate = new Date();-->
-
-					<!--												var timeDiff = Math.abs(currentDate.getTime() - startingDate.getTime());-->
-					<!--												var daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));-->
-
-					<!--												var dateDifferenceElement = document.getElementById("date-difference");-->
-					<!--												var spanElement = document.createElement("span");-->
-					<!--												spanElement.textContent = daysDiff + " gün";-->
-					<!--												dateDifferenceElement.appendChild(spanElement);-->
-					<!--												myModal.show();-->
-					<!--											});												-->
-					<!--										</script>-->
-
-
-					<!--									</div>								-->
-					<!--								<div class="modal-footer">-->
-					<!--									<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
-					<!--								</div>-->
-					<!--							</div>-->
-					<!--						</div>-->
-					<!--					</div>-->
 
 				</tr>
 			</tbody>

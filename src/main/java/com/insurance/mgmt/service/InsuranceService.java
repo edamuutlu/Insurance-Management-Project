@@ -1,5 +1,6 @@
 package com.insurance.mgmt.service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,6 +35,12 @@ public class InsuranceService {
         Optional<Insurance> optionalInsurance = insuranceRepository.findByHomeId(homeId);
         return optionalInsurance.orElse(null); // Eğer nesne varsa nesneyi, yoksa null dönecektir.
     }
+	
+	public List<Insurance> getInsurancesByHomeId(int homeId) {
+	    Optional<Insurance> optionalInsurance = insuranceRepository.findByHomeId(homeId);
+	    return optionalInsurance.map(Collections::singletonList).orElse(Collections.emptyList());
+	}
+
 	
 	public Insurance getInsuranceByHealthId(int healthId) {
         Optional<Insurance> optionalInsurance = insuranceRepository.findByHealthId(healthId);
