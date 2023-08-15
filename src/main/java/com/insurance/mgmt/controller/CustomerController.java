@@ -170,7 +170,7 @@ public class CustomerController {
 	}
 
 	@PostMapping("/save")
-	public String addCustomer(@ModelAttribute Customer customer, Model model, RedirectAttributes redirectAttributes) {
+	public String saveCustomer(@ModelAttribute Customer customer, Model model, RedirectAttributes redirectAttributes) {
 
 		// Aynı TC numaralı kullanıcı kontrolü
 		Customer myCustomer = customerService.getCustomerById(customer.getCustomerId());

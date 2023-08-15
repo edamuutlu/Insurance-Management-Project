@@ -17,5 +17,4 @@ public class KdvService {
 	public void save(Kdv kdv) {
 		kdvRepository.save(kdv);
 	}
-
 }

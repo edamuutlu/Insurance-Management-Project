@@ -76,7 +76,6 @@
 
 				<input type="date" name="birth" placeholder="Birth Date*" ng-required="true" th:value="${customer.birth}" id="birth">
 				<p class="error" ng-show="myForm.birth.$invalid && myForm.birth.$touched">Fill out your Birth Date.</p>
-				<!--<p class="error" ng-show="myForm.birth.$error.date">Incorrect date selection</p>-->
 
 				<input type="text" name="email" placeholder="Email*" ng-required="true" th:value="${customer.email}">
 				<p class="error" ng-show="myForm.email.$invalid && myForm.email.$touched">Enter your corrent email.</p>

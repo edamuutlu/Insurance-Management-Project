@@ -93,9 +93,12 @@ public class HealthController {
 
 		Kdv kdv = kdvService.getProductTypeById(3);
 		int kdvRate = kdv.getKdvRate();
+		
 		Jobs job = jobsService.getJobById(health.getJob());
 		int riskFactor = job.getRiskFactor();
+		
 		double offer = CalculateMethods.calculateHealthInsurance(health, kdvRate, riskFactor);
+		
 		insurance.setKdv(kdvRate);
 		insurance.setOffer(offer);
 		insurance.setStatus(1);
@@ -127,13 +130,13 @@ public class HealthController {
 		redirectAttributes.addFlashAttribute("health", health);
 		redirectAttributes.addFlashAttribute("insurance", insurance);
 
-		return "redirect:/healthInsuranceCalculate/" + health.getHealthId();
+		return "redirect:/healthInsuranceCalculate/" + insurance.getInsuranceId();
 	}
 
-	@GetMapping("/healthInsuranceCalculate/{healthId}")
-	public String healthInsurance(@PathVariable("healthId") int healthId, Model model) {
-		Health health = healthService.getHealthById(healthId);
-		Insurance insurance = insuranceService.getInsuranceByHealthId(healthId);
+	@GetMapping("/healthInsuranceCalculate/{insuranceId}")
+	public String healthInsurance(@PathVariable("insuranceId") int insuranceId, Model model) {
+		Insurance insurance = insuranceService.getInsuranceById(insuranceId);
+		Health health = healthService.getHealthById(insurance.getHealthId());	
 		Customer customer = customerService.getCustomerById(health.getCustomerId());
 		model.addAttribute("health", health);
 		model.addAttribute("insurance", insurance);
@@ -186,11 +189,10 @@ public class HealthController {
 		return new ModelAndView("healthInfoList", "health", list);
 	}
 
-	@GetMapping("/newHealthInsuranceCalculate/{insuranceId}")
-	public String healthInsuranceCalculate(@PathVariable("insuranceId") int insuranceId, Model model) {
+	@GetMapping("/healthInsuranceEdit/{insuranceId}")
+	public String healthInsuranceCalculate(@PathVariable("insuranceId") int insuranceId, Model model, RedirectAttributes redirectAttributes) {
 		Insurance insurance = insuranceService.getInsuranceById(insuranceId);
 		Health health = healthService.getHealthById(insurance.getHealthId());
-		Customer customer = customerService.getCustomerById(health.getCustomerId());
 
 		// Devam eden bir sigorta var mı kontrolü
 		List<Insurance> insurances = insuranceService.findByStatusAndHealthId(1, insurance.getHealthId());
@@ -201,10 +203,29 @@ public class HealthController {
 				return "seeHealthInsuranceDetails";
 			}
 		}
-
 		LocalDateTime now = LocalDateTime.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-		insurance.setStartDate(now.format(formatter));
+		insurance.setEndDate(now.format(formatter));
+		insurance.setResult("Canceled");
+		
+		model.addAttribute("insurance", insurance);
+		model.addAttribute(health);
+		
+		List<Jobs> jobs = jobsService.getAllJobs();
+		model.addAttribute(jobs);
+		
+		return "healthInsuranceEdit";
+	}
+	
+	@PostMapping("/editHealthInfo")
+	public String saveHealthInfo(@ModelAttribute Health health, Model model) {
+		System.out.println(health.getHealthId());
+		Health oldHealth = healthService.getHealthById(health.getHealthId());
+		System.out.println(oldHealth.toString());
+		Customer customer = customerService.getCustomerById(health.getCustomerId());
+		
+		LocalDateTime now = LocalDateTime.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 		LocalDateTime endDate = now.plusDays(health.getPeriod());
 
 		Kdv kdv = kdvService.getProductTypeById(3);
@@ -212,24 +233,27 @@ public class HealthController {
 		Jobs job = jobsService.getJobById(health.getJob());
 		int riskFactor = job.getRiskFactor();
 		double offer = CalculateMethods.calculateHealthInsurance(health, kdvRate, riskFactor);
-
+		
 		Insurance newInsurance = new Insurance();
 		newInsurance.setInsuranceType("Health");
-		newInsurance.setCustomerId(insurance.getCustomerId());
-		newInsurance.setHealthId(insurance.getHealthId());
+		newInsurance.setCustomerId(health.getCustomerId());
+		newInsurance.setHealthId(health.getHealthId());
 		newInsurance.setStartDate(now.format(formatter));
 		newInsurance.setEndDate(endDate.format(formatter));
-		newInsurance.setPeriod(insurance.getPeriod());
-		newInsurance.setKdv(insurance.getKdv());
-		newInsurance.setPeriod(insurance.getPeriod());
+		newInsurance.setKdv(kdvRate);
+		newInsurance.setPeriod(health.getPeriod());
 		newInsurance.setOffer(offer);
-		newInsurance.setStatus(1);
+		newInsurance.setStatus(1);	
+		System.out.println(newInsurance);
 		insuranceService.save(newInsurance);
-
-		model.addAttribute(customer);
+		
+		
+		oldHealth.setStatus(1);
+		healthService.save(oldHealth);
 		model.addAttribute("insurance", newInsurance);
-		model.addAttribute(health);
-		return "healthInsuranceCalculate";
+		model.addAttribute("health", health);
+		model.addAttribute("customer", customer);
+		return "redirect:/healthInsuranceCalculate/" + newInsurance.getInsuranceId();
 	}
 
 	@RequestMapping("/deleteHealthInfo/{id}")

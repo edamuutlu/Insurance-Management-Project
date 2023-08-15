@@ -110,6 +110,9 @@ public class HomeController {
 		int kdvRate = kdv.getKdvRate();
 		double offer = CalculateMethods.calculateHomeInsurance(home, kdvRate);
 		insurance.setKdv(kdvRate);
+		
+		// offerkdv ?
+		
 		insurance.setOffer(offer);
 		insurance.setStatus(1);
 

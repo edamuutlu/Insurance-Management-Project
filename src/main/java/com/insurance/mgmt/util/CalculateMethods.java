@@ -231,6 +231,9 @@ public class CalculateMethods {
 		case 2:
 			offer += 200;
 			break;
+		case 1:
+			offer += 100;
+			break;
 		default:
 			break;
 		}
