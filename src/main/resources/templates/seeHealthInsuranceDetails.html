@@ -60,12 +60,27 @@
 			defined! </div>
 		<div class="alert alert-warning" role="alert" th:if="${showAlert}"> This health insurance has already been
 			deleted or expired! </div>
+		<div class="alert alert-warning" role="alert" th:if="${showHealthAlert}">The person with this health
+			information already has health insurance! </div>
+		<div class="alert alert-warning" role="alert" th:if="${showAbsent}"> There is no insurance for this health info!
+		</div>
 		<button type="button" class="btn btn-info text-white mb-2"
-			style="background-color: rgb(62, 209, 221); font-size: 17px; padding: 10px 20px;">
-			<a class="text-decoration-none" th:href="@{/healthInsuranceEdit/{id}(id=${insuranceId})}"> <!--th:href="@{/newHealthInsuranceCalculate/{id}(id=${insuranceId})}"-->
+			style="background-color: rgb(62, 209, 221); font-size: 17px; padding: 10px 20px;" id="editButton">
+			<a class="text-decoration-none" th:href="@{/healthInsuranceEdit/{id}(id=${insuranceId})}">
 				<strong>Renew Health Insurance</strong>
 			</a>
 		</button>
+
+		<script th:inline="javascript">
+			document.addEventListener("DOMContentLoaded", function () {
+				var showAbsent = /*[[${showAbsent}]]*/[];
+				var editButton = document.getElementById("editButton");
+
+				if (showAbsent) {
+					editButton.disabled = true; // Butonu tıklanamaz yapar
+				}
+			});
+		</script>
 
 		<table class="table table-hover text-center">
 			<thead>
@@ -95,8 +110,9 @@
 					<td th:text="${i.startDate}"></td>
 					<td th:text="${i.endDate}"></td>
 					<td th:text="${i.period}"></td>
-					<td><button id="trash" class="mx-auto"><a th:href="@{/healthInsuranceRefund/{id}(id=${i.insuranceId})}"><i
-									id="icon-trash" class="bx bx-trash"></i></a></button></td>
+					<td><button id="trash" class="mx-auto"><a
+								th:href="@{/healthInsuranceRefund/{id}(id=${i.insuranceId})}"><i id="icon-trash"
+									class="bx bx-trash"></i></a></button></td>
 				</tr>
 			</tbody>
 		</table>

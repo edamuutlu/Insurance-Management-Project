@@ -66,6 +66,10 @@ public class InsuranceService {
     public List<Insurance> findByStatusAndCustomerId(int status, int customerId) {
         return insuranceRepository.findByStatusAndCustomerId(status, customerId);
     }
+    
+    public List<Insurance> findByStatusAndCustomerIdAndResult(int status, int customerId, String result) {
+        return insuranceRepository.findByStatusAndCustomerIdAndResult(status, customerId, result);
+    }
 
     public List<Insurance> findByStatusAndResultAndHomeId(int status, String result, int homeId) {
         return insuranceRepository.findByStatusAndResultAndHomeId(status, result, homeId);

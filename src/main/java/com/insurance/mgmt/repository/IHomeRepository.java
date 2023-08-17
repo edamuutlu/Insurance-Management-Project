@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.insurance.mgmt.entity.Home;
 
 @Repository
-public interface IHomeRepository extends JpaRepository<Home,Integer>{ //Object, id (type)
+public interface IHomeRepository extends JpaRepository<Home,Integer>{ 
 	List<Home> findByStatus(int status);
 	List<Home> findByCustomerId(int id);
 	List<Home> findByStatusAndCustomerId(int status, int customerId);

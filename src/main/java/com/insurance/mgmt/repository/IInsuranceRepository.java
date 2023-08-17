@@ -18,4 +18,5 @@ public interface IInsuranceRepository extends JpaRepository<Insurance,Integer>{ 
 	List<Insurance> findByStatusAndResultAndHomeId(int status, String result, int homeId);
 	List<Insurance> findByStatusAndHealthId(int status, int healthId);
 	List<Insurance> findByStatusAndResultAndHealthId(int status, String result, int healthId);
+	List<Insurance> findByStatusAndCustomerIdAndResult(int status, int customerId, String result);
 }

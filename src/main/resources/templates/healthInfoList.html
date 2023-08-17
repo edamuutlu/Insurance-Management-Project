@@ -18,7 +18,7 @@
 	<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 	<link rel="stylesheet" href="" th:href="@{/css/style.css}">
 	<link href="https://css.gg/css" rel="stylesheet" />
-	
+
 	<title>SBM Home</title>
 
 	<style>
@@ -49,11 +49,13 @@
 
 	<script>
 
-		window.onload = function () {
-			$(document).ready(function () {
-				$('#myModal').modal('show');
-			});
-		};
+		 window.onload = function () {
+        $(document).ready(function () {
+            // Her iki modala da farklı id değerleri verdiniz.
+            $('#expiredModal').modal('show');
+            $('#deadlineModal').modal('show');
+        });
+    };
 
 	</script>
 
@@ -85,8 +87,32 @@
 	<!--End Navbar-->
 
 	<div class="container mt-5">
-		<div class="modal fade" id="myModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"
-			aria-labelledby="myModalTitle" aria-hidden="true" th:if="${showText}">
+		<div class="modal fade" id="deadlineModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"
+			aria-labelledby="myModalTitle" aria-hidden="true" th:if="${showDeadlineAlert}">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="myModalTitle">Bildirim</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<p>Sağlık bilgilerinizin güncellenmesi gerektiği için lütfen devam seçeneğinden forma gidiniz.:
+						</p>
+					</div>
+					<div class="modal-footer">
+						<a th:href="@{/healthInsuranceEdit2/{id}(id=${healthId})}"
+							class="btn btn-secondary">Devam Et</a>
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		
+		<div class="modal fade" id="expiredModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"
+			aria-labelledby="myModalTitle" aria-hidden="true" th:if="${showExpiredAlert}">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -137,8 +163,8 @@
 					<td th:text="${h.smokingOrAlcohol}"></td>
 					<td th:text="${h.pastOperation}"></td>
 					<td th:text="${h.period}"></td>
-					<td><button class="mx-auto"><a th:href="@{/deleteHealthInfo/{id}(id=${h.healthId})}"><i id="icon-trash"
-									class="bx bx-trash"></i></a></button></td>
+					<td><button class="mx-auto"><a th:href="@{/deleteHealthInfo/{id}(id=${h.healthId})}"><i
+									id="icon-trash" class="bx bx-trash"></i></a></button></td>
 					<td><button class="mx-auto"><a th:href="@{/seeHealthInsuranceDetails/{id}(id=${h.healthId})}"><i
 									class="fa-solid fa-ellipsis"></i></a></button></td>
 				</tr>

@@ -65,7 +65,9 @@ public class HomeController {
 	@Autowired
 	NeighbourhoodService neighbourhoodService;
 
-	private static final Logger log = LoggerFactory.getLogger(CarController.class);
+	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+
+	private static final Logger log = LoggerFactory.getLogger(HomeController.class);
 
 	@InitBinder
 	public void initBinder(WebDataBinder dataBinder) {
@@ -95,9 +97,10 @@ public class HomeController {
 		// Form doldurulurkenki tarih ve sigortanın biteceği tarih hesaplanmaktadır
 		Insurance insurance = new Insurance();
 		insurance.setCustomerId(idParam);
+
 		LocalDateTime now = LocalDateTime.now();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 		insurance.setStartDate(now.format(formatter));
+
 		LocalDateTime endDate = now.plusDays(home.getPeriod());
 		insurance.setEndDate(endDate.format(formatter));
 
@@ -110,9 +113,7 @@ public class HomeController {
 		int kdvRate = kdv.getKdvRate();
 		double offer = CalculateMethods.calculateHomeInsurance(home, kdvRate);
 		insurance.setKdv(kdvRate);
-		
-		// offerkdv ?
-		
+
 		insurance.setOffer(offer);
 		insurance.setStatus(1);
 
@@ -156,62 +157,58 @@ public class HomeController {
 		Home home = homeService.getHomeById(homeId);
 		Insurance insurance = insuranceService.getInsuranceByHomeId(homeId);
 		Customer customer = customerService.getCustomerById(home.getCustomerId());
-		boolean showText = false;
-		model.addAttribute("showText", showText);
 		model.addAttribute(customer);
 		model.addAttribute(insurance);
 		model.addAttribute(home);
 		return "homeInsuranceCalculate";
 	}
 
-	@GetMapping("/newHomeInsuranceCalculate/{insuranceId}")
-	public String newHomeInsuranceCalculate(@PathVariable("insuranceId") int insuranceId, Model model) {			
-		Insurance insurance = insuranceService.getInsuranceById(insuranceId);
-		Home home = homeService.getHomeById(insurance.getHomeId());
-		Customer customer = customerService.getCustomerById(home.getCustomerId());
+//	@GetMapping("/newHomeInsuranceCalculate/{insuranceId}")
+//	public String newHomeInsuranceCalculate(@PathVariable("insuranceId") int insuranceId, Model model) {
+//		Insurance insurance = insuranceService.getInsuranceById(insuranceId);
+//		Home home = homeService.getHomeById(insurance.getHomeId());
+//		Customer customer = customerService.getCustomerById(home.getCustomerId());
+//
+//		// Devam eden bir sigorta var mı kontrolü
+//		List<Insurance> insurances = insuranceService.findByStatusAndHomeId(1, insurance.getHomeId());
+//
+//		for (Insurance i : insurances) {
+//			if ("Accepted".equals(i.getResult())) {
+//				model.addAttribute("showText", true);
+//				model.addAttribute("insurance", insurances);
+//				return "seeHomeInsuranceDetails";
+//			}
+//		}
+//
+//		LocalDateTime now = LocalDateTime.now();
+//		LocalDateTime endDate = now.plusDays(home.getPeriod());
+//
+//		// Bina inşa yılına göre bina yaşı hesaplanmaktadır
+//		int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+//		int buildingAge = currentYear - home.getYear();
+//		home.setBuildingAge(buildingAge);
+//
+//		Kdv kdv = kdvService.getProductTypeById(2);
+//		int kdvRate = kdv.getKdvRate();
+//		double offer = CalculateMethods.calculateHomeInsurance(home, kdvRate);
 
-		// Devam eden bir sigorta var mı kontrolü
-		List<Insurance> insurances = insuranceService.findByStatusAndHomeId(1, insurance.getHomeId());
-		
-		for (Insurance i : insurances) {
-			if ("Accepted".equals(i.getResult())) {
-				model.addAttribute("showText", true);
-				model.addAttribute("insurance", insurances);
-				return "seeHomeInsuranceDetails";
-		    }			
-		}
+//		Insurance newInsurance = new Insurance();
+//		newInsurance.setInsuranceType("Home");
+//		newInsurance.setCustomerId(insurance.getCustomerId());
+//		newInsurance.setHomeId(insurance.getHomeId());
+//		newInsurance.setStartDate(now.format(formatter));
+//		newInsurance.setEndDate(endDate.format(formatter));
+//		newInsurance.setPeriod(insurance.getPeriod());
+//		newInsurance.setKdv(insurance.getKdv());
+//		newInsurance.setOffer(offer);
+//		newInsurance.setStatus(1);
+//		insuranceService.save(newInsurance);
 
-		LocalDateTime now = LocalDateTime.now();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-		LocalDateTime endDate = now.plusDays(home.getPeriod());
-
-		// Bina inşa yılına göre bina yaşı hesaplanmaktadır
-		int currentYear = Calendar.getInstance().get(Calendar.YEAR);
-		int buildingAge = currentYear - home.getYear();
-		home.setBuildingAge(buildingAge);
-
-		Kdv kdv = kdvService.getProductTypeById(2);
-		int kdvRate = kdv.getKdvRate();
-		double offer = CalculateMethods.calculateHomeInsurance(home, kdvRate);
-
-		Insurance newInsurance = new Insurance();
-		newInsurance.setInsuranceType("Home");
-		newInsurance.setCustomerId(insurance.getCustomerId());
-		newInsurance.setHomeId(insurance.getHomeId());
-		newInsurance.setStartDate(now.format(formatter));
-		newInsurance.setEndDate(endDate.format(formatter));
-		newInsurance.setPeriod(insurance.getPeriod());
-		newInsurance.setKdv(insurance.getKdv());
-		newInsurance.setPeriod(insurance.getPeriod());
-		newInsurance.setOffer(offer);
-		newInsurance.setStatus(1);
-		insuranceService.save(newInsurance);
-
-		model.addAttribute(customer);
-		model.addAttribute("insurance", newInsurance);
-		model.addAttribute(home);
-		return "homeInsuranceCalculate";
-	}
+//		model.addAttribute(customer);
+//		//model.addAttribute("insurance", newInsurance);
+//		model.addAttribute(home);
+//		return "homeInsuranceCalculate";
+//	}
 
 	@GetMapping(path = "/homeInsuranceForm")
 	public String getForm(@RequestParam(value = "customerId", required = false) int idParam, Model model,
@@ -229,99 +226,131 @@ public class HomeController {
 
 	@GetMapping("/homeList/{customerId}")
 	public ModelAndView getAllHome(@PathVariable("customerId") int customerId, Model model) {
-		List<Home> homes = homeService.findByStatus(1);
-		List<Home> list = new ArrayList<>();
+		List<Home> homes = homeService.findByStatusAndCustomerId(1, customerId);
 		ArrayList<Home> expiredHomes = new ArrayList<>();
-		// Insurance insurance = insuranceService.getInsuranceByCustomerId(customerId);
-		boolean showText = false;
 
 		// Poliçenin süresinin bitip bitmediğini kontrol etme
 		for (Home home : homes) {
-			if (home.getCustomerId() == customerId) {
-				List<Insurance> insurances = insuranceService.findByStatusAndCustomerId(1, customerId);
-				for (Insurance insurance : insurances) {
-					if (insurance.getResult().equals("Accepted")) {
-						DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-						LocalDateTime endDateTime = LocalDateTime.parse(insurance.getEndDate(), formatter);
+			List<Insurance> insurances = insuranceService.findByStatusAndCustomerIdAndResult(1, customerId, "Accepted");
+			for (Insurance insurance : insurances) {
+				LocalDateTime endDateTime = LocalDateTime.parse(insurance.getEndDate(), formatter);
 
-						LocalDateTime now = LocalDateTime.now(); 
+				LocalDateTime now = LocalDateTime.now();
+				Duration duration = Duration.between(now, endDateTime);
+				int dayCheck = (int) duration.toDays();
 
-						Duration duration = Duration.between(now, endDateTime);
-						int dayCheck = (int) duration.toDays();
-
-						if (dayCheck < 0) {
-							expiredHomes.add(home);
-							showText = true;
-							insurance.setResult("Expired");
-							// insurance.setStatus(0);
-							insuranceService.save(insurance);
-						}
-					}
-
+				if (dayCheck < 0) {
+					expiredHomes.add(home);
+					model.addAttribute("showText", true);
+					insurance.setResult("Expired");
+					insuranceService.save(insurance);
 				}
 			}
 		}
 
-		for (Home home : homes) {
-			if (home.getCustomerId() == customerId) {
-				list.add(home);
-			}
-		}
-
 		model.addAttribute("expiredHomes", expiredHomes);
-		model.addAttribute("showText", showText);
-		return new ModelAndView("homeList", "home", list);
+		return new ModelAndView("homeList", "home", homes);
 	}
 
 	@GetMapping("/seeHomeInsuranceDetails/{id}")
-	public String seeHomeInsuranceDetails(@PathVariable("id") int homeId, Model model, RedirectAttributes redirectAttributes) {
+	public String seeHomeInsuranceDetails(@PathVariable("id") int homeId, Model model,
+			RedirectAttributes redirectAttributes) {
 		List<Insurance> insurances = insuranceService.findByStatusAndHomeId(1, homeId);
-//		if(insurances.isEmpty()) {
-//			List<Customer> customerList = customerService.findByStatus(1);
-//			
-//			Kdv carKdv = kdvService.getProductTypeById(1);
-//			Kdv homeKdv = kdvService.getProductTypeById(2);
-//			Kdv healthKdv = kdvService.getProductTypeById(3);
-//			model.addAttribute("carKdv", carKdv);
-//			model.addAttribute("homeKdv", homeKdv);
-//			model.addAttribute("healthKdv", healthKdv);
-//			model.addAttribute("customer",  customerList);
-//			
-//			return "customerList";
-//		}
 		for (Insurance insurance : insurances) {
-			insuranceService.save(insurance); 
+			insuranceService.save(insurance);
 			model.addAttribute("insuranceId", insurance.getInsuranceId());
+			model.addAttribute("period", insurance.getPeriod());
+		}
+		
+		if (insurances.isEmpty()) {
+			model.addAttribute("showAbsent", true);
+			model.addAttribute("insurance", insurances);
+			return "seeHomeInsuranceDetails";
 		}
 
 		model.addAttribute("homeId", homeId);
 		model.addAttribute("insurance", insurances);
 		return "seeHomeInsuranceDetails";
-		//return new ModelAndView("seeHomeInsuranceDetails", "insurance", insurances);
+	}
+
+	@PostMapping("/renewHomeInsurance/{insuranceId}")
+	public String renewHomeInsurance(@PathVariable("insuranceId") int insuranceId, @RequestParam("period") int period,
+			Model model) {
+		Insurance oldInsurance = insuranceService.getInsuranceById(insuranceId); // Eski sigorta
+		Home home = homeService.getHomeById(oldInsurance.getHomeId());
+		Customer customer = customerService.getCustomerById(home.getCustomerId());
+
+		// Devam eden bir sigorta var mı kontrolü
+		List<Insurance> insurances = insuranceService.findByStatusAndHomeId(1, oldInsurance.getHomeId());
+
+		for (Insurance i : insurances) {
+			if ("Accepted".equals(i.getResult())) {
+				model.addAttribute("showText", true);
+				model.addAttribute("insurance", insurances);
+				return "seeHomeInsuranceDetails"; 
+			}
+		}
+
+		LocalDateTime now = LocalDateTime.now();
+		LocalDateTime endDate = now.plusDays(home.getPeriod());
+
+		// Bina inşa yılına göre bina yaşı hesaplanmaktadır
+		int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+		int buildingAge = currentYear - home.getYear();
+		home.setBuildingAge(buildingAge);
+
+		Kdv kdv = kdvService.getProductTypeById(2);
+		int kdvRate = kdv.getKdvRate();
+		double offer = CalculateMethods.calculateHomeInsurance(home, kdvRate);
+
+		Insurance newInsurance = new Insurance();
+		newInsurance.setInsuranceType(oldInsurance.getInsuranceType());
+		newInsurance.setCustomerId(oldInsurance.getCustomerId());
+		newInsurance.setHomeId(oldInsurance.getHomeId());
+		newInsurance.setStartDate(now.format(formatter));
+		newInsurance.setEndDate(endDate.format(formatter));
+		newInsurance.setKdv(oldInsurance.getKdv());
+		newInsurance.setOffer(offer);
+		newInsurance.setStatus(oldInsurance.getStatus());
+
+		// Yeni periyodu set et
+		home.setPeriod(period);
+		homeService.save(home);
+
+		newInsurance.setPeriod(period); // Yeni periyodu set et
+
+		// Yeni sigortayı kaydet
+		insuranceService.save(newInsurance);
+
+		model.addAttribute(customer);
+		model.addAttribute("insurance", newInsurance);
+		model.addAttribute(home);
+		// Yenileme işlemi tamamlandıktan sonra newcalculate sayfasına yönlendir
+		return "homeInsuranceCalculate";
 	}
 
 	@RequestMapping("/deleteHome/{id}")
 	public String deleteHome(@PathVariable("id") int homeId, Model model) {
 		Home home = homeService.getHomeById(homeId);
-		List<Insurance> insurances = insuranceService.findByStatusAndHomeId(1, homeId);	
-		if(!(insurances.isEmpty())) {
+		List<Insurance> insurances = insuranceService.findByStatusAndHomeId(1, homeId);
+		if (!(insurances.isEmpty())) {
 			for (Insurance insurance : insurances) {
 				insurance.setStatus(0);
 				insurance.setResult("Canceled");
 				LocalDateTime now = LocalDateTime.now();
-				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 				insurance.setEndDate(now.format(formatter));
 				insuranceService.save(insurance);
 			}
-		}		
+		}
 		home.setStatus(0);
 		homeService.save(home);
-		
+
 		return "redirect:/homeList/" + home.getCustomerId();
 	}
 
 	@GetMapping("/homeInsuranceRefund/{insuranceId}")
-	public String insuranceRefund(@PathVariable("insuranceId") int insuranceId, Model model, RedirectAttributes redirectAttributes) {		
+	public String insuranceRefund(@PathVariable("insuranceId") int insuranceId, Model model,
+			RedirectAttributes redirectAttributes) {
 		Insurance insurance = insuranceService.getInsuranceById(insuranceId);
 		Home home = homeService.getHomeById(insurance.getHomeId());
 
@@ -331,7 +360,6 @@ public class HomeController {
 		}
 
 		LocalDateTime now = LocalDateTime.now();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 		String end_date = now.format(formatter);
 		LocalDateTime startingDateTime = LocalDateTime.parse(insurance.getStartDate(), formatter);
 		LocalDateTime endDateTime = LocalDateTime.parse(end_date, formatter);
@@ -359,7 +387,6 @@ public class HomeController {
 		Insurance insurance = insuranceService.getInsuranceById(id);
 		insurance.setResult("Canceled");
 		LocalDateTime now = LocalDateTime.now();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 		String end_date = now.format(formatter);
 		insurance.setEndDate(end_date);
 		// insurance.setStatus(0);
@@ -379,7 +406,6 @@ public class HomeController {
 			// Poliçeyi iptal ettiyse iptal etme tarihi yazdırılmaktadır
 			if (insurance.getResult().equals("Canceled")) {
 				LocalDateTime now = LocalDateTime.now();
-				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 				String end_date = now.format(formatter);
 				insurance.setEndDate(end_date);
 			}

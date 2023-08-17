@@ -44,6 +44,9 @@ public class Health {
 	
 	@Column(name= "period")
 	private int period;
+	
+	@Column(name = "deadline")
+	private String deadline;
 
 	public Health() {
 		super();
@@ -51,7 +54,7 @@ public class Health {
 	}
 
 	public Health(int healthId, int customerId, String job, String forWho, Byte sgk, String height, String weight,
-			Byte smokingOrAlcohol, Byte pastOperation, int status, int period) {
+			Byte smokingOrAlcohol, Byte pastOperation, int status, int period, String deadline) {
 		super();
 		this.healthId = healthId;
 		this.customerId = customerId;
@@ -64,6 +67,7 @@ public class Health {
 		this.pastOperation = pastOperation;
 		this.status = status;
 		this.period = period;
+		this.deadline = deadline;
 	}
 
 	public int getHealthId() {
@@ -154,12 +158,20 @@ public class Health {
 		this.period = period;
 	}
 
+	public String getDeadline() {
+		return deadline;
+	}
+
+	public void setDeadline(String deadline) {
+		this.deadline = deadline;
+	}
+
 	@Override
 	public String toString() {
 		return "Health [healthId=" + healthId + ", customerId=" + customerId + ", job=" + job + ", forWho=" + forWho
 				+ ", sgk=" + sgk + ", height=" + height + ", weight=" + weight + ", smokingOrAlcohol="
 				+ smokingOrAlcohol + ", pastOperation=" + pastOperation + ", status=" + status + ", period=" + period
-				+ "]";
+				+ ", deadline=" + deadline + "]";
 	}
 	
 	

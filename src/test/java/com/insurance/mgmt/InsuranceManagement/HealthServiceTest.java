@@ -31,13 +31,13 @@ class HealthServiceTest {
 	private IHealthRepository healthRepository;
 
 	private List<Health> dummyHealths = Stream
-			.of(new Health(1, 1, "Job 1", "Person 1", (byte) 0, "180", "75", (byte) 0, (byte) 0, 1, 6),
-					new Health(2, 1, "Job 2", "Person 2", (byte) 0, "170", "60", (byte) 1, (byte) 1, 2, 6))
+			.of(new Health(1, 1, "Job 1", "Person 1", (byte) 0, "180", "75", (byte) 0, (byte) 0, 1, 6, "12/12/2023 12:00:00"),
+					new Health(2, 1, "Job 2", "Person 2", (byte) 0, "170", "60", (byte) 1, (byte) 1, 2, 6, "01/01/2023 12:00:00"))
 			.collect(Collectors.toList());
 
 	@Test
 	public void testCalculateHealthInsurance() {
-		Health health = new Health(1, 1, "Askeri Personel", "Me", (byte) 1, "200", "80", (byte) 1, (byte) 0, 1, 6);
+		Health health = new Health(1, 1, "Askeri Personel", "Me", (byte) 1, "200", "80", (byte) 1, (byte) 0, 1, 6, "01/01/2023 12:00:00");
 		int kdvRate = 18;
 		int riskFactor = 3;
 
@@ -93,7 +93,7 @@ class HealthServiceTest {
 
 	@Test
 	public void testSaveHealth() {
-		Health newHealth = new Health(3, 2, "Job 3", "Person 3", (byte) 0, "160cm", "55kg", (byte) 0, (byte) 0, 1, 6);
+		Health newHealth = new Health(3, 2, "Job 3", "Person 3", (byte) 0, "160cm", "55kg", (byte) 0, (byte) 0, 1, 6, "01/01/2023 12:00:00");
 
 		when(healthRepository.save(newHealth)).thenReturn(newHealth);
 

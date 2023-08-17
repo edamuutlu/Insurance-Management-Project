@@ -55,8 +55,10 @@ public class HealthController {
 
 	@Autowired
 	private JobsService jobsService;
+	
+	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 
-	private static final Logger log = LoggerFactory.getLogger(CarController.class);
+	private static final Logger log = LoggerFactory.getLogger(HealthController.class);
 
 	@InitBinder
 	public void initBinder(WebDataBinder dataBinder) {
@@ -85,20 +87,23 @@ public class HealthController {
 		// Form doldurulurkenki tarih ve sigortanın biteceği tarih hesaplanmaktadır
 		Insurance insurance = new Insurance();
 		insurance.setCustomerId(idParam);
-		LocalDateTime now = LocalDateTime.now();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+		LocalDateTime now = LocalDateTime.now();		
 		insurance.setStartDate(now.format(formatter));
 		LocalDateTime endDate = now.plusDays(health.getPeriod());
 		insurance.setEndDate(endDate.format(formatter));
+		
+		// Sağlık bilgilerinin geçerlilik süresi set edilmektedir
+		LocalDateTime deadlineDate = now.plusDays(30);
+		health.setDeadline(deadlineDate.format(formatter));
 
 		Kdv kdv = kdvService.getProductTypeById(3);
 		int kdvRate = kdv.getKdvRate();
-		
+
 		Jobs job = jobsService.getJobById(health.getJob());
 		int riskFactor = job.getRiskFactor();
-		
+
 		double offer = CalculateMethods.calculateHealthInsurance(health, kdvRate, riskFactor);
-		
+
 		insurance.setKdv(kdvRate);
 		insurance.setOffer(offer);
 		insurance.setStatus(1);
@@ -107,8 +112,7 @@ public class HealthController {
 		List<Health> filteredList = healthService.findByForWhoAndStatus(health.getForWho(), 1);
 
 		if (!filteredList.isEmpty()) {
-			boolean showHealthAlert = true;
-			model.addAttribute("showHealthAlert", showHealthAlert);
+			model.addAttribute("showHealthAlert", true);
 			model.addAttribute("customerId", idParam);
 			model.addAttribute("health", health);
 
@@ -136,7 +140,7 @@ public class HealthController {
 	@GetMapping("/healthInsuranceCalculate/{insuranceId}")
 	public String healthInsurance(@PathVariable("insuranceId") int insuranceId, Model model) {
 		Insurance insurance = insuranceService.getInsuranceById(insuranceId);
-		Health health = healthService.getHealthById(insurance.getHealthId());	
+		Health health = healthService.getHealthById(insurance.getHealthId());
 		Customer customer = customerService.getCustomerById(health.getCustomerId());
 		model.addAttribute("health", health);
 		model.addAttribute("insurance", insurance);
@@ -146,51 +150,48 @@ public class HealthController {
 
 	@GetMapping("/healthInfoList/{customerId}")
 	public ModelAndView getAllHealth(@PathVariable("customerId") int customerId, Model model) {
-		List<Health> healthInfos = healthService.findByStatus(1);
-		List<Health> list = new ArrayList<>();
+		List<Health> healthInfos = healthService.findByStatusAndCustomerId(1, customerId);
 		ArrayList<Health> expiredHealthInsurance = new ArrayList<>();
-		// Insurance insurance = insuranceService.getInsuranceByCustomerId(customerId);
-		boolean showText = false;
 
 		// Poliçenin süresinin bitip bitmediğini kontrol etme
 		for (Health health : healthInfos) {
-			if (health.getCustomerId() == customerId) {
-				List<Insurance> insurances = insuranceService.findByStatusAndCustomerId(1, customerId);
-				for (Insurance insurance : insurances) {
-					if (insurance.getResult().equals("Accepted")) {
-						DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-						LocalDateTime endDateTime = LocalDateTime.parse(insurance.getEndDate(), formatter);
+			List<Insurance> insurances = insuranceService.findByStatusAndCustomerIdAndResult(1, customerId, "Accepted");
+			for (Insurance insurance : insurances) {
+				LocalDateTime endDateTime = LocalDateTime.parse(insurance.getEndDate(), formatter);
 
-						LocalDateTime now = LocalDateTime.now();
+				LocalDateTime now = LocalDateTime.now();
+				Duration duration = Duration.between(now, endDateTime);
+				int dayCheck = (int) duration.toDays();
 
-						Duration duration = Duration.between(now, endDateTime);
-						int dayCheck = (int) duration.toDays();
-
-						if (dayCheck < 0) {
-							expiredHealthInsurance.add(health);
-							showText = true;
-							insurance.setResult("Expired");
-							// insurance.setStatus(0);
-							insuranceService.save(insurance);
-						}
-					}
+				if (dayCheck < 0) {
+					expiredHealthInsurance.add(health);
+					model.addAttribute("showExpiredAlert", true);
+					insurance.setResult("Expired");
+					insuranceService.save(insurance);
 				}
 			}
 		}
 
+		// Sağlık bilgilerini güncelleme süresinin bitip bitmediğini kontrol etme
 		for (Health health : healthInfos) {
-			if (health.getCustomerId() == customerId) {
-				list.add(health);
-			}
+				LocalDateTime deadlineDate = LocalDateTime.parse(health.getDeadline(), formatter);
+
+				LocalDateTime now = LocalDateTime.now();
+				Duration duration = Duration.between(now, deadlineDate);
+				int dayCheck = (int) duration.toDays();
+
+				if (dayCheck < 0) {
+					model.addAttribute("showDeadlineAlert", true);
+					model.addAttribute("healthId", health.getHealthId());
+				}
 		}
 
 		model.addAttribute("expiredHealthInsurance", expiredHealthInsurance);
-		model.addAttribute("showText", showText);
-		return new ModelAndView("healthInfoList", "health", list);
+		return new ModelAndView("healthInfoList", "health", healthInfos);
 	}
 
 	@GetMapping("/healthInsuranceEdit/{insuranceId}")
-	public String healthInsuranceCalculate(@PathVariable("insuranceId") int insuranceId, Model model, RedirectAttributes redirectAttributes) {
+	public String healthInsuranceEdit(@PathVariable("insuranceId") int insuranceId, Model model) {
 		Insurance insurance = insuranceService.getInsuranceById(insuranceId);
 		Health health = healthService.getHealthById(insurance.getHealthId());
 
@@ -198,34 +199,49 @@ public class HealthController {
 		List<Insurance> insurances = insuranceService.findByStatusAndHealthId(1, insurance.getHealthId());
 		for (Insurance i : insurances) {
 			if ("Accepted".equals(i.getResult())) {
-				model.addAttribute("showText", true);
+				model.addAttribute("showHealthAlert", true);
 				model.addAttribute("insurance", insurances);
 				return "seeHealthInsuranceDetails";
 			}
 		}
 		LocalDateTime now = LocalDateTime.now();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 		insurance.setEndDate(now.format(formatter));
 		insurance.setResult("Canceled");
-		
+
 		model.addAttribute("insurance", insurance);
 		model.addAttribute(health);
-		
+
 		List<Jobs> jobs = jobsService.getAllJobs();
 		model.addAttribute(jobs);
-		
+
 		return "healthInsuranceEdit";
 	}
 	
+	@GetMapping("/healthInsuranceEdit2/{healthId}")
+	public String healthInsuranceEdit2(@PathVariable("healthId") int healthId, Model model) {
+		Health health = healthService.getHealthById(healthId);
+		model.addAttribute(health);
+		
+		List<Insurance> insurances = insuranceService.findByStatusAndResultAndHealthId(1, "Accepted", healthId);
+		for(Insurance insurance : insurances) {
+			insurance.setResult("Canceled");
+			LocalDateTime now = LocalDateTime.now();
+			insurance.setEndDate(now.format(formatter));
+			insuranceService.save(insurance);
+		}	
+
+		List<Jobs> jobs = jobsService.getAllJobs();
+		model.addAttribute(jobs);
+
+		return "healthInsuranceEdit";
+	}
+
 	@PostMapping("/editHealthInfo")
 	public String saveHealthInfo(@ModelAttribute Health health, Model model) {
-		System.out.println(health.getHealthId());
 		Health oldHealth = healthService.getHealthById(health.getHealthId());
-		System.out.println(oldHealth.toString());
 		Customer customer = customerService.getCustomerById(health.getCustomerId());
-		
+
 		LocalDateTime now = LocalDateTime.now();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 		LocalDateTime endDate = now.plusDays(health.getPeriod());
 
 		Kdv kdv = kdvService.getProductTypeById(3);
@@ -233,7 +249,7 @@ public class HealthController {
 		Jobs job = jobsService.getJobById(health.getJob());
 		int riskFactor = job.getRiskFactor();
 		double offer = CalculateMethods.calculateHealthInsurance(health, kdvRate, riskFactor);
-		
+
 		Insurance newInsurance = new Insurance();
 		newInsurance.setInsuranceType("Health");
 		newInsurance.setCustomerId(health.getCustomerId());
@@ -243,13 +259,16 @@ public class HealthController {
 		newInsurance.setKdv(kdvRate);
 		newInsurance.setPeriod(health.getPeriod());
 		newInsurance.setOffer(offer);
-		newInsurance.setStatus(1);	
+		newInsurance.setStatus(1);
 		System.out.println(newInsurance);
 		insuranceService.save(newInsurance);
-		
-		
+
+		// Sağlık bilgilerinin geçerlilik süresi set edilmektedir
+		LocalDateTime deadlineDate = now.plusDays(30);
+		oldHealth.setDeadline(deadlineDate.format(formatter));
 		oldHealth.setStatus(1);
 		healthService.save(oldHealth);
+		
 		model.addAttribute("insurance", newInsurance);
 		model.addAttribute("health", health);
 		model.addAttribute("customer", customer);
@@ -265,7 +284,6 @@ public class HealthController {
 				insurance.setStatus(0);
 				insurance.setResult("Canceled");
 				LocalDateTime now = LocalDateTime.now();
-				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 				insurance.setEndDate(now.format(formatter));
 				insuranceService.save(insurance);
 			}
@@ -280,27 +298,30 @@ public class HealthController {
 		Insurance insurance = insuranceService.getInsuranceById(id);
 		insurance.setResult("Canceled");
 		LocalDateTime now = LocalDateTime.now();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 		String end_date = now.format(formatter);
 		insurance.setEndDate(end_date);
-		// insurance.setStatus(0);
 		insuranceService.save(insurance);
-		// insuranceService.deleteById(id); // database den de kalıcı olarak silmek için
 		return "redirect:/seeHealthInsuranceDetails/" + insurance.getHealthId();
 	}
 
 	@GetMapping("/seeHealthInsuranceDetails/{id}")
-	public ModelAndView seeHealthInsuranceDetails(@PathVariable("id") int healthId, Model model) {
+	public String seeHealthInsuranceDetails(@PathVariable("id") int healthId, Model model) {
 
 		List<Insurance> insurances = insuranceService.findByStatusAndHealthId(1, healthId);
 		for (Insurance insurance : insurances) {
 			insuranceService.save(insurance);
 			model.addAttribute("insuranceId", insurance.getInsuranceId());
 		}
+		
+		if (insurances.isEmpty()) {
+			model.addAttribute("showAbsent", true);
+			model.addAttribute("insurance", insurances);
+			return "seeHealthInsuranceDetails";
+		}
 
 		model.addAttribute("healthId", healthId);
 		model.addAttribute("insurance", insurances);
-		return new ModelAndView("seeHealthInsuranceDetails", "insurance", insurances);
+		return "seeHealthInsuranceDetails";
 	}
 
 	@GetMapping("/healthInsuranceRefund/{insuranceId}")
@@ -315,7 +336,6 @@ public class HealthController {
 		}
 
 		LocalDateTime now = LocalDateTime.now();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 		String end_date = now.format(formatter);
 		LocalDateTime startingDateTime = LocalDateTime.parse(insurance.getStartDate(), formatter);
 		LocalDateTime endDateTime = LocalDateTime.parse(end_date, formatter);
@@ -325,7 +345,7 @@ public class HealthController {
 
 		insurance.setDaysDiff(daysDiff);
 		int remainingDay = insurance.getPeriod() - daysDiff; // remainingDay, poliçenin bitimine ne kadar kaldığı
-		double refund = (insurance.getOffer() / insurance.getPeriod()) * remainingDay; // refund, iade edilecek miktar
+		double refund = (insurance.getOffer() / insurance.getPeriod()) * remainingDay; 
 		insurance.setRefund(refund);
 		model.addAttribute(refund);
 		insuranceService.save(insurance);
@@ -349,7 +369,6 @@ public class HealthController {
 			// Poliçeyi iptal ettiyse iptal etme tarihi yazdırılmaktadır
 			if (insurance.getResult().equals("Canceled")) {
 				LocalDateTime now = LocalDateTime.now();
-				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 				String end_date = now.format(formatter);
 				insurance.setEndDate(end_date);
 			}

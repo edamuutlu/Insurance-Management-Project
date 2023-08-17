@@ -30,6 +30,20 @@ myApp.controller("rootController", ["$scope", "$http", function($scope) {
 
 }]);
 
+myApp.controller("homeController", ["$scope", "$http", function($scope) {
+    $scope.openModal = function() {
+        $('#renewModal').modal('show');
+    };
+    $scope.closeModal = function() {
+        $('#renewModal').modal('hide');
+    };
+
+    $scope.period = period;
+    
+     
+
+}]);
+
 
 myApp.controller("registerCustomerFormController", ["$scope", function($scope) {
 
