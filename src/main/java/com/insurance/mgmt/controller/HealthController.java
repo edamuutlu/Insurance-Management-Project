@@ -237,7 +237,7 @@ public class HealthController {
 	}
 
 	@PostMapping("/editHealthInfo")
-	public String saveHealthInfo(@ModelAttribute Health health, Model model) {
+	public String editHealthInfo(@ModelAttribute Health health, Model model) {
 		Health oldHealth = healthService.getHealthById(health.getHealthId());
 		Customer customer = customerService.getCustomerById(health.getCustomerId());
 
@@ -246,6 +246,7 @@ public class HealthController {
 
 		Kdv kdv = kdvService.getProductTypeById(3);
 		int kdvRate = kdv.getKdvRate();
+		health.setForWho(oldHealth.getForWho());	// kimin için sigorta yaptırılacağı formda değiştirilmiyor
 		Jobs job = jobsService.getJobById(health.getJob());
 		int riskFactor = job.getRiskFactor();
 		double offer = CalculateMethods.calculateHealthInsurance(health, kdvRate, riskFactor);

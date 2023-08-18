@@ -81,6 +81,10 @@ input[type="number"] {
 	font-size: 15px;
 }
 
+.modal-footer .btn {
+    padding: 10px;
+    font-size: 15px;
+}
 
 .product {
 	margin: 0;

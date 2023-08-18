@@ -67,14 +67,8 @@
 			defined! </div>
 		<div class="alert alert-warning" role="alert" th:if="${showAlert}"> An insurance for this house has already been
 			deleted or expired! </div>
-		<div class="alert alert-warning" role="alert" th:if="${showAbsent}"> There is no insurance for this house!
-		</div>
-		<!--		<button type="button" class="btn btn-info text-white mb-2"-->
-		<!--			style="background-color: rgb(62, 209, 221); font-size: 17px; padding: 10px 20px;">-->
-		<!--			<a class="text-decoration-none" th:href="@{/newHomeInsuranceCalculate/{id}(id=${insuranceId})}">-->
-		<!--				<strong>Renew Home Insurance</strong>-->
-		<!--			</a>-->
-		<!--		</button>-->
+		<div class="alert alert-warning" role="alert" th:if="${showAbsent}"> There is no insurance for this house! </div>
+		
 		<!-- Button to trigger the modal -->
 		<button type="button" class="btn btn-info text-white mb-2"
 			style="background-color: rgb(62, 209, 221); font-size: 17px; padding: 10px 20px;" data-bs-toggle="modal"

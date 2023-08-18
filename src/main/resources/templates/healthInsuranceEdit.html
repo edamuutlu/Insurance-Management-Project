@@ -103,7 +103,7 @@
 				<p class="error" ng-show="myForm.job.$invalid && myForm.job.$touched">Select your job.</p>
 
 				<select name="forWho" id="forWho">
-					<option th:selected="${health.forWho}" ng-repeat="option in forWhose" value="{{option}}">{{option}}</option>
+					<option th:selected="${health.forWho}" ng-repeat="option in forWhose" th:value="${option}" disabled>{{option}}</option>
 				</select>
 
 				<input type="text" name="height" th:value="${health.height}" placeholder="Height (cm)*" 

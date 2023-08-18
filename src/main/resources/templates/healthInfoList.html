@@ -49,13 +49,13 @@
 
 	<script>
 
-		 window.onload = function () {
-        $(document).ready(function () {
-            // Her iki modala da farklı id değerleri verdiniz.
-            $('#expiredModal').modal('show');
-            $('#deadlineModal').modal('show');
-        });
-    };
+		window.onload = function () {
+			$(document).ready(function () {
+				// Her iki modala da farklı id değerleri verdiniz.
+				$('#expiredModal').modal('show');
+				$('#deadlineModal').modal('show');
+			});
+		};
 
 	</script>
 
@@ -87,8 +87,8 @@
 	<!--End Navbar-->
 
 	<div class="container mt-5">
-		<div class="modal fade" id="deadlineModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"
-			aria-labelledby="myModalTitle" aria-hidden="true" th:if="${showDeadlineAlert}">
+		<div class="modal fade" id="deadlineModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+			role="dialog" aria-labelledby="myModalTitle" aria-hidden="true" th:if="${showDeadlineAlert}">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -98,21 +98,21 @@
 						</button>
 					</div>
 					<div class="modal-body">
-						<p>Sağlık bilgilerinizin güncellenmesi gerektiği için lütfen devam seçeneğinden forma gidiniz.:
+						<p>Sağlık bilgilerinizin güncellenmesi gerektiği için lütfen devam seçeneğinden forma gidiniz.
 						</p>
 					</div>
 					<div class="modal-footer">
-						<a th:href="@{/healthInsuranceEdit2/{id}(id=${healthId})}"
-							class="btn btn-secondary">Devam Et</a>
+						<a th:href="@{/healthInsuranceEdit2/{id}(id=${healthId})}" class="btn btn-secondary">Devam
+							Et</a>
 						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
 					</div>
 
 				</div>
 			</div>
 		</div>
-		
-		<div class="modal fade" id="expiredModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"
-			aria-labelledby="myModalTitle" aria-hidden="true" th:if="${showExpiredAlert}">
+
+		<div class="modal fade" id="expiredModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+			role="dialog" aria-labelledby="myModalTitle" aria-hidden="true" th:if="${showExpiredAlert}">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
