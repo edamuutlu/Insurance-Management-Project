@@ -90,7 +90,7 @@ public class CustomerController {
 	}
 
 	@GetMapping("/customerRegisterForm")
-	public String registerCustomer(@ModelAttribute Customer customer, Model model) {
+	public String customerRegisterForm(@ModelAttribute Customer customer, Model model) {
 		
 		List<Province> getAllProvinces = provinceService.listAll();
 		List<District> getAllDistricts = districtService.listAll();
@@ -102,7 +102,7 @@ public class CustomerController {
 	}
 
 	@GetMapping("/customerList")
-	public String getAllCustomer(Model model) {
+	public String customerList(Model model) {
 		List<Customer> customerList = customerService.findByStatus(1);
 		
 		Kdv carKdv = kdvService.getProductTypeById(1);
@@ -111,6 +111,7 @@ public class CustomerController {
 		model.addAttribute("carKdv", carKdv);
 		model.addAttribute("homeKdv", homeKdv);
 		model.addAttribute("healthKdv", healthKdv);
+		
 		model.addAttribute("customer",  customerList);
 		
 		return "customerList";
@@ -125,7 +126,7 @@ public class CustomerController {
 	}
 
 	@PostMapping("/customerRegisterForm")
-	public String register(@Valid @ModelAttribute Customer customer,
+	public String customerRegisterForm(@Valid @ModelAttribute Customer customer,
 			BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
 		List<Province> getAllProvinces = provinceService.listAll();
 		List<District> getAllDistricts = districtService.listAll();
@@ -140,33 +141,24 @@ public class CustomerController {
 		}
 
 		// Aynı TC numaralı ve email adresli kullanıcı kontrolü
-		boolean showTcAlert = false;
-		boolean showEmailAlert = false;
-
 		List<Customer> sameTcList = customerService.findByStatusAndTc(1, customer.getTc());
 		List<Customer> sameEmailList = customerService.findByStatusAndEmail(1, customer.getEmail());
 
-		if (!sameTcList.isEmpty()) {
-			showTcAlert = true;
-		}
-		if (!sameEmailList.isEmpty()) {
-			showEmailAlert = true;
-		}
+		boolean showTcAlert = !sameTcList.isEmpty();
+		boolean showEmailAlert = !sameEmailList.isEmpty();
 
-		if (showTcAlert == true || showEmailAlert == true) {
-			model.addAttribute("showTcAlert", showTcAlert);
-			model.addAttribute("showEmailAlert", showEmailAlert);
-
-	        model.addAttribute("getAllProvinces", getAllProvinces);
-	        model.addAttribute("getAllDistricts", getAllDistricts);
-			
-			return "customerRegisterForm";
+		if (showTcAlert || showEmailAlert) {
+		    model.addAttribute("showTcAlert", showTcAlert);
+		    model.addAttribute("showEmailAlert", showEmailAlert);
+		    model.addAttribute("getAllProvinces", getAllProvinces);
+		    model.addAttribute("getAllDistricts", getAllDistricts);
+		    return "customerRegisterForm";
 		} else {
-			model.addAttribute("customers", customerService.getAllCustomer());
-			customer.setStatus(1);
-			customerService.save(customer);
-			return "redirect:customerList";
+		    customer.setStatus(1);
+		    customerService.save(customer);
+		    return "redirect:customerList";
 		}
+
 	}
 
 	@PostMapping("/save")
@@ -236,7 +228,6 @@ public class CustomerController {
 		Customer customer = customerService.getCustomerById(customerId);
 		customer.setStatus(0);
 		customerService.save(customer);
-		// customerService.deleteById(customerId); // database den de kalıcı olarak silmek için
 		return "redirect:/customerList";
 	}
 

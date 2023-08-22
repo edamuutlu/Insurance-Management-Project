@@ -28,14 +28,6 @@ public class HealthService {
 	public void deleteById(int id) {
 		healthRepository.deleteById(id);
 	}
-	
-	public List<Health> findByStatus(int status) {
-        return healthRepository.findByStatus(status);
-    }
-
-    public List<Health> findByCustomerId(int id) {
-        return healthRepository.findByCustomerId(id);
-    }
     
     public List<Health> findByStatusAndCustomerId(int status, int id) {
         return healthRepository.findByStatusAndCustomerId(status, id);

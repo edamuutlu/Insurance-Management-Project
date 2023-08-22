@@ -124,6 +124,7 @@ public class CalculateMethods {
 		return offer;
 	}
 
+	
 	public static double calculateHomeInsurance(Home home, int kdvRate) {
 		double offer = 500;
 

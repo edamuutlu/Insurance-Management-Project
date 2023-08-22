@@ -134,20 +134,71 @@ class InsuranceServiceTest {
         assertEquals(1, result.size());
         assertEquals(dummyInsurances.get(0).getHomeId(), result.get(0).getHomeId());
     }
-
+    
     @Test
     public void testFindByStatusAndResultAndHomeId() {
         List<Insurance> mockInsurances = new ArrayList<>();
         mockInsurances.add(dummyInsurances.get(0));
 
-        // findByStatusAndResultAndHomeId metodu çağrıldığında, sahte verileri döndürmesi için mock'u ayarlıyoruz
         when(insuranceService.findByStatusAndResultAndHomeId(1, "Accepted", 1)).thenReturn(mockInsurances);
 
         List<Insurance> result = insuranceService.findByStatusAndResultAndHomeId(1, "Accepted", 1);
 
-        // Sonuçları kontrol ediyoruz
         assertEquals(1, result.size());
         assertEquals(dummyInsurances.get(0).getHomeId(), result.get(0).getHomeId());
     }
+
+    @Test
+    public void testFindByStatusAndCustomerId() {
+        List<Insurance> mockInsurances = new ArrayList<>();
+        mockInsurances.add(dummyInsurances.get(0));
+
+        when(insuranceService.findByStatusAndCustomerId(1, 1)).thenReturn(mockInsurances);
+
+        List<Insurance> result = insuranceService.findByStatusAndCustomerId(1, 1);
+
+        assertEquals(1, result.size());
+        assertEquals(dummyInsurances.get(0).getCustomerId(), result.get(0).getCustomerId());
+    }
+
+    @Test
+    public void testFindByStatusAndCustomerIdAndResult() {
+        List<Insurance> mockInsurances = new ArrayList<>();
+        mockInsurances.add(dummyInsurances.get(0));
+
+        when(insuranceService.findByStatusAndCustomerIdAndResult(1, 1, "Accepted")).thenReturn(mockInsurances);
+
+        List<Insurance> result = insuranceService.findByStatusAndCustomerIdAndResult(1, 1, "Accepted");
+
+        assertEquals(1, result.size());
+        assertEquals(dummyInsurances.get(0).getCustomerId(), result.get(0).getCustomerId());
+    }
+
+    @Test
+    public void testFindByStatusAndHealthId() {
+        List<Insurance> mockInsurances = new ArrayList<>();
+        mockInsurances.add(dummyInsurances.get(0));
+
+        when(insuranceService.findByStatusAndHealthId(1, 1)).thenReturn(mockInsurances);
+
+        List<Insurance> result = insuranceService.findByStatusAndHealthId(1, 1);
+
+        assertEquals(1, result.size());
+        assertEquals(dummyInsurances.get(0).getHealthId(), result.get(0).getHealthId());
+    }
+
+    @Test
+    public void testFindByStatusAndResultAndHealthId() {
+        List<Insurance> mockInsurances = new ArrayList<>();
+        mockInsurances.add(dummyInsurances.get(0));
+
+        when(insuranceService.findByStatusAndResultAndHealthId(1, "Accepted", 1)).thenReturn(mockInsurances);
+
+        List<Insurance> result = insuranceService.findByStatusAndResultAndHealthId(1, "Accepted", 1);
+
+        assertEquals(1, result.size());
+        assertEquals(dummyInsurances.get(0).getHealthId(), result.get(0).getHealthId());
+    }
+
 
 }

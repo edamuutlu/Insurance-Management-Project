@@ -41,7 +41,6 @@ public class InsuranceService {
 	    return optionalInsurance.map(Collections::singletonList).orElse(Collections.emptyList());
 	}
 
-	
 	public Insurance getInsuranceByHealthId(int healthId) {
         Optional<Insurance> optionalInsurance = insuranceRepository.findByHealthId(healthId);
         return optionalInsurance.orElse(null); // Eğer nesne varsa nesneyi, yoksa null dönecektir.

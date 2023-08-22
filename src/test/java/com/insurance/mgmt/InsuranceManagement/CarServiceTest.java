@@ -33,7 +33,7 @@ class CarServiceTest {
 	public void calculateCarInsuranceTest() {
 
 		Car car = new Car();
-	    car.setCustomerId(12); // Set customer_id property
+	    car.setCustomerId(12); 
 	    car.setType("Car");
 	    car.setPurpose("Private");
 	    car.setBrand("Audi");
@@ -95,15 +95,6 @@ class CarServiceTest {
 	        Car result = carService.getCarId(carId);
 	        verify(carService, times(1)).getCarId(carId);
 	        assertEquals(dummyCar, result);
-	    }
-	    
-	    @Test
-	    public void findByStatusTest() {
-	        int status = 1;
-	        when(carService.findByStatus(status)).thenReturn(dummyCars);
-	        List<Car> result = carService.findByStatus(status);
-	        assertEquals(dummyCars, result);
-	        verify(carService, times(1)).findByStatus(status);
 	    }
 	    
 	    @Test

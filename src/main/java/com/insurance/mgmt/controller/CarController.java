@@ -2,10 +2,8 @@ package com.insurance.mgmt.controller;
 
 import java.time.Duration;
 import java.time.LocalDate;
-//import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
-//import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +49,8 @@ public class CarController {
 	@Autowired
 	KdvService kdvService;
 	
+	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+	
 	private static final Logger log =  LoggerFactory.getLogger(CarController.class);
 	
 	@InitBinder
@@ -60,7 +60,7 @@ public class CarController {
 	} 		
 	
 	@PostMapping("/carRegister")
-	public String register(@Valid @ModelAttribute Car car, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes, @RequestParam(value = "customerId", required = false) int idParam) {		
+	public String carRegister(@Valid @ModelAttribute Car car, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes, @RequestParam(value = "customerId", required = false) int idParam) {		
 				
 		if(bindingResult.hasErrors()) {
 			log.info(">> Car : {}",car.toString());
@@ -71,17 +71,13 @@ public class CarController {
 		
 		// Form doldurulurkenki tarih ve sigortanın biteceği tarih hesaplanmaktadır
 		LocalDateTime now = LocalDateTime.now();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 		car.setStartDate(now.format(formatter));
 		LocalDateTime endDate = now.plusDays(car.getPeriod());
 		car.setEndDate(endDate.format(formatter));
 		
-		Customer customer = customerService.getCustomerById(car.getCustomerId());				
-		// String'i LocalDate nesnesine dönüştürme
+		Customer customer = customerService.getCustomerById(car.getCustomerId());	
         LocalDate birthDate = LocalDate.parse(customer.getBirth());
-        // Bugünkü tarihi al
         LocalDate currentDate = LocalDate.now();
-        // Yaşı hesapla
         int age = Period.between(birthDate, currentDate).getYears();
         
         Kdv kdv = kdvService.getProductTypeById(1);
@@ -108,26 +104,24 @@ public class CarController {
 	}
 	
 	@GetMapping("/trafficInsuranceCalculate")
-	public String trafficInsurance() { 
+	public String trafficInsuranceCalculate() { 
 		return "trafficInsuranceCalculate";
 	}
 	
-	
 	@RequestMapping(path = "/trafficInsuranceForm", method = RequestMethod.GET )
-	public String getForm(@RequestParam(value = "customerId", required = false) int idParam, Model model, @ModelAttribute Car car){
+	public String trafficInsuranceForm(@RequestParam(value = "customerId", required = false) int idParam, Model model, @ModelAttribute Car car){
 		model.addAttribute("customerId",idParam);
 		return "trafficInsuranceForm";
 	}
 	
 	@GetMapping("/carList/{customerId}")
-	public ModelAndView getAllCar(@PathVariable("customerId") int customerId, Model model) {	
+	public ModelAndView carList(@PathVariable("customerId") int customerId, Model model) {	
 		ArrayList<Car> expiredCars = new ArrayList<>();
 		boolean showText = false;
 		
 	    // Poliçenin süresinin bitip bitmediğini kontrol etme			
 		 List<Car> cars = carService.findByStatusAndCustomerIdAndResult(1, customerId, "Accepted");
 		 for(Car car : cars) {
-			 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 	    		LocalDateTime endDateTime = LocalDateTime.parse(car.getEndDate(), formatter);
 	    			    		
 	    		LocalDateTime now = LocalDateTime.now();
@@ -156,21 +150,18 @@ public class CarController {
 		Car car = carService.getCarId(id);
 		car.setResult("Canceled");
 		LocalDateTime now = LocalDateTime.now();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 		String end_date = now.format(formatter);
 		car.setEndDate(end_date);
 		car.setStatus(0);
 		carService.save(car);
-		//carService.deleteById(id);	// database den de kalıcı olarak silmek için
 		return "redirect:/customerList";
 	}
 	
 	@GetMapping("/trafficInsuranceRefund/{id}")
-	public String insuranceRefund(@PathVariable("id") int id, Model model) {		
+	public String trafficInsuranceRefund(@PathVariable("id") int id, Model model) {		
 		Car car = carService.getCarId(id);
 		
 		LocalDateTime now = LocalDateTime.now();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 		String end_date = now.format(formatter);
 		LocalDateTime startingDateTime = LocalDateTime.parse(car.getStartDate(), formatter);
 		LocalDateTime endDateTime = LocalDateTime.parse(end_date, formatter);
@@ -178,12 +169,10 @@ public class CarController {
 		Duration duration = Duration.between(startingDateTime, endDateTime);
 		int daysDiff = (int) duration.toDays();	// daysDiff, poliçeyi ne kadar kullandığı
 
-		//System.out.println("Fark: " + daysDiff + " gün");
 		car.setDaysDiff(daysDiff);
 		int remainingDay = car.getPeriod() - daysDiff;	// remainingDay, poliçenin bitimine ne kadar kaldığı			
-		double refund = (car.getOffer() / car.getPeriod()) * remainingDay;	// refund, iade edilecek miktar
+		double refund = (car.getOffer() / car.getPeriod()) * remainingDay;
 		car.setRefund(refund);
-		//System.out.println("İade: "+ refund);
 		model.addAttribute(refund);
 		carService.save(car);
 		
@@ -195,9 +184,7 @@ public class CarController {
 	}
 	
 	@PostMapping("/result")
-    public String result(@RequestParam("carId") int carId,
-                            @RequestParam("result") String result) {
-        // carId'ye göre veritabanında aracı bulun
+    public String result(@RequestParam("carId") int carId, @RequestParam("result") String result) {
         Car car = carService.getCarId(carId);
         
         if (car != null) {
@@ -207,14 +194,12 @@ public class CarController {
         	//Poliçeyi iptal ettiyse iptal etme tarihi yazdırılmaktadır
         	if(car.getResult().equals("Canceled")) {
         		LocalDateTime now = LocalDateTime.now();
-        		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
         		String end_date = now.format(formatter);
         		car.setEndDate(end_date);
         	}
         	carService.save(car);
         }
-        
-        // Sayfayı yeniden yönlendir veya başka bir işlem yap
+
         return "redirect:/customerList";
     }
 

@@ -30,6 +30,7 @@ myApp.controller("rootController", ["$scope", "$http", function($scope) {
 
 }]);
 
+
 myApp.controller("homeController", ["$scope", "$http", function($scope) {
     $scope.openModal = function() {
         $('#renewModal').modal('show');
@@ -38,9 +39,7 @@ myApp.controller("homeController", ["$scope", "$http", function($scope) {
         $('#renewModal').modal('hide');
     };
 
-    $scope.period = period;
-    
-     
+    $scope.period = period;   
 
 }]);
 
@@ -57,53 +56,6 @@ myApp.controller("registerCustomerFormController", ["$scope", function($scope) {
 
 	var birthInput = document.getElementById("birth");
 	birthInput.setAttribute("max", today.toISOString().split("T")[0]);
-
-
-	/* Select Province and District */
-	//	var provinceDistrictinfo = {
-	//		Ankara: {
-	//			cities: ["Akyurt", "Altındağ", "Ayaş", "Bala", "Beypazarı", "Çamlıdere", "Çankaya", "Çubuk", "Elmadağ", "Eti̇mesgut", "Evren", "Gölbaşı", "Güdül", "Haymana", "Kahramankazan", "Kaleci̇k", "Keçi̇ören", "Kizilcahamam", "Mamak", "Nallihan", "Polatlı", "Pursaklar", "Si̇ncan", "Şerefli̇koçhi̇sar", "Yeni̇mahalle"],
-	//		},
-	//		Bursa: {
-	//			cities: ["Osmangazi", "Nilüfer", "Yıldırım", "Büyükorhan", "Gemlik", "Gürsu", "Harmancık", "İnegöl", "İznik", "Karacabey", "Keles", "Kestel", "Mudanya", "Mustafakemalpaşa", "Orhaneli", "Orhangazi", "Yenişehir"],
-	//		},
-	//		İstanbul: {
-	//			cities: ["Adalar", "Arnavutköy", "Ataşehir", "Avcılar", "Bağcılar", "Bahçelievler", "Bakırköy", "Başakşehir", "Bayrampaşa", "Beşiktaş", "Beykoz", "Beylikdüzü", "Beyoğlu", "Büyükçekmece", "Çatalca", "Çekmeköy", "Esenler", "Esenyurt", "Eyüpsultan", "Fatih", "Gaziosmanpaşa", "Güngören", "Kadıköy", "Kağıthane", "Kartal", "Küçükçekmece", "Maltepe", "Pendik", "Sancaktepe", "Sarıyer", "Silivri", "Sultanbeyli", "Sultangazi", "Şile", "Şişli", "Tuzla", "Ümraniye", "Üsküdar", "Zeytinburnu"],
-	//		},
-	//	};
-	//
-	//
-	//	window.onload = function() {
-	//		const selectProvince = document.getElementById('province');
-	//		const selectDistrict = document.getElementById('district');
-	//		const selects = document.querySelectorAll('select');
-	//
-	//		selectDistrict.disabled = true;
-	//
-	//		selects.forEach(select => {
-	//			select.style.cursor = select.disabled ? "auto" : "pointer";
-	//		});
-	//
-	//		for (let province in provinceDistrictinfo) {
-	//			selectProvince.options[selectProvince.options.length] = new Option(province, province);
-	//		}
-	//
-	//		selectProvince.onchange = function(e) {
-	//			selectDistrict.disabled = false;
-	//
-	//			selects.forEach(select => {
-	//				select.style.cursor = select.disabled ? "auto" : "pointer";
-	//			});
-	//
-	//			selectDistrict.length = 1;
-	//
-	//			for (let district of provinceDistrictinfo[e.target.value].cities) {
-	//				selectDistrict.options[selectDistrict.options.length] = new Option(district, district);
-	//			}
-	//		};
-	//	};
-
-
 
 }]);
 
@@ -134,8 +86,8 @@ myApp.controller("trafficInsuranceFormController", ["$scope", function($scope) {
 	$scope.periods = [30, 60];
 	$scope.period = "";
 
-
 }]);
+
 
 myApp.controller("homeInsuranceFormController", ["$scope", function($scope) {
 
@@ -173,6 +125,7 @@ myApp.controller("homeInsuranceFormController", ["$scope", function($scope) {
 
 }]);
 
+
 myApp.controller("healthInsuranceFormController", ["$scope", function($scope) {
 
 	$scope.register = function() {
@@ -191,7 +144,6 @@ myApp.controller("healthInsuranceFormController", ["$scope", function($scope) {
 	//Select the For Who
 	$scope.forWhose = ["Me", "My Family", "My Children"];
 	$scope.forWho = "";
-
 
 }]);
 

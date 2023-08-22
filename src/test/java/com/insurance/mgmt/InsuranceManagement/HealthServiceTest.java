@@ -111,15 +111,4 @@ class HealthServiceTest {
 		verify(healthRepository, times(1)).deleteById(1);
 	}
 
-	@Test
-    public void testFindByCustomerId() {
-        when(healthRepository.findByCustomerId(1)).thenReturn(dummyHealths);
-
-        List<Health> result = healthService.findByCustomerId(1);
-
-        assertEquals(2, result.size());
-        assertEquals("Person 1", result.get(0).getForWho());
-        assertEquals("Person 2", result.get(1).getForWho());
-    }
-
 }

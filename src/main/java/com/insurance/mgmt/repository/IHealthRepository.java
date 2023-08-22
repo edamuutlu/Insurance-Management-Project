@@ -10,12 +10,7 @@ import com.insurance.mgmt.entity.Health;
 @Repository
 public interface IHealthRepository  extends JpaRepository<Health,Integer>{
 
-	List<Health> findByStatus(int status);
-
-	List<Health> findByCustomerId(int id);
-
 	List<Health> findByStatusAndCustomerId(int status, int id);
 
 	List<Health> findByForWhoAndStatus(String forWho, int status);
-
 }

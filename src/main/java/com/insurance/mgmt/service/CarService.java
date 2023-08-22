@@ -30,10 +30,6 @@ public class CarService {
 		return carRepository.findById(id).get();
 	}
 	
-	public List<Car> findByStatus(int status) {
-        return carRepository.findByStatus(status);
-    }
-
     public List<Car> findByStatusAndCustomerId(int status, int customerId) {
         return carRepository.findByStatusAndCustomerId(status, customerId);
     }

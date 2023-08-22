@@ -80,42 +80,6 @@ class HomeServiceTest {
 	    }
 	    
 	    @Test
-	    public void testFindByStatus() {
-	        // Mock üzerinden dönecek olan örnek verileri hazırlıyoruz
-	        int status = 1;
-	        List<Home> mockHomes = new ArrayList<>();
-	        mockHomes.add(dummyHomes.get(0));
-
-	        // findByStatus metodu çağrıldığında, sahte verileri döndürmesi için mock'u ayarlıyoruz
-	        when(homeService.findByStatus(status)).thenReturn(mockHomes);
-
-	        // Servis metodunu çağırıyoruz
-	        List<Home> result = homeService.findByStatus(status);
-
-	        // Sonuçları kontrol ediyoruz
-	        assertEquals(1, result.size());
-	        assertEquals(dummyHomes.get(0).getHomeId(), result.get(0).getHomeId());
-	    }
-
-	    @Test
-	    public void testFindByCustomerId() {
-	        // Mock üzerinden dönecek olan örnek verileri hazırlıyoruz
-	        int customerId = 1;
-	        List<Home> mockHomes = new ArrayList<>();
-	        mockHomes.add(dummyHomes.get(0));
-
-	        // findByCustomerId metodu çağrıldığında, sahte verileri döndürmesi için mock'u ayarlıyoruz
-	        when(homeService.findByCustomerId(customerId)).thenReturn(mockHomes);
-
-	        // Servis metodunu çağırıyoruz
-	        List<Home> result = homeService.findByCustomerId(customerId);
-
-	        // Sonuçları kontrol ediyoruz
-	        assertEquals(1, result.size());
-	        assertEquals(dummyHomes.get(0).getHomeId(), result.get(0).getHomeId());
-	    }
-	    
-	    @Test
 	    public void testFindByStatusAndCustomerId() {
 	        // Mock üzerinden dönecek olan örnek verileri hazırlıyoruz
 	        int status = 1;

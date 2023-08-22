@@ -4,13 +4,16 @@
 <head>
 	<meta charset="utf-8">
 	<title>SBM Home</title>
+	
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
 		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
 		crossorigin="anonymous"></script>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
 		integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+		
 	<!-- Boxicons CSS -->
 	<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+	
 	<link rel="stylesheet" href="" th:href="@{/css/style.css}">
 	<link href="https://css.gg/css" rel="stylesheet" />
 	<style>
@@ -66,7 +69,7 @@
 		</div>
 		<button type="button" class="btn btn-info text-white mb-2"
 			style="background-color: rgb(62, 209, 221); font-size: 17px; padding: 10px 20px;" id="editButton">
-			<a class="text-decoration-none" th:href="@{/healthInsuranceEdit/{id}(id=${insuranceId})}">
+			<a class="text-decoration-none" th:href="@{/healthInsuranceEditForm/{id}(id=${insuranceId})}">
 				<strong>Renew Health Insurance</strong>
 			</a>
 		</button>
