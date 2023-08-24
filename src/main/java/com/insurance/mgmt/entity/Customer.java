@@ -20,6 +20,7 @@ import jakarta.validation.constraints.Size;
 public class Customer {
 
 	@Id
+	@Column(name="customer_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int customerId;
 

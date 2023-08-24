@@ -1,11 +1,15 @@
 package com.insurance.mgmt.entity;
 
+import org.hibernate.validator.constraints.Length;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "HEALTH")
@@ -19,24 +23,33 @@ public class Health {
 	private int customerId;
 	
 	@Column(name ="job") 
+	@NotEmpty(message = "Select your job.")
 	private String job;
 	
 	@Column(name ="for_who") 
+	@NotEmpty(message = "Select who to take out the insurance for.")
 	private String forWho;
 	
 	@Column(name ="sgk") 
+	@NotNull(message = "Please fill this field.")
 	private Byte sgk;	// tinyint alanı için Byte veri tipi kullanılmaktadır
 	
 	@Column(name ="height") 
+	@NotEmpty(message = "Select your height.")
+	@Length(min = 2, max=3, message = "Invalid input.")
 	private String height;
 	
 	@Column(name ="weight") 
+	@NotEmpty(message = "Select your weight.")
+	@Length(min = 2, max=3, message = "Invalid input.")
 	private String weight;
 	
 	@Column(name ="smoking_alcohol") 
+	@NotNull(message = "Please fill this field.")
 	private Byte smokingOrAlcohol;
 	
-	@Column(name ="past_operation") 
+	@Column(name ="past_operation")
+	@NotNull(message = "Please fill this field.")
 	private Byte pastOperation;
 	
 	@Column(name ="status") 

@@ -81,25 +81,22 @@ class HomeServiceTest {
 	    
 	    @Test
 	    public void testFindByStatusAndCustomerId() {
-	        // Mock üzerinden dönecek olan örnek verileri hazırlıyoruz
 	        int status = 1;
 	        int customerId = 1;
 	        List<Home> mockHomes = new ArrayList<>();
 	        mockHomes.add(dummyHomes.get(0));
 
-	        // findByStatusAndCustomerId metodu çağrıldığında, sahte verileri döndürmesi için mock'u ayarlıyoruz
 	        when(homeService.findByStatusAndCustomerId(status, customerId)).thenReturn(mockHomes);
 	        
 	        List<Home> result = homeService.findByStatusAndCustomerId(status, customerId);
 
-	        // Sonuçları kontrol ediyoruz
 	        assertEquals(1, result.size());
 	        assertEquals(dummyHomes.get(0).getHomeId(), result.get(0).getHomeId());
 	    }
 
 	    @Test
 	    public void testFindByProvinceAndDistrictAndNeighbourhoodAndBuildingNumberAndApartmentAndFloorAndStatus() {
-	        // Mock üzerinden dönecek olan örnek verileri hazırlıyoruz
+	        // Mock üzerinden dönecek olan örnek verileri hazırlanmaktadır
 	        String province = "Istanbul";
 	        String district = "Kadikoy";
 	        String neighbourhood = "Acıbadem";
@@ -110,15 +107,12 @@ class HomeServiceTest {
 	        List<Home> mockHomes = new ArrayList<>();
 	        mockHomes.add(dummyHomes.get(0));
 
-	        // findByProvinceAndDistrictAndNeighbourhoodAndBuildingNumberAndApartmentAndFloorAndStatus metodu çağrıldığında, sahte verileri döndürmesi için mock'u ayarlıyoruz
 	        when(homeService.findByProvinceAndDistrictAndNeighbourhoodAndBuildingNumberAndApartmentAndFloorAndStatus(
 	            province, district, neighbourhood, buildingNumber, apartment, floor, status)).thenReturn(mockHomes);
 
-	        // Servis metodunu çağırıyoruz
 	        List<Home> result = homeService.findByProvinceAndDistrictAndNeighbourhoodAndBuildingNumberAndApartmentAndFloorAndStatus(
 	            province, district, neighbourhood, buildingNumber, apartment, floor, status);
 
-	        // Sonuçları kontrol ediyoruz
 	        assertEquals(1, result.size());
 	        assertEquals(dummyHomes.get(0).getHomeId(), result.get(0).getHomeId());
 	    }
