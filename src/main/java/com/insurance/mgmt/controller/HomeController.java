@@ -364,5 +364,5 @@ public class HomeController {
 
 		return "redirect:/seeHomeInsuranceDetails/" + insurance.getHomeId();
 	}
-
+	
 }

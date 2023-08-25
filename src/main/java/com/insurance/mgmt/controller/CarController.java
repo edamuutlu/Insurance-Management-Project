@@ -121,15 +121,11 @@ public class CarController {
 		
 	    // Poliçenin süresinin bitip bitmediğini kontrol etme			
 		 List<Car> cars = carService.findByStatusAndCustomerIdAndResult(1, customerId, "Accepted");
+		 LocalDateTime now = LocalDateTime.now();
 		 for(Car car : cars) {
-	    		LocalDateTime endDateTime = LocalDateTime.parse(car.getEndDate(), formatter);
-	    			    		
-	    		LocalDateTime now = LocalDateTime.now();
+	    		LocalDateTime endDateTime = LocalDateTime.parse(car.getEndDate(), formatter);    		
 	    		
-	    		Duration duration = Duration.between(now, endDateTime);
-	    		int dayCheck = (int) duration.toDays();
-	    		
-	    		if(dayCheck<0) {
+	    		if (now.isAfter(endDateTime)) {
 	    			car.setResult("Expired");
 	    			expiredCars.add(car);
 	    			showText = true;
@@ -167,10 +163,10 @@ public class CarController {
 		LocalDateTime endDateTime = LocalDateTime.parse(end_date, formatter);
 
 		Duration duration = Duration.between(startingDateTime, endDateTime);
-		int daysDiff = (int) duration.toDays();	// daysDiff, poliçeyi ne kadar kullandığı
+		int daysDiff = (int) duration.toDays();	
 
 		car.setDaysDiff(daysDiff);
-		int remainingDay = car.getPeriod() - daysDiff;	// remainingDay, poliçenin bitimine ne kadar kaldığı			
+		int remainingDay = car.getPeriod() - daysDiff;				
 		double refund = (car.getOffer() / car.getPeriod()) * remainingDay;
 		car.setRefund(refund);
 		model.addAttribute(refund);

@@ -187,7 +187,7 @@ public class HealthController {
 	}
 
 	@GetMapping("/healthInsuranceEditForm/{insuranceId}")
-	public String healthInsuranceEdit(@PathVariable("insuranceId") int insuranceId, Model model) {
+	public String healthInsuranceEditForm(@PathVariable("insuranceId") int insuranceId, Model model) {
 		
 		Insurance insurance = insuranceService.getInsuranceById(insuranceId);
 		Health health = healthService.getHealthById(insurance.getHealthId());
@@ -213,7 +213,7 @@ public class HealthController {
 	}
 
 	@GetMapping("/healthInsuranceUpdate/{healthId}")
-	public String healthInsuranceEdit2(@PathVariable("healthId") int healthId, Model model) {
+	public String healthInsuranceUpdate(@PathVariable("healthId") int healthId, Model model) {
 		
 		Health health = healthService.getHealthById(healthId);
 		model.addAttribute(health);

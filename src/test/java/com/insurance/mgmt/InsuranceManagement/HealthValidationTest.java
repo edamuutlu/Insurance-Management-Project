@@ -3,11 +3,8 @@ package com.insurance.mgmt.InsuranceManagement;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
-import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 import com.insurance.mgmt.entity.Health;
@@ -17,14 +14,10 @@ import jakarta.validation.Validator;
 import java.util.Set;
 
 @SpringBootTest
-@RunWith(MockitoJUnitRunner.class)
 public class HealthValidationTest {
 
 	@Autowired
     private final Validator validator = new LocalValidatorFactoryBean();
-	
-	@MockBean
-	private Health health;
 
     @Test
     public void testValidHealthObject() {
