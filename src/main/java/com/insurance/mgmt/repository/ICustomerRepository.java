@@ -17,5 +17,6 @@ public interface ICustomerRepository extends JpaRepository<Customer,Integer>{
 	@Query("FROM Customer WHERE status=?1 and tc=?2")
 	List<Customer> findByStatusAndTc(int status, String tc);
 	
+	@Query("FROM Customer WHERE status=?1 and email=?2")
 	List<Customer> findByStatusAndEmail(int status, String email);
 }
