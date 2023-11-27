@@ -12,6 +12,7 @@ import com.insurance.mgmt.entity.Customer;
 public interface ICustomerRepository extends JpaRepository<Customer,Integer>{ 
 	
 	//Nuri
+	//Eda
 	@Query("FROM Customer WHERE status=?1")
 	List<Customer> findByStatus(int status);
 	
