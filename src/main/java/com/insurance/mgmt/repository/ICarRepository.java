@@ -12,7 +12,6 @@ public interface ICarRepository extends JpaRepository<Car, Integer>{
 	
 	 List<Car> findByStatusAndCustomerId(int status, int customerId);
 	 
-	 List<Car> findByStatusAndPlate1AndPlate2AndPlate3AndResult(int status, int plate1, String plate2, int plate3, String result);
+	 List<Car> findByStatusAndPlate1AndPlate2AndPlate3(int status, int plate1, String plate2, int plate3);
 	 
-	 List<Car> findByStatusAndCustomerIdAndResult(int status,int customerId, String result);
 }

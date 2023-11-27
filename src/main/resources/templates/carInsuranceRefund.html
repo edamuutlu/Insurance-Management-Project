@@ -4,14 +4,33 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Customer Edit</title>
-	
+	<title>Insurance Cancellation</title>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
 		integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-	
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
 	
+	<link href="https://css.gg/css" rel="stylesheet" />
+	
 	<link rel="stylesheet" href="" th:href="@{/css/style.css}">
+	<link rel="stylesheet" href="" th:href="@{/css/home.css}">
+
+	<style>
+		button {
+			font-size: 0.8rem;
+			font-weight: 700;
+			outline: none;
+			border: none;
+			background-color: black;
+			color: aliceblue;
+			padding: 13px 30px;
+			cursor: pointer;
+			text-transform: uppercase;
+		}
+
+		button:hover {
+			background-color: #3f3e3e;
+		}
+	</style>
 
 </head>
 
@@ -40,51 +59,49 @@
 	</nav>
 	<!--	End Navbar-->
 
-	<div class="section-header mt-5">
-		<div class="container">
-			<div class="row">
+	<section id="blog-home" class="container mt-5 pt-5">
+		<h2 class="font-weight-bold pt-5">Car Insurance Cancellation</h2>
+		<hr>
+	</section>
 
-				<div class="col-lg-12">
-					<h1 class="page-header text-center" th:text="${'Hi ' + customer.firstname + ', '}"></h1>
-					<h3 class="text-center">Here is the offer price we have prepared for you!</h3>
+	<section id="cart-bottom" class="container mt-4">
+		<div class="row">
+			<div class="total col-lg-6 col-md-6 col-12">
+				<div>
+					<h5>BILLING SUMMARY</h5>
+					<div class="d-flex justify-content-between">
+						<h6>Subtotal</h6>
+						 <p th:text="${#numbers.formatDecimal(((insurance.offer * 100) / ( (100 + insurance.kdv))), 0, 'COMMA', 2, 'POINT') + ' ₺'}"></p>
+
+					</div>
+					<div class="d-flex justify-content-between">
+						<h6>KDV</h6>
+						<p th:text="${'% ' + insurance.kdv}"></p>
+					</div>
+					<div class="d-flex justify-content-between">
+						<h6>Total Amount</h6>
+						<p th:text="${#numbers.formatDecimal(insurance.offer, 0, 'COMMA', 2, 'POINT') + ' ₺'}"></p>
+					</div>
+					<div class="d-flex justify-content-between">
+						<h6>Total Usage Time (Day)</h6>
+						<p th:text="${insurance.daysDiff + ' day'}"></p>
+					</div>
+					<hr class="second-hr">
+					<div class="d-flex justify-content-between">
+						<h6>Total Refund</h6>
+						<p th:text="${#numbers.formatDecimal(insurance.refund, 0, 'COMMA', 2, 'POINT') + ' ₺'}"></p>
+					</div>
+
+					<div class="d-flex justify-content-between">
+						<button class="ms-auto"><a
+								th:href="@{/seeCarInsuranceDetails/{id}(id=${insurance.carId})}">Cancel</a></button>
+						<button class="ms-2"><a
+								th:href="@{/deleteCarInsurance/{id}(id=${insurance.insuranceId})}">Delete</a></button>
+					</div>
 				</div>
-
-			</div>
-		</div> <!-- /.container -->
-	</div> <!-- /.section-colored -->
-
-
-	<div class="row pricing-table">
-		<div class="col-sm-3 mx-auto" th:object="${customer}">
-			<div class="panel panel-default text-center">
-
-				<div class="panel-heading">
-					<strong>Traffic Insurance</strong>
-				</div>
-				<div class="panel-body">
-					<h3 class="panel-title price" th:text="${insurance.offer + '₺'}"></h3>
-				</div>
-				<form th:object="${insurance}" method="post" name="myForm" action="/result">
-					<input type="hidden" name="insuranceId" th:value="${insurance.insuranceId}">
-					<ul class="list-group">
-						<li class="list-group-item">Most Comprehensive Offer</li>
-						<li class="list-group-item">All Authorized Services and Special Services</li>
-						<li class="list-group-item">Original Glass (Exempt)</li>
-						<li class="list-group-item">Mini-Repair: Yes</li>
-						<li class="list-group-item">Roadside Assistance: Yes</li>
-						<li class="list-group-item">
-							<div class="button-group">
-								<button type="submit" name="result" value="Canceled"
-									class="btn reject-btn">Cancel</button>
-								<button type="submit" name="result" value="Accepted"
-									class="btn accept-btn">Accept</button>
-							</div>
-						</li>
-					</ul>
-				</form>
 			</div>
 		</div>
-	</div>
+	</section>
 
 
 

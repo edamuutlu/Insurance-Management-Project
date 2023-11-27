@@ -36,6 +36,11 @@ public class InsuranceService {
         return optionalInsurance.orElse(null); // Eğer nesne varsa nesneyi, yoksa null dönecektir.
     }
 	
+	public Insurance getInsuranceByCarId(int carId) {
+        Optional<Insurance> optionalInsurance = insuranceRepository.findByCarId(carId);
+        return optionalInsurance.orElse(null); // Eğer nesne varsa nesneyi, yoksa null dönecektir.
+    }
+	
 	public List<Insurance> getInsurancesByHomeId(int homeId) {
 	    Optional<Insurance> optionalInsurance = insuranceRepository.findByHomeId(homeId);
 	    return optionalInsurance.map(Collections::singletonList).orElse(Collections.emptyList());
@@ -62,6 +67,10 @@ public class InsuranceService {
         return insuranceRepository.findByStatusAndHomeId(status, homeId);
     }
     
+    public List<Insurance> findByStatusAndCarId(int status, int carId) {
+        return insuranceRepository.findByStatusAndCarId(status, carId);
+    }
+    
     public List<Insurance> findByStatusAndCustomerId(int status, int customerId) {
         return insuranceRepository.findByStatusAndCustomerId(status, customerId);
     }
@@ -72,6 +81,10 @@ public class InsuranceService {
 
     public List<Insurance> findByStatusAndResultAndHomeId(int status, String result, int homeId) {
         return insuranceRepository.findByStatusAndResultAndHomeId(status, result, homeId);
+    }
+    
+    public List<Insurance> findByStatusAndResultAndCarId(int status, String result, int carId) {
+        return insuranceRepository.findByStatusAndResultAndCarId(status, result, carId);
     }
 
 	public List<Insurance> findByStatusAndHealthId(int status, int healthId) {

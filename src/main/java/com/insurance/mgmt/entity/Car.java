@@ -71,32 +71,12 @@ public class Car {
 	//@Size(min = 1,  message = "Input must be at least 1 digits.")
 	private Integer seatCapacity;
 	
-	@Column(name ="offer") //insertable = false, nullable = true
-	private double offer;
-	
-	@Column(name ="result")
-	private String result;
+	@Column(name= "period")
+	private int period;
 	
 	@Column(name ="status")
 	private int status;
-	
-	@Column(name ="period")
-	private int period;
-	
-	@Column(name ="startDate")
-	private String startDate;
-	
-	@Column(name ="days_diff")
-	private Integer daysDiff;
-	
-	@Column(name ="refund")
-	private double refund;
-	
-	@Column(name ="end_date")
-	private String endDate;
-	
-	@Column(name= "kdv")
-	private int kdv;
+
 	
 	public Car() {
 		super();
@@ -104,10 +84,18 @@ public class Car {
 	}
 		
 
-	public Car(Integer plate1, String plate2, Integer plate3, String type,
-			String purpose, String brand, String fuelType, Integer engineSize, Integer seatCapacity, int customerId, double offer, String result, 
-			int status, int period, String startDate, Integer daysDiff, double refund, String endDate, int kdv) {
+	public Car(int id, int customerId, @NotNull(message = "This field must be filled.") Integer plate1,
+			@NotBlank(message = "This field must be filled.") @Pattern(regexp = "[a-zA-Z\\s]+", message = "Only alphabetic characters and spaces are allowed") @Length(min = 1, max = 3, message = "This field must be between 1 and 3 characters") String plate2,
+			@NotNull(message = "This field must be filled.") Integer plate3,
+			@NotBlank(message = "This field must be filled.") String type,
+			@NotBlank(message = "This field must be filled.") String purpose,
+			@NotBlank(message = "This field must be filled.") String brand,
+			@NotBlank(message = "This field must be filled.") String fuelType,
+			@NotNull(message = "Enter your engine size.") @Digits(integer = 4, fraction = 0, message = "Only numeric input is allowed.") Integer engineSize,
+			@NotNull(message = "Enter your seating capacity.") @Digits(integer = 10, fraction = 0, message = "Only numeric input is allowed.") Integer seatCapacity,
+			int period, int status) {
 		super();
+		this.id = id;
 		this.customerId = customerId;
 		this.plate1 = plate1;
 		this.plate2 = plate2;
@@ -118,16 +106,10 @@ public class Car {
 		this.fuelType = fuelType;
 		this.engineSize = engineSize;
 		this.seatCapacity = seatCapacity;
-		this.offer=offer;
-		this.result=result;
+		this.period = period;
 		this.status = status;
-		this.period=period;
-		this.startDate = startDate;
-		this.daysDiff = daysDiff;
-		this.refund = refund;
-		this.endDate = endDate;
-		this.kdv = kdv;
 	}
+
 
 	public int getId() {
 		return id;
@@ -238,37 +220,8 @@ public class Car {
 		this.seatCapacity = seatCapacity;
 	}
 
-
-	public double getOffer() {
-		return offer;
-	}
-
-
-	public void setOffer(double offer) {
-		this.offer = offer;
-	}
-
-
-	public String getResult() {
-		return result;
-	}
-
-
-	public void setResult(String result) {
-		this.result = result;
-	}
 	
 	
-	public int getStatus() {
-		return status;
-	}
-
-
-	public void setStatus(int status) {
-		this.status = status;
-	}
-		
-
 	public int getPeriod() {
 		return period;
 	}
@@ -277,55 +230,15 @@ public class Car {
 	public void setPeriod(int period) {
 		this.period = period;
 	}
-		
 
-	public String getStartDate() {
-		return startDate;
+
+	public int getStatus() {
+		return status;
 	}
 
 
-	public void setStartDate(String startDate) {
-		this.startDate = startDate;
-	}
-	
-
-	public Integer getDaysDiff() {
-		return daysDiff;
-	}
-
-
-	public void setDaysDiff(Integer daysDiff) {
-		this.daysDiff = daysDiff;
-	}
-
-
-	public double getRefund() {
-		return refund;
-	}
-
-
-	public void setRefund(double refund) {
-		this.refund = refund;
-	}
-		
-
-	public String getEndDate() {
-		return endDate;
-	}
-
-
-	public void setEndDate(String endDate) {
-		this.endDate = endDate;
-	}
-	
-	
-	public int getKdv() {
-		return kdv;
-	}
-
-	
-	public void setKdv(int kdv) {
-		this.kdv = kdv;
+	public void setStatus(int status) {
+		this.status = status;
 	}
 
 
@@ -333,9 +246,8 @@ public class Car {
 	public String toString() {
 		return "Car [id=" + id + ", customerId=" + customerId + ", plate1=" + plate1 + ", plate2=" + plate2
 				+ ", plate3=" + plate3 + ", type=" + type + ", purpose=" + purpose + ", brand=" + brand + ", fuelType="
-				+ fuelType + ", engineSize=" + engineSize + ", seatCapacity=" + seatCapacity + ", offer=" + offer
-				+ ", result=" + result + ", status=" + status + ", period=" + period + ", startDate=" + startDate
-				+ ", daysDiff=" + daysDiff + ", refund=" + refund + ", endDate=" + endDate + "kdv=" + kdv + "]";
+				+ fuelType + ", engineSize=" + engineSize + ", seatCapacity=" + seatCapacity + ", period=" + period
+				+ ", status=" + status + "]";
 	}	
 	
 		

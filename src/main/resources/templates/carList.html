@@ -132,13 +132,8 @@
 					<th cope="col">Fuel Type</th>
 					<th cope="col">Engine Size</th>
 					<th scope="col">Seating Capacity</th>
-					<th scope="col">Kdv</th>
-					<th scope="col">Offer</th>
-					<th scope="col">Period</th>
-					<th scope="col">Start Date</th>
-					<th scope="col">End Date</th>
-					<th scope="col">Result</th>
 					<th scope="col">Delete</th>
+					<th scope="col">See Insurance Details</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -156,15 +151,11 @@
 					<td th:text="${c.fuelType}"></td>
 					<td th:text="${c.engineSize}"></td>
 					<td th:text="${c.seatCapacity}"></td>
-					<td th:text="${'% ' + c.kdv}"></td>
-					<td th:text="${c.offer}"></td>
-					<td th:text="${c.period}"></td>
-					<td th:text="${c.startDate}"></td>
-					<td th:text="${c.endDate}"></td>
-					<td th:text="${c.result}"></td>
 					
 					<td><button class="mx-auto"><a th:href="@{/trafficInsuranceRefund/{id}(id=${c.id})}"><i id="icon-trash"
 									class="bx bx-trash"></i></a></button></td>
+					<td><button class="mx-auto"><a th:href="@{/seeCarInsuranceDetails/{id}(id=${c.id})}"><i
+									class="fa-solid fa-ellipsis"></i></a></button></td>
 
 				</tr>
 			</tbody>

@@ -207,7 +207,6 @@ public class CustomerController {
 		List<Health> healthInfos = healthService.findByStatusAndCustomerId(1, customerId);
 		List<Insurance> insurances = insuranceService.findByStatusAndCustomerId(1, customerId);
 		for (Car car : cars) {
-			car.setResult("Canceled");
 			car.setStatus(0);
 			carService.save(car);
 		}

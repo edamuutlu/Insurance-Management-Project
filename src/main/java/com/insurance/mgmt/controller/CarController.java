@@ -29,9 +29,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.insurance.mgmt.entity.Car;
 import com.insurance.mgmt.entity.Customer;
+import com.insurance.mgmt.entity.Insurance;
 import com.insurance.mgmt.entity.Kdv;
 import com.insurance.mgmt.service.CarService;
 import com.insurance.mgmt.service.CustomerService;
+import com.insurance.mgmt.service.InsuranceService;
 import com.insurance.mgmt.service.KdvService;
 import com.insurance.mgmt.util.CalculateMethods;
 
@@ -39,6 +41,8 @@ import jakarta.validation.Valid;
 
 @Controller
 public class CarController {
+	@Autowired
+	InsuranceService insuranceService;
 	
 	@Autowired
 	CustomerService customerService;
@@ -70,10 +74,13 @@ public class CarController {
 		model.addAttribute("cars",carService.getAllCars()); 
 		
 		// Form doldurulurkenki tarih ve sigortanın biteceği tarih hesaplanmaktadır
+		Insurance insurance = new Insurance();
+		insurance.setCustomerId(idParam);
+		
 		LocalDateTime now = LocalDateTime.now();
-		car.setStartDate(now.format(formatter));
+		insurance.setStartDate(now.format(formatter));
 		LocalDateTime endDate = now.plusDays(car.getPeriod());
-		car.setEndDate(endDate.format(formatter));
+		insurance.setEndDate(endDate.format(formatter));
 		
 		Customer customer = customerService.getCustomerById(car.getCustomerId());	
         LocalDate birthDate = LocalDate.parse(customer.getBirth());
@@ -83,28 +90,45 @@ public class CarController {
         Kdv kdv = kdvService.getProductTypeById(1);
 		int kdvRate = kdv.getKdvRate();
 		double offer = CalculateMethods.calculateCarInsurance(car, age, kdvRate);	
-		car.setKdv(kdvRate);
-		car.setOffer(offer);
-		car.setStatus(1);
+		insurance.setKdv(kdvRate);
+		insurance.setOffer(offer);
+		insurance.setStatus(1);
 		
-		List<Car> list = carService.findByStatusAndPlate1AndPlate2AndPlate3AndResult(1, car.getPlate1(), car.getPlate2(), car.getPlate3(), "Accepted");
+		List<Car> list = carService.findByStatusAndPlate1AndPlate2AndPlate3(1, car.getPlate1(), car.getPlate2(), car.getPlate3());
 		if (!list.isEmpty()) {
 		    boolean showPlateAlert = true;	
 		    model.addAttribute("showPlateAlert", showPlateAlert);				
 		    model.addAttribute("customerId", idParam);
 		    return "trafficInsuranceForm";
 		}
+
+		car.setCustomerId(idParam);
+		car.setStatus(1);
+		carService.save(car);
 		
-		car.setResult("Canceled");	// Default olarak canceled yazdırılmaktadır
-		carService.save(car);				
+		insurance.setInsuranceType("Car");
+		insurance.setResult("Canceled"); // Default olarak canceled yazdırılmaktadır
+		insurance.setPeriod(car.getPeriod());
+		insurance.setCarId(car.getId());
+		insuranceService.save(insurance);
+		
 		redirectAttributes.addFlashAttribute("car", car);				
 		redirectAttributes.addFlashAttribute("customer",customer);	
-		return "redirect:/trafficInsuranceCalculate";	
+		redirectAttributes.addFlashAttribute("insurance", insurance);
+		return "redirect:/trafficInsuranceCalculate/" + car.getId();	
 				
 	}
 	
-	@GetMapping("/trafficInsuranceCalculate")
-	public String trafficInsuranceCalculate() { 
+	@GetMapping("/trafficInsuranceCalculate/{carId}")
+	public String trafficInsuranceCalculate(@PathVariable("carId") int carId, Model model) { 
+		Car car = carService.getCarId(carId);
+		Insurance insurance = insuranceService.getInsuranceByCarId(carId);
+		Customer customer = customerService.getCustomerById(car.getCustomerId());
+		System.out.println(insurance);
+
+		model.addAttribute(customer);
+		model.addAttribute(insurance);
+		model.addAttribute(car);
 		return "trafficInsuranceCalculate";
 	}
 	
@@ -116,87 +140,218 @@ public class CarController {
 	
 	@GetMapping("/carList/{customerId}")
 	public ModelAndView carList(@PathVariable("customerId") int customerId, Model model) {	
-		ArrayList<Car> expiredCars = new ArrayList<>();
-		boolean showText = false;
+						
+		List<Car> cars = carService.findByStatusAndCustomerId(1, customerId);
+		List<Insurance> insurances = insuranceService.findByStatusAndCustomerIdAndResult(1, customerId, "Accepted");
+		ArrayList<Car> expiredCars = new ArrayList<>(); 
 		
-	    // Poliçenin süresinin bitip bitmediğini kontrol etme			
-		 List<Car> cars = carService.findByStatusAndCustomerIdAndResult(1, customerId, "Accepted");
-		 LocalDateTime now = LocalDateTime.now();
-		 for(Car car : cars) {
-	    		LocalDateTime endDateTime = LocalDateTime.parse(car.getEndDate(), formatter);    		
-	    		
-	    		if (now.isAfter(endDateTime)) {
-	    			car.setResult("Expired");
-	    			expiredCars.add(car);
-	    			showText = true;
-	    			car.setStatus(0);
-	    			carService.save(car);
-	    		}
-		 }
-	    
-		List<Car> list = carService.findByStatusAndCustomerId(1, customerId);
-	    
-	    model.addAttribute("showText", showText);
-	    model.addAttribute("expiredCars", expiredCars);
-		return new ModelAndView("carList","car",list);
-	}	
-			
-	@RequestMapping("/deleteCar/{id}")
-	public String deleteCar(@PathVariable("id") int id) {
-		Car car = carService.getCarId(id);
-		car.setResult("Canceled");
+		// Poliçenin süresinin bitip bitmediğini kontrol etme 
 		LocalDateTime now = LocalDateTime.now();
-		String end_date = now.format(formatter);
-		car.setEndDate(end_date);
-		car.setStatus(0);
-		carService.save(car);
-		return "redirect:/customerList";
+		for(Car car : cars) {
+			for (Insurance insurance : insurances) {
+		    	LocalDateTime endDateTime = LocalDateTime.parse(insurance.getEndDate(), formatter);    		
+		    		
+		    	if (now.isAfter(endDateTime)) {		    		
+		    		expiredCars.add(car);
+		    		model.addAttribute("showText", true);
+		    		insurance.setResult("Expired");
+		    		insuranceService.save(insurance);
+		    	}
+			}
+		}
+	    
+	    model.addAttribute("expiredCars", expiredCars);
+		return new ModelAndView("carList","car",cars);
 	}
 	
-	@GetMapping("/trafficInsuranceRefund/{id}")
-	public String trafficInsuranceRefund(@PathVariable("id") int id, Model model) {		
-		Car car = carService.getCarId(id);
+	@GetMapping("/seeCarInsuranceDetails/{id}")
+	public String seeCarInsuranceDetails(@PathVariable("id") int carId, Model model,
+			RedirectAttributes redirectAttributes) {
+
+		List<Insurance> insurances = insuranceService.findByStatusAndCarId(1, carId);
+		for (Insurance insurance : insurances) {
+			insuranceService.save(insurance);
+			model.addAttribute("insuranceId", insurance.getInsuranceId());
+			model.addAttribute("period", insurance.getPeriod());
+		}
+
+		if (insurances.isEmpty()) {
+			model.addAttribute("showAbsent", true);
+			model.addAttribute("insurance", insurances);
+			return "seeCarInsuranceDetails";
+		}
+
+		model.addAttribute("carId", carId);
+		model.addAttribute("insurance", insurances);
+		return "seeCarInsuranceDetails";
+	}
+	
+	@PostMapping("/renewCarInsurance/{insuranceId}")
+	public String renewHomeInsurance(@PathVariable("insuranceId") int insuranceId, @RequestParam("period") int period,
+			Model model) {
+		Insurance oldInsurance = insuranceService.getInsuranceById(insuranceId);
+		Car car = carService.getCarId(oldInsurance.getCarId());
+		Customer customer = customerService.getCustomerById(car.getCustomerId());
+
+		// Devam eden bir sigorta var mı kontrolü
+		List<Insurance> insurances = insuranceService.findByStatusAndResultAndCarId(1, "Accepted", oldInsurance.getCarId());
+		if (!insurances.isEmpty()) {
+			model.addAttribute("showText", true);
+			model.addAttribute("insurance", insurances);
+			return "seeCarInsuranceDetails";
+		}
+
+		Insurance newInsurance = new Insurance();
+		LocalDateTime now = LocalDateTime.now();
+		LocalDateTime endDate = now.plusDays(newInsurance.getPeriod());
+
+		Kdv kdv = kdvService.getProductTypeById(2);
+		int kdvRate = kdv.getKdvRate();
+		LocalDate birthDate = LocalDate.parse(customer.getBirth());
+		LocalDate currentDate = LocalDate.now();
+        int age = Period.between(birthDate, currentDate).getYears();
+		double offer = CalculateMethods.calculateCarInsurance(car, age, kdvRate);
+	
+		newInsurance.setInsuranceType(oldInsurance.getInsuranceType());
+		newInsurance.setCustomerId(oldInsurance.getCustomerId());
+		newInsurance.setCarId(oldInsurance.getCarId());
+		newInsurance.setStartDate(now.format(formatter));
+		newInsurance.setEndDate(endDate.format(formatter));
+		newInsurance.setOffer(offer);
+		newInsurance.setStatus(oldInsurance.getStatus());
+		newInsurance.setResult("Accepted");
+
+		// Kullancıdan alınan yeni periyodu set edilmektedir
+		car.setPeriod(period);
+		carService.save(car);
+
+		newInsurance.setPeriod(period); 
+		insuranceService.save(newInsurance);
+
+		model.addAttribute(customer);
+		model.addAttribute("insurance", newInsurance);
+		model.addAttribute(car);
+		return "trafficInsuranceCalculate";
+	}
+	
+	@GetMapping("/carInsuranceRefund/{insuranceId}")
+	public String carInsuranceRefund(@PathVariable("insuranceId") int insuranceId, Model model, RedirectAttributes redirectAttributes) {
+		
+		Insurance insurance = insuranceService.getInsuranceById(insuranceId);
+		Car car = carService.getCarId(insurance.getCarId());
+
+		if (insurance.getResult().equals("Canceled") || insurance.getResult().equals("Expired")) {
+			redirectAttributes.addFlashAttribute("showAlert", true);
+			return "redirect:/seeCarInsuranceDetails/" + insurance.getCarId();
+		}
+
+		LocalDateTime now = LocalDateTime.now();
+		String end_date = now.format(formatter);
+		LocalDateTime startingDateTime = LocalDateTime.parse(insurance.getStartDate(), formatter);
+		LocalDateTime endDateTime = LocalDateTime.parse(end_date, formatter);
+
+		Duration duration = Duration.between(startingDateTime, endDateTime);
+		int daysDiff = (int) duration.toDays(); 
+
+		insurance.setDaysDiff(daysDiff);
+		int remainingDay = insurance.getPeriod() - daysDiff; 
+		double refund = (insurance.getOffer() / insurance.getPeriod()) * remainingDay; 
+		insurance.setRefund(refund);
+		model.addAttribute(refund);
+		insuranceService.save(insurance);
+
+		Kdv kdv = kdvService.getProductTypeById(2);
+
+		model.addAttribute(kdv);
+		model.addAttribute(insurance);
+		model.addAttribute(car);
+		return "carInsuranceRefund";
+	}
+	
+	@RequestMapping("/deleteCarInsurance/{id}")
+	public String deleteCarInsurance(@PathVariable("id") int id, Model model) {
+		
+		Insurance insurance = insuranceService.getInsuranceById(id);
+		insurance.setResult("Canceled");
+		LocalDateTime now = LocalDateTime.now();
+		String end_date = now.format(formatter);
+		insurance.setEndDate(end_date);
+		insuranceService.save(insurance);
+		return "redirect:/seeCarInsuranceDetails/" + insurance.getCarId();
+	}
+			
+	@RequestMapping("/deleteCar/{id}")
+	public String deleteCar(@PathVariable("id") int carId) {
+		Car car = carService.getCarId(carId);
+		
+		List<Insurance> insurances = insuranceService.findByStatusAndCarId(1, carId);
+		if (!(insurances.isEmpty())) {
+			for (Insurance insurance : insurances) {
+				insurance.setStatus(0);
+				insurance.setResult("Canceled");
+				LocalDateTime now = LocalDateTime.now();
+				insurance.setEndDate(now.format(formatter));
+				insuranceService.save(insurance);
+			}
+		}
+		car.setStatus(0);
+		carService.save(car);
+
+		return "redirect:/carList/" + car.getCustomerId();
+	}
+	
+	@GetMapping("/trafficInsuranceRefund/{insuranceId}")
+	public String trafficInsuranceRefund(@PathVariable("insuranceId") int insuranceId, Model model, RedirectAttributes redirectAttributes) {		
+		
+		Insurance insurance = insuranceService.getInsuranceById(insuranceId);
+		Car car = carService.getCarId(insurance.getCarId());
+
+		if (insurance.getResult().equals("Canceled") || insurance.getResult().equals("Expired")) {
+			redirectAttributes.addFlashAttribute("showAlert", true);
+			return "redirect:/seeCarInsuranceDetails/" + insurance.getCarId();
+		}
 		
 		LocalDateTime now = LocalDateTime.now();
 		String end_date = now.format(formatter);
-		LocalDateTime startingDateTime = LocalDateTime.parse(car.getStartDate(), formatter);
+		LocalDateTime startingDateTime = LocalDateTime.parse(insurance.getStartDate(), formatter);
 		LocalDateTime endDateTime = LocalDateTime.parse(end_date, formatter);
 
 		Duration duration = Duration.between(startingDateTime, endDateTime);
 		int daysDiff = (int) duration.toDays();	
 
-		car.setDaysDiff(daysDiff);
-		int remainingDay = car.getPeriod() - daysDiff;				
-		double refund = (car.getOffer() / car.getPeriod()) * remainingDay;
-		car.setRefund(refund);
+		insurance.setDaysDiff(daysDiff);
+		int remainingDay = insurance.getPeriod() - daysDiff;				
+		double refund = (insurance.getOffer() / insurance.getPeriod()) * remainingDay;
+		insurance.setRefund(refund);
 		model.addAttribute(refund);
-		carService.save(car);
+		insuranceService.save(insurance);
 		
 		Kdv kdv = kdvService.getProductTypeById(1);
 
-		model.addAttribute(kdv);		
+		model.addAttribute(kdv);
+		model.addAttribute(insurance);
 		model.addAttribute(car);
 		return "trafficInsuranceRefund";
 	}
 	
 	@PostMapping("/result")
-    public String result(@RequestParam("carId") int carId, @RequestParam("result") String result) {
-        Car car = carService.getCarId(carId);
-        
-        if (car != null) {
-            // result değerine göre result sütununu güncelle
-        	car.setResult(result);  
-        	
-        	//Poliçeyi iptal ettiyse iptal etme tarihi yazdırılmaktadır
-        	if(car.getResult().equals("Canceled")) {
-        		LocalDateTime now = LocalDateTime.now();
-        		String end_date = now.format(formatter);
-        		car.setEndDate(end_date);
-        	}
-        	carService.save(car);
-        }
+    public String result(@RequestParam("insuranceId") int insuranceId, @RequestParam("result") String result) {
+		Insurance insurance = insuranceService.getInsuranceById(insuranceId);
 
-        return "redirect:/customerList";
+		if (insurance != null) {
+			// result değerine göre result sütununu güncelle
+			insurance.setResult(result);
+
+			// Poliçeyi iptal ettiyse iptal etme tarihi yazdırılmaktadır
+			if (insurance.getResult().equals("Canceled")) {
+				LocalDateTime now = LocalDateTime.now();
+				String end_date = now.format(formatter);
+				insurance.setEndDate(end_date);
+			}
+			insuranceService.save(insurance);
+		}
+
+		return "redirect:/seeCarInsuranceDetails/" + insurance.getCarId();
     }
 
 }

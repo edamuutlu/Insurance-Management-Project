@@ -25,8 +25,8 @@ class CarServiceTest {
 	private CarService carService;
 	
 	private List<Car> dummyCars = Stream.of(
-            new Car(34, "vs", 1234, "Car", "Private", "Audi", "Petrol", 2, 5, 1, 6000, "Accepted", 1, 30, "17/05/2023 13:27:29", 0, 0, "17/06/2023 13:27:30", 10),
-            new Car(34, "vs", 5678, "Car", "Private", "Audi", "Petrol", 2, 5, 1, 8000, "Accepted", 1, 30, "17/05/2023 13:00:00", 0, 0, "17/06/2023 13:00:00", 10)
+            new Car(1, 1, 34, "vs", 1234, "Car", "Private", "Audi", "Petrol", 2, 5, 30, 1),
+            new Car(1, 1, 34, "vs", 5678, "Car", "Private", "Audi", "Petrol", 2, 5, 30, 1)
     ).collect(Collectors.toList());
 
 	@Test
@@ -55,7 +55,7 @@ class CarServiceTest {
 	// CarService Sınıfındaki Metotların Testleri
 		@Test
 		public void saveCarTest() {
-			 Car car = new Car(34, "vs", 1234, "Car", "Private", "Audi", "Petrol", 2, 5, 1, 6000, "Accepted", 1, 30, "17/05/2023 13:27:29", 0, 0, "17/06/2023 13:27:30", 10);
+			 Car car = new Car(1, 1, 34, "vs", 1234, "Car", "Private", "Audi", "Petrol", 2, 5, 30, 1);
 			 carService.save(car);
 			 verify(carService, times(1)).save(car);
 		}
@@ -64,8 +64,8 @@ class CarServiceTest {
 		@Test
 		public void getAllCarsTest() {
 			when(carService.getAllCars()).thenReturn(Stream
-					.of(new Car(34, "vs", 1234, "Car", "Private", "Audi", "Petrol", 2, 5, 1, 6000, "Accepted", 1, 30, "17/05/2023 13:27:29", 0, 0, "17/06/2023 13:27:30", 10), 
-							(new Car(34, "vs", 5678, "Car", "Private", "Audi", "Petrol", 2, 5, 1, 8000, "Accepted", 1, 30, "17/05/2023 13:00:00", 0, 0, "17/06/2023 13:00:00", 10))).collect(Collectors.toList()));
+					.of(new Car(1, 1, 34, "vs", 1234, "Car", "Private", "Audi", "Petrol", 2, 5, 30, 1), 
+							(new Car(1, 1, 34, "vs", 5678, "Car", "Private", "Audi", "Petrol", 2, 5, 30, 1))).collect(Collectors.toList()));
 			assertEquals(2, carService.getAllCars().size());
 		}
 		// Yöntem 2
@@ -109,19 +109,19 @@ class CarServiceTest {
 	    @Test
 	    public void findByStatusAndPlate1AndPlate2AndPlate3AndResult() {
 	        int status = 1;
-	        when(carService.findByStatusAndPlate1AndPlate2AndPlate3AndResult(status, 34, "vs", 1234, "Accepted")).thenReturn(dummyCars);
-	        List<Car> result = carService.findByStatusAndPlate1AndPlate2AndPlate3AndResult(status, 34, "vs", 1234, "Accepted");
+	        when(carService.findByStatusAndPlate1AndPlate2AndPlate3(status, 34, "vs", 1234)).thenReturn(dummyCars);
+	        List<Car> result = carService.findByStatusAndPlate1AndPlate2AndPlate3(status, 34, "vs", 1234);
 	        assertEquals(dummyCars, result);
-	        verify(carService, times(1)).findByStatusAndPlate1AndPlate2AndPlate3AndResult(status, 34, "vs", 1234, "Accepted");
+	        verify(carService, times(1)).findByStatusAndPlate1AndPlate2AndPlate3(status, 34, "vs", 1234);
 	    }
 	    
 	    @Test
 	    public void findByStatusAndCustomerIdAndResult() {
 	        int status = 1;
-	        when(carService.findByStatusAndCustomerIdAndResult(status, 1, "Accepted")).thenReturn(dummyCars);
-	        List<Car> result = carService.findByStatusAndCustomerIdAndResult(status, 1, "Accepted");
+	        when(carService.findByStatusAndCustomerId(status, 1)).thenReturn(dummyCars);
+	        List<Car> result = carService.findByStatusAndCustomerId(status, 1);
 	        assertEquals(dummyCars, result);
-	        verify(carService, times(1)).findByStatusAndCustomerIdAndResult(status, 1, "Accepted");
+	        verify(carService, times(1)).findByStatusAndCustomerId(status, 1);
 	    }
 
 }

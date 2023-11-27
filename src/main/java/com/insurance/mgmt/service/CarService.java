@@ -34,11 +34,8 @@ public class CarService {
         return carRepository.findByStatusAndCustomerId(status, customerId);
     }
 
-    public List<Car> findByStatusAndPlate1AndPlate2AndPlate3AndResult(int status, int plate1, String plate2, int plate3, String result) {
-        return carRepository.findByStatusAndPlate1AndPlate2AndPlate3AndResult(status, plate1, plate2, plate3, result);
+    public List<Car> findByStatusAndPlate1AndPlate2AndPlate3(int status, int plate1, String plate2, int plate3) {
+        return carRepository.findByStatusAndPlate1AndPlate2AndPlate3(status, plate1, plate2, plate3);
     }
 
-    public List<Car> findByStatusAndCustomerIdAndResult(int status, int customerId, String result) {
-        return carRepository.findByStatusAndCustomerIdAndResult(status, customerId, result);
-    }
 }
