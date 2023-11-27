@@ -11,13 +11,6 @@ import com.insurance.mgmt.entity.Customer;
 @Repository
 public interface ICustomerRepository extends JpaRepository<Customer,Integer>{ 
 	
-<<<<<<< HEAD
-	//Nuri
-	//Eda123
-=======
-	//Nuri21312
-	//Eda
->>>>>>> 40e2faab350bc05977f886a23df0f3832eaa914a
 	@Query("FROM Customer WHERE status=?1")
 	List<Customer> findByStatus(int status);
 	
