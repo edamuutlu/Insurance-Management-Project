@@ -152,29 +152,26 @@ public class CustomerController {
 			
 			return "customerRegister";
 		}
-//
-//		// Aynı TC numaralı ve email adresli kullanıcı kontrolü
-//		List<Customer> sameTcList = customerService.findByStatusAndTc(1, customer.getTc());
-//		List<Customer> sameEmailList = customerService.findByStatusAndEmail(1, customer.getEmail());
-//
-//		boolean showTcAlert = !sameTcList.isEmpty();
-//		boolean showEmailAlert = !sameEmailList.isEmpty();
-//
-//		if (showTcAlert || showEmailAlert) {
-//		    model.addAttribute("showTcAlert", showTcAlert);
-//		    model.addAttribute("showEmailAlert", showEmailAlert);
-//		    model.addAttribute("getAllProvinces", getAllProvinces);
-//		    model.addAttribute("getAllDistricts", getAllDistricts);
-//		    return "customerRegister";
-//		} else {
-//		    customer.setStatus(1);
-//		    customerService.save(customer);
-//		    return "redirect:customerList";
-//		}
-		System.out.println(customer);
-		customer.setStatus(1);
-	    customerService.save(customer);
-		 return "redirect:customerList";
+
+		// Aynı TC numaralı ve email adresli kullanıcı kontrolü
+		List<Customer> sameTcList = customerService.findByStatusAndTc(1, customer.getTc());
+		List<Customer> sameEmailList = customerService.findByStatusAndEmail(1, customer.getEmail());
+
+		boolean showTcAlert = !sameTcList.isEmpty();
+		boolean showEmailAlert = !sameEmailList.isEmpty();
+
+		if (showTcAlert || showEmailAlert) {
+		    model.addAttribute("showTcAlert", showTcAlert);
+		    model.addAttribute("showEmailAlert", showEmailAlert);
+		    model.addAttribute("getAllProvinces", getAllProvinces);
+		    model.addAttribute("getAllDistricts", getAllDistricts);
+		    return "customerRegister";
+		} else {
+		    customer.setStatus(1);
+		    customerService.save(customer);
+		    return "redirect:customerList";
+		}
+		
 	}
 
 	@PostMapping("/save")

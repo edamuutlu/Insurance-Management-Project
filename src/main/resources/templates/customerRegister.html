@@ -231,15 +231,10 @@
 							<button class="btn btn-submit">Submit</button>
 						</div>
 						<!-- alert -->
-						<div ng-show="msg" class="alert alert-warning" role="alert">
-							{{msg}}
-							<div class="alert alert-warning" role="alert" th:if="${showTcAlert}"> This TC number is
-								already
-								registered! </div>
-							<div class="alert alert-warning" role="alert" th:if="${showEmailAlert}"> This Email address
-								is already
-								registered! </div>
-						</div>
+						<div class="alert alert-warning" role="alert" th:if="${showTcAlert}" ng-show="${!showTcAlert}"> This TC number is already
+						registered! </div>
+						<div class="alert alert-warning" role="alert" th:if="${showEmailAlert}" ng-show="${!showTcAlert}"> This Email address is already
+						registered! </div>
 						
 						<script th:inline="javascript">
 							var districtList = /*[[${getAllDistricts}]]*/[];
