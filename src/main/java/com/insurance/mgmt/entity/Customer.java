@@ -53,6 +53,18 @@ public class Customer {
 	@Length(min = 2, message = "Name must be at least 2 characters")
 	private String lastname;
 	
+	@Column(name="username")
+	@NotBlank(message = "Enter your username.")
+	private String username;
+	
+	@Column(name="password")
+	@NotBlank(message = "Enter your password.")
+	private String password;
+	
+	@Column(name="phoneNumber")
+	@NotBlank(message = "Enter your phoneNumber.")
+	private String phoneNumber;
+	
 	@Column(name="province")
 	@NotBlank(message = "Enter your province.")
 	private String province;
@@ -70,7 +82,7 @@ public class Customer {
 	}
 
 	public Customer(int customerId, String tc, String birth, String email, String firstname, String lastname,
-			String province, String district, int status) {
+			String username, String password, String phoneNumber, String province, String district, int status) {
 		super();
 		this.customerId = customerId;
 		this.tc = tc;
@@ -78,6 +90,9 @@ public class Customer {
 		this.email = email;
 		this.firstname = firstname;
 		this.lastname = lastname;
+		this.username = username;
+		this.password = password;
+		this.phoneNumber = phoneNumber;
 		this.province = province;
 		this.district = district;
 		this.status = status;
@@ -131,6 +146,30 @@ public class Customer {
 		this.lastname = lastname;
 	}
 
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
 	public String getProvince() {
 		return province;
 	}
@@ -158,11 +197,11 @@ public class Customer {
 	@Override
 	public String toString() {
 		return "Customer [customerId=" + customerId + ", tc=" + tc + ", birth=" + birth + ", email=" + email
-				+ ", firstname=" + firstname + ", lastname=" + lastname + ", province=" + province + ", district="
-				+ district + ", status=" + status + "]";
+				+ ", firstname=" + firstname + ", lastname=" + lastname + ", username=" + username + ", password="
+				+ password + ", phoneNumber=" + phoneNumber + ", province=" + province + ", district=" + district
+				+ ", status=" + status + "]";
 	}
 
-	
 
 //	@OneToMany(targetEntity = Customer.class, cascade = CascadeType.ALL)
 //	@JoinColumn(name = "customer_id", referencedColumnName = "customer_id", nullable = true)

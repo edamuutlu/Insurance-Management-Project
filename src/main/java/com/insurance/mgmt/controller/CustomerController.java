@@ -88,6 +88,18 @@ public class CustomerController {
 		model.addAttribute("customerId", id);
 		return "home";
 	}
+	
+	@GetMapping("/customerRegister")
+	public String customerRegister(@ModelAttribute Customer customer, Model model) {
+		
+		List<Province> getAllProvinces = provinceService.listAll();
+		List<District> getAllDistricts = districtService.listAll();
+
+        model.addAttribute("getAllProvinces", getAllProvinces);
+        model.addAttribute("getAllDistricts", getAllDistricts);
+
+		return "customerRegister";
+	}
 
 	@GetMapping("/customerRegisterForm")
 	public String customerRegisterForm(@ModelAttribute Customer customer, Model model) {
@@ -125,40 +137,42 @@ public class CustomerController {
 		return "redirect:/customerList";				
 	}
 
-	@PostMapping("/customerRegisterForm")
-	public String customerRegisterForm(@Valid @ModelAttribute Customer customer,
+	@PostMapping("/customerRegister")
+	public String customerRegister(@Valid @ModelAttribute Customer customer,
 			BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
 		List<Province> getAllProvinces = provinceService.listAll();
 		List<District> getAllDistricts = districtService.listAll();
 		
-		if (bindingResult.hasErrors()) {
-			log.info(">> Customer : {}", customer.toString());
-			
-	        model.addAttribute("getAllProvinces", getAllProvinces);
-	        model.addAttribute("getAllDistricts", getAllDistricts);
-			
-			return "customerRegisterForm";
-		}
-
-		// Aynı TC numaralı ve email adresli kullanıcı kontrolü
-		List<Customer> sameTcList = customerService.findByStatusAndTc(1, customer.getTc());
-		List<Customer> sameEmailList = customerService.findByStatusAndEmail(1, customer.getEmail());
-
-		boolean showTcAlert = !sameTcList.isEmpty();
-		boolean showEmailAlert = !sameEmailList.isEmpty();
-
-		if (showTcAlert || showEmailAlert) {
-		    model.addAttribute("showTcAlert", showTcAlert);
-		    model.addAttribute("showEmailAlert", showEmailAlert);
-		    model.addAttribute("getAllProvinces", getAllProvinces);
-		    model.addAttribute("getAllDistricts", getAllDistricts);
-		    return "customerRegisterForm";
-		} else {
-		    customer.setStatus(1);
-		    customerService.save(customer);
-		    return "redirect:customerList";
-		}
-
+//		if (bindingResult.hasErrors()) {
+//			log.info(">> Customer : {}", customer.toString());
+//			
+//	        model.addAttribute("getAllProvinces", getAllProvinces);
+//	        model.addAttribute("getAllDistricts", getAllDistricts);
+//			
+//			return "customerRegister";
+//		}
+//
+//		// Aynı TC numaralı ve email adresli kullanıcı kontrolü
+//		List<Customer> sameTcList = customerService.findByStatusAndTc(1, customer.getTc());
+//		List<Customer> sameEmailList = customerService.findByStatusAndEmail(1, customer.getEmail());
+//
+//		boolean showTcAlert = !sameTcList.isEmpty();
+//		boolean showEmailAlert = !sameEmailList.isEmpty();
+//
+//		if (showTcAlert || showEmailAlert) {
+//		    model.addAttribute("showTcAlert", showTcAlert);
+//		    model.addAttribute("showEmailAlert", showEmailAlert);
+//		    model.addAttribute("getAllProvinces", getAllProvinces);
+//		    model.addAttribute("getAllDistricts", getAllDistricts);
+//		    return "customerRegister";
+//		} else {
+//		    customer.setStatus(1);
+//		    customerService.save(customer);
+//		    return "redirect:customerList";
+//		}
+		customer.setStatus(1);
+	    customerService.save(customer);
+		 return "redirect:customerList";
 	}
 
 	@PostMapping("/save")

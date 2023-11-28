@@ -147,4 +147,31 @@ myApp.controller("healthInsuranceFormController", ["$scope", function($scope) {
 
 }]);
 
+myApp.controller("registerFormController", ["$scope", function($scope){
+
+    $scope.register = function(){
+        $scope.msg = "This is a warning alert—check it out!";
+    }
+
+}]);
+
+function togglePasswordVisibility() {
+    var password = document.getElementById("password");
+    var hideIcon = document.getElementById("hideIcon");
+    var showIcon = document.getElementById("showIcon");
+
+    // Check the current type of the password input
+    if (password.type === "password") {
+        password.type = "text";
+        showIcon.style.display = "none";
+        hideIcon.style.display = "inline-block";
+    } else {
+        password.type = "password";
+        showIcon.style.display = "inline-block";
+        hideIcon.style.display = "none";
+    }
+}
+
+
+
 

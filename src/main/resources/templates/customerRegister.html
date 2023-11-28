@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Customer Registration Form</title>
+	<!-- Bootsrapt -->
+	<link rel="stylesheet" href="" th:href="@{/css/bootstrap.min.css}">
+	<!-- İcon -->
+	<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+	<!-- CSS -->
+	<link rel="stylesheet" th:href="@{/css/register.css}" href="src/main/resources/static/css/register.css">
+	<!-- Angularjs -->
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+	<!-- jQuery -->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script th:src="@{/js/custom.js}"></script>
+
+	<script>
+		$(document).ready(function () {
+			$("#province").change(function () {
+				var provinceId = $("#province").val();
+				$("#district").empty();
+
+				// İlk olarak "Select District" seçeneğini ekliyoruz
+				var defaultOption = $("<option>").val("").text("Select District*");
+				$("#district").append(defaultOption);
+
+				for (var i = 0; i < districtList.length; i++) {
+					if (districtList[i].sehirid == provinceId) {
+						var option = $("<option>").val(districtList[i].id).text(districtList[i].ilceadi);
+						$("#district").append(option);
+					}
+				}
+			});
+		});
+	</script>
+</head>
+
+<body ng-app="myApp" ng-controller="registerFormController">
+	<div class="page-wrapper bg-gra-02">
+		<div class="wrapper">
+			<div class="card">
+				<div class="card-body">
+					<h2 class="title">Customer Registration Form</h2>
+					<form th:action="@{/customerRegister}" th:object="${customer}" method="post" ng-submit="register()"
+						name="myForm">
+
+						<!-- Fist -Last Name -->
+						<div class="row">
+							<div class="col-2">
+								<div class="input-group">
+									<label class="label">
+										<div class="txt">First Name</div>
+										<div class="warning"
+											ng-show="myForm.firstname.$invalid && myForm.firstname.$touched">
+											<i class='bx bxs-error-alt'></i>
+											<p>Required</p>
+										</div>
+									</label>
+									<input type="text" ng-model="firstname" ng-required="true" class="input-4"
+										id="firstname">
+								</div>
+							</div>
+							<div class="col-2">
+								<div class="input-group">
+									<label class="label">
+										<div class="txt">Last Name</div>
+										<div class="warning"
+											ng-show="myForm.lastname.$invalid && myForm.lastname.$touched">
+											<i class='bx bxs-error-alt'></i>
+											<p>Required</p>
+										</div>
+									</label>
+									<input type="text" ng-model="lastname" ng-required="true" class="input-4"
+										id="lastname">
+								</div>
+							</div>
+						</div>
+						<!-- Tc - Email -->
+						<div class="row">
+							<div class="col-2">
+								<div class="input-group">
+									<label class="label">
+										<div class="txt">T.C.</div>
+										<div class="warning" ng-show="myForm.tc.$invalid && myForm.tc.$touched">
+											<i class='bx bxs-error-alt'></i>
+											<p>Required</p>
+										</div>
+									</label>
+									<input type="number" ng-model="tc" ng-required="true" class="input-4" id="tc">
+								</div>
+							</div>
+							<div class="col-2">
+								<div class="input-group">
+									<label class="label">
+										<div class="txt">Email</div>
+										<div class="warning" ng-show="myForm.email.$invalid && myForm.email.$touched">
+											<i class='bx bxs-error-alt'></i>
+											<p>Required</p>
+										</div>
+									</label>
+									<input type="email" ng-model="email" ng-required="true" class="input-4" id="email">
+								</div>
+							</div>
+						</div>
+						<!-- Username - Password -->
+						<div class="row">
+							<div class="col-2">
+								<div class="input-group">
+									<label class="label">
+										<div class="txt">Username</div>
+										<div class="warning"
+											ng-show="myForm.username.$invalid && myForm.username.$touched">
+											<i class='bx bxs-error-alt'></i>
+											<p>Required</p>
+										</div>
+									</label>
+									<input type="text" ng-model="username" ng-required="true" class="input-4"
+										id="username">
+								</div>
+							</div>
+							<div class="col-2">
+								<div class="input-group">
+									<label class="label">
+										<div class="txt">Password</div>
+										<div class="warning"
+											ng-show="myForm.password.$invalid && myForm.password.$touched">
+											<i class='bx bxs-error-alt'></i>
+											<p>Required</p>
+										</div>
+									</label>
+									<input type="password" ng-model="password" ng-required="true" id="password"
+										class="input-4" name="password">
+									<button type="button" class="hide-pass" onclick="togglePasswordVisibility()">
+										<i class='bx bxs-hide' id="hideIcon" style="display: none;"></i>
+										<i class='bx bx-show' id="showIcon"></i>
+									</button>
+								</div>
+							</div>
+						</div>
+						<!-- Birthday - Phone Number -->
+						<div class="row">
+							<div class="col-2">
+								<div class="input-group">
+									<label class="label">
+										<div class="txt">Birthday</div>
+										<div class="warning" ng-show="myForm.birth.$invalid && myForm.birth.$touched">
+											<i class='bx bxs-error-alt'></i>
+											<p>Required</p>
+										</div>
+									</label>
+									<input type="date" ng-model="birth" ng-required="true" class="input-4" name="birth"
+										id="birth">
+								</div>
+							</div>
+							<div class="col-2">
+								<div class="input-group">
+									<label class="label">
+										<div class="txt">Phone Number</div>
+										<div class="warning"
+											ng-show="myForm.phoneNumber.$invalid && myForm.phoneNumber.$touched">
+											<i class='bx bxs-error-alt'></i>
+											<p>Required</p>
+										</div>
+									</label>
+									<input type="number" ng-model="phoneNumber" ng-required="true" class="input-4"
+										name="phoneNumber" id="phoneNumber">
+								</div>
+							</div>
+						</div>
+						<!-- Select İl - İlçe -->
+						<div class="row">
+							<div class="col-2">
+								<div class="input-group">
+									<label class="label">
+										<div class="txt">Province</div>
+										<div class="warning"
+											ng-show="myForm.province.$error.required && myForm.province.$touched">
+											<i class='bx bxs-error-alt'></i>
+											<p>Required</p>
+										</div>
+									</label>
+									<select class="form-select" name="province" id="province" ng-model="province"
+										ng-required="true" aria-label="Default select example">
+										<option value="" th:selected="${#fields.hasErrors('province')}">Select Province*
+										</option>
+										<option th:each="province : ${getAllProvinces}" th:value="${province.id}"
+											th:text="${province.sehiradi}"></option>
+									</select>
+									<p th:if="${#fields.hasErrors('province')}" th:errorclass="error"
+										th:errors="*{province}" />
+								</div>
+							</div>
+							<div class="col-2">
+								<div class="input-group">
+									<label class="label">
+										<div class="txt">District</div>
+										<div class="warning"
+											ng-show="myForm.district.$error.required && myForm.district.$touched">
+											<i class='bx bxs-error-alt'></i>
+											<p>Required</p>
+										</div>
+									</label>
+									<select class="form-select" name="district" id="district" ng-model="district"
+										ng-required="true" aria-label="Default select example">
+										<option value="" th:selected="${#fields.hasErrors('district')}">Select District*
+										</option>
+									</select>
+									<p th:if="${#fields.hasErrors('district')}" th:errorclass="error"
+										th:errors="*{district}" />
+								</div>
+							</div>
+						</div>
+						<!-- Kabul Metni -->
+						<div class="agree">
+							<label>
+								<input type="checkbox" name="terms" ng-model="terms" ng-required="true" tabindex="1">
+								<span class="terms-text">I understand and agree to the
+									<span>Formstack Privacy Policy</span>,
+									<span>Software Services Agreement</span>
+									and
+									<span>Acceptable Use Policy</span>.
+								</span>
+							</label>
+							<span class="termsValid" ng-show="myForm.terms.$error.required">* Please agree to the terms
+								and conditions.</span>
+						</div>
+						<!-- Submit -->
+						<div class="button">
+							<button class="btn btn-submit">Submit</button>
+						</div>
+						<!-- alert -->
+						<div ng-show="msg" class="alert alert-warning" role="alert">
+							{{msg}}
+							<div class="alert alert-warning" role="alert" th:if="${showTcAlert}"> This TC number is
+								already
+								registered! </div>
+							<div class="alert alert-warning" role="alert" th:if="${showEmailAlert}"> This Email address
+								is already
+								registered! </div>
+						</div>
+						
+						<script th:inline="javascript">
+							var districtList = /*[[${getAllDistricts}]]*/[];
+						</script>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="/js/app.js"></script>
+
+</body>
+
+</html>
