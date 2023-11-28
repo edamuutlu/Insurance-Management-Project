@@ -44,20 +44,20 @@ myApp.controller("homeController", ["$scope", "$http", function($scope) {
 }]);
 
 
-myApp.controller("registerCustomerFormController", ["$scope", function($scope) {
-
-	$scope.register = function() {
-		$scope.msg = "Welcome " + $scope.firstname + "! You have signed in.";
-
-	};
-
-	var today = new Date();
-	today.setFullYear(today.getFullYear() - 18); // Bugünden 18 yıl önceki tarih
-
-	var birthInput = document.getElementById("birth");
-	birthInput.setAttribute("max", today.toISOString().split("T")[0]);
-
-}]);
+//myApp.controller("registerCustomerFormController", ["$scope", function($scope) {
+//
+//	$scope.register = function() {
+//		$scope.msg = "Welcome " + $scope.firstname + "! You have signed in.";
+//
+//	};
+//
+//	var today = new Date();
+//	today.setFullYear(today.getFullYear() - 18); // Bugünden 18 yıl önceki tarih
+//
+//	var birthInput = document.getElementById("birth");
+//	birthInput.setAttribute("max", today.toISOString().split("T")[0]);
+//
+//}]);
 
 myApp.controller("trafficInsuranceFormController", ["$scope", function($scope) {
 
@@ -152,6 +152,12 @@ myApp.controller("registerFormController", ["$scope", function($scope){
     $scope.register = function(){
         $scope.msg = "This is a warning alert—check it out!";
     }
+    
+    var today = new Date();
+	today.setFullYear(today.getFullYear() - 18); // Bugünden 18 yıl önceki tarih
+
+	var birthInput = document.getElementById("birth");
+	birthInput.setAttribute("max", today.toISOString().split("T")[0]);
 
 }]);
 

@@ -163,10 +163,10 @@
 											ng-show="myForm.phoneNumber.$invalid && myForm.phoneNumber.$touched">
 											<i class='bx bxs-error-alt'></i>
 											<p>Required</p>
-										</div>
+										</div> 
 									</label>
-									<input type="number" ng-model="phoneNumber" ng-required="true" class="input-4"
-										name="phoneNumber" id="phoneNumber">
+									<input type="text" ng-model="phoneNumber" ng-required="true" class="input-4"
+										name="phoneNumber" id="phoneNumber" onKeyPress="if(this.value.length==11) return false;">
 								</div>
 							</div>
 						</div>
