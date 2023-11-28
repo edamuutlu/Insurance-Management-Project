@@ -61,7 +61,7 @@ public class Customer {
 	@NotBlank(message = "Enter your password.")
 	private String password;
 	
-	@Column(name="phoneNumber")
+	@Column(name="phone_number")
 	@NotBlank(message = "Enter your phoneNumber.")
 	private String phoneNumber;
 	

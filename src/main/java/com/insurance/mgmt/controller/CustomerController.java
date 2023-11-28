@@ -143,14 +143,15 @@ public class CustomerController {
 		List<Province> getAllProvinces = provinceService.listAll();
 		List<District> getAllDistricts = districtService.listAll();
 		
-//		if (bindingResult.hasErrors()) {
-//			log.info(">> Customer : {}", customer.toString());
-//			
-//	        model.addAttribute("getAllProvinces", getAllProvinces);
-//	        model.addAttribute("getAllDistricts", getAllDistricts);
-//			
-//			return "customerRegister";
-//		}
+		if (bindingResult.hasErrors()) {
+			log.info(">> Customer : {}", customer.toString());
+			
+	        model.addAttribute("getAllProvinces", getAllProvinces);
+	        model.addAttribute("getAllDistricts", getAllDistricts);
+	        
+			
+			return "customerRegister";
+		}
 //
 //		// Aynı TC numaralı ve email adresli kullanıcı kontrolü
 //		List<Customer> sameTcList = customerService.findByStatusAndTc(1, customer.getTc());
@@ -170,6 +171,7 @@ public class CustomerController {
 //		    customerService.save(customer);
 //		    return "redirect:customerList";
 //		}
+		System.out.println(customer);
 		customer.setStatus(1);
 	    customerService.save(customer);
 		 return "redirect:customerList";
