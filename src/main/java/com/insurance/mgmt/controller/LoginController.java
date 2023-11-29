@@ -36,7 +36,7 @@ public class LoginController {
 		System.out.println(loggedCustomer);
 		System.out.println(customer);
 		
-		if(loggedCustomer == null) {
+		if(loggedCustomer == null || customer.getStatus()==0) {
 			model.addAttribute("showAbsentUserAlert", true);
 			return "login";
 		}else if(loggedCustomer.getPassword().equals(customer.getPassword())) {
