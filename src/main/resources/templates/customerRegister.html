@@ -110,11 +110,6 @@
 								<div class="input-group">
 									<label class="label">
 										<div class="txt">Email</div>
-										<div class="warning"
-											ng-show="myForm.email.$error.required && myForm.email.$touched">
-											<i class='bx bxs-error-alt'></i>
-											Required.
-										</div>
 										<div class="warning" ng-show="myForm.email.$invalid && myForm.email.$dirty">
 											<i class='bx bxs-error-alt'></i>
 											Enter a valid email address.
@@ -145,11 +140,6 @@
 								<div class="input-group">
 									<label class="label">
 										<div class="txt">Password</div>
-										<div class="warning"
-											ng-show="myForm.password.$invalid && myForm.password.$touched">
-											<i class='bx bxs-error-alt'></i>
-											<p>Required</p>
-										</div>
 										<div class="warning" ng-show="passwordError">
 											<i class='bx bxs-error-alt'></i>
 											<p>{{ passwordError }}</p>
@@ -235,6 +225,7 @@
 										ng-required="true" aria-label="Default select example">
 										<option value="" th:selected="${#fields.hasErrors('district')}">Select District*
 										</option>
+										<option ng-repeat="item in "> deneme </option>
 									</select>
 
 								</div>

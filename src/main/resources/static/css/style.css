@@ -1,37 +1,61 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
-
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
 body {
 	font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-size: 14px;
 }
 
-/* Navbar - Start*/
-
-.navbar {
-	font-size: 18px;
-	top: 0;
-	left: 0;
-	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+body .navbar {
+  height: 70px;
+  top: 0;
+  left: 0;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
 }
-
-.navbar-light .navbar-nav .nav-link {
-	padding: 0 20px;
-	color: black;
-	transition: 0.3s ease;
+body .navbar .operations {
+  display: flex;
 }
-
-.navbar-light .navbar-nav .nav-link:hover,
-.navbari:hover,
-.navbar-light .navbar-nav .nav-link.active,
-.nnavbari.active {
-	color: coral;
+body .navbar .operations a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  background-color: transparent;
+  font-size: 12px;
+  line-height: 24px;
+  margin-right: 10px;
+  padding: 0 13px;
+  vertical-align: middle;
+  color: #313131;
+  border: 1px solid rgba(49, 49, 49, 0.5019607843);
+  border-radius: 14px;
+  opacity: 0.8;
+  transition: 0.3s;
 }
-
-.navbar-light .navbar-toggler {
-	outline: none;
-	border: none;
+body .navbar .operations a:hover {
+  opacity: 1;
 }
-
-/* Navbar - end*/
+body .navbar .operations a .login-icon {
+  font-size: 20px;
+  color: #ed2d34;
+  margin-right: 5px;
+}
+body .navbar .operations a .register-icon {
+  font-size: 20px;
+  color: #ed9a2d;
+  margin-right: 5px;
+}
+body .navbar-light .navbar-nav .nav-link {
+  padding: 0 20px;
+  color: black;
+  transition: 0.3s ease;
+}
+body .navbar-light .navbar-nav .nav-link:hover {
+  color: coral;
+}
+body .navbar-light .navbar-toggler {
+  outline: none;
+  border: none;
+}
 
 .container-register {
 	display: block;
