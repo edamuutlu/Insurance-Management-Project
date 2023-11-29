@@ -19,4 +19,10 @@ public interface ICustomerRepository extends JpaRepository<Customer,Integer>{
 	
 	@Query("FROM Customer WHERE status=?1 and email=?2") // ?1 ve ?2 parametrelerin sırasını belirtmektedir
 	List<Customer> findByStatusAndEmail(int status, String email);
+
+	Customer findByUsername(String username);
+
+	List<Customer> findByStatusAndUsername(int status, String username);
+
+	
 }

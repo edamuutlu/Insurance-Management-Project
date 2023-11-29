@@ -225,7 +225,6 @@
 										ng-required="true" aria-label="Default select example">
 										<option value="" th:selected="${#fields.hasErrors('district')}">Select District*
 										</option>
-										<option ng-repeat="item in "> deneme </option>
 									</select>
 
 								</div>
@@ -255,6 +254,9 @@
 							registered! </div>
 						<div class="alert alert-warning" role="alert" th:if="${showEmailAlert}"
 							ng-show="${!showTcAlert}"> This Email address is already
+							registered! </div>
+						<div class="alert alert-warning" role="alert" th:if="${showUsernameAlert}"
+							ng-show="${!showUsernameAlert}"> This Username is already
 							registered! </div>
 
 						<script th:inline="javascript">

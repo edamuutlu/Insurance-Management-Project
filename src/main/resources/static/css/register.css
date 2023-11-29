@@ -9,11 +9,63 @@ body {
   font-weight: 500;
   font-size: 14px;
   overflow: hidden;
+  /* Navber start */
+  /* Navber start */
 }
 @media (max-width: 767px) {
   body {
     overflow: auto;
   }
+}
+body .navbar {
+  top: 0;
+  left: 0;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+body .navbar .operations {
+  display: flex;
+}
+body .navbar .operations a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  background-color: transparent;
+  font-size: 12px;
+  line-height: 24px;
+  margin-right: 10px;
+  padding: 0 13px;
+  vertical-align: middle;
+  color: #313131;
+  border: 1px solid rgba(49, 49, 49, 0.5019607843);
+  border-radius: 14px;
+  opacity: 0.8;
+  transition: 0.3s;
+}
+body .navbar .operations a:hover {
+  opacity: 1;
+}
+body .navbar .operations a .login-icon {
+  font-size: 20px;
+  color: #ed2d34;
+  margin-right: 5px;
+}
+body .navbar .operations a .register-icon {
+  font-size: 20px;
+  color: #ed9a2d;
+  margin-right: 5px;
+}
+body .navbar-light .navbar-nav .nav-link {
+  padding: 0 20px;
+  color: black;
+  transition: 0.3s ease;
+}
+body .navbar-light .navbar-nav .nav-link:hover {
+  color: coral;
+}
+body .navbar-light .navbar-toggler {
+  outline: none;
+  border: none;
 }
 body .page-wrapper {
   display: flex;
@@ -26,6 +78,13 @@ body .page-wrapper {
 body .page-wrapper .wrapper {
   max-width: 680px;
   margin: 0 auto;
+  padding-bottom: 5%;
+  padding-top: 1%;
+}
+@media (max-width: 767px) {
+  body .page-wrapper .wrapper {
+    padding: 1% 4%;
+  }
 }
 body .page-wrapper .wrapper .card .card-body {
   padding: 57px 65px;
@@ -228,9 +287,26 @@ body .page-wrapper .wrapper .card .card-body .button .btn-submit {
   transition: all 0.4s ease;
   cursor: pointer;
   font-size: 18px;
+  width: 100%;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
 }
 body .page-wrapper .wrapper .card .card-body .button .btn-submit:hover {
   background: #ff9d4c;
+}
+body .page-wrapper .wrapper .card .card-body .login__register {
+  font-size: 12px;
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+}
+body .page-wrapper .wrapper .card .card-body .login__register a {
+  color: #e9880b;
+  text-decoration: none;
+  padding-left: 5px;
+  font-weight: 500;
+}
+body .page-wrapper .wrapper .card .card-body .login__register a:hover {
+  text-decoration: underline;
 }
 body .page-wrapper .wrapper .card .card-body .alert {
   margin-top: 15px;

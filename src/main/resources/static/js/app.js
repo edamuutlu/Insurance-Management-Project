@@ -211,6 +211,14 @@ function togglePasswordVisibility() {
     }
 }
 
+myApp.controller("LoginController", ["$scope", function($scope){
+
+    $scope.login = function(){
+        $scope.msg = "Success Login!";
+    }
+
+}]);
+
 
 
 

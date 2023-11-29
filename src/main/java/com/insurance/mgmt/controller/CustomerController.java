@@ -101,17 +101,17 @@ public class CustomerController {
 		return "customerRegister";
 	}
 
-	@GetMapping("/customerRegisterForm")
-	public String customerRegisterForm(@ModelAttribute Customer customer, Model model) {
-		
-		List<Province> getAllProvinces = provinceService.listAll();
-		List<District> getAllDistricts = districtService.listAll();
-
-        model.addAttribute("getAllProvinces", getAllProvinces);
-        model.addAttribute("getAllDistricts", getAllDistricts);
-
-		return "customerRegisterForm";
-	}
+//	@GetMapping("/customerRegisterForm")
+//	public String customerRegisterForm(@ModelAttribute Customer customer, Model model) {
+//		
+//		List<Province> getAllProvinces = provinceService.listAll();
+//		List<District> getAllDistricts = districtService.listAll();
+//
+//        model.addAttribute("getAllProvinces", getAllProvinces);
+//        model.addAttribute("getAllDistricts", getAllDistricts);
+//
+//		return "customerRegisterForm";
+//	}
 
 	@GetMapping("/customerList")
 	public String customerList(Model model) {
@@ -156,13 +156,16 @@ public class CustomerController {
 		// Aynı TC numaralı ve email adresli kullanıcı kontrolü
 		List<Customer> sameTcList = customerService.findByStatusAndTc(1, customer.getTc());
 		List<Customer> sameEmailList = customerService.findByStatusAndEmail(1, customer.getEmail());
+		List<Customer> sameUsernameList = customerService.findByStatusAndUsername(1, customer.getUsername());
 
 		boolean showTcAlert = !sameTcList.isEmpty();
 		boolean showEmailAlert = !sameEmailList.isEmpty();
+		boolean showUsernameAlert = !sameUsernameList.isEmpty();
 
-		if (showTcAlert || showEmailAlert) {
+		if (showTcAlert || showEmailAlert || showUsernameAlert) {
 		    model.addAttribute("showTcAlert", showTcAlert);
 		    model.addAttribute("showEmailAlert", showEmailAlert);
+		    model.addAttribute("showUsernameAlert", showUsernameAlert);
 		    model.addAttribute("getAllProvinces", getAllProvinces);
 		    model.addAttribute("getAllDistricts", getAllDistricts);
 		    return "customerRegister";

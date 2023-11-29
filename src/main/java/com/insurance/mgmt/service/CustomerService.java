@@ -39,4 +39,12 @@ public class CustomerService {
     public List<Customer> findByStatusAndEmail(int status, String email) {
         return customerRepository.findByStatusAndEmail(status, email);
     }
+    
+    public List<Customer> findByStatusAndUsername(int status, String username) {
+        return customerRepository.findByStatusAndUsername(status, username);
+    }
+    
+    public Customer findByUsername(String username) {
+		return customerRepository.findByUsername(username);
+	}
 }
