@@ -159,7 +159,8 @@ public class CarController {
 		    	}
 			}
 		}
-	    
+	    Customer customer = customerService.getCustomerById(customerId);
+	    model.addAttribute("customer",customer);
 	    model.addAttribute("expiredCars", expiredCars);
 		return new ModelAndView("carList","car",cars);
 	}

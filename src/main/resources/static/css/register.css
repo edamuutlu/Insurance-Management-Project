@@ -8,11 +8,10 @@ body {
   font-family: "Poppins", sans-serif;
   font-weight: 500;
   font-size: 14px;
-  overflow: hidden;
   /* Navber start */
   /* Navber start */
 }
-@media (max-width: 767px) {
+@media (max-width: 1000px) {
   body {
     overflow: auto;
   }
@@ -311,4 +310,205 @@ body .page-wrapper .wrapper .card .card-body .login__register a:hover {
 body .page-wrapper .wrapper .card .card-body .alert {
   margin-top: 15px;
   margin-bottom: 0;
+}
+body .user-page-wrapper {
+  display: flex;
+  justify-content: center;
+  background: webkit-gradient(linear, left bottom, right top, from(#fc2c77), to(#6c4079));
+  background: linear-gradient(to top right, rgba(252, 161, 44, 0.8509803922) 0%, rgba(120, 121, 64, 0.0196078431) 100%);
+  min-height: 100vh;
+  padding-top: 56px;
+}
+body .user-page-wrapper .user-page-main {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  background-color: #eeeeee;
+  border-radius: 15px;
+  width: 95%;
+  height: 100%;
+  margin: 10px auto;
+  padding: 4% 3%;
+}
+@media (max-width: 1000px) {
+  body .user-page-wrapper .user-page-main {
+    padding: 1% 4%;
+  }
+}
+body .user-page-wrapper .user-page-main .user-title {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 5%;
+  background-color: #fafafa;
+  border: 1px solid transparent;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin-bottom: 10px;
+  box-shadow: 3px 2px 6px 0px rgba(0, 0, 0, 0.3);
+}
+body .user-page-wrapper .user-page-main .user-page {
+  width: 100%;
+  height: 90%;
+  padding: 5px;
+  display: flex;
+}
+@media (max-width: 1000px) {
+  body .user-page-wrapper .user-page-main .user-page {
+    display: block;
+  }
+}
+body .user-page-wrapper .user-page-main .user-page .user-details {
+  width: 21%;
+  margin-right: 10px;
+}
+@media (max-width: 1000px) {
+  body .user-page-wrapper .user-page-main .user-page .user-details {
+    width: 100%;
+  }
+}
+body .user-page-wrapper .user-page-main .user-page .user-details .table {
+  margin: 0 auto 20px;
+  width: 85%;
+}
+body .user-page-wrapper .user-page-main .user-page .user-details .table td {
+  padding: 0;
+  font-size: 12px;
+  max-width: 15ch;
+  word-wrap: break-word;
+  padding: 0.5rem 0.5rem;
+}
+body .user-page-wrapper .user-page-main .user-page .user-details .table th {
+  font-size: 12px;
+  font-weight: 600;
+}
+body .user-page-wrapper .user-page-main .user-page .user-details .user-settings {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+body .user-page-wrapper .user-page-main .user-page .user-details .user-settings a {
+  margin-bottom: 5px;
+  font-size: 13px;
+  width: 30%;
+  padding: 3px;
+  font-weight: 600;
+  text-align: center;
+}
+body .user-page-wrapper .user-page-main .user-page .user-insurances {
+  width: 80%;
+}
+@media (max-width: 1000px) {
+  body .user-page-wrapper .user-page-main .user-page .user-insurances {
+    width: 100%;
+  }
+}
+body .user-page-wrapper .user-page-main .user-page .user-insurances .card {
+  height: 100%;
+  max-height: 725px;
+  overflow-y: auto;
+}
+@media (max-width: 1585px) {
+  body .user-page-wrapper .user-page-main .user-page .user-insurances .card {
+    max-height: 725px;
+    overflow-x: auto;
+    overflow-y: auto;
+  }
+}
+body .user-page-wrapper .user-page-main .user-page .user-insurances .card .table {
+  width: 98%;
+  margin: 0 auto 5px;
+}
+body .user-page-wrapper .user-page-main .user-page .user-insurances .card .table td {
+  padding: 0;
+  font-size: 14px;
+  max-width: 11ch;
+  word-wrap: break-word;
+  padding: 3px 2px;
+  text-align: center;
+}
+body .user-page-wrapper .user-page-main .user-page .user-insurances .card .table td .badge {
+  font-weight: 500;
+  font-size: 14px;
+}
+body .user-page-wrapper .user-page-main .user-page .user-insurances .card .table td button {
+  border: none;
+  background: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+}
+body .user-page-wrapper .user-page-main .user-page .user-insurances .card .table td button .heart {
+  color: #bd0000;
+}
+body .user-page-wrapper .user-page-main .user-page .user-insurances .card .table td button .heart:hover {
+  color: rgb(255, 62, 62);
+}
+body .user-page-wrapper .user-page-main .user-page .user-insurances .card .table td button .home {
+  color: #0d6efd;
+}
+body .user-page-wrapper .user-page-main .user-page .user-insurances .card .table td button .home:hover {
+  color: rgb(69, 112, 222);
+}
+body .user-page-wrapper .user-page-main .user-page .user-insurances .card .table td button .car {
+  color: #0d6efd;
+}
+body .user-page-wrapper .user-page-main .user-page .user-insurances .card .table td button .car:hover {
+  color: rgb(69, 112, 222);
+}
+body .user-page-wrapper .user-page-main .user-page .user-insurances .card .table td button .edit {
+  color: blue;
+}
+body .user-page-wrapper .user-page-main .user-page .user-insurances .card .table td button .edit:hover {
+  color: rgb(69, 112, 222);
+}
+body .user-page-wrapper .user-page-main .user-page .user-insurances .card .table td button .trash {
+  color: #bd0000;
+}
+body .user-page-wrapper .user-page-main .user-page .user-insurances .card .table td button .trash:hover {
+  color: rgb(255, 62, 62);
+}
+body .user-page-wrapper .user-page-main .user-page .user-insurances .card .table th {
+  text-align: center;
+}
+body footer {
+  background-color: rgba(15, 15, 15, 0.7960784314);
+}
+body footer h5 {
+  color: #d8d8d8;
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+body footer li {
+  padding-bottom: 4px;
+}
+body footer li a {
+  font-size: 0.8rem;
+  color: #999;
+}
+body footer li a:hover {
+  color: #d8d8d8;
+}
+body footer p {
+  color: #999;
+  font-size: 0.8rem;
+}
+body footer .copyright a {
+  color: black;
+  width: 38px;
+  height: 38px;
+  background-color: white;
+  display: inline-block;
+  text-align: center;
+  line-height: 38px;
+  border-radius: 50%;
+  transition: 0.3 ease;
+  margin: 0 5px;
+}
+body footer .copyright a:hover {
+  color: white;
+  background-color: #fb774b;
 }/*# sourceMappingURL=style.css.map */

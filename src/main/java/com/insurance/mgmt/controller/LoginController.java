@@ -12,8 +12,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.insurance.mgmt.entity.Car;
 import com.insurance.mgmt.entity.Customer;
+import com.insurance.mgmt.entity.Health;
+import com.insurance.mgmt.entity.Home;
+import com.insurance.mgmt.service.CarService;
 import com.insurance.mgmt.service.CustomerService;
+import com.insurance.mgmt.service.HealthService;
+import com.insurance.mgmt.service.HomeService;
 
 import jakarta.validation.Valid;
 
@@ -21,6 +27,15 @@ import jakarta.validation.Valid;
 public class LoginController {
 	@Autowired
 	CustomerService customerService;
+	
+	@Autowired
+	HealthService healthService;
+	
+	@Autowired
+	HomeService homeService;
+	
+	@Autowired
+	CarService carService;
 	
 	@GetMapping("/")
 	public String home() {
@@ -43,8 +58,6 @@ public class LoginController {
 		List<Customer> customerList = customerService.findByStatus(1);
 		
 		Customer loggedCustomer = customerService.findByUsername(customer.getUsername());
-		System.out.println(loggedCustomer);
-		System.out.println(customer);
 		
 		if(loggedCustomer == null) { 
 			model.addAttribute("showAbsentUserAlert", true);
@@ -58,8 +71,8 @@ public class LoginController {
 				return "customerList";
 			}
 			model.addAttribute("customer",  customer);
-			//return "customerInfo";  // kullanıcının sayfasına gitmeli ?
-			return "redirect:/customerInfo/" + customer.getUsername();
+			//return "redirect:/customerInfo/" + customer.getUsername();
+			return "redirect:/userPage/" + customer.getUsername();
 		}else {
 			model.addAttribute("showWrongPasswordAlert", true);
 			return "login";
@@ -67,11 +80,25 @@ public class LoginController {
 
 	}
 	
-	@GetMapping("/customerInfo/{username}")
-	public String customerList(@PathVariable("username") String username, Model model) {
-		List<Customer> customer = customerService.findByStatusAndUsername(1, username);
+//	@GetMapping("/customerInfo/{username}")
+//	public String customerInfo(@PathVariable("username") String username, Model model) {
+//		List<Customer> customer = customerService.findByStatusAndUsername(1, username);
+//		
+//		model.addAttribute("customer",  customer);
+//		return "customerInfo";
+//	}
+	
+	@GetMapping("/userPage/{username}")
+	public String userPage(@PathVariable("username") String username, Model model) {
+		Customer customer = customerService.findByUsername(username);
+		List<Health> health = healthService.findByStatusAndCustomerId(1,customer.getCustomerId());
+		List<Home> home = homeService.findByStatusAndCustomerId(1,customer.getCustomerId());
+		List<Car> car = carService.findByStatusAndCustomerId(1,customer.getCustomerId());
 		
 		model.addAttribute("customer",  customer);
-		return "customerInfo";
+		model.addAttribute("health",  health);
+		model.addAttribute("home",  home);
+		model.addAttribute("car",  car);
+		return "userPage";
 	}
 }
