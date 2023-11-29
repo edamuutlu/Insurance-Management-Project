@@ -43,26 +43,40 @@
 <body ng-app="myApp">
 
 	<!--Navbar-->
-	<nav class="navbar navbar-expand-lg navbar-light bg-light py-3 fixed-top">
-		<div class="container">
-			<a class="navbar-brand text-black" href="/index">SBM</a>
-			<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-				data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-				aria-label="Toggle navigation">
-				<span id="bar" data-lucide="menu"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-					<li class="nav-item">
-						<a class="nav-link" href="/customerList">See Customer List</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="/customerRegisterForm">New Customer Register</a>
-					</li>
-				</ul>
-			</div>
-		</div>
-	</nav>
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid px-5">
+          <a class="navbar-brand" href="#">Logo</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+            <ul class="navbar-nav mb-2 mb-lg-0 text-center">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/index">
+                    <i class='bx bxs-home'></i>
+                    Home
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/index">Products</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/#">Contact Us</a>
+              </li>
+            </ul>
+          </div>
+          <div class="operations">
+            <a href="/login">
+                <i class='bx bxs-user-circle login-icon'></i>
+                Login
+            </a>
+            <a href="/customerRegister">
+                <i class='bx bxs-user-plus register-icon'></i>
+                Register
+            </a>
+          </div>
+        </div>
+      </nav>
 	<!--	End Navbar-->
 
 	<section id="blog-home" class="container mt-5 pt-5">
@@ -95,7 +109,60 @@
 		</div>
 	</section>
 
-
+	<!-- Footer -->
+	<footer class="mt-4 py-4">
+		<div class="row container mx-auto pt-4">
+			<div class="footer-one col-lg-3 col-md-5 col-12 mb-3">
+				<img src="img/logo.png" alt="">
+				<p class="pt-3">Protect your future with reliable insurance coverage from our trusted insurance
+					company..</p>
+			</div>
+			<div class="footer-one col-lg-3 col-md-6 col-12 mb-3">
+				<h5 class="pb-2">Featured</h5>
+				<ul class="text-uppercase list-unstyled">
+					<li><a href="#">Traffic Insurance</a></li>
+					<li><a href="#">Comprehensive Insurance</a></li>
+					<li><a href="#">Health Insurance</a></li>
+					<li><a href="#">Earthquake Insurance</a></li>
+				</ul>
+			</div>
+			<div class="footer-one col-lg-3 col-md-6 col-12 mb-3">
+				<h5 class="pb-2">Contact Us</h5>
+				<div>
+					<h6 class="text-uppercase">Address</h6>
+					<p>Istanbul, Turkey</p>
+				</div>
+				<div>
+					<h6 class="text-uppercase">Github</h6>
+					<p>https://github.com/edamuutlu</p>  
+					<p>https://github.com/nuricanbrdmr</p>
+				</div>
+				<div>
+					<h6 class="text-uppercase">Email</h6>
+					<p>edamuutlu@gmail.com</p>
+					<p>nuricanb6@gmail.com</p>
+				</div>
+			</div>
+			<div class="footer-one col-lg-3 col-md-6 col-12">
+				<div class="col-lg-4 col-md-6 col-12 mb-3">
+					<h5 class="pb-2">Follow Us</h5>
+					<a href="#"><i class="fa-brands fa-lg fa-facebook"></i></a>
+					<a href="#"><i class="fa-brands fa-lg fa-instagram"></i></a>
+					<a href="#"><i class="fa-brands fa-lg fa-twitter"></i></a>
+				</div>
+				<div class="col-lg-3 col-md-6 col-12 mb-4">
+					<img src="img/payment.png" alt="">
+				</div>
+			</div>
+			<div class="copyright mt-2">
+				<div class="row container mx-auto">
+					<div class="col-lg-4 col-md-6 col-12 text-nowrap mb-2">
+						<p>Eda Nur Mutlu eInsurance © 2023. All Rights Reserved</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
 
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"

@@ -73,16 +73,6 @@ public class CustomerController {
 		dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
 	}
 
-	@GetMapping("/")
-	public String home() {
-		return "index";
-	}
-
-	@GetMapping("/index")
-	public String index() {
-		return "index";
-	}
-
 	@RequestMapping(path = "/selectType", method = RequestMethod.GET)
 	public String selectType(@RequestParam(value = "customerId", required = false) int id, Model model) {
 		model.addAttribute("customerId", id);

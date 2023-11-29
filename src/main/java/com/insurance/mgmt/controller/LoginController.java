@@ -21,6 +21,16 @@ import jakarta.validation.Valid;
 public class LoginController {
 	@Autowired
 	CustomerService customerService;
+	
+	@GetMapping("/")
+	public String home() {
+		return "index";
+	}
+
+	@GetMapping("/index")
+	public String index() {
+		return "index";
+	}
 
 	@GetMapping("/login")
 	public String login(@ModelAttribute Customer customer) {

@@ -51,28 +51,42 @@
 </head>
 
 <body>
-	<!-- Navbar -->
-	<nav class="navbar navbar-expand-lg navbar-light bg-light py-3 fixed-top">
-		<div class="container">
-			<a class="navbar-brand text-black" href="/index">SBM</a>
-			<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-				data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-				aria-label="Toggle navigation">
-				<span id="bar" data-lucide="menu"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-					<li class="nav-item">
-						<a class="nav-link" href="/customerList">See Customer List</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="/customerRegisterForm">New Customer Register</a>
-					</li>
-				</ul>
-			</div>
-		</div>
-	</nav>
-	<!--End Navbar-->
+	<!--Navbar-->
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid px-5">
+          <a class="navbar-brand" href="#">Logo</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+            <ul class="navbar-nav mb-2 mb-lg-0 text-center">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/index">
+                    <i class='bx bxs-home'></i>
+                    Home
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/index">Products</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/#">Contact Us</a>
+              </li>
+            </ul>
+          </div>
+          <div class="operations">
+            <a href="/login">
+                <i class='bx bxs-user-circle login-icon'></i>
+                Login
+            </a>
+            <a href="/customerRegister">
+                <i class='bx bxs-user-plus register-icon'></i>
+                Register
+            </a>
+          </div>
+        </div>
+      </nav>
+	<!--	End Navbar-->
 
 	<section id="featured" class="my-5 py-5">
 		<div class="container mt-5 py-5">
