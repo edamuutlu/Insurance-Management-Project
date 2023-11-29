@@ -54,14 +54,17 @@
 									<label class="label">
 										<div class="txt">First Name</div>
 										<div class="warning"
-											ng-show="myForm.firstname.$invalid && myForm.firstname.$touched">
-											<i class='bx bxs-error-alt'></i>
-											<p>Required</p>
+											ng-show="myForm.firstname.$error.required && myForm.firstname.$dirty">
+											Required.
+										</div>
+										<div class="warning"
+											ng-show="myForm.firstname.$error.pattern && myForm.firstname.$dirty">
+											Only letters can be used.
 										</div>
 									</label>
 									<input type="text" ng-model="firstname" ng-pattern="/^[a-zA-Z\s]*$/"
 										ng-required="true" class="input-4" id="firstname" name="firstname"
-										maxlength="50">
+										maxlength="50" onkeypress="return /[a-zA-ZçÇğĞıİöÖşŞüÜ\s]/i.test(event.key)">
 								</div>
 							</div>
 							<div class="col-2">
@@ -69,16 +72,17 @@
 									<label class="label">
 										<div class="txt">Last Name</div>
 										<div class="warning"
-											ng-show="myForm.lastname.$invalid && myForm.lastname.$touched">
-											<i class='bx bxs-error-alt'></i>
-											<p>Required</p>
+											ng-show="myForm.lastname.$error.required && myForm.lastname.$dirty">
+											Required.
+										</div>
+										<div class="warning"
+											ng-show="myForm.lastname.$error.pattern && myForm.lastname.$dirty">
+											Only letters can be used.
 										</div>
 									</label>
 									<input type="text" ng-model="lastname" ng-pattern="/^[a-zA-Z\s]*$/"
-										ng-required="true" class="input-4" id="lastname" name="lastname" maxlength="50">
-									<div ng-show="myForm.laststname.$error.pattern">
-										Only letters can be used.
-									</div>
+										ng-required="true" class="input-4" id="lastname" name="lastname" maxlength="50"
+										onkeypress="return /[a-zA-ZçÇğĞıİöÖşŞüÜ\s]/i.test(event.key)">
 								</div>
 							</div>
 						</div>
@@ -88,22 +92,32 @@
 								<div class="input-group">
 									<label class="label">
 										<div class="txt">T.C.</div>
-										<div class="warning" ng-show="myForm.tc.$invalid && myForm.tc.$touched">
+										<div class="warning" ng-show="myForm.tc.$error.required && myForm.tc.$dirty">
 											<i class='bx bxs-error-alt'></i>
-											<p>Required</p>
+											Required.
+										</div>
+										<div class="warning" ng-show="myForm.tc.$error.pattern && myForm.tc.$dirty">
+											<i class='bx bxs-error-alt'></i>
+											T.C. must have 11 digits.
 										</div>
 									</label>
 									<input type="number" ng-model="tc" ng-required="true" class="input-4" id="tc"
-										name="tc" onKeyPress="if(this.value.length==11) return false;">
+										name="tc" ng-pattern="/^\d{11}$/"
+										onKeyPress="if(this.value.length==11) return false;">
 								</div>
 							</div>
 							<div class="col-2">
 								<div class="input-group">
 									<label class="label">
 										<div class="txt">Email</div>
-										<div class="warning" ng-show="myForm.email.$invalid && myForm.email.$touched">
+										<div class="warning"
+											ng-show="myForm.email.$error.required && myForm.email.$touched">
 											<i class='bx bxs-error-alt'></i>
-											<p>Required</p>
+											Required.
+										</div>
+										<div class="warning" ng-show="myForm.email.$invalid && myForm.email.$dirty">
+											<i class='bx bxs-error-alt'></i>
+											Enter a valid email address.
 										</div>
 									</label>
 									<input type="email" ng-model="email" ng-required="true" class="input-4" id="email"
@@ -136,9 +150,13 @@
 											<i class='bx bxs-error-alt'></i>
 											<p>Required</p>
 										</div>
+										<div class="warning" ng-show="passwordError">
+											<i class='bx bxs-error-alt'></i>
+											<p>{{ passwordError }}</p>
+										</div>
 									</label>
 									<input type="password" ng-model="password" ng-required="true" id="password"
-										class="input-4" name="password" >
+										class="input-4" name="password" ng-change="validatePassword()">
 									<button type="button" class="hide-pass" onclick="togglePasswordVisibility()">
 										<i class='bx bxs-hide' id="hideIcon" style="display: none;"></i>
 										<i class='bx bx-show' id="showIcon"></i>
@@ -166,13 +184,17 @@
 									<label class="label">
 										<div class="txt">Phone Number</div>
 										<div class="warning"
-											ng-show="myForm.phoneNumber.$invalid && myForm.phoneNumber.$touched">
-											<i class='bx bxs-error-alt'></i>
-											<p>Required</p>
+											ng-show="myForm.phoneNumber.$error.required && myForm.phoneNumber.$dirty">
+											Required.
+										</div>
+										<div class="warning"
+											ng-show="myForm.phoneNumber.$error.pattern && myForm.phoneNumber.$dirty">
+											Phone number must have 11 digits.
 										</div>
 									</label>
 									<input type="number" ng-model="phoneNumber" ng-required="true" class="input-4"
-										name="phoneNumber" id="phoneNumber" onKeyPress="if(this.value.length==11) return false;">
+										name="phoneNumber" id="phoneNumber" ng-pattern="/^\d{11}$/"
+										onKeyPress="if(this.value.length==11) return false;">
 								</div>
 							</div>
 						</div>

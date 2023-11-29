@@ -158,8 +158,41 @@ myApp.controller("registerFormController", ["$scope", function($scope){
 
 	var birthInput = document.getElementById("birth");
 	birthInput.setAttribute("max", today.toISOString().split("T")[0]);
+	
+	$scope.validatePassword = function() {
+    $scope.passwordError = checkPasswordStrength($scope.password);
+}
 
 }]);
+
+function checkPasswordStrength(password) {
+    const regexLowercase = /[a-z]/;
+    const regexUppercase = /[A-Z]/;
+    const regexNumber = /[0-9]/;
+    const regexSpecial = /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/;
+
+    if (password.length < 8) {
+        return 'Password must be at least 8 characters long.';
+    }
+
+    if (!regexLowercase.test(password)) {
+        return 'Password must contain at least one lowercase letter.';
+    }
+
+    if (!regexUppercase.test(password)) {
+        return 'Password must contain at least one uppercase letter.';
+    }
+
+    if (!regexNumber.test(password)) {
+        return 'Password must contain at least one number.';
+    }
+
+    if (!regexSpecial.test(password)) {
+        return 'Password must contain at least one special character.';
+    }
+
+    return null; // No errors
+}
 
 function togglePasswordVisibility() {
     var password = document.getElementById("password");
