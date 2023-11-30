@@ -51,7 +51,7 @@
 
 <body>
 	<!--Navbar-->
-	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+	<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
         <div class="container-fluid px-5">
           <a class="navbar-brand" href="#">Logo</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -66,10 +66,10 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/index">Products</a>
+                <a class="nav-link scrollTo" href="#product">Products</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/#">Contact Us</a>
+                <a class="nav-link scrollTo" href="#contactUs">Contact Us</a>
               </li>
             </ul>
           </div>
@@ -87,8 +87,8 @@
       </nav>
 	<!--	End Navbar-->
 
-	<section id="featured" class="my-5 py-5">
-		<div class="container mt-5 py-5">
+	<section id="featured" class="my-5 pt-5">
+		<div class="container">
 			<h2 class="font-weight-bold">Address of Trust in Insurance</h2>
 			<hr>
 			<p>Here you can check out our insurance options.</p>
@@ -106,7 +106,7 @@
 					<li><i class="fa-regular fa-circle-check"></i> Roadside Assistance: Yes</li>
 				</ul>
 				<br><br>
-				<button class="buy-btn"><a th:href="@{/customerRegister}">Register Now</a></button>
+				<a th:href="@{/customerRegister}"><button class="buy-btn">Register Now</button></a>
 			</div>
 
 			<div class="product text-center col-lg-3 col-md-4 col-12">
@@ -121,8 +121,9 @@
 					<li><i class="fa-regular fa-circle-check"></i> Discounts for Health Check-ups</li>
 				</ul>
 				<br><br>
-				<button class="buy-btn"><a th:href="@{/customerRegister}">Register Now</a></button>
+				<a th:href="@{/customerRegister}"><button class="buy-btn">Register Now</button></a>
 			</div>
+			
 			<div class="product text-center col-lg-3 col-md-4 col-12">
 				<img class="img-fluid mb-3" src="img/travel.jpg" alt="">
 				<h5 class="p-name">Travel Health Insurance</h5>
@@ -135,7 +136,7 @@
 					<li><i class="fa-regular fa-circle-check"></i> Lost Baggage and Documents</li>
 				</ul>
 				<br><br>
-				<button class="buy-btn"><a th:href="@{/customerRegister}">Register Now</a></button>
+				<a th:href="@{/customerRegister}"><button class="buy-btn">Register Now</button></a>
 			</div>
 			<div class="product text-center col-lg-3 col-md-4 col-12">
 				<img class="img-fluid mb-3" src="img/dask.jpg" alt="">
@@ -148,14 +149,19 @@
 					<li><i class="fa-regular fa-circle-check"></i> Optional Valuables Coverage</li>
 					<li><i class="fa-regular fa-circle-check"></i> Safety Features Discounts</li>
 				</ul>
-				<br><br>
-				<button class="buy-btn"><a th:href="@{/customerRegister}">Register Now</a></button>
+				<br><br id="product">
+				<a th:href="@{/customerRegister}"><button class="buy-btn">Register Now</button></a>
 			</div>
 
 		</div>
 	</section>
 
-	<section id="featured" class="my-5 py-5">
+	<section class="featured">
+		<div class="container mb-5">
+			<h2 class="font-weight-bold">Insurance Products</h2>
+			<hr>
+			<p>Here you can see what our products can bring you.</p>
+		</div>
 		<div class="row mx-auto container">
 			<div class="product text-center col-lg-4 col-md-4 col-12">
 				<div style="max-width: 390px;">
@@ -191,7 +197,7 @@
 	</section>
 
 	<!-- Footer -->
-	<footer class="mt-4 py-4">
+	<footer class="mt-4 py-4" id="contactUs">
 		<div class="row container mx-auto pt-4">
 			<div class="footer-one col-lg-3 col-md-5 col-12 mb-3">
 				<img src="img/logo.png" alt="">

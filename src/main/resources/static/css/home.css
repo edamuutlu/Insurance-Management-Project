@@ -84,11 +84,20 @@ hr {
     opacity: 0.7;
 }
 
+.product a{
+	display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+}
 .product .buy-btn{
     background-color: #fb774b;
     transform: translateY(20px);
     opacity: 0;
     transition: 0.3s all;
+}
+.product .buy-btn:hover{
+    background-color: #fb774bdb;
 }
 
 .product:hover .buy-btn{
