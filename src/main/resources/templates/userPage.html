@@ -152,8 +152,9 @@
 		
 
 		<div class="user-title">
-			<span class="username-text" th:text="${c.username}"></span>
-		</div>
+            <span class="username-text" th:text="${c.username}"></span>
+            <div class="select-type"><a th:href="@{/selectType(customerId=${c.customerId})}"><span class="badge text-bg-primary">Get Insurance Quote</span></a></div>
+        </div>
 		<div class="user-page">
 			<!-- User Bilgileri -->
 			<div class="user-details">
@@ -254,7 +255,7 @@
 										<td th:text="${h.period}"></td>
 										<td><button class="mx-auto"><a
 													th:href="@{/deleteHealthInfo/{id}(id=${h.healthId})}"><i
-														id="icon-trash" class="bx bx-trash"></i></a></button></td>
+														id="icon-trash" class="bx bx-trash trash"></i></a></button></td>
 										<td><button class="mx-auto"><a
 													th:href="@{/seeHealthInsuranceDetails/{id}(id=${h.healthId})}"><i
 														class="fa-solid fa-ellipsis"></i></a></button></td>
@@ -301,7 +302,7 @@
 										<td th:text="${h.buildingAge}"></td>
 										<td th:text="${h.insurerTitle}"></td>
 										<td><button class="mx-auto"><a th:href="@{/deleteHome/{id}(id=${h.homeId})}"><i
-														id="icon-trash" class="bx bx-trash"></i></a></button></td>
+														id="icon-trash" class="bx bx-trash trash"></i></a></button></td>
 										<td><button class="mx-auto"><a
 													th:href="@{/seeHomeInsuranceDetails/{id}(id=${h.homeId})}"><i
 														class="fa-solid fa-ellipsis"></i></a></button></td>
@@ -344,7 +345,7 @@
 										<td th:text="${c.seatCapacity}"></td>
 
 										<td><button class="mx-auto"><a th:href="@{/deleteCar/{id}(id=${c.id})}"><i
-														id="icon-trash" class="bx bx-trash"></i></a></button></td>
+														id="icon-trash" class="bx bx-trash trash"></i></a></button></td>
 										<td><button class="mx-auto"><a
 													th:href="@{/seeCarInsuranceDetails/{id}(id=${c.id})}"><i
 														class="fa-solid fa-ellipsis"></i></a></button></td>
