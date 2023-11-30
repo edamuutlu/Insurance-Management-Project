@@ -1,5 +1,8 @@
 package com.insurance.mgmt.controller;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +19,12 @@ import com.insurance.mgmt.entity.Car;
 import com.insurance.mgmt.entity.Customer;
 import com.insurance.mgmt.entity.Health;
 import com.insurance.mgmt.entity.Home;
+import com.insurance.mgmt.entity.Insurance;
 import com.insurance.mgmt.service.CarService;
 import com.insurance.mgmt.service.CustomerService;
 import com.insurance.mgmt.service.HealthService;
 import com.insurance.mgmt.service.HomeService;
+import com.insurance.mgmt.service.InsuranceService;
 
 import jakarta.validation.Valid;
 
@@ -36,6 +41,11 @@ public class LoginController {
 	
 	@Autowired
 	CarService carService;
+	
+	@Autowired
+	InsuranceService insuranceService;
+	
+	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 	
 	@GetMapping("/")
 	public String home() {
@@ -94,6 +104,61 @@ public class LoginController {
 		List<Health> health = healthService.findByStatusAndCustomerId(1,customer.getCustomerId());
 		List<Home> home = homeService.findByStatusAndCustomerId(1,customer.getCustomerId());
 		List<Car> car = carService.findByStatusAndCustomerId(1,customer.getCustomerId());
+		
+		//CAR
+		List<Car> cars = carService.findByStatusAndCustomerId(1, customer.getCustomerId());
+		List<Insurance> insurances = insuranceService.findByStatusAndCustomerIdAndResult(1, customer.getCustomerId(), "Accepted");
+		ArrayList<Car> expiredCars = new ArrayList<>(); 
+		
+		// Poliçenin süresinin bitip bitmediğini kontrol etme 
+		LocalDateTime now = LocalDateTime.now();
+		for(Car c : cars) {
+			for (Insurance insurance : insurances) {
+		    	LocalDateTime endDateTime = LocalDateTime.parse(insurance.getEndDate(), formatter);    		
+		    	if (now.isAfter(endDateTime)) {		    		
+		    		expiredCars.add(c);
+		    		model.addAttribute("showText", true);
+		    		insurance.setResult("Expired");
+		    		insuranceService.save(insurance);
+		    	}
+			}
+		}
+	    model.addAttribute("expiredCars", expiredCars);
+	    model.addAttribute("carList",cars);
+	    
+	    //HOME
+	    List<Health> healthInfos = healthService.findByStatusAndCustomerId(1, customer.getCustomerId());
+		ArrayList<Health> expiredHealthInsurance = new ArrayList<>();
+
+		// Poliçenin süresinin bitip bitmediğini kontrol etme
+		for (Health h : healthInfos) {
+			for (Insurance insurance : insurances) {
+				LocalDateTime endDateTime = LocalDateTime.parse(insurance.getEndDate(), formatter);
+
+				if (now.isAfter(endDateTime)) {
+					expiredHealthInsurance.add(h);
+					model.addAttribute("showExpiredAlert", true);
+					insurance.setResult("Expired");
+					insuranceService.save(insurance);
+				}
+			}
+		}
+
+		// Sağlık bilgilerini güncelleme süresinin bitip bitmediğini kontrol etme
+		for (Health h : healthInfos) {
+			LocalDateTime deadlineDate = LocalDateTime.parse(h.getDeadline(), formatter);
+
+			if (now.isAfter(deadlineDate)) {
+				model.addAttribute("showDeadlineAlert", true);
+				model.addAttribute("healthId", h.getHealthId());
+			}
+		}
+
+		model.addAttribute("expiredHealthInsurance", expiredHealthInsurance);
+		model.addAttribute("healthInfoList", healthInfos);
+		
+		//HEALTH
+		
 		
 		model.addAttribute("customer",  customer);
 		model.addAttribute("health",  health);

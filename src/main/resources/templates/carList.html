@@ -26,6 +26,7 @@
 		};
 
 	</script>
+	
 </head>
 <!--Navbar-->
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
@@ -65,10 +66,32 @@
 </nav>
 <!--	End Navbar-->
 
-<div class="user-page-wrapper">
-	
-
+<div class="user-page-wrapper">	
 	<div class="user-page-main" th:each="c :${customer}">
+		<!-- Modal -->
+		<div class="modal fade" id="myModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myModalTitle"
+			aria-hidden="true" th:if="${showText}">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="myModalTitle">Bildirim</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<p>Listelenen Plakalı Araçlarınızın Sigorta Süresi Bitmiştir:</p>
+						<ul>
+							<li th:each="data : ${expiredCars}" th:text="${data.getPlate1() + ' ' + data.getPlate2()+ ' ' + data.getPlate3()}"></li>
+						</ul>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>	
+		
 		<div class="user-title">
 			<span class="username-text" th:text="${c.username}"></span>
 		</div>
