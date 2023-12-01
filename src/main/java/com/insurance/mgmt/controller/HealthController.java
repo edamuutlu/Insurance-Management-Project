@@ -317,7 +317,9 @@ public class HealthController {
 			model.addAttribute("insurance", insurances);
 			return "seeHealthInsuranceDetails";
 		}
-
+		
+		Customer customer = customerService.getCustomerById(insurances.get(0).getCustomerId());
+		model.addAttribute("customer", customer);
 		model.addAttribute("healthId", healthId);
 		model.addAttribute("insurance", insurances);
 		return "seeHealthInsuranceDetails";

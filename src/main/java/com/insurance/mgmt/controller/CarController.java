@@ -173,7 +173,7 @@ public class CarController {
 		for (Insurance insurance : insurances) {
 			insuranceService.save(insurance);
 			model.addAttribute("insuranceId", insurance.getInsuranceId());
-			model.addAttribute("period", insurance.getPeriod());
+			model.addAttribute("period", insurance.getPeriod());						
 		}
 
 		if (insurances.isEmpty()) {
@@ -181,7 +181,9 @@ public class CarController {
 			model.addAttribute("insurance", insurances);
 			return "seeCarInsuranceDetails";
 		}
-
+		
+		Customer customer = customerService.getCustomerById(insurances.get(0).getCustomerId());
+		model.addAttribute("customer", customer);
 		model.addAttribute("carId", carId);
 		model.addAttribute("insurance", insurances);
 		return "seeCarInsuranceDetails";

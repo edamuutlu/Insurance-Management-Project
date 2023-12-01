@@ -126,7 +126,7 @@ public class LoginController {
 	    model.addAttribute("expiredCars", expiredCars);
 	    model.addAttribute("carList",cars);
 	    
-	    //HOME
+	    //HEALTH
 	    List<Health> healthInfos = healthService.findByStatusAndCustomerId(1, customer.getCustomerId());
 		ArrayList<Health> expiredHealthInsurance = new ArrayList<>();
 
@@ -157,7 +157,7 @@ public class LoginController {
 		model.addAttribute("expiredHealthInsurance", expiredHealthInsurance);
 		model.addAttribute("healthInfoList", healthInfos);
 		
-		//HEALTH
+		//HOME
 		
 		
 		model.addAttribute("customer",  customer);

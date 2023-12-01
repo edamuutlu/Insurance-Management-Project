@@ -223,6 +223,8 @@ public class HomeController {
 			return "seeHomeInsuranceDetails";
 		}
 
+		Customer customer = customerService.getCustomerById(insurances.get(0).getCustomerId());
+		model.addAttribute("customer", customer);
 		model.addAttribute("homeId", homeId);
 		model.addAttribute("insurance", insurances);
 		return "seeHomeInsuranceDetails";
