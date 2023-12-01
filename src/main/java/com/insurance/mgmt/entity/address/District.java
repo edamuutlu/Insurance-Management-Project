@@ -17,7 +17,7 @@ public class District {
 	@Column(name = "ilce_adi")
 	private String ilceadi;
 	@Column(name = "il_id")
-	private String sehirid;
+	private int sehirid;
 	@Column(name = "il_adi")
 	private String sehiradi;
 	
@@ -26,7 +26,7 @@ public class District {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public District(int id, String ilceadi, String sehirid, String sehiradi) {
+	public District(int id, String ilceadi, int sehirid, String sehiradi) {
 		super();
 		this.id = id;
 		this.ilceadi = ilceadi;
@@ -46,10 +46,10 @@ public class District {
 	public void setIlceadi(String ilceadi) {
 		this.ilceadi = ilceadi;
 	}
-	public String getSehirid() {
+	public int getSehirid() {
 		return sehirid;
 	}
-	public void setSehirid(String sehirid) {
+	public void setSehirid(int sehirid) {
 		this.sehirid = sehirid;
 	}
 

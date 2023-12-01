@@ -21,7 +21,7 @@ public class Neighbourhood {
 	@Column(name = "ilce_adi")
 	private String ilceAdi;
 	@Column(name = "il_id")
-	private String sehirId;
+	private int sehirId;
 	@Column(name = "il_adi")
 	private String sehirAdi;
 	
@@ -30,7 +30,7 @@ public class Neighbourhood {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Neighbourhood(int mahalleId, String mahalleAdi, int ilceId, String ilceAdi, String sehirId,
+	public Neighbourhood(int mahalleId, String mahalleAdi, int ilceId, String ilceAdi, int sehirId,
 			String sehirAdi) {
 		super();
 		this.mahalleId = mahalleId;
@@ -73,11 +73,11 @@ public class Neighbourhood {
 		this.ilceAdi = ilceAdi;
 	}
 
-	public String getSehirId() {
+	public int getSehirId() {
 		return sehirId;
 	}
 
-	public void setSehirId(String sehirId) {
+	public void setSehirId(int sehirId) {
 		this.sehirId = sehirId;
 	}
 

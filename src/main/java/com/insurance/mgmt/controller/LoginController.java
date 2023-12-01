@@ -79,10 +79,11 @@ public class LoginController {
 			if(loggedCustomer.getUsername().equals("admin")) {
 				model.addAttribute("customer",  customerList);
 				return "customerList";
-			}
-			model.addAttribute("customer",  customer);
-			//return "redirect:/customerInfo/" + customer.getUsername();
-			return "redirect:/userPage/" + customer.getUsername();
+			}else {
+				model.addAttribute("customer",  customer);
+				//return "redirect:/customerInfo/" + customer.getUsername();
+				return "redirect:/userPage/" + customer.getUsername();
+			}		
 		}else {
 			model.addAttribute("showWrongPasswordAlert", true);
 			return "login";

@@ -162,7 +162,7 @@ public class CustomerController {
 		} else {
 		    customer.setStatus(1);
 		    customerService.save(customer);
-		    return "redirect:customerList";
+		    return "redirect:/userPage/" + customer.getUsername();
 		}
 		
 	}
