@@ -288,7 +288,8 @@ public class HealthController {
 		}
 		health.setStatus(0);
 		healthService.save(health);
-		return "redirect:/healthInfoList/" + health.getCustomerId();
+		Customer customer = customerService.getCustomerById(health.getCustomerId());
+		return "redirect:/userPage/" + customer.getUsername();
 	}
 
 	@RequestMapping("/deleteHealthInsurance/{id}")
