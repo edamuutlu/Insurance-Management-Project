@@ -31,6 +31,7 @@ import com.insurance.mgmt.entity.Car;
 import com.insurance.mgmt.entity.Customer;
 import com.insurance.mgmt.entity.Insurance;
 import com.insurance.mgmt.entity.Kdv;
+import com.insurance.mgmt.jdbcTemplate.DatabaseService;
 import com.insurance.mgmt.service.CarService;
 import com.insurance.mgmt.service.CustomerService;
 import com.insurance.mgmt.service.InsuranceService;
@@ -53,6 +54,13 @@ public class CarController {
 	@Autowired
 	KdvService kdvService;
 	
+	private final DatabaseService databaseService;
+	
+	@Autowired
+    public CarController(DatabaseService databaseService) {
+        this.databaseService = databaseService;
+    }
+		
 	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 	
 	private static final Logger log =  LoggerFactory.getLogger(CarController.class);
@@ -61,6 +69,7 @@ public class CarController {
 	public void initBinder(WebDataBinder dataBinder) {
 		StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
 		dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
+		//databaseService.disableForeignKeyChecks();
 	} 		
 	
 	@PostMapping("/carRegister")
@@ -191,7 +200,7 @@ public class CarController {
 	
 	@PostMapping("/renewCarInsurance/{insuranceId}")
 	public String renewHomeInsurance(@PathVariable("insuranceId") int insuranceId, @RequestParam("period") int period,
-			Model model) {
+			Model model) {		
 		Insurance oldInsurance = insuranceService.getInsuranceById(insuranceId);
 		Car car = carService.getCarId(oldInsurance.getCarId());
 		Customer customer = customerService.getCustomerById(car.getCustomerId());
@@ -229,6 +238,10 @@ public class CarController {
 		carService.save(car);
 
 		newInsurance.setPeriod(period); 
+		
+		newInsurance.setHomeId(0);
+		newInsurance.setHealthId(0);
+		
 		insuranceService.save(newInsurance);
 
 		model.addAttribute(customer);
