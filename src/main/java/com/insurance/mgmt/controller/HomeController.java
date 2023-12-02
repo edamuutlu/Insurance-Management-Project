@@ -297,7 +297,8 @@ public class HomeController {
 		home.setStatus(0);
 		homeService.save(home);
 
-		return "redirect:/homeList/" + home.getCustomerId();
+		Customer customer = customerService.getCustomerById(home.getCustomerId());
+		return "redirect:/userPage/" + customer.getUsername();
 	}
 
 	@GetMapping("/homeInsuranceRefund/{insuranceId}")

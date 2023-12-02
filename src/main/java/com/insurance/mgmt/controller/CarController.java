@@ -300,7 +300,8 @@ public class CarController {
 		car.setStatus(0);
 		carService.save(car);
 
-		return "redirect:/carList/" + car.getCustomerId();
+		Customer customer = customerService.getCustomerById(car.getCustomerId());
+		return "redirect:/userPage/" + customer.getUsername();
 	}
 	
 	@GetMapping("/trafficInsuranceRefund/{insuranceId}")
