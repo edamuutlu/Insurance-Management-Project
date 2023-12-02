@@ -127,15 +127,6 @@ body .page-wrapper .wrapper .card .card-body .row .col-2 {
 body .page-wrapper .wrapper .card .card-body .row .col-2 .input-group {
   position: relative;
   margin-bottom: 22px;
-  /*i{
-      position: absolute;
-      font-size: 18px;
-      color: #999;
-      right: 18px;
-      top: 50%;
-      transform: translateY(-50%);
-      cursor: pointer;
-  }*/
 }
 body .page-wrapper .wrapper .card .card-body .row .col-2 .input-group .label {
   font-size: 14px;
@@ -400,6 +391,9 @@ body .user-page-wrapper .user-page-main .user-page .user-details .user-settings 
   padding: 3px;
   font-weight: 600;
   text-align: center;
+}
+body .user-page-wrapper .user-page-main .user-page .user-details .user-settings a:hover{
+  color: white;
 }
 body .user-page-wrapper .user-page-main .user-page .user-insurances {
   width: 80%;
