@@ -219,6 +219,10 @@ myApp.controller("LoginController", ["$scope", function($scope){
 
 }]);
 
+function goBack() {
+    window.history.back();
+}
+
 
 
 

@@ -8,8 +8,6 @@ body {
   font-family: "Poppins", sans-serif;
   font-weight: 500;
   font-size: 14px;
-  /* Navber start */
-  /* Navber start */
 }
 @media (max-width: 1000px) {
   body {
@@ -308,7 +306,6 @@ body .user-page-wrapper {
   background: webkit-gradient(linear, left bottom, right top, from(#fc2c77), to(#6c4079));
   background: linear-gradient(to top right, rgba(252, 161, 44, 0.8509803922) 0%, rgba(120, 121, 64, 0.0196078431) 100%);
   min-height: 100vh;
-  padding-top: 56px;
 }
 body .user-page-wrapper .user-page-main {
   display: flex;
@@ -319,7 +316,7 @@ body .user-page-wrapper .user-page-main {
   width: 95%;
   height: 100%;
   margin: 10px auto;
-  padding: 4% 3%;
+  padding: 2% 3%;
 }
 @media (max-width: 1000px) {
   body .user-page-wrapper .user-page-main {
@@ -339,8 +336,47 @@ body .user-page-wrapper .user-page-main .user-title {
   margin-bottom: 10px;
   box-shadow: 3px 2px 6px 0px rgba(0, 0, 0, 0.3);
 }
+body .user-page-wrapper .user-page-main .user-title .username-settings {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+body .user-page-wrapper .user-page-main .user-title .username-settings button {
+  padding-right: 10px;
+  font-size: 15px;
+  border: none;
+  background: none;
+}
+body .user-page-wrapper .user-page-main .user-title .username-settings button span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+body .user-page-wrapper .user-page-main .user-title .username-settings button span i {
+  font-size: 20px;
+}
+body .user-page-wrapper .user-page-main .user-title .username-settings button span:hover {
+  background-color: #8d98a3 !important;
+}
 body .user-page-wrapper .user-page-main .user-title .select-type span {
   font-size: 14px;
+  padding: 6px;
+  color: white !important;
+}
+body .user-page-wrapper .user-page-main .user-title .select-type .text-bg-primary:hover {
+  background-color: rgba(13, 110, 253, 0.7411764706) !important;
+}
+body .user-page-wrapper .user-page-main .user-title .select-type .text-bg-info:hover {
+  background-color: rgba(0, 183, 255, 0.7411764706) !important;
+}
+body .user-page-wrapper .user-page-main .insurance-error {
+  box-shadow: 3px 2px 6px 0px rgba(0, 0, 0, 0.3);
+  font-weight: 600;
+  margin-bottom: 3px;
+}
+body .user-page-wrapper .user-page-main .insurance-error i {
+  font-size: 16px;
+  margin-right: 8px;
 }
 body .user-page-wrapper .user-page-main .user-page {
   width: 100%;
@@ -392,7 +428,7 @@ body .user-page-wrapper .user-page-main .user-page .user-details .user-settings 
   font-weight: 600;
   text-align: center;
 }
-body .user-page-wrapper .user-page-main .user-page .user-details .user-settings a:hover{
+body .user-page-wrapper .user-page-main .user-page .user-details .user-settings a:hover {
   color: white;
 }
 body .user-page-wrapper .user-page-main .user-page .user-insurances {
@@ -509,4 +545,10 @@ body footer .copyright a {
 body footer .copyright a:hover {
   color: white;
   background-color: #fb774b;
+}
+@media (max-width: 767px) {
+  body footer .copyright p {
+    max-width: 30ch;
+    word-wrap: break-word;
+  }
 }/*# sourceMappingURL=style.css.map */
