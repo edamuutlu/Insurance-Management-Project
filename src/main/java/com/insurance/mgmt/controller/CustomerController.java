@@ -19,18 +19,22 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.insurance.mgmt.entity.Car;
+import com.insurance.mgmt.entity.CarInsurance;
 import com.insurance.mgmt.entity.Customer;
 import com.insurance.mgmt.entity.Health;
+import com.insurance.mgmt.entity.HealthInsurance;
 import com.insurance.mgmt.entity.Home;
-import com.insurance.mgmt.entity.Insurance;
+import com.insurance.mgmt.entity.HomeInsurance;
 import com.insurance.mgmt.entity.Kdv;
 import com.insurance.mgmt.entity.address.District;
 import com.insurance.mgmt.entity.address.Province;
+import com.insurance.mgmt.service.CarInsuranceService;
 import com.insurance.mgmt.service.CarService;
 import com.insurance.mgmt.service.CustomerService;
+import com.insurance.mgmt.service.HealthInsuranceService;
 import com.insurance.mgmt.service.HealthService;
+import com.insurance.mgmt.service.HomeInsuranceService;
 import com.insurance.mgmt.service.HomeService;
-import com.insurance.mgmt.service.InsuranceService;
 import com.insurance.mgmt.service.KdvService;
 import com.insurance.mgmt.service.address.DistrictService;
 import com.insurance.mgmt.service.address.ProvinceService;
@@ -53,7 +57,13 @@ public class CustomerController {
 	HealthService healthService;
 	
 	@Autowired
-	InsuranceService insuranceService;
+	CarInsuranceService carInsuranceService;
+	
+	@Autowired
+	HomeInsuranceService homeInsuranceService;
+	
+	@Autowired
+	HealthInsuranceService healthInsuranceService;
 
 	@Autowired
 	ProvinceService provinceService;
@@ -211,7 +221,10 @@ public class CustomerController {
 		List<Car> cars = carService.findByStatusAndCustomerId(1, customerId); 
 		List<Home> homes = homeService.findByStatusAndCustomerId(1, customerId);
 		List<Health> healthInfos = healthService.findByStatusAndCustomerId(1, customerId);
-		List<Insurance> insurances = insuranceService.findByStatusAndCustomerId(1, customerId);
+		List<CarInsurance> carInsurances = carInsuranceService.findByStatusAndCustomerId(1, customerId);
+		List<HomeInsurance> homeInsurances = homeInsuranceService.findByStatusAndCustomerId(1, customerId);
+		List<HealthInsurance> healthInsurances = healthInsuranceService.findByStatusAndCustomerId(1, customerId);
+		
 		for (Car car : cars) {
 			car.setStatus(0);
 			carService.save(car);
@@ -224,10 +237,20 @@ public class CustomerController {
 			health.setStatus(0);
 			healthService.save(health);
 		}
-		for (Insurance insurance : insurances) {
+		for (CarInsurance insurance : carInsurances) {
 			insurance.setResult("Canceled");
 			insurance.setStatus(0);
-			insuranceService.save(insurance);
+			carInsuranceService.save(insurance);
+		}
+		for (HomeInsurance insurance : homeInsurances) {
+			insurance.setResult("Canceled");
+			insurance.setStatus(0);
+			homeInsuranceService.save(insurance);
+		}
+		for (HealthInsurance insurance : healthInsurances) {
+			insurance.setResult("Canceled");
+			insurance.setStatus(0);
+			healthInsuranceService.save(insurance);
 		}
 
 		Customer customer = customerService.getCustomerById(customerId);

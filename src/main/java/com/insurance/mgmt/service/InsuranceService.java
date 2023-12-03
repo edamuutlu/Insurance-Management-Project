@@ -1,4 +1,4 @@
-package com.insurance.mgmt.service;
+/* package com.insurance.mgmt.service;
 
 import java.util.Collections;
 import java.util.List;
@@ -95,3 +95,4 @@ public class InsuranceService {
 		return insuranceRepository.findByStatusAndResultAndHealthId(status, result, healthId);
 	}
 }
+*/

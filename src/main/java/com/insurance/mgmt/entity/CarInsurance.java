@@ -8,8 +8,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "insurance")
-public class Insurance {
+@Table(name = "car_insurance")
+public class CarInsurance {
 	@Id
 	@Column(name ="insurance_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,12 +23,6 @@ public class Insurance {
 	
 	@Column(name ="car_id") 
 	private int carId;
-	
-	@Column(name ="home_id") 
-	private int homeId;
-	
-	@Column(name ="health_id") 
-	private int healthId;
 	
 	@Column(name ="offer") 
 	private double offer;
@@ -57,20 +51,18 @@ public class Insurance {
 	@Column(name= "kdv")
 	private int kdv;
 
-	public Insurance() {
+	public CarInsurance() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Insurance(int insuranceId, String insuranceType, int customerId, int carId, int homeId, int healthId, double offer,
-			String result, String startDate, String endDate, int daysDiff, double refund, int status, int period, int kdv) {
+	public CarInsurance(int insuranceId, String insuranceType, int customerId, int carId, double offer, String result,
+			String startDate, String endDate, int period, int daysDiff, double refund, int status, int kdv) {
 		super();
 		this.insuranceId = insuranceId;
 		this.insuranceType = insuranceType;
 		this.customerId = customerId;
 		this.carId = carId;
-		this.homeId = homeId;
-		this.healthId = healthId;
 		this.offer = offer;
 		this.result = result;
 		this.startDate = startDate;
@@ -112,22 +104,6 @@ public class Insurance {
 
 	public void setCarId(int carId) {
 		this.carId = carId;
-	}
-
-	public int getHomeId() {
-		return homeId;
-	}
-
-	public void setHomeId(int homeId) {
-		this.homeId = homeId;
-	}
-
-	public int getHealthId() {
-		return healthId;
-	}
-
-	public void setHealthId(int healthId) {
-		this.healthId = healthId;
 	}
 
 	public double getOffer() {
@@ -193,7 +169,7 @@ public class Insurance {
 	public void setStatus(int status) {
 		this.status = status;
 	}
-	
+
 	public int getKdv() {
 		return kdv;
 	}
@@ -204,11 +180,10 @@ public class Insurance {
 
 	@Override
 	public String toString() {
-		return "Insurance [insuranceId=" + insuranceId + ", insuranceType=" + insuranceType + ", customerId="
-				+ customerId + ", carId=" + carId + ", homeId=" + homeId + ", healthId=" + healthId + ", offer=" + offer
-				+ ", result=" + result + ", startDate=" + startDate + ", endDate=" + endDate + ", period=" + period
-				+ ", daysDiff=" + daysDiff + ", refund=" + refund + ", status=" + status + ", kdv=" + kdv + "]";
+		return "CarInsurance [insuranceId=" + insuranceId + ", insuranceType=" + insuranceType + ", customerId="
+				+ customerId + ", carId=" + carId + ", offer=" + offer + ", result=" + result + ", startDate="
+				+ startDate + ", endDate=" + endDate + ", period=" + period + ", daysDiff=" + daysDiff + ", refund="
+				+ refund + ", status=" + status + ", kdv=" + kdv + "]";
 	}
-	
 	
 }

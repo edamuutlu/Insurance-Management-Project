@@ -1,4 +1,4 @@
-package com.insurance.mgmt.repository;
+/*package com.insurance.mgmt.repository;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,7 +11,7 @@ import com.insurance.mgmt.entity.Insurance;
 @Repository
 public interface IInsuranceRepository extends JpaRepository<Insurance,Integer>{ 
 	
-	List<Insurance> findByStatus(int status);
+	//List<Insurance> findByStatus(int status);
 	
 	Optional<Insurance> findByHomeId(int homeId); 
 	
@@ -23,7 +23,7 @@ public interface IInsuranceRepository extends JpaRepository<Insurance,Integer>{
 	
 	List<Insurance> findByStatusAndCarId(int status, int carId);
 	
-	List<Insurance> findByStatusAndCustomerId(int status, int customerId);
+	//List<Insurance> findByStatusAndCustomerId(int status, int customerId);
 	
 	List<Insurance> findByStatusAndHealthId(int status, int healthId);
 	
@@ -33,5 +33,5 @@ public interface IInsuranceRepository extends JpaRepository<Insurance,Integer>{
 	
 	List<Insurance> findByStatusAndResultAndHealthId(int status, String result, int healthId);
 	
-	List<Insurance> findByStatusAndCustomerIdAndResult(int status, int customerId, String result);
-}
+	//List<Insurance> findByStatusAndCustomerIdAndResult(int status, int customerId, String result);
+} */
