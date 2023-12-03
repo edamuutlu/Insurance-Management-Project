@@ -73,14 +73,7 @@
 	</nav>
 	<!--	End Navbar-->
 
-	<!--		<div class="alert alert-warning" role="alert" th:if="${showText}"> This health insurance has already been-->
-	<!--			defined! </div>-->
-	<!--		<div class="alert alert-warning" role="alert" th:if="${showAlert}"> This health insurance has already been-->
-	<!--			deleted or expired! </div>-->
-	<!--		<div class="alert alert-warning" role="alert" th:if="${showHealthAlert}">The person with this health-->
-	<!--			information already has health insurance! </div>-->
-	<!--		<div class="alert alert-warning" role="alert" th:if="${showAbsent}"> There is no insurance for this health info!-->
-	<!--		</div>-->
+
 	<!--		<button type="button" class="btn btn-info text-white mb-2"-->
 	<!--			style="background-color: rgb(62, 209, 221); font-size: 17px; padding: 10px 20px;" id="editButton">-->
 	<!--			<a class="text-decoration-none" th:href="@{/healthInsuranceEditForm/{id}(id=${insuranceId})}">-->
@@ -88,40 +81,43 @@
 	<!--			</a>-->
 	<!--		</button>-->
 
-	<!--		<script th:inline="javascript">-->
-	<!--			document.addEventListener("DOMContentLoaded", function () {-->
-	<!--				var showAbsent = /*[[${showAbsent}]]*/[];-->
-	<!--				var editButton = document.getElementById("editButton");-->
+			<script th:inline="javascript">
+				document.addEventListener("DOMContentLoaded", function () {
+					var showAbsent = /*[[${showAbsent}]]*/[];
+					var editButton = document.getElementById("editButton");
 
-	<!--				if (showAbsent) {-->
-	<!--					editButton.disabled = true; // Butonu tıklanamaz yapar-->
-	<!--				}-->
-	<!--			});-->
-	<!--		</script>-->
+					if (showAbsent) {
+						editButton.disabled = true; // Butonu tıklanamaz yapar
+					}
+				});
+			</script>
 
 	<div class="user-page-wrapper">
 		<div class="user-page-main" th:each="c :${customer}">
 			<div class="user-title">
-				<!--<span class="username-text" th:text="${c.username}"></span>
-				<div class="select-type"><a th:href="@{/selectType(customerId=${c.customerId})}"><span
-							class="badge text-bg-primary">Get Insurance Quote</span></a></div>-->
 				<div class="username-settings">
-	              <a th:href="@{/userPage/{username}(username=${c.username})}">
+					<a th:href="@{/userPage/{username}(username=${c.username})}">
 						<span class="badge text-bg-secondary"><i class='bx bx-arrow-back'></i></span>
 					</a>
-	              <span class="username-text" th:text="${c.username}"></span>
-	            </div>
-	            <div class="select-type">
-	              <a href="#"><span class="badge text-bg-info">Insurance Renew</span></a>
-	            </div>
+					<span class="username-text" th:text="${c.username}"></span>
+				</div>
+				<form th:action="@{/healthInsuranceEditForm/{insuranceId}(insuranceId=${insuranceId})}" method="get">
+				<button type="submit" class="select-type" data-bs-toggle="modal" data-bs-target="#renewModal"
+					id="renewButton">
+					<span class="badge text-bg-info" >Renew Car Insurance</span>
+				</button>
+				</form>
 			</div>
+
 			<!--Alert Message-->
-			<div class="alert alert-warning insurance-error d-flex align-items-center" role="alert">
-          	  <i class='bx bxs-error' ></i>
-	          <div>
-	            An example warning alert with an icon
-	          </div>
-	        </div>
+			<div class="alert alert-warning insurance-error d-flex align-items-center" role="alert"
+				th:if="${showText} or ${showAlert} or ${showAbsent}">
+				<i class='bx bxs-error'></i>
+				<span th:if="${showText}"> The person with this health information already has health insurance! </span>
+				<span th:if="${showAlert}"> An insurance for this health insurance has already been deleted or expired! </span>
+				<span th:if="${showAbsent}"> There is no insurance for this health insurance!</span>
+			</div>
+
 			
 			<div class="user-page">
 				<!-- User Bilgileri -->

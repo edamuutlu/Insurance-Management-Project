@@ -244,8 +244,8 @@ public class HomeController {
 	}
 
 	@PostMapping("/renewHomeInsurance/{insuranceId}")
-	public String renewHomeInsurance(@PathVariable("insuranceId") int insuranceId, @RequestParam("period") int period,
-			Model model) {
+	public String renewHomeInsurance(@PathVariable("insuranceId") int insuranceId,
+			Model model, RedirectAttributes redirectAttributes) {
 		HomeInsurance oldInsurance = homeInsuranceService.getInsuranceById(insuranceId);
 		Home home = homeService.getHomeById(oldInsurance.getHomeId());
 		Customer customer = customerService.getCustomerById(home.getCustomerId());
@@ -253,13 +253,13 @@ public class HomeController {
 		// Devam eden bir sigorta var mı kontrolü
 		List<HomeInsurance> insurances = homeInsuranceService.findByStatusAndResultAndHomeId(1, "Accepted", oldInsurance.getHomeId());
 		if (!insurances.isEmpty()) {
-			model.addAttribute("showText", true);
+			redirectAttributes.addFlashAttribute("showText", true);
 			model.addAttribute("insurance", insurances);
-			return "seeHomeInsuranceDetails";
+			return "redirect:/seeHomeInsuranceDetails/" + oldInsurance.getHomeId();
 		}
 
 		LocalDateTime now = LocalDateTime.now();
-		LocalDateTime endDate = now.plusDays(home.getPeriod());
+		LocalDateTime endDate = now.plusDays(oldInsurance.getPeriod());
 
 		// Bina inşa yılına göre bina yaşı hesaplanmaktadır
 		int currentYear = Calendar.getInstance().get(Calendar.YEAR);
@@ -279,12 +279,7 @@ public class HomeController {
 		newInsurance.setKdv(oldInsurance.getKdv());
 		newInsurance.setOffer(offer);
 		newInsurance.setStatus(oldInsurance.getStatus());
-
-		// Kullancıdan alınan yeni periyodu set edilmektedir
-		home.setPeriod(period);
-		homeService.save(home);
-
-		newInsurance.setPeriod(period); 
+		newInsurance.setPeriod(oldInsurance.getPeriod()); 
 		homeInsuranceService.save(newInsurance);
 
 		model.addAttribute(customer);
@@ -343,7 +338,7 @@ public class HomeController {
 		Kdv kdv = kdvService.getProductTypeById(2);
 
 		model.addAttribute(kdv);
-		model.addAttribute(insurance);
+		model.addAttribute("insurance", insurance);
 		model.addAttribute(home);
 		return "homeInsuranceRefund";
 	}

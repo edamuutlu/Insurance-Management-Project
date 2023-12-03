@@ -237,9 +237,7 @@ public class CarController {
 
 		// Devam eden bir sigorta var mı kontrolü
 		List<CarInsurance> insurances = carInsuranceService.findByStatusAndResultAndCarId(1, "Accepted", oldInsurance.getCarId());
-		System.out.print(insurances);
 		if (!insurances.isEmpty()) {
-			System.out.println("girdi");
 			redirectAttributes.addFlashAttribute("showText", true);
 			model.addAttribute("insurance", insurances);
 			return "redirect:/seeCarInsuranceDetails/" + oldInsurance.getCarId();

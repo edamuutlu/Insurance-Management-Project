@@ -51,10 +51,10 @@ public class HealthController {
 
 	@Autowired
 	CarInsuranceService carInsuranceService;
-	
+
 	@Autowired
 	HomeInsuranceService homeInsuranceService;
-	
+
 	@Autowired
 	HealthInsuranceService healthInsuranceService;
 
@@ -134,7 +134,7 @@ public class HealthController {
 		health.setCustomerId(idParam);
 		health.setStatus(1);
 		healthService.save(health);
-		
+
 		insurance.setHealthId(health.getHealthId());
 		healthInsuranceService.save(insurance);
 
@@ -163,7 +163,8 @@ public class HealthController {
 	public ModelAndView healthInfoList(@PathVariable("customerId") int customerId, Model model) {
 
 		List<Health> healthInfos = healthService.findByStatusAndCustomerId(1, customerId);
-		List<HealthInsurance> insurances = healthInsuranceService.findByStatusAndCustomerIdAndResult(1, customerId, "Accepted");
+		List<HealthInsurance> insurances = healthInsuranceService.findByStatusAndCustomerIdAndResult(1, customerId,
+				"Accepted");
 		ArrayList<Health> expiredHealthInsurance = new ArrayList<>();
 
 		// Poliçenin süresinin bitip bitmediğini kontrol etme
@@ -196,18 +197,20 @@ public class HealthController {
 	}
 
 	@GetMapping("/healthInsuranceEditForm/{insuranceId}")
-	public String healthInsuranceEditForm(@PathVariable("insuranceId") int insuranceId, Model model) {
-		
+	public String healthInsuranceEditForm(@PathVariable("insuranceId") int insuranceId, Model model, RedirectAttributes redirectAttributes) {
+
 		HealthInsurance insurance = healthInsuranceService.getInsuranceById(insuranceId);
 		Health health = healthService.getHealthById(insurance.getHealthId());
 
 		// Devam eden bir sigorta var mı kontrolü
-		List<HealthInsurance> insurances = healthInsuranceService.findByStatusAndResultAndHealthId(1, "Accepted", insurance.getHealthId());
+		List<HealthInsurance> insurances = healthInsuranceService.findByStatusAndResultAndHealthId(1, "Accepted",
+				insurance.getHealthId());
 		if (!insurances.isEmpty()) {
-			model.addAttribute("showHealthAlert", true);
+			redirectAttributes.addFlashAttribute("showText", true);
 			model.addAttribute("insurance", insurances);
-			return "seeHealthInsuranceDetails";
+			return "redirect:/seeHealthInsuranceDetails/" + insurance.getHealthId();
 		}
+		
 		LocalDateTime now = LocalDateTime.now();
 		insurance.setEndDate(now.format(formatter));
 		insurance.setResult("Canceled");
@@ -223,11 +226,12 @@ public class HealthController {
 
 	@GetMapping("/healthInsuranceUpdate/{healthId}")
 	public String healthInsuranceUpdate(@PathVariable("healthId") int healthId, Model model) {
-		
+
 		Health health = healthService.getHealthById(healthId);
 		model.addAttribute(health);
 
-		List<HealthInsurance> insurances = healthInsuranceService.findByStatusAndResultAndHealthId(1, "Accepted", healthId);
+		List<HealthInsurance> insurances = healthInsuranceService.findByStatusAndResultAndHealthId(1, "Accepted",
+				healthId);
 		for (HealthInsurance insurance : insurances) {
 			insurance.setResult("Canceled");
 			LocalDateTime now = LocalDateTime.now();
@@ -242,8 +246,8 @@ public class HealthController {
 	}
 
 	@PostMapping("/editHealthInfo")
-	public String editHealthInfo(@ModelAttribute Health health, Model model) {
-		
+	public String editHealthInfo(@ModelAttribute Health health, Model model, RedirectAttributes redirectAttributes) {
+
 		Health oldHealth = healthService.getHealthById(health.getHealthId());
 		Customer customer = customerService.getCustomerById(health.getCustomerId());
 
@@ -283,7 +287,7 @@ public class HealthController {
 
 	@RequestMapping("/deleteHealthInfo/{id}")
 	public String deleteHealthInfo(@PathVariable("id") int healthId, Model model) {
-		
+
 		Health health = healthService.getHealthById(healthId);
 		List<HealthInsurance> insurances = healthInsuranceService.findByStatusAndHealthId(1, healthId);
 		if (!(insurances.isEmpty())) {
@@ -303,7 +307,7 @@ public class HealthController {
 
 	@RequestMapping("/deleteHealthInsurance/{id}")
 	public String deleteHealthInsurance(@PathVariable("id") int id, Model model) {
-		
+
 		HealthInsurance insurance = healthInsuranceService.getInsuranceById(id);
 		insurance.setResult("Canceled");
 		LocalDateTime now = LocalDateTime.now();
@@ -315,11 +319,11 @@ public class HealthController {
 
 	@GetMapping("/seeHealthInsuranceDetails/{id}")
 	public String seeHealthInsuranceDetails(@PathVariable("id") int healthId, Model model) {
-		
+
 		List<HealthInsurance> insurances = healthInsuranceService.findByStatusAndHealthId(1, healthId);
 		Health health = healthService.getHealthById(healthId);
 		Customer customer = customerService.getCustomerById(health.getCustomerId());
-		
+
 		for (HealthInsurance insurance : insurances) {
 			healthInsuranceService.save(insurance);
 			model.addAttribute("insuranceId", insurance.getInsuranceId());
@@ -331,7 +335,7 @@ public class HealthController {
 			model.addAttribute("customer", customer);
 			return "seeHealthInsuranceDetails";
 		}
-		
+
 		model.addAttribute("customer", customer);
 		model.addAttribute("healthId", healthId);
 		model.addAttribute("insurance", insurances);
@@ -339,8 +343,9 @@ public class HealthController {
 	}
 
 	@GetMapping("/healthInsuranceRefund/{insuranceId}")
-	public String healthInsuranceRefund(@PathVariable("insuranceId") int insuranceId, Model model, RedirectAttributes redirectAttributes) {
-		
+	public String healthInsuranceRefund(@PathVariable("insuranceId") int insuranceId, Model model,
+			RedirectAttributes redirectAttributes) {
+
 		HealthInsurance insurance = healthInsuranceService.getInsuranceById(insuranceId);
 		Health health = healthService.getHealthById(insurance.getHealthId());
 
@@ -367,14 +372,14 @@ public class HealthController {
 		Kdv kdv = kdvService.getProductTypeById(3);
 
 		model.addAttribute(kdv);
-		model.addAttribute(insurance);
+		model.addAttribute("insurance", insurance);
 		model.addAttribute(health);
 		return "healthInsuranceRefund";
 	}
 
 	@PostMapping("/healthResult")
 	public String healthResult(@RequestParam("insuranceId") int insuranceId, @RequestParam("result") String result) {
-		
+
 		HealthInsurance insurance = healthInsuranceService.getInsuranceById(insuranceId);
 
 		if (insurance != null) {
