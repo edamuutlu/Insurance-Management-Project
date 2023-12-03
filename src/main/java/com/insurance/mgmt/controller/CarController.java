@@ -77,7 +77,8 @@ public class CarController {
 	} 		
 	
 	@PostMapping("/carRegister")
-	public String carRegister(@Valid @ModelAttribute Car car, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes, @RequestParam(value = "customerId", required = false) int idParam) {		
+	public String carRegister(@Valid @ModelAttribute Car car, BindingResult bindingResult, Model model, 
+			RedirectAttributes redirectAttributes, @RequestParam(value = "customerId", required = false) int idParam) {		
 				
 		if(bindingResult.hasErrors()) {
 			log.info(">> Car : {}",car.toString());
@@ -126,7 +127,8 @@ public class CarController {
 		carInsuranceService.save(insurance);
 		
 		redirectAttributes.addFlashAttribute("car", car);				
-		redirectAttributes.addFlashAttribute("customer",customer);	
+		redirectAttributes.addFlashAttribute("customer",customer);
+		model.addAttribute("customerId", idParam);
 		redirectAttributes.addFlashAttribute("insurance", insurance);
 		return "redirect:/trafficInsuranceCalculate/" + car.getId();	
 				

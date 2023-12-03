@@ -91,11 +91,13 @@
 									<label class="label">
 										<div class="txt">First Name</div>
 										<div class="warning"
-											ng-show="myForm.firstname.$error.required && myForm.firstname.$dirty">
+											ng-show="myForm.firstname.$error.required && myForm.firstname.$touched">
+											<i class='bx bxs-error-alt'></i>
 											Required.
 										</div>
 										<div class="warning"
 											ng-show="myForm.firstname.$error.pattern && myForm.firstname.$dirty">
+											<i class='bx bxs-error-alt'></i>
 											Only letters can be used.
 										</div>
 									</label>
@@ -109,11 +111,13 @@
 									<label class="label">
 										<div class="txt">Last Name</div>
 										<div class="warning"
-											ng-show="myForm.lastname.$error.required && myForm.lastname.$dirty">
+											ng-show="myForm.lastname.$error.required && myForm.lastname.$touched">
+											<i class='bx bxs-error-alt'></i>
 											Required.
 										</div>
 										<div class="warning"
 											ng-show="myForm.lastname.$error.pattern && myForm.lastname.$dirty">
+											<i class='bx bxs-error-alt'></i>
 											Only letters can be used.
 										</div>
 									</label>
@@ -129,7 +133,7 @@
 								<div class="input-group">
 									<label class="label">
 										<div class="txt">T.C.</div>
-										<div class="warning" ng-show="myForm.tc.$error.required && myForm.tc.$dirty">
+										<div class="warning" ng-show="myForm.tc.$error.required && myForm.tc.$touched">
 											<i class='bx bxs-error-alt'></i>
 											Required.
 										</div>
@@ -147,7 +151,7 @@
 								<div class="input-group">
 									<label class="label">
 										<div class="txt">Email</div>
-										<div class="warning" ng-show="myForm.email.$invalid && myForm.email.$dirty">
+										<div class="warning" ng-show="myForm.email.$invalid && myForm.email.$touched">
 											<i class='bx bxs-error-alt'></i>
 											Enter a valid email address.
 										</div>
@@ -181,6 +185,10 @@
 											<i class='bx bxs-error-alt'></i>
 											<p>{{ passwordError }}</p>
 										</div>
+										<div class="warning" ng-show="myForm.password.$error.required && myForm.password.$touched">
+											<i class='bx bxs-error-alt'></i>
+											Required.
+										</div>
 									</label>
 									<input type="password" ng-model="password" ng-required="true" id="password"
 										class="input-4" name="password" ng-change="validatePassword()">
@@ -211,7 +219,7 @@
 									<label class="label">
 										<div class="txt">Phone Number</div>
 										<div class="warning"
-											ng-show="myForm.phoneNumber.$error.required && myForm.phoneNumber.$dirty">
+											ng-show="myForm.phoneNumber.$error.required && myForm.phoneNumber.$touched">
 											Required.
 										</div>
 										<div class="warning"
