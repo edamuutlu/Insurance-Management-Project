@@ -205,24 +205,44 @@ public class CarController {
 		return "seeCarInsuranceDetails";
 	}
 	
+//	@PostMapping("/renewButton/{insuranceId}")
+//	public String renewButton(@PathVariable("insuranceId") int insuranceId, Model model, RedirectAttributes redirectAttributes) {	
+//		CarInsurance oldInsurance = carInsuranceService.getInsuranceById(insuranceId);
+//		Car car = carService.getCarId(oldInsurance.getCarId());
+//		Customer customer = customerService.getCustomerById(car.getCustomerId());
+//
+//		// Devam eden bir sigorta var mı kontrolü
+//		List<CarInsurance> insurances = carInsuranceService.findByStatusAndResultAndCarId(1, "Accepted", oldInsurance.getCarId());
+//		System.out.print(insurances);
+//		if (!insurances.isEmpty()) {
+//			System.out.println("girdi");
+//			redirectAttributes.addFlashAttribute("showText", true);
+//			model.addAttribute("insurance", insurances);
+//			return "redirect:/seeCarInsuranceDetails/" + oldInsurance.getCarId();
+//		}else {
+//			model.addAttribute("showAlertMessage",true);
+//		}
+//		model.addAttribute(customer);
+//		model.addAttribute("insurance", oldInsurance);
+//		model.addAttribute(car);
+//		return "seeCarInsuranceDetails";
+//	}
+	
 	@PostMapping("/renewCarInsurance/{insuranceId}")
-	public String renewCarInsurance(@PathVariable("insuranceId") int insuranceId, @RequestParam("period") int period,
-			Model model) {		
+	public String renewCarInsurance(@PathVariable("insuranceId") int insuranceId,
+			Model model, RedirectAttributes redirectAttributes) {		
 		CarInsurance oldInsurance = carInsuranceService.getInsuranceById(insuranceId);
 		Car car = carService.getCarId(oldInsurance.getCarId());
 		Customer customer = customerService.getCustomerById(car.getCustomerId());
-		System.out.print("BURDAA1");
-		boolean showText = false;
 
 		// Devam eden bir sigorta var mı kontrolü
 		List<CarInsurance> insurances = carInsuranceService.findByStatusAndResultAndCarId(1, "Accepted", oldInsurance.getCarId());
 		System.out.print(insurances);
 		if (!insurances.isEmpty()) {
-			model.addAttribute("showText",true);
-			System.out.print(showText);
-			System.out.print("BURDAA2");
+			System.out.println("girdi");
+			redirectAttributes.addFlashAttribute("showText", true);
 			model.addAttribute("insurance", insurances);
-			return "seeCarInsuranceDetails";
+			return "redirect:/seeCarInsuranceDetails/" + oldInsurance.getCarId();
 		}
 
 		CarInsurance newInsurance = new CarInsurance();
@@ -244,12 +264,7 @@ public class CarController {
 		newInsurance.setOffer(offer);
 		newInsurance.setStatus(oldInsurance.getStatus());
 		newInsurance.setResult("Accepted");
-
-		// Kullancıdan alınan yeni periyodu set edilmektedir
-		car.setPeriod(period);
-		carService.save(car);
-
-		newInsurance.setPeriod(period); 
+		newInsurance.setPeriod(oldInsurance.getPeriod()); 
 		
 		carInsuranceService.save(newInsurance);
 

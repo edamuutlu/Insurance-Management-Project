@@ -80,53 +80,45 @@
 	<script th:inline="javascript">
 		document.addEventListener("DOMContentLoaded", function () {
 			var showAbsent = /*[[${showAbsent}]]*/[];
-			//var showText = /*[[${showText}]]*/ [];
+			var showText = /*[[${showText}]]*/ [];
 			//var showAlertMessage; 
-			alert("mesaj1" + showText);
 			var renewButton = document.getElementById("renewButton");
 
 			if (showAbsent) {
 				renewButton.disabled = true; // Butonu tıklanamaz yapar
 			}
 
-			//if (!showText) {
-			//	showAlertMessage = true;
-			//}else{
-			//	showAlertMessage = false;
-			//}
 		});
 	</script>
-
-
 	<!--			 Renew Car Insurance Modal -->
-			<div class="modal fade" id="renewModal" tabindex="-1" aria-labelledby="renewModalLabel" aria-hidden="true">
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="renewModalLabel">Renew Car Insurance</h5>
-							<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<div class="modal-body">
-							<form th:action="@{/renewCarInsurance/{insuranceId}(insuranceId=${insuranceId})}" method="post"
-								name="periodForm" novalidate>
-								<input type="hidden" name="insuranceId" th:value="${insuranceId}" />
-								<div class="d-flex justify-content-between mt-3">
-									<label style="margin-right: 20px;" for="period">Enter New Period:</label>
-									<input type="number" id="period" name="period" class="form-control"
-										placeholder="Period*" th:value="${period}" ng-required="true" min="0" max="100">
-								</div>
-															<p class="error" ng-show="periodForm.period.$invalid && periodForm.period.$touched">Fill out your period.</p>
-								<div class="modal-footer">
-									<button type="submit" class="btn modal-btn" ng-disabled="periodForm.$invalid">Save
-										Changes</button>
-								</div>
-							</form>
-						</div>
-					</div>
-				</div>
-			</div>
+<!--			<div class="modal fade" id="renewModal" tabindex="-1" aria-labelledby="renewModalLabel" aria-hidden="true" th:if="${showAlertMessage}">-->
+<!--				<div class="modal-dialog">-->
+<!--					<div class="modal-content">-->
+<!--						<div class="modal-header">-->
+<!--							<h5 class="modal-title" id="renewModalLabel">Renew Car Insurance</h5>-->
+<!--							<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">-->
+<!--								<span aria-hidden="true">&times;</span>-->
+<!--							</button>-->
+<!--						</div>-->
+<!--						<div class="modal-body">-->
+<!--							<form th:action="@{/renewCarInsurance/{insuranceId}(insuranceId=${insuranceId})}" method="post"-->
+<!--								name="periodForm" novalidate>-->
+<!--								<input type="hidden" name="insuranceId" th:value="${insuranceId}" />-->
+<!--								<div class="d-flex justify-content-between mt-3">-->
+<!--									<label style="margin-right: 20px;" for="period">Enter New Period:</label>-->
+<!--									<input type="number" id="period" name="period" class="form-control"-->
+<!--										placeholder="Period*" th:value="${period}" ng-required="true" min="0" max="100">-->
+<!--								</div>-->
+<!--															<p class="error" ng-show="periodForm.period.$invalid && periodForm.period.$touched">Fill out your period.</p>-->
+<!--								<div class="modal-footer">-->
+<!--									<button type="submit" class="btn modal-btn" ng-disabled="periodForm.$invalid">Save-->
+<!--										Changes</button>-->
+<!--								</div>-->
+<!--							</form>-->
+<!--						</div>-->
+<!--					</div>-->
+<!--				</div>-->
+<!--			</div>-->
 
 
 	<div class="user-page-wrapper">
@@ -141,10 +133,12 @@
 				<!--					<a href="#"><span class="badge text-bg-info">Renew Car Insurance</span></a>-->
 				<!--				</div>-->
 				<!--		 Button to trigger the modal -->
-				<button type="button" class="select-type" data-bs-toggle="modal" data-bs-target="#renewModal"
+				<form th:action="@{/renewCarInsurance/{insuranceId}(insuranceId=${insuranceId})}" method="post">
+				<button type="submit" class="select-type" data-bs-toggle="modal" data-bs-target="#renewModal"
 					id="renewButton">
-					<a class="badge text-bg-info">Renew Car Insurance</a>
+					<a class="badge text-bg-info" >Renew Car Insurance</a>
 				</button>
+				</form>
 			</div>
 
 			<!--Alert Message-->
