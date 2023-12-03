@@ -247,7 +247,7 @@ public class CarController {
 
 		CarInsurance newInsurance = new CarInsurance();
 		LocalDateTime now = LocalDateTime.now();
-		LocalDateTime endDate = now.plusDays(newInsurance.getPeriod());
+		LocalDateTime endDate = now.plusDays(oldInsurance.getPeriod());
 
 		Kdv kdv = kdvService.getProductTypeById(2);
 		int kdvRate = kdv.getKdvRate();

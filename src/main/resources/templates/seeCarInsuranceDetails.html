@@ -125,8 +125,9 @@
 		<div class="user-page-main" th:each="c :${customer}">
 			<div class="user-title">
 				<div class="username-settings">
-					<button onclick="goBack()"><span class="badge text-bg-secondary"><i
-								class='bx bx-arrow-back'></i></span></button>
+					<a th:href="@{/userPage/{username}(username=${c.username})}">
+						<span class="badge text-bg-secondary"><i class='bx bx-arrow-back'></i></span>
+					</a>
 					<span class="username-text" th:text="${c.username}"></span>
 				</div>
 				<!--				<div class="select-type">-->
@@ -136,7 +137,7 @@
 				<form th:action="@{/renewCarInsurance/{insuranceId}(insuranceId=${insuranceId})}" method="post">
 				<button type="submit" class="select-type" data-bs-toggle="modal" data-bs-target="#renewModal"
 					id="renewButton">
-					<a class="badge text-bg-info" >Renew Car Insurance</a>
+					<span class="badge text-bg-info" >Renew Car Insurance</span>
 				</button>
 				</form>
 			</div>

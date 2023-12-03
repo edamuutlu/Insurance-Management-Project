@@ -8,6 +8,8 @@ body {
   font-family: "Poppins", sans-serif;
   font-weight: 500;
   font-size: 14px;
+  /* Navber start */
+  /* Navber start */
 }
 @media (max-width: 1000px) {
   body {
@@ -104,7 +106,15 @@ body .page-wrapper .wrapper .card .card-body .title {
   font-size: 24px;
   color: #525252;
   font-weight: 600;
-  margin-bottom: 40px;
+}
+body .page-wrapper .wrapper .card .card-body .customer-id {
+  width: 100%;
+  font-size: 15px;
+  display: flex;
+  justify-content: end;
+  text-decoration: underline;
+  color: #525252;
+  font-weight: 600;
 }
 body .page-wrapper .wrapper .card .card-body .row {
   -webkit-box-pack: justify;
@@ -132,6 +142,9 @@ body .page-wrapper .wrapper .card .card-body .row .col-2 .input-group .label {
   text-transform: capitalize;
   display: flex;
   margin-bottom: 5px;
+}
+body .page-wrapper .wrapper .card .card-body .row .col-2 .input-group .label .txt {
+  font-weight: 500;
 }
 body .page-wrapper .wrapper .card .card-body .row .col-2 .input-group .label .warning {
   font-size: 14px;
@@ -187,6 +200,23 @@ body .page-wrapper .wrapper .card .card-body .row .col-2 .input-group select {
   font-size: 16px;
   color: #666;
   transition: all 0.4s ease;
+}
+body .page-wrapper .wrapper .card .card-body .row .col-2 .input-group .radio-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+body .page-wrapper .wrapper .card .card-body .row .col-2 .input-group .radio-buttons label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px;
+  font-weight: 400;
+  color: #555;
+}
+body .page-wrapper .wrapper .card .card-body .row .col-2 .input-group .radio-buttons label input {
+  margin-right: 5px;
+  width: auto;
 }
 body .page-wrapper .wrapper .card .card-body .row .col-12 {
   width: 100%;
@@ -247,6 +277,49 @@ body .page-wrapper .wrapper .card .card-body .row .col-12 .input-group .hide-pas
 body .page-wrapper .wrapper .card .card-body .row .col-12 .input-group .hide-pass i {
   font-size: 13px;
 }
+body .page-wrapper .wrapper .card .card-body .row .col-12 .input-group select {
+  width: 100%;
+  line-height: 50px;
+  box-shadow: inset 0px 1px 3px 0px rgba(0, 0, 0, 0.08);
+  border-radius: 5px;
+  padding: 0 20px;
+  font-size: 16px;
+  color: #666;
+  transition: all 0.4s ease;
+}
+body .page-wrapper .wrapper .card .card-body .row .col-12 .input-group .plane-group {
+  display: flex;
+}
+body .page-wrapper .wrapper .card .card-body .row .col-12 .input-group .plane-group input {
+  width: 100%;
+  margin-right: 4px;
+}
+body .page-wrapper .wrapper .card .card-body .row .col-12 .input-group .home-group {
+  display: flex;
+  width: 100%;
+}
+body .page-wrapper .wrapper .card .card-body .row .col-12 .input-group .home-group select {
+  width: 100%;
+  margin-right: 4px;
+}
+body .page-wrapper .wrapper .card .card-body .row .col-12 .input-group .radio-buttons {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  width: 50%;
+}
+body .page-wrapper .wrapper .card .card-body .row .col-12 .input-group .radio-buttons label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px;
+  font-weight: 400;
+  color: #555;
+}
+body .page-wrapper .wrapper .card .card-body .row .col-12 .input-group .radio-buttons label input {
+  margin-right: 5px;
+  width: auto;
+}
 body .page-wrapper .wrapper .card .card-body .agree {
   font-weight: 400;
 }
@@ -306,6 +379,7 @@ body .user-page-wrapper {
   background: webkit-gradient(linear, left bottom, right top, from(#fc2c77), to(#6c4079));
   background: linear-gradient(to top right, rgba(252, 161, 44, 0.8509803922) 0%, rgba(120, 121, 64, 0.0196078431) 100%);
   min-height: 100vh;
+  padding-top: 56px;
 }
 body .user-page-wrapper .user-page-main {
   display: flex;
@@ -341,21 +415,22 @@ body .user-page-wrapper .user-page-main .user-title .username-settings {
   justify-content: center;
   align-items: center;
 }
-body .user-page-wrapper .user-page-main .user-title .username-settings button {
+body .user-page-wrapper .user-page-main .user-title .username-settings a {
   padding-right: 10px;
   font-size: 15px;
   border: none;
   background: none;
+  text-decoration: none;
 }
-body .user-page-wrapper .user-page-main .user-title .username-settings button span {
+body .user-page-wrapper .user-page-main .user-title .username-settings a span {
   display: flex;
   justify-content: center;
   align-items: center;
 }
-body .user-page-wrapper .user-page-main .user-title .username-settings button span i {
+body .user-page-wrapper .user-page-main .user-title .username-settings a span i {
   font-size: 20px;
 }
-body .user-page-wrapper .user-page-main .user-title .username-settings button span:hover {
+body .user-page-wrapper .user-page-main .user-title .username-settings a span:hover {
   background-color: #8d98a3 !important;
 }
 body .user-page-wrapper .user-page-main .user-title .select-type span {
@@ -363,11 +438,15 @@ body .user-page-wrapper .user-page-main .user-title .select-type span {
   padding: 6px;
   color: white !important;
 }
+body .user-page-wrapper .user-page-main .user-title form button {
+  border: none;
+}
 body .user-page-wrapper .user-page-main .user-title .select-type .text-bg-primary:hover {
   background-color: rgba(13, 110, 253, 0.7411764706) !important;
 }
-body .user-page-wrapper .user-page-main .user-title .select-type .text-bg-info:hover {
-  background-color: rgba(0, 183, 255, 0.7411764706) !important;
+body .user-page-wrapper .user-page-main .user-title form .select-type .text-bg-info:hover {
+  background-color: #08a1ddbd !important;
+  color: #ffffffed!important;
 }
 body .user-page-wrapper .user-page-main .insurance-error {
   box-shadow: 3px 2px 6px 0px rgba(0, 0, 0, 0.3);
