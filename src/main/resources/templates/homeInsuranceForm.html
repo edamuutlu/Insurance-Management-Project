@@ -1,16 +1,24 @@
-<!doctype html>
-<html lang="en" xmlns:th"http://www.thymeLeaf.org">
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Home Insurance Form</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Health Insurance Form</title>
+	<!-- Bootsrapt -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
 		integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+	<!-- İcon -->
+	<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+	<!-- CSS -->
+	<link rel="stylesheet" th:href="@{/css/register.css}" href="src/main/resources/static/css/register.css">
+	<!-- Angularjs -->
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-	
-	<link rel="stylesheet" href="" th:href="@{/css/style.css}">
 
 	<script>
 		$(document).ready(function () {
@@ -48,156 +56,278 @@
 			});
 		});
 	</script>
-
 </head>
 
-<body ng-app="myApp">
-
+<body ng-app="myApp" ng-controller="homeInsuranceFormController">
 	<!--Navbar-->
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid px-5">
-          <a class="navbar-brand" href="#">Logo</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
-            <ul class="navbar-nav mb-2 mb-lg-0 text-center">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/index">
-                    <i class='bx bxs-home'></i>
-                    Home
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/index">Products</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/#">Contact Us</a>
-              </li>
-            </ul>
-          </div>
-          <div class="operations">
-            <a href="/login">
-                <i class='bx bxs-user-circle login-icon'></i>
-                Login
-            </a>
-            <a href="/customerRegister">
-                <i class='bx bxs-user-plus register-icon'></i>
-                Register
-            </a>
-          </div>
-        </div>
-      </nav>
+		<div class="container-fluid px-5">
+			<a class="navbar-brand" href="#">Logo</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+				data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+				<ul class="navbar-nav mb-2 mb-lg-0 text-center">
+					<li class="nav-item">
+						<a class="nav-link active" aria-current="page" href="#">
+							<i class='bx bxs-home'></i>
+							Home
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">Products</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">Features</a>
+					</li>
+				</ul>
+			</div>
+			<div class="operations">
+				<a href="/login">
+					<i class='bx bxs-user-circle login-icon'></i>
+					Login
+				</a>
+				<a href="/customerRegister">
+					<i class='bx bxs-user-plus register-icon'></i>
+					Register
+				</a>
+			</div>
+		</div>
+	</nav>
 	<!--	End Navbar-->
 
 
-	<section id="featured" class="my-5 pt-5">
-		<div class="container-register mt-5 py-5" ng-controller="homeInsuranceFormController">
-			<div class="textIntro">
-				<h1 class="text-center">Home Insurance Form</h1>
-				<p ng-show="msg">{{msg}}</p>
-				<div class="alert alert-warning" role="alert" th:if="${showHomeAlert}"> This home address is
-					already registered! </div>
+	<div class="page-wrapper bg-gra-02">
+		<div class="wrapper">
+			<div class="card">
+				<div class="card-body">
+					<h2 class="title">Home Insurance Form</h2>
+					<span class="customer-id mb-3">Customer Id: <span th:text="${customerId}"></span></span>
+					<form th:action="@{/homeRegister}" th:object="${home}" method="post" name="myForm"
+						ng-submit="register()">
+						<input type="hidden" name="customerId" th:value="${customerId}" />
+						<!-- Area -->
+						<div class="row">
+							<div class="col-12">
+								<div class="input-group">
+									<label class="label">
+										<div class="txt">Flat Area (m2)</div>
+										<div class="warning"
+											ng-show="myForm.flatArea.$invalid && myForm.flatArea.$touched">
+											<i class='bx bxs-error-alt'></i>
+											<p>Fill out your flat area.</p>
+										</div>
+									</label>
+									<input type="number" id="flatArea" name="flatArea" placeholder="Flat Area (m2)*"
+										ng-model="flatArea" ng-required="true" class="input-4">
+								</div>
+							</div>
+						</div>
+						<!-- Building - Type -->
+						<div class="row">
+							<div class="col-2">
+								<div class="input-group">
+									<label class="label">
+										<div class="txt">Select Building Type</div>
+										<div class="warning"
+											ng-show="myForm.buildingType.$error.required && myForm.buildingType.$touched">
+											<i class='bx bxs-error-alt'></i>
+											<p>Required</p>
+										</div>
+									</label>
+									<select class="form-select" name="buildingType" ng-model="buildingType"
+										ng-required="true" id="buildingType">
+										<option value="" th:selected="${#fields.hasErrors('buildingType')}">Building
+											Type</option>
+										<option ng-repeat="option in buildingTypes" value="{{option}}">{{option}}
+										</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-2">
+								<div class="input-group">
+									<label class="label">
+										<div class="txt">Select Type Of Use</div>
+										<div class="warning"
+											ng-show="myForm.typeOfUse.$error.required && myForm.typeOfUse.$touched">
+											<i class='bx bxs-error-alt'></i>
+											<p>Required</p>
+										</div>
+									</label>
+									<select class="form-select" name="typeOfUse" id="typeOfUse" ng-model="typeOfUse"
+										ng-required="true">
+										<option value="" th:selected="${#fields.hasErrors('typeOfUse')}">Type</option>
+										<option ng-repeat="option in typesOfUse" value="{{option}}">{{option}}</option>
+									</select>
+								</div>
+							</div>
+						</div>
+						<!-- Province - District - Neighbourhood -->
+						<div class="row">
+							<div class="col-12">
+								<div class="input-group">
+									<label class="label">
+										<div class="txt">Select Province - District - Neighbourhood</div>
+										<div class="warning" ng-show="myForm.province.$error.required && myForm.province.$touched || myForm.district.$error.required && myForm.district.$touched
+                                            || myForm.neighbourhood.$error.required && myForm.neighbourhood.$touched">
+											<i class='bx bxs-error-alt'></i>
+											<p>Required</p>
+										</div>
+									</label>
+									<div class="home-group">
+										<select class="form-select" name="province" id="province" ng-model="province"
+											ng-required="true" aria-label="Default select example">
+											<option value="" th:selected="${#fields.hasErrors('province')}">Select
+												Province*
+											</option>
+											<option th:each="province : ${getAllProvinces}" th:value="${province.id}"
+												th:text="${province.sehiradi}"></option>
+										</select>
+										<select class="form-select" name="district" id="district" ng-model="district"
+											ng-required="true" aria-label="Default select example">
+											<option value="" th:selected="${#fields.hasErrors('district')}">Select
+												District*
+											</option>
+										</select>
+										<select class="form-select" name="neighbourhood" id="neighbourhood" ng-model="neighbourhood"
+											ng-required="true" aria-label="Default select example">
+											<option value="" th:selected="${#fields.hasErrors('neighbourhood')}">Select
+												Neighbourhood*
+											</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<script th:inline="javascript">
+								var districtList = /*[[${getAllDistricts}]]*/[];
+								var neighbourhoodList = /*[[${getAllNeighbourhoods}]]*/[];
+							</script>
+							
+							<!-- Number - Apartment -->
+							<div class="row">
+								<div class="col-2">
+									<div class="input-group">
+										<label class="label">
+											<div class="txt">Building Number</div>
+											<div class="warning"
+												ng-show="myForm.buildingNumber.$invalid && myForm.buildingNumber.$touched">
+												<i class='bx bxs-error-alt'></i>
+												<p>Fill out your building number.</p>
+											</div>
+										</label>
+										<input type="number" id="buildingNumber" name="buildingNumber"
+											placeholder="Building Number*" ng-model="buildingNumber" ng-required="true"
+											class="input-4">
+									</div>
+								</div>
+								<div class="col-2">
+									<div class="input-group">
+										<label class="label">
+											<div class="txt">Apartment</div>
+											<div class="warning"
+												ng-show="myForm.apartment.$invalid && myForm.apartment.$touched">
+												<i class='bx bxs-error-alt'></i>
+												<p>Fill out your apartment.</p>
+											</div>
+										</label>
+										<input type="number" id="apartment" name="apartment" placeholder="Apartment*"
+											ng-model="apartment" ng-required="true" class="input-4">
+									</div>
+								</div>
+							</div>
+							<!-- Year - Floors -->
+							<div class="row">
+								<div class="col-2">
+									<div class="input-group">
+										<label class="label">
+											<div class="txt">Select Building Construction Year</div>
+											<div class="warning"
+												ng-show="myForm.year.$error.required && myForm.year.$touched">
+												<i class='bx bxs-error-alt'></i>
+												<p>Required</p>
+											</div>
+										</label>
+										<select class="form-select" name="year" id="year" ng-model="year"
+											ng-required="true">
+											<option value="" th:selected="${#fields.hasErrors('year')}">Year</option>
+											<option ng-repeat="option in years" value="{{option}}">{{option}}</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-2">
+									<div class="input-group">
+										<label class="label">
+											<div class="txt">Select Building Floors</div>
+											<div class="warning"
+												ng-show="myForm.floor.$error.required && myForm.floor.$touched">
+												<i class='bx bxs-error-alt'></i>
+												<p>Required</p>
+											</div>
+										</label>
+										<select class="form-select" name="floor" id="floor" ng-model="floor"
+											ng-required="true">
+											<option value="" th:selected="${#fields.hasErrors('floor')}">Floors</option>
+											<option ng-repeat="option in floors" value="{{option}}">{{option}}</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<!-- Title - Period -->
+							<div class="row">
+								<div class="col-2">
+									<div class="input-group">
+										<label class="label">
+											<div class="txt">Select Title of Insurer</div>
+											<div class="warning"
+												ng-show="myForm.insurerTitle.$error.required && myForm.insurerTitle.$touched">
+												<i class='bx bxs-error-alt'></i>
+												<p>Required</p>
+											</div>
+										</label>
+										<select class="form-select" name="insurerTitle" id="insurerTitle"
+											ng-model="insurerTitle" ng-required="true">
+											<option value="" th:selected="${#fields.hasErrors('insurerTitle')}">Insurer
+											</option>
+											<option ng-repeat="option in titles" value="{{option}}">{{option}}</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-2">
+									<div class="input-group">
+										<label class="label">
+											<div class="txt">Select Insurance Period (Day)</div>
+											<div class="warning"
+												ng-show="myForm.period.$error.required && myForm.period.$touched">
+												<i class='bx bxs-error-alt'></i>
+												<p>Required</p>
+											</div>
+										</label>
+										<select class="form-select" name="period" id="period" ng-model="period"
+											ng-required="true">
+											<option value="">Period</option>
+											<option ng-repeat="option in periods" value="{{option}}">{{option}}</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<!-- Submit -->
+							<div class="button" type="submit" ng-disabled="myForm.$invalid">
+								<button class="btn btn-submit">Prepare My Offer</button>
+							</div>
+							<!-- alert -->
+							<div class="alert alert-warning" role="alert" th:if="${showHomeAlert}">
+								This home address is already registered!
+							</div>
+					</form>
+				</div>
 			</div>
-
-			<form th:action="@{/homeRegister}" th:object="${home}" method="post" name="myForm" ng-submit="register()">
-				<input type="hidden" name="customerId" th:value="${customerId}" />
-				<div style=" display: flex; flex-direction: row;">
-					<h4 class="mr-2">Customer Id : </h4>
-					<h4 th:text="${customerId}">idParam</h4>
-				</div>
-
-				<input type="number" id="flatArea" name="flatArea" placeholder="Flat Area (m2)*" ng-model="flatArea"
-					ng-required="true">
-				<p class="error" ng-show="myForm.flatArea.$invalid && myForm.flatArea.$touched">Fill out your flat area.
-				</p>
-
-				<select name="buildingType" id="buildingType">
-					<option value="" th:selected="${#fields.hasErrors('buildingType')}">Select Building Type*</option>
-					<option ng-repeat="option in buildingTypes" value="{{option}}">{{option}}</option>
-				</select>
-				<p th:if="${#fields.hasErrors('buildingType')}" th:errorclass="error" th:errors="*{buildingType}" />
-
-				<select name="typeOfUse" id="typeOfUse">
-					<option value="" th:selected="${#fields.hasErrors('typeOfUse')}">Select Type Of Use*</option>
-					<option ng-repeat="option in typesOfUse" value="{{option}}">{{option}}</option>
-				</select>
-				<p th:if="${#fields.hasErrors('typeOfUse')}" th:errorclass="error" th:errors="*{typeOfUse}" />
-
-				<div class="main-select">
-					<div class="province">
-						<select name="province" id="province">
-							<option value="" th:selected="${#fields.hasErrors('province')}">Select Province*</option>
-							<option th:each="province : ${getAllProvinces}" th:value="${province.id}"
-								th:text="${province.sehiradi}"></option>
-						</select>
-						<p th:if="${#fields.hasErrors('province')}" th:errorclass="error" th:errors="*{province}" />
-					</div>
-
-					<div class="district">
-						<select name="district" id="district">
-							<option value="" th:selected="${#fields.hasErrors('district')}">Select District*</option>
-						</select>
-						<p th:if="${#fields.hasErrors('district')}" th:errorclass="error" th:errors="*{district}" />
-					</div>
-
-					<div class="neighbourhood">
-						<select name="neighbourhood" id="neighbourhood">
-							<option value="" th:selected="${#fields.hasErrors('neighbourhood')}">Select Neighbourhood*
-							</option>
-						</select>
-						<p th:if="${#fields.hasErrors('neighbourhood')}" th:errorclass="error"
-							th:errors="*{neighbourhood}" />
-					</div>
-				</div>
-
-				<script th:inline="javascript">
-					var districtList = /*[[${getAllDistricts}]]*/[];
-					var neighbourhoodList = /*[[${getAllNeighbourhoods}]]*/[];
-				</script>
-
-				<input type="number" id="buildingNumber" name="buildingNumber" placeholder="Building Number*"
-					ng-model="buildingNumber" ng-required="true">
-				<p class="error" ng-show="myForm.buildingNumber.$invalid && myForm.buildingNumber.$touched">Fill out
-					your building number.</p>
-
-				<input type="number" id="apartment" name="apartment" placeholder="Apartment*" ng-model="apartment"
-					ng-required="true">
-				<p class="error" ng-show="myForm.apartment.$invalid && myForm.apartment.$touched">Fill out your
-					apartment.</p>
-
-				<select name="year" id="year">
-					<option value="" th:selected="${#fields.hasErrors('year')}">Select Building Construction Year*
-					</option>
-					<option ng-repeat="option in years" value="{{option}}">{{option}}</option>
-				</select>
-				<p th:if="${#fields.hasErrors('year')}" th:errorclass="error" th:errors="*{year}" />
-
-				<select name="floor" id="floor">
-					<option value="" th:selected="${#fields.hasErrors('floor')}">Select Building Floors*</option>
-					<option ng-repeat="option in floors" value="{{option}}">{{option}}</option>
-				</select>
-				<p th:if="${#fields.hasErrors('floor')}" th:errorclass="error" th:errors="*{floor}" />
-
-				<select name="insurerTitle" id="insurerTitle">
-					<option value="" th:selected="${#fields.hasErrors('insurerTitle')}">Select Title of Insurer*
-					</option>
-					<option ng-repeat="option in titles" value="{{option}}">{{option}}</option>
-				</select>
-				<p th:if="${#fields.hasErrors('insurerTitle')}" th:errorclass="error" th:errors="*{insurerTitle}" />
-
-				<select name="period" id="period" ng-model="period" ng-required="true">
-					<option value="">Select Insurance Period (Day)*</option>
-					<option ng-repeat="option in periods" value="{{option}}">{{option}}</option>
-				</select>
-
-				<button type="submit" class="btn" ng-disabled="myForm.$invalid">Prepare My Offer</button>
-			</form>
 		</div>
-	</section>
-	
-	<!-- Footer -->
-	<footer class="mt-4 py-4">
+	</div>
+	</div>
+
+	<footer class="py-4">
 		<div class="row container mx-auto pt-4">
 			<div class="footer-one col-lg-3 col-md-5 col-12 mb-3">
 				<img src="img/logo.png" alt="">
@@ -221,7 +351,7 @@
 				</div>
 				<div>
 					<h6 class="text-uppercase">Github</h6>
-					<p>https://github.com/edamuutlu</p>  
+					<p>https://github.com/edamuutlu</p>
 					<p>https://github.com/nuricanbrdmr</p>
 				</div>
 				<div>
@@ -243,24 +373,13 @@
 			</div>
 			<div class="copyright mt-2">
 				<div class="row container mx-auto">
-					<div class="col-lg-4 col-md-6 col-12 text-nowrap mb-2">
+					<div class="col-lg-4 col-md-6 col-12 mb-2">
 						<p>Eda Nur Mutlu eInsurance © 2023. All Rights Reserved</p>
 					</div>
 				</div>
 			</div>
 		</div>
 	</footer>
-
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
-		integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
-		crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-		integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-		crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"
-		integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS"
-		crossorigin="anonymous"></script>
-
 	<script src="/js/app.js"></script>
 </body>
 
