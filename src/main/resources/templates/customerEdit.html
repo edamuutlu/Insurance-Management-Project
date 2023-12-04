@@ -42,7 +42,7 @@
 
 </head>
 
-<body ng-app="myApp" ng-controller="registerFormController">
+<body ng-app="myApp" ng-controller="customerEditFormController">
 
 	<!--Navbar-->
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -93,6 +93,21 @@
 						name="myForm">
 						<input type="hidden" name="customerId" th:value="${customer.customerId}" />
 						<!-- Fist -Last Name -->
+						
+						<script th:inline="javascript">
+							var firstname = /*[[${customer.firstname}]]*/ '';
+							var lastname = /*[[${customer.lastname}]]*/ '';
+							var tc = /*[[${customer.tc}]]*/ '';
+							var email = /*[[${customer.email}]]*/ '';
+							var username = /*[[${customer.username}]]*/ '';
+							var password = /*[[${customer.password}]]*/ '';
+							var birth = /*[[${customer.birth}]]*/ '';
+							var phoneNumber = /*[[${customer.phoneNumber}]]*/ '';
+							var gender = /*[[${customer.phoneNumber}]]*/ '';
+							var province = /*[[${customer.province}]]*/ '';
+							var district = /*[[${customer.district}]]*/ '';
+						</script>
+						
 						<div class="row">
 							<div class="col-2">
 								<div class="input-group">
@@ -109,10 +124,9 @@
 											Only letters can be used.
 										</div>
 									</label>
-									<input type="text" ng-pattern="/^[a-zA-Z\s]*$/" ng-required="true" class="input-4"
+									<input type="text" ng-model="firstname" ng-pattern="/^[a-zA-Z\s]*$/" ng-required="true" class="input-4"
 										id="firstname" name="firstname" maxlength="50"
-										onkeypress="return /[a-zA-ZçÇğĞıİöÖşŞüÜ\s]/i.test(event.key)"
-										th:value="${customer.firstname}">
+										onkeypress="return /[a-zA-ZçÇğĞıİöÖşŞüÜ\s]/i.test(event.key)">
 								</div>
 							</div>
 							<div class="col-2">
@@ -130,10 +144,9 @@
 											Only letters can be used.
 										</div>
 									</label>
-									<input type="text" ng-pattern="/^[a-zA-Z\s]*$/" ng-required="true" class="input-4"
+									<input type="text" ng-model="lastname" ng-pattern="/^[a-zA-Z\s]*$/" ng-required="true" class="input-4"
 										id="lastname" name="lastname" maxlength="50"
-										onkeypress="return /[a-zA-ZçÇğĞıİöÖşŞüÜ\s]/i.test(event.key)"
-										th:value="${customer.lastname}">
+										onkeypress="return /[a-zA-ZçÇğĞıİöÖşŞüÜ\s]/i.test(event.key)">
 								</div>
 							</div>
 						</div>
@@ -152,7 +165,7 @@
 											T.C. must have 11 digits.
 										</div>
 									</label>
-									<input type="number" ng-required="true" class="input-4" id="tc" name="tc"
+									<input type="number" ng-model="tc" ng-required="true" class="input-4" id="tc" name="tc"
 										ng-pattern="/^\d{11}$/" onKeyPress="if(this.value.length==11) return false;"
 										th:value="${customer.tc}">
 								</div>
@@ -166,7 +179,7 @@
 											Enter a valid email address.
 										</div>
 									</label>
-									<input type="email" ng-required="true" class="input-4" id="email" name="email"
+									<input type="email" ng-model="email" ng-required="true" class="input-4" id="email" name="email"
 										th:value="${customer.email}">
 								</div>
 							</div>
@@ -183,7 +196,7 @@
 											<p>Required</p>
 										</div>
 									</label>
-									<input type="text" ng-required="true" class="input-4" id="username" name="username"
+									<input type="text" ng-model="username" ng-required="true" class="input-4" id="username" name="username"
 										maxlength="50" th:value="${customer.username}">
 								</div>
 							</div>
@@ -196,7 +209,7 @@
 											<p>{{ passwordError }}</p>
 										</div>
 									</label>
-									<input type="password" ng-required="true" id="password" class="input-4"
+									<input type="password" ng-model="password" ng-required="true" id="password" class="input-4"
 										name="password" ng-change="validatePassword()" th:value="${customer.password}">
 									<button type="button" class="hide-pass" onclick="togglePasswordVisibility()">
 										<i class='bx bxs-hide' id="hideIcon" style="display: none;"></i>
@@ -216,7 +229,7 @@
 											<p>Required</p>
 										</div>
 									</label>
-									<input type="date" ng-required="true" class="input-4" name="birth" id="birth"
+									<input type="date" ng-model="birth" ng-required="true" class="input-4" name="birth" id="birth"
 										th:value="${customer.birth}">
 								</div>
 							</div>
@@ -242,6 +255,32 @@
 								</div>
 							</div>
 						</div>
+						<!-- Gender -->
+                        <div class="row mt-1">
+                            <div class="col-12">
+                                <div class="input-group">
+                                    <label class="label">
+                                        <div class="txt">Gender</div>
+                                            <div class="warning" ng-show="myForm.pastOperation.$error.required && myForm.pastOperation.$touched">
+                                                <i class='bx bxs-error-alt'></i>
+                                                <p>Required</p>
+                                            </div>
+                                    </label>
+                                    <div class="radio-buttons-gender">
+                                        <label>
+											<input type="radio" name="gender"
+												th:checked="${customer.gender == 'M'}" ng-required="true"
+												value="M"> Male
+										</label>
+										<label>
+											<input type="radio" name="gender"
+												th:checked="${customer.gender == 'F'}" ng-required="true"
+												value="F"> Female
+										</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 						<!-- Select İl - İlçe -->
 						<div class="row">
 							<div class="col-2">
@@ -254,7 +293,7 @@
 											<p>Required</p>
 										</div>
 									</label>
-									<select class="form-select" name="province" id="province" ng-required="true"
+									<select class="form-select" ng-model="province" name="province" id="province" ng-required="true"
 										aria-label="Default select example">
 										<option th:value="${customer.province}" th:text="${customer.province}"
 											th:selected="${#fields.hasErrors('province')}">Select Province*</option>
@@ -273,7 +312,7 @@
 											<p>Required</p>
 										</div>
 									</label>
-									<select class="form-select" name="district" id="district" ng-required="true"
+									<select class="form-select" ng-model="district" name="district" id="district" ng-required="true"
 										aria-label="Default select example">
 										<option th:value="${customer.district}" th:text="${customer.district}"
 											>Select District*

@@ -653,3 +653,23 @@ body footer .copyright a:hover {
     word-wrap: break-word;
   }
 }/*# sourceMappingURL=style.css.map */
+
+/* CustomerRegister - Gender */
+body .page-wrapper .wrapper .card .card-body .row .col-12 .input-group .radio-buttons-gender {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  width: 90%;
+}
+body .page-wrapper .wrapper .card .card-body .row .col-12 .input-group .radio-buttons-gender label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px;
+  font-weight: 400;
+  color: #555;
+}
+body .page-wrapper .wrapper .card .card-body .row .col-12 .input-group .radio-buttons-gender label input {
+  margin-right: 5px;
+  width: auto;
+}

@@ -101,7 +101,7 @@
 											Only letters can be used.
 										</div>
 									</label>
-									<input type="text" ng-model="firstname" ng-pattern="/^[a-zA-Z\s]*$/"
+									<input type="text" ng-model="firstname" ng-pattern="/^[a-zA-ZçÇğĞıİöÖşŞüÜ\s]*$/"
 										ng-required="true" class="input-4" id="firstname" name="firstname"
 										maxlength="50" onkeypress="return /[a-zA-ZçÇğĞıİöÖşŞüÜ\s]/i.test(event.key)">
 								</div>
@@ -121,7 +121,7 @@
 											Only letters can be used.
 										</div>
 									</label>
-									<input type="text" ng-model="lastname" ng-pattern="/^[a-zA-Z\s]*$/"
+									<input type="text" ng-model="lastname" ng-pattern="/^[a-zA-ZçÇğĞıİöÖşŞüÜ\s]*$/"
 										ng-required="true" class="input-4" id="lastname" name="lastname" maxlength="50"
 										onkeypress="return /[a-zA-ZçÇğĞıİöÖşŞüÜ\s]/i.test(event.key)">
 								</div>
@@ -233,6 +233,28 @@
 								</div>
 							</div>
 						</div>
+						 <!-- Gender -->
+                        <div class="row mt-1">
+                            <div class="col-12">
+                                <div class="input-group">
+                                    <label class="label">
+                                        <div class="txt">Gender</div>
+                                            <div class="warning" ng-show="myForm.pastOperation.$error.required && myForm.pastOperation.$touched">
+                                                <i class='bx bxs-error-alt'></i>
+                                                <p>Required</p>
+                                            </div>
+                                    </label>
+                                    <div class="radio-buttons-gender">
+                                        <label>
+                                            <input type="radio" name="gender" ng-model="gender" ng-required="true" value="M"> Male
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="gender" ng-model="gender" ng-required="true" value="F"> Female
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 						<!-- Select İl - İlçe -->
 						<div class="row">
 							<div class="col-2">

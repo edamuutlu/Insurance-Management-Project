@@ -65,6 +65,10 @@ public class Customer {
 	@NotBlank(message = "Enter your phoneNumber.")
 	private String phoneNumber;
 	
+	@Column(name="gender")
+	@NotBlank(message = "Enter your gender.")
+	private String gender;
+	
 	@Column(name="province")
 	@NotBlank(message = "Enter your province.")
 	private String province;
@@ -82,7 +86,7 @@ public class Customer {
 	}
 
 	public Customer(int customerId, String tc, String birth, String email, String firstname, String lastname,
-			String username, String password, String phoneNumber, String province, String district, int status) {
+			String username, String password, String phoneNumber, String gender, String province, String district, int status) {
 		super();
 		this.customerId = customerId;
 		this.tc = tc;
@@ -93,6 +97,7 @@ public class Customer {
 		this.username = username;
 		this.password = password;
 		this.phoneNumber = phoneNumber;
+		this.gender = gender;
 		this.province = province;
 		this.district = district;
 		this.status = status;
@@ -170,6 +175,14 @@ public class Customer {
 		this.phoneNumber = phoneNumber;
 	}
 
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
 	public String getProvince() {
 		return province;
 	}
@@ -198,8 +211,8 @@ public class Customer {
 	public String toString() {
 		return "Customer [customerId=" + customerId + ", tc=" + tc + ", birth=" + birth + ", email=" + email
 				+ ", firstname=" + firstname + ", lastname=" + lastname + ", username=" + username + ", password="
-				+ password + ", phoneNumber=" + phoneNumber + ", province=" + province + ", district=" + district
-				+ ", status=" + status + "]";
+				+ password + ", phoneNumber=" + phoneNumber + ", gender=" + gender + ", province=" + province
+				+ ", district=" + district + ", status=" + status + "]";
 	}
 
 

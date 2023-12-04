@@ -174,6 +174,39 @@ myApp.controller("registerFormController", ["$scope", function($scope){
         $scope.msg = "This is a warning alert—check it out!";
     }
     
+    $scope.province = province;
+	$scope.district = district;
+    
+    var today = new Date();
+	today.setFullYear(today.getFullYear() - 18); // Bugünden 18 yıl önceki tarih
+
+	var birthInput = document.getElementById("birth");
+	birthInput.setAttribute("max", today.toISOString().split("T")[0]);
+	
+	$scope.validatePassword = function() {
+    $scope.passwordError = checkPasswordStrength($scope.password);
+}
+
+}]);
+
+myApp.controller("customerEditFormController", ["$scope", function($scope){
+
+    $scope.register = function(){
+        $scope.msg = "This is a warning alert—check it out!";
+    }
+    
+    $scope.firstname = firstname;
+    $scope.lastname = lastname;
+    $scope.tc = tc;
+    $scope.email = email;
+    $scope.username = username;
+    $scope.password = password;
+    $scope.birth = birth;
+    $scope.phoneNumber = phoneNumber;
+    $scope.gender = gender;
+    $scope.province = province;
+    $scope.district = district;
+    
     var today = new Date();
 	today.setFullYear(today.getFullYear() - 18); // Bugünden 18 yıl önceki tarih
 
