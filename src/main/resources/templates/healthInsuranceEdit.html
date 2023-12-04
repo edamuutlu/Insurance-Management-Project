@@ -20,7 +20,7 @@
 
 </head>
 
-<body ng-app="myApp" ng-controller="healthInsuranceFormController">
+<body ng-app="myApp" ng-controller="editHealthInsuranceFormController">
 	<!--Navbar-->
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<div class="container-fluid px-5">
@@ -69,7 +69,6 @@
 					<form th:action="@{/editHealthInfo}" th:object="${health}" method="post" name="myForm">
 						<input type="hidden" name="customerId" th:value="${health.customerId}" />
 						<input type="hidden" name="healthId" th:value="${health.healthId}" />
-						<p th:value="${health.job}" />
 						<!-- Period - Job -->
 						<div class="row">
 							<div class="col-2">
@@ -82,9 +81,14 @@
 											<p>Required</p>
 										</div>
 									</label>
-									<select class="form-select" name="period" id="period" th:value="${health.period}" ng-required="true">
-										<option th:selected="${health.period}" ng-repeat="option in periods" ng-value="{{option}}">{{option}}</option>
+									<script th:inline="javascript">
+										var period = /*[[${health.period}]]*/ 0;
+									</script>
+									<select class="form-select" name="period" id="period" ng-model="period"
+										ng-required="true" ng-options="option for option in periods track by option">
 									</select>
+
+
 								</div>
 							</div>
 							<div class="col-2">
@@ -96,9 +100,13 @@
 											<i class='bx bxs-error-alt'></i>
 											<p>Required</p>
 										</div>
+										<script th:inline="javascript">
+											var job = /*[[${health.job}]]*/ '';
+										</script>
 									</label>
-									<select class="form-select" name="job" id="job" th:value="${health.job}" ng-required="true">
-								    	<option th:selected="${health.job}" ng-repeat="option in jobs" ng-value="{{option}}">{{option}}</option>
+									<select class="form-select" name="job" id="job" ng-model="job" ng-required="true"
+										ng-options="option for option in jobs track by option">
+										<option value="{{option}}">{{option}}</option>
 									</select>
 								</div>
 							</div>
@@ -114,10 +122,13 @@
 											<i class='bx bxs-error-alt'></i>
 											<p>Required</p>
 										</div>
+										<script th:inline="javascript">
+											var forWho = /*[[${health.forWho}]]*/ '';
+										</script>
 									</label>
-									<span th:text="${health.forWho}"></span>
-									<select class="form-select" name="forWho" id="forWho" th:value="${health.forWho}" ng-required="true">
-										<option th:selected="'${health.forWho}'" ng-repeat="option in forWhose" ng-value="{{option}}">{{option}}</option>
+									<select class="form-select" name="forWho" id="forWho" ng-model="forWho"
+										ng-required="true" ng-options="option for option in forWhose" disabled>
+										<option value="{{option}}">{{option}}</option>
 									</select>
 								</div>
 							</div>

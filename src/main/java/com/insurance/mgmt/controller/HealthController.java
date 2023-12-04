@@ -214,9 +214,12 @@ public class HealthController {
 		LocalDateTime now = LocalDateTime.now();
 		insurance.setEndDate(now.format(formatter));
 		insurance.setResult("Canceled");
+		healthInsuranceService.save(insurance);
+		System.out.print(insurance.getPeriod());
+		System.out.print(health.getJob());
 
 		model.addAttribute("insurance", insurance);
-		model.addAttribute(health);
+		model.addAttribute("health", health);
 
 		List<Jobs> jobs = jobsService.getAllJobs();
 		model.addAttribute(jobs);
@@ -275,9 +278,9 @@ public class HealthController {
 
 		// Sağlık bilgilerinin geçerlilik süresi set edilmektedir
 		LocalDateTime deadlineDate = now.plusDays(30);
-		oldHealth.setDeadline(deadlineDate.format(formatter));
-		oldHealth.setStatus(1);
-		healthService.save(oldHealth);
+		health.setDeadline(deadlineDate.format(formatter));
+		health.setStatus(1);
+		healthService.save(health);
 
 		model.addAttribute("insurance", newInsurance);
 		model.addAttribute("health", health);
