@@ -72,7 +72,7 @@
                             <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">
-                                        <div class="txt">Select Insurance Period (Day)</div>
+                                        <div class="txt">Insurance Period (Day)</div>
                                             <div class="warning" ng-show="myForm.period.$error.required && myForm.period.$touched">
                                                 <i class='bx bxs-error-alt'></i>
                                                 <p>Required</p>
@@ -93,7 +93,7 @@
                                                 <p>Required</p>
                                             </div>
                                     </label>
-                                    <select class="form-select" name="job" id="job" ng-model="job">
+                                    <select class="form-select" name="job" id="job" ng-model="job" ng-required="true">
                                         <option selected value="">Job</option>
 										<option ng-repeat="option in jobs" value="{{option}}">{{option}}</option>
                                       </select>
@@ -111,7 +111,7 @@
                                                 <p>Required</p>
                                             </div>
                                     </label>
-                                    <select class="form-select" name="forWho" id="forWho" ng-model="forWho">
+                                    <select class="form-select" name="forWho" id="forWho" ng-model="forWho" ng-required="true">
                                         <option selected value="">Who</option>
 										<option ng-repeat="option in forWhose" value="{{option}}">{{option}}</option>
                                       </select>
@@ -192,7 +192,7 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="input-group">
-                                    <label class="label">
+                                    <label class="label-question">
                                         <div class="txt">Have you ever had a surgical operation?</div>
                                             <div class="warning" ng-show="myForm.pastOperation.$error.required && myForm.pastOperation.$touched">
                                                 <i class='bx bxs-error-alt'></i>
@@ -277,6 +277,6 @@
 			</div>
 		</div>
 	</footer>
-    <script src="app.js"></script>
+    <script src="/js/app.js"></script>
 </body>
 </html>

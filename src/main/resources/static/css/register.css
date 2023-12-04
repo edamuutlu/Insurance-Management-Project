@@ -158,6 +158,8 @@ body .page-wrapper .wrapper .card .card-body .row .col-2 .input-group .label .wa
   margin: 0;
   padding-left: 3px;
   font-size: 12px;
+  max-width: 20ch;
+  word-wrap: break-word;
 }
 body .page-wrapper .wrapper .card .card-body .row .col-2 .input-group input {
   outline: none;
@@ -239,6 +241,26 @@ body .page-wrapper .wrapper .card .card-body .row .col-12 .input-group .label .w
   justify-content: center;
   align-items: center;
   color: #e30000;
+}
+body .page-wrapper .wrapper .card .card-body .row .col-12 .input-group .label-question {
+  font-size: 14px;
+  color: #555;
+  text-transform: capitalize;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 5px;
+}
+body .page-wrapper .wrapper .card .card-body .row .col-12 .input-group .label-question .warning {
+  font-size: 14px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  color: #e30000;
+}
+body .page-wrapper .wrapper .card .card-body .row .col-12 .input-group .label-question .warning p {
+  margin: 0;
+  padding-left: 3px;
+  font-size: 12px;
 }
 body .page-wrapper .wrapper .card .card-body .row .col-12 .input-group .label .warning p {
   margin: 0;

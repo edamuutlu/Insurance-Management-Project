@@ -82,10 +82,8 @@
 											<p>Required</p>
 										</div>
 									</label>
-									<select class="form-select" name="period" id="period" th:value="${health.period}"
-										ng-required="true">
-										<option th:selected="${health.period}" ng-repeat="option in periods"
-											ng-value="{{option}}">{{option}}</option>
+									<select class="form-select" name="period" id="period" th:value="${health.period}" ng-required="true">
+										<option th:selected="${health.period}" ng-repeat="option in periods" ng-value="{{option}}">{{option}}</option>
 									</select>
 								</div>
 							</div>
@@ -99,10 +97,8 @@
 											<p>Required</p>
 										</div>
 									</label>
-									<select class="form-select" name="job" id="job" th:value="${health.job}"
-										ng-required="true">
-										<option th:selected="${health.job}" ng-repeat="option in jobs"
-											value="{{option}}">{{option}}</option>
+									<select class="form-select" name="job" id="job" th:value="${health.job}" ng-required="true">
+								    	<option th:selected="${health.job}" ng-repeat="option in jobs" ng-value="{{option}}">{{option}}</option>
 									</select>
 								</div>
 							</div>
@@ -119,10 +115,9 @@
 											<p>Required</p>
 										</div>
 									</label>
-									<select class="form-select" name="forWho" ng-model="forWho" ng-required="true"
-										aria-label="Default select example">
-										<option th:selected="${health.forWho}" ng-repeat="option in forWhose"
-											th:value="${option}" disabled>{{option}}</option>
+									<span th:text="${health.forWho}"></span>
+									<select class="form-select" name="forWho" id="forWho" th:value="${health.forWho}" ng-required="true">
+										<option th:selected="'${health.forWho}'" ng-repeat="option in forWhose" ng-value="{{option}}">{{option}}</option>
 									</select>
 								</div>
 							</div>
