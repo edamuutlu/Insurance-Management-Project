@@ -17,25 +17,6 @@
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script th:src="@{/js/custom.js}"></script>
 
-	<script>
-		$(document).ready(function () {
-			$("#province").change(function () {
-				var provinceId = $("#province").val();
-				$("#district").empty();
-
-				// İlk olarak "Select District" seçeneğini ekliyoruz
-				var defaultOption = $("<option>").val("").text("Select District*");
-				$("#district").append(defaultOption);
-
-				for (var i = 0; i < districtList.length; i++) {
-					if (districtList[i].sehirid == provinceId) {
-						var option = $("<option>").val(districtList[i].id).text(districtList[i].ilceadi);
-						$("#district").append(option);
-					}
-				}
-			});
-		});
-	</script>
 </head>
 
 <body ng-app="myApp" ng-controller="registerFormController">
@@ -256,6 +237,10 @@
                             </div>
                         </div>
 						<!-- Select İl - İlçe -->
+						<script th:inline="javascript">
+							var provincesList = /*[[${getAllProvinces}]]*/[];
+							var districtList = /*[[${getAllDistricts}]]*/[];
+						</script>
 						<div class="row">
 							<div class="col-2">
 								<div class="input-group">
@@ -267,15 +252,10 @@
 											<p>Required</p>
 										</div>
 									</label>
-									<select class="form-select" name="province" id="province" ng-model="province"
-										ng-required="true" aria-label="Default select example">
-										<option value="" th:selected="${#fields.hasErrors('province')}">Select Province*
-										</option>
-										<option th:each="province : ${getAllProvinces}" th:value="${province.id}"
-											th:text="${province.sehiradi}"></option>
-									</select>
-									<p th:if="${#fields.hasErrors('province')}" th:errorclass="error"
-										th:errors="*{province}" />
+									<select class="form-select" name="province" id="province" ng-model="province" ng-required="true" 
+									ng-options="province.id as province.sehiradi for province in provincesList track by province.id">
+								        <option value="">Select a Province</option>
+								    </select>
 								</div>
 							</div>
 							<div class="col-2">
@@ -288,12 +268,10 @@
 											<p>Required</p>
 										</div>
 									</label>
-									<select class="form-select" name="district" id="district" ng-model="district"
-										ng-required="true" aria-label="Default select example">
-										<option value="" th:selected="${#fields.hasErrors('district')}">Select District*
-										</option>
-									</select>
-
+										<select class="form-select" name="district" id="district" ng-model="district" ng-required="true" 
+									            ng-options="district.id as district.ilceadi for district in getDistricts(province) track by district.id">
+									        <option value="">Select a District</option>
+									    </select>
 								</div>
 							</div>
 						</div>
@@ -325,10 +303,6 @@
 						<div class="alert alert-warning" role="alert" th:if="${showUsernameAlert}"
 							ng-show="${!showUsernameAlert}"> This Username is already
 							registered! </div>
-
-						<script th:inline="javascript">
-							var districtList = /*[[${getAllDistricts}]]*/[];
-						</script>
 					</form>
 				</div>
 			</div>

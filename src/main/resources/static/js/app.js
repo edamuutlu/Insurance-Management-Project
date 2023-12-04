@@ -174,8 +174,30 @@ myApp.controller("registerFormController", ["$scope", function($scope){
         $scope.msg = "This is a warning alert—check it out!";
     }
     
-    $scope.province = province;
-	$scope.district = district;
+    $scope.provincesList = provincesList;
+    console.log($scope.provincesList);
+
+	$scope.districtList = districtList;
+    console.log($scope.districtList);
+    
+    
+    $scope.province;
+    $scope.district;
+     // Seçilen il'e ait ilçeleri getirme fonksiyonu
+            $scope.getDistricts = function(province) {
+                if (!province) {
+                    return []; // Eğer seçilen il yoksa boş bir dizi döndür
+                }
+
+                var filteredDistricts = $scope.districtList.filter(function(district) {
+                    return district.sehirid === province;
+                });
+
+                console.log('Filtered Districts:', filteredDistricts);
+
+                return filteredDistricts;
+            };
+    
     
     var today = new Date();
 	today.setFullYear(today.getFullYear() - 18); // Bugünden 18 yıl önceki tarih
