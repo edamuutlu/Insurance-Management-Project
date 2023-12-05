@@ -657,11 +657,23 @@ body .user-page-wrapper .user-page-main .user-page .user-insurances-admin .card 
   align-items: center;
   font-size: 20px;
 }
-body .user-page-wrapper .user-page-main .user-page .user-insurances-admin .card .table td button .dots {
+body .user-page-wrapper .user-page-main .user-page .user-insurances-admin .card .table td button .heart {
+  color: #bd0000;
+}
+body .user-page-wrapper .user-page-main .user-page .user-insurances-admin .card .table td button .heart:hover {
+  color: rgb(255, 62, 62);
+}
+body .user-page-wrapper .user-page-main .user-page .user-insurances-admin .card .table td button .home {
   color: #0d6efd;
 }
-body .user-page-wrapper .user-page-main .user-page .user-insurances-admin .card .table td button .dots:hover {
-  color: rgba(69, 112, 222, 0.6784313725);
+body .user-page-wrapper .user-page-main .user-page .user-insurances-admin .card .table td button .home:hover {
+  color: rgb(69, 112, 222);
+}
+body .user-page-wrapper .user-page-main .user-page .user-insurances-admin .card .table td button .car {
+  color: #0d6efd;
+}
+body .user-page-wrapper .user-page-main .user-page .user-insurances-admin .card .table td button .car:hover {
+  color: rgb(69, 112, 222);
 }
 body .user-page-wrapper .user-page-main .user-page .user-insurances-admin .card .table td button .edit {
   color: blue;

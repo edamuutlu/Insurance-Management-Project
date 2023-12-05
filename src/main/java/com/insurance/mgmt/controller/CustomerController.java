@@ -84,10 +84,16 @@ public class CustomerController {
 	}
 
 	@RequestMapping(path = "/selectType", method = RequestMethod.GET)
-	public String selectType(@RequestParam(value = "customerId", required = false) int id, Model model) {
-		model.addAttribute("customerId", id);
+	public String selectType(@RequestParam(value = "customerId", required = false) int customerId, Model model) {
+		model.addAttribute("customerId", customerId);
 		return "home";
 	}
+	
+//	@GetMapping("/selectType/{customerId}")
+//	public String selectType(@PathVariable("customerId") int customerId, Model model) {
+//		model.addAttribute("customerId", customerId);
+//		return "home";
+//	}
 	
 	@GetMapping("/customerRegister")
 	public String customerRegister(@ModelAttribute Customer customer, Model model) {

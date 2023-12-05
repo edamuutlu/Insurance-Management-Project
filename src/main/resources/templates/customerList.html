@@ -110,185 +110,85 @@
 	</script>
 
 	<div class="user-page-wrapper">
-      <div class="user-page-main">
-        <div class="user-title">
-            <div class="username-settings">
-              <a href="user-page.html"><span class="badge text-bg-secondary"><i class='bx bx-arrow-back'></i></span></a>
-              <span class="username-text">Nuricanbrdmr</span>
-            </div>
-            <div class="select-type">
-              <a href="#"><span class="badge text-bg-info">Change KDV Rate</span></a>
-            </div>
-        </div>
-        <div class="alert alert-warning insurance-error d-flex align-items-center" role="alert">
-          <i class='bx bxs-error' ></i>
-          <div>
-            An example warning alert with an icon
-          </div>
-        </div>
-        <div class="user-page">
+		<div class="user-page-main">
+			<div class="user-title">
+				<div class="username-settings">
+					<a href="user-page.html"><span class="badge text-bg-secondary"><i
+								class='bx bx-arrow-back'></i></span></a>
+					<span class="username-text">Nuricanbrdmr</span>
+				</div>
+				<div class="select-type">
+					<a href="#"><span class="badge text-bg-info">Change KDV Rate</span></a>
+				</div>
+			</div>
+			<div class="alert alert-warning insurance-error d-flex align-items-center" role="alert">
+				<i class='bx bxs-error'></i>
+				<div>
+					An example warning alert with an icon
+				</div>
+			</div>
+			<div class="user-page">
 
-	<!-- User Tablo -->
-			<div class="user-insurances-admin">
-				<div class="card mb-4">
-					<ul class="nav nav-tabs" id="myTab" role="tablist">
-						<li class="nav-item" role="presentation">
-							<button class="nav-link active" id="health-tab" data-bs-toggle="tab"
-								data-bs-target="#health-tab-pane" type="button" role="tab"
-								aria-controls="health-tab-pane" aria-selected="true">Health Info</button>
-						</li>
-						<li class="nav-item" role="presentation">
-							<button class="nav-link" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane"
-								type="button" role="tab" aria-controls="home-tab-pane" aria-selected="false">Home
-								Info</button>
-						</li>
-						<li class="nav-item" role="presentation">
-							<button class="nav-link" id="car-tab" data-bs-toggle="tab" data-bs-target="#car-tab-pane"
-								type="button" role="tab" aria-controls="car-tab-pane" aria-selected="false">Car
-								Info</button>
-						</li>
-					</ul>
-					<div class="tab-content" id="myTabContent">
-						<div class="tab-pane fade show active" id="health-tab-pane" role="tabpanel"
-							aria-labelledby="health-tab" tabindex="0">
-							<table class="table">
-								<thead>
-									<tr>
-										<th scope="col">Health Id</th>
-										<th scope="col">Customer Id</th>
-										<th scope="col">Job</th>
-										<th scope="col">For Who</th>
-										<th scope="col">SGK</th>
-										<th cope="col">Height</th>
-										<th cope="col">Weight</th>
-										<th cope="col">Lifestyle Habits</th>
-										<th scope="col">Past Operation</th>
-										<th cope="col">Period</th>
-										<th scope="col">Delete</th>
-										<th scope="col">See Insurance Details</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr th:each="h :${health}">
-										<td th:text="${h.healthId}"></td>
-										<td th:text="${h.customerId}"></td>
-										<td th:text="${h.job}"></td>
-										<td th:text="${h.forWho}"></td>
-										<td th:text="${h.sgk}"></td>
-										<td th:text="${h.height}"></td>
-										<td th:text="${h.weight}"></td>
-										<td th:text="${h.smokingOrAlcohol}"></td>
-										<td th:text="${h.pastOperation}"></td>
-										<td th:text="${h.period}"></td>
-										<td><button class="mx-auto"><a
-													th:href="@{/deleteHealthInfo/{id}(id=${h.healthId})}"><i
-														id="icon-trash" class="bx bx-trash trash"></i></a></button></td>
-										<td><button class="mx-auto"><a
-													th:href="@{/seeHealthInsuranceDetails/{id}(id=${h.healthId})}"><i
-														class="fa-solid fa-ellipsis"></i></a></button></td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-
-						<div class="tab-pane fade" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab"
-							tabindex="0">
-							<table class="table">
-								<thead>
-									<tr>
-										<th scope="col">Home Id</th>
-										<th scope="col">Customer Id</th>
-										<th scope="col">Construction Type</th>
-										<th scope="col">Usage Type</th>
-										<th scope="col">Province</th>
-										<th cope="col">District</th>
-										<th cope="col">Neighbourhood</th>
-										<th cope="col">Building Number</th>
-										<th scope="col">Apartment</th>
-										<th cope="col">Flat Area (m2)</th>
-										<th scope="col">Floor</th>
-										<th scope="col">Building Age</th>
-										<th scope="col">Owner Title</th>
-										<th scope="col">Delete</th>
-										<th scope="col">See Insurance Details</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr th:each="h :${home}">
-										<td th:text="${h.homeId}"></td>
-										<td th:text="${h.customerId}"></td>
-										<td th:text="${h.buildingType}"></td>
-										<td th:text="${h.typeOfUse}"></td>
-										<td th:text="${h.province}"></td>
-										<td th:text="${h.district}"></td>
-										<td th:text="${h.neighbourhood}"></td>
-										<td th:text="${h.buildingNumber}"></td>
-										<td th:text="${h.apartment}"></td>
-										<td th:text="${h.flatArea}"></td>
-										<td th:text="${h.floor}"></td>
-										<td th:text="${h.buildingAge}"></td>
-										<td th:text="${h.insurerTitle}"></td>
-										<td><button class="mx-auto"><a th:href="@{/deleteHome/{id}(id=${h.homeId})}"><i
-														id="icon-trash" class="bx bx-trash trash"></i></a></button></td>
-										<td><button class="mx-auto"><a
-													th:href="@{/seeHomeInsuranceDetails/{id}(id=${h.homeId})}"><i
-														class="fa-solid fa-ellipsis"></i></a></button></td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-						<div class="tab-pane fade" id="car-tab-pane" role="tabpanel" aria-labelledby="car-tab"
-							tabindex="0">
-							<table class="table">
-								<thead>
-									<tr>
-										<th scope="col">Id</th>
-										<th scope="col">Customer Id</th>
-										<th scope="col">License Plate</th>
-										<th scope="col">Usage Type</th>
-										<th scope="col">Purpose of Usage</th>
-										<th cope="col">Brand</th>
-										<th cope="col">Fuel Type</th>
-										<th cope="col">Engine Size</th>
-										<th scope="col">Seating Capacity</th>
-										<th scope="col">Delete</th>
-										<th scope="col">See Insurance Details</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr th:each="c :${car}">
-										<td th:text="${c.id}"></td>
-										<td th:text="${c.customerId}"></td>
-										<td>
-											<span th:text="${c.plate1}"></span>
-											<span th:text="${c.plate2}"></span>
-											<span th:text="${c.plate3}"></span>
-										</td>
-										<td th:text="${c.type}"></td>
-										<td th:text="${c.purpose}"></td>
-										<td th:text="${c.brand}"></td>
-										<td th:text="${c.fuelType}"></td>
-										<td th:text="${c.engineSize}"></td>
-										<td th:text="${c.seatCapacity}"></td>
-
-										<td><button class="mx-auto"><a th:href="@{/deleteCar/{id}(id=${c.id})}"><i
-														id="icon-trash" class="bx bx-trash trash"></i></a></button></td>
-										<td><button class="mx-auto"><a
-													th:href="@{/seeCarInsuranceDetails/{id}(id=${c.id})}"><i
-														class="fa-solid fa-ellipsis"></i></a></button></td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
+				<!-- User Tablo -->
+				<div class="user-insurances-admin">
+					<div class="card mb-4">
+						<table class="table">
+							<thead>
+								<tr>
+									<th scope="col">Id</th>
+									<th scope="col">TC</th>
+									<th scope="col">Birth Date</th>
+									<th scope="col">Email</th>
+									<th scope="col">First Name</th>
+									<th cope="col">Last Name</th>
+									<th cope="col">Province</th>
+									<th cope="col">District</th>
+									<th scope="col">Insurance Type</th>
+									<th scope="col">Health Info List</th>
+									<th scope="col">Home List</th>
+									<th scope="col">Car List</th>
+									<th scope="col">Update</th>
+									<th scope="col">Delete</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="c :${customer}">
+									<td th:text="${c.customerId}"></td>
+									<td th:text="${c.tc}"></td>
+									<td style="width: 112px;" th:text="${c.birth}"></td>
+									<td th:text="${c.email}"></td>
+									<td th:text="${c.firstname}"></td>
+									<td th:text="${c.lastname}"></td>
+									<td th:text="${c.province}"></td>
+									<td th:text="${c.district}"></td>
+									<td><a th:href="@{/selectType(customerId=${c.customerId})}"><span class="badge text-bg-primary">Add New Insurance</span></a></td>
+									<td><button class="mx-auto"><a
+												th:href="@{/healthInfoList/{customerId}(customerId=${c.customerId})}"><i
+													class="fa-solid fa-heart-circle-plus heart"></i></a></button></td>
+									<td><button class="mx-auto"><a
+												th:href="@{/homeList/{customerId}(customerId=${c.customerId})}"><i
+													class="bx bxs-home home"></i></a></button></td>
+									<td><button class="mx-auto"><a
+												th:href="@{/carList/{customerId}(customerId=${c.customerId})}"><i
+													class="bx bxs-car car"></i></a></button></td>
+									<td><button class="mx-auto"><a
+												th:href="@{/editCustomer/{customerId}(customerId=${c.customerId})}"><i
+													class="bx bxs-edit edit"></i></a></button></td>
+									<td><button class="mx-auto"><a
+												th:href="@{/deleteCustomer/{customerId}(customerId=${c.customerId})}"><i
+													class="bx bx-trash trash"></i></a></button></td>
+								</tr>
+							</tbody>
+						</table>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
+	</div>
 
 	<script src="/js/app.js"></script>
-	
+
 	<footer class="py-4">
 		<div class="row container mx-auto pt-4">
 			<div class="footer-one col-lg-3 col-md-5 col-12 mb-3">
