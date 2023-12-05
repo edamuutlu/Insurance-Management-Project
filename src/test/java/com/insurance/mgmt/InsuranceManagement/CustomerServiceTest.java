@@ -23,11 +23,11 @@ class CustomerServiceTest {
 	private CustomerService customerService;
 	
 	private List<Customer> dummyCustomers = Stream.of(
-            new Customer(1, "1234567890", "2000-01-01", "x@gmail.com", "Eda", "Mutlu", "Eda", "Eda", "123", "İstanbul", "Ataşehir", 1),
-            new Customer(2, "1234567891", "2000-01-01", "xz@gmail.com", "Nur", "Mutlu", "Eda", "Eda", "123","İstanbul", "Ataşehir", 1)
+            new Customer(1, "1234567890", "2000-01-01", "x@gmail.com", "Eda", "Mutlu", "Eda", "Eda", "123", "F", "İstanbul", "Ataşehir", 1),
+            new Customer(2, "1234567891", "2000-01-01", "xz@gmail.com", "Nur", "Mutlu", "Eda", "Eda", "123","F", "İstanbul", "Ataşehir", 1)
     ).collect(Collectors.toList());
 	
-	private Customer dummyCustomer = new Customer(1, "1234567890", "2000-01-01", "x@gmail.com", "Eda", "Mutlu", "Eda", "Eda", "123", "İstanbul", "Ataşehir", 1);
+	private Customer dummyCustomer = new Customer(1, "1234567890", "2000-01-01", "x@gmail.com", "Eda", "Mutlu", "Eda", "Eda", "123", "F","İstanbul", "Ataşehir", 1);
 
 	// CustomerService Sınıfındaki Metotların Testleri
 		@Test

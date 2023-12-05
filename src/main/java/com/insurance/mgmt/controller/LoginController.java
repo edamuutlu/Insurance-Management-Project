@@ -87,7 +87,7 @@ public class LoginController {
 		} else if (loggedCustomer.getPassword().equals(customer.getPassword())) {
 			if (loggedCustomer.getUsername().equals("admin")) {
 				model.addAttribute("customer", customerList);
-				return "customerList";
+			    return "redirect:/customerList";
 			} else {
 				model.addAttribute("customer", customer);
 				// return "redirect:/customerInfo/" + customer.getUsername();
