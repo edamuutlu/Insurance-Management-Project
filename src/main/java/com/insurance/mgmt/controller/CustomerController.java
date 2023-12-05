@@ -218,10 +218,8 @@ public class CustomerController {
 		return "customerEdit";
 	}
 
-	@RequestMapping(path = { "/deleteCustomer/{customerId}",
-			"/deleteCustomer/{customerId}/{admin}" }, method = RequestMethod.GET)
-	public String deleteCustomer(@PathVariable("customerId") int customerId,
-			@PathVariable(required = false) String admin, Model model) {
+	@RequestMapping(path = { "/deleteCustomer/{customerId}", "/deleteCustomer/{customerId}/{admin}" }, method = RequestMethod.GET)
+	public String deleteCustomer(@PathVariable("customerId") int customerId, @PathVariable(required = false) String admin, Model model) {
 
 		// Müşterinin varsa araçlarının listelenmemesi için
 		List<Car> cars = carService.findByStatusAndCustomerId(1, customerId);
@@ -264,12 +262,12 @@ public class CustomerController {
 		customerService.save(customer);
 
 		if (admin == null) {
-			return "home";
+			return "redirect:/index";
 		}
-		// if(admin.equals("admin")){
+
 		List<Customer> customerList = customerService.findByStatus(1);
 		model.addAttribute("customer", customerList);
-		return "customerList";
+		return "redirect:/customerList";
 
 	}
 

@@ -191,11 +191,16 @@
 								</tr>
 							</tbody>
 						</table>
+						<script th:inline="javascript">
+							var isAdmin = /*[[${username}]]*/ '';
+						</script>
 						<div class="user-settings mb-2">
 							<a type="button" class="btn btn-outline-info"
 								th:href="@{/editCustomer/{customerId}(customerId=${c.customerId})}">Edit</a>
-							<a type="button" class="btn btn-outline-danger"
-								th:href="@{/deleteCustomer/{customerId}(customerId=${c.customerId})}">Delete</a>
+							<a type="button" ng-if="isAdmin == 'admin'" class="btn btn-outline-danger"
+								th:href="@{'/deleteCustomer/' + ${c.customerId} + '/admin'}">Delete</a>
+							<a type="button" ng-if="isAdmin != 'admin'" class="btn btn-outline-danger"
+								th:href="@{'/deleteCustomer/' + ${c.customerId}}">Delete</a>
 						</div>
 					</div>
 				</div>

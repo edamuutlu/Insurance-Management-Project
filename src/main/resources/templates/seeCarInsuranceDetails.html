@@ -28,7 +28,7 @@
 
 </head>
 
-<body>
+<body ng-app="myApp" ng-controller="UserPageController">
 	<!--Navbar-->
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<div class="container-fluid px-5">
@@ -116,8 +116,14 @@
 	<div class="user-page-wrapper">
 		<div class="user-page-main" th:each="c :${customer}">
 			<div class="user-title">
+				<script th:inline="javascript">
+					var isAdmin = /*[[${username}]]*/ '';
+				</script>
 				<div class="username-settings">
-					<a th:href="@{'/userPage/' + ${c.username} + '/' + ${'admin'}}">
+					<a ng-if="isAdmin == 'admin'" th:href="@{'/userPage/' + ${c.username} + '/' + ${'admin'}}">
+						<span class="badge text-bg-secondary"><i class='bx bx-arrow-back'></i></span>
+					</a>
+					<a ng-if="isAdmin != 'admin'" th:href="@{'/userPage/' + ${c.username}}">
 						<span class="badge text-bg-secondary"><i class='bx bx-arrow-back'></i></span>
 					</a>
 					<span class="username-text" th:text="${username}"></span>
