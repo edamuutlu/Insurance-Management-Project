@@ -91,9 +91,9 @@ public class LoginController {
 				model.addAttribute("customer", customerList);
 			    return "redirect:/customerList";
 			} else {
-				model.addAttribute("customer", customer);
+				model.addAttribute("customer", loggedCustomer);
 				// return "redirect:/customerInfo/" + customer.getUsername();
-				return "redirect:/userPage/" + customer.getUsername();
+				return "redirect:/userPage/" + loggedCustomer.getUsername();
 			}
 		} else {
 			model.addAttribute("showWrongPasswordAlert", true);
@@ -113,78 +113,78 @@ public class LoginController {
 
 	@RequestMapping(path = {"/userPage/{username}", "/userPage/{username}/{admin}"}, method = RequestMethod.GET)
 	public String userPage(@PathVariable("username") String username, @PathVariable(required = false) String admin , Model model) {
-		
+
 		Customer customer = customerService.findByUsername(username);
-		List<Health> health = healthService.findByStatusAndCustomerId(1, customer.getCustomerId());
-		List<Home> home = homeService.findByStatusAndCustomerId(1, customer.getCustomerId());
-		List<Car> car = carService.findByStatusAndCustomerId(1, customer.getCustomerId());
+		if(customer != null) {
+			List<Health> health = healthService.findByStatusAndCustomerId(1, customer.getCustomerId());
+			List<Home> home = homeService.findByStatusAndCustomerId(1, customer.getCustomerId());
+			List<Car> car = carService.findByStatusAndCustomerId(1, customer.getCustomerId());
 
-		// CAR
-		List<Car> cars = carService.findByStatusAndCustomerId(1, customer.getCustomerId()); //?
-		List<CarInsurance> insurances = carInsuranceService.findByStatusAndCustomerIdAndResult(1,
-				customer.getCustomerId(), "Accepted");
-		ArrayList<Car> expiredCars = new ArrayList<>();
+			List<CarInsurance> insurances = carInsuranceService.findByStatusAndCustomerIdAndResult(1, customer.getCustomerId(), "Accepted");
+			ArrayList<Car> expiredCars = new ArrayList<>();
 
-		// Poliçenin süresinin bitip bitmediğini kontrol etme
-		LocalDateTime now = LocalDateTime.now();
-		for (CarInsurance insurance : insurances) {
-			LocalDateTime endDateTime = LocalDateTime.parse(insurance.getEndDate(), formatter);
-			if (now.isAfter(endDateTime)) {
-				Car expiredCar = carService.getCarId(insurance.getCarId());
-				expiredCars.add(expiredCar);
-				model.addAttribute("showText", true);
-				insurance.setResult("Expired");
-				carInsuranceService.save(insurance);
+			// Poliçenin süresinin bitip bitmediğini kontrol etme
+			LocalDateTime now = LocalDateTime.now();
+			for (CarInsurance insurance : insurances) {
+				LocalDateTime endDateTime = LocalDateTime.parse(insurance.getEndDate(), formatter);
+				if (now.isAfter(endDateTime)) {
+					Car expiredCar = carService.getCarId(insurance.getCarId());
+					expiredCars.add(expiredCar);
+					model.addAttribute("showText", true);
+					insurance.setResult("Expired");
+					carInsuranceService.save(insurance);
+				}
 			}
-		}
-		model.addAttribute("expiredCars", expiredCars);
-		model.addAttribute("carList", cars);
+			model.addAttribute("expiredCars", expiredCars);
+			model.addAttribute("carList", car);
 
-		// HEALTH
-		List<Health> healthInfos = healthService.findByStatusAndCustomerId(1, customer.getCustomerId());
-		List<HealthInsurance> healthInsurances = healthInsuranceService.findByStatusAndCustomerIdAndResult(1,
-				customer.getCustomerId(), "Accepted");
-		ArrayList<Health> expiredHealthInsurance = new ArrayList<>();
+			// HEALTH
+			List<Health> healthInfos = healthService.findByStatusAndCustomerId(1, customer.getCustomerId());
+			List<HealthInsurance> healthInsurances = healthInsuranceService.findByStatusAndCustomerIdAndResult(1,
+					customer.getCustomerId(), "Accepted");
+			ArrayList<Health> expiredHealthInsurance = new ArrayList<>();
 
-		// Poliçenin süresinin bitip bitmediğini kontrol etme
-		for (HealthInsurance insurance : healthInsurances) {
-			LocalDateTime endDateTime = LocalDateTime.parse(insurance.getEndDate(), formatter);
+			// Poliçenin süresinin bitip bitmediğini kontrol etme
+			for (HealthInsurance insurance : healthInsurances) {
+				LocalDateTime endDateTime = LocalDateTime.parse(insurance.getEndDate(), formatter);
 
-			if (now.isAfter(endDateTime)) {
-				Health expiredHealth = healthService.getHealthById(insurance.getHealthId());
-				expiredHealthInsurance.add(expiredHealth);
-				model.addAttribute("showExpiredAlert", true);
-				insurance.setResult("Expired");
-				healthInsuranceService.save(insurance);
+				if (now.isAfter(endDateTime)) {
+					Health expiredHealth = healthService.getHealthById(insurance.getHealthId());
+					expiredHealthInsurance.add(expiredHealth);
+					model.addAttribute("showExpiredAlert", true);
+					insurance.setResult("Expired");
+					healthInsuranceService.save(insurance);
+				}
 			}
-		}
 
-		// Sağlık bilgilerini güncelleme süresinin bitip bitmediğini kontrol etme
-		for (Health h : healthInfos) {
-			LocalDateTime deadlineDate = LocalDateTime.parse(h.getDeadline(), formatter);
+			// Sağlık bilgilerini güncelleme süresinin bitip bitmediğini kontrol etme
+			for (Health h : healthInfos) {
+				LocalDateTime deadlineDate = LocalDateTime.parse(h.getDeadline(), formatter);
 
-			if (now.isAfter(deadlineDate)) {
-				model.addAttribute("showDeadlineAlert", true);
-				model.addAttribute("healthId", h.getHealthId());
+				if (now.isAfter(deadlineDate)) {
+					model.addAttribute("showDeadlineAlert", true);
+					model.addAttribute("healthId", h.getHealthId());
+				}
 			}
+
+			model.addAttribute("expiredHealthInsurance", expiredHealthInsurance);
+			model.addAttribute("healthInfoList", healthInfos);
+
+			// HOME
+			// eklenecek
+			
+			if(admin == null){
+				model.addAttribute("username", customer.getUsername());
+			}else if(admin.equals("admin")){
+				model.addAttribute("username", "admin");
+			}
+			
+			model.addAttribute("customer", customer);
+			model.addAttribute("health", health);
+			model.addAttribute("home", home);
+			model.addAttribute("car", car);
 		}
-
-		model.addAttribute("expiredHealthInsurance", expiredHealthInsurance);
-		model.addAttribute("healthInfoList", healthInfos);
-
-		// HOME
-		// eklenecek
 		
-		if(admin == null){
-			model.addAttribute("username", customer.getUsername());
-		}else if(admin.equals("admin")){
-			model.addAttribute("username", "admin");
-		}
-		
-		model.addAttribute("customer", customer);
-		model.addAttribute("health", health);
-		model.addAttribute("home", home);
-		model.addAttribute("car", car);
 		return "userPage";
 	}
 }

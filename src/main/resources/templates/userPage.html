@@ -316,9 +316,17 @@
 										<td th:text="${h.insurerTitle}"></td>
 										<td><button class="mx-auto"><a th:href="@{/deleteHome/{id}(id=${h.homeId})}"><i
 														id="icon-trash" class="bx bx-trash trash"></i></a></button></td>
-										<td><button class="mx-auto">
-											<a th:href="@{'/seeHomeInsuranceDetails/' + ${h.homeId} + '/' + ${'admin'}}">
-													<i class="fa-solid fa-ellipsis"></i></a></button></td>
+										<td><button class="mx-auto" ng-if="isAdmin == 'admin'">
+										        <a th:href="@{'/seeHomeInsuranceDetails/' + ${h.homeId} + '/admin'}">
+										            <i class="fa-solid fa-ellipsis"></i>
+										        </a>
+										    </button>
+										    <button class="mx-auto" ng-if="isAdmin != 'admin'">
+										        <a th:href="@{'/seeHomeInsuranceDetails/' + ${h.homeId}}">
+										            <i class="fa-solid fa-ellipsis"></i>
+										        </a>
+										    </button>
+										</td>
 									</tr>
 								</tbody>
 							</table>
@@ -359,9 +367,17 @@
 
 										<td><button class="mx-auto"><a th:href="@{/deleteCar/{id}(id=${c.id})}"><i
 														id="icon-trash" class="bx bx-trash trash"></i></a></button></td>
-										<td><button class="mx-auto">
-											<a sth:href="@{'/seeCarInsuranceDetails/' + ${c.id} + '/' + ${'admin'}}">
-												<i class="fa-solid fa-ellipsis"></i></a></button></td>
+										<td><button class="mx-auto" ng-if="isAdmin == 'admin'">
+										        <a th:href="@{'/seeCarInsuranceDetails/' + ${c.id} + '/admin'}">
+										            <i class="fa-solid fa-ellipsis"></i>
+										        </a>
+										    </button>
+										    <button class="mx-auto" ng-if="isAdmin != 'admin'">
+										        <a th:href="@{'/seeCarInsuranceDetails/' + ${c.id}}">
+										            <i class="fa-solid fa-ellipsis"></i>
+										        </a>
+										    </button>
+										 </td>
 									</tr>
 								</tbody>
 							</table>
