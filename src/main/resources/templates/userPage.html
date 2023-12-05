@@ -34,7 +34,7 @@
 	</script>
 
 </head>
-
+<body ng-app="myApp" ng-controller="UserPageController">
 	<!--Navbar-->
 	<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
 		<div class="container-fluid px-5">
@@ -152,7 +152,7 @@
 		
 
 		<div class="user-title">
-            <span class="username-text" th:text="${c.username}"></span>
+            <span class="username-text" th:text="${username}"></span>
             <div class="select-type"><a th:href="@{/selectType(customerId=${c.customerId})}"><span class="badge text-bg-primary">Get Insurance Quote</span></a></div>
         </div>
 		<div class="user-page">
@@ -241,6 +241,7 @@
 										<th scope="col">See Insurance Details</th>
 									</tr>
 								</thead>
+								
 								<tbody>
 									<tr th:each="h :${health}">
 										<td th:text="${h.healthId}"></td>
@@ -256,9 +257,21 @@
 										<td><button class="mx-auto"><a
 													th:href="@{/deleteHealthInfo/{id}(id=${h.healthId})}"><i
 														id="icon-trash" class="bx bx-trash trash"></i></a></button></td>
-										<td><button class="mx-auto"><a
-													th:href="@{/seeHealthInsuranceDetails/{id}(id=${h.healthId})}"><i
-														class="fa-solid fa-ellipsis"></i></a></button></td>
+										<td>
+											<script th:inline="javascript">
+												var isAdmin = /*[[${username}]]*/ '';
+											</script>
+										    <button class="mx-auto" ng-if="isAdmin == 'admin'">
+										        <a th:href="@{'/seeHealthInsuranceDetails/' + ${h.healthId} + '/admin'}">
+										            <i class="fa-solid fa-ellipsis"></i>
+										        </a>
+										    </button>
+										    <button class="mx-auto" ng-if="isAdmin != 'admin'">
+										        <a th:href="@{'/seeHealthInsuranceDetails/' + ${h.healthId}}">
+										            <i class="fa-solid fa-ellipsis"></i>
+										        </a>
+										    </button>
+										</td>
 									</tr>
 								</tbody>
 							</table>
@@ -303,9 +316,9 @@
 										<td th:text="${h.insurerTitle}"></td>
 										<td><button class="mx-auto"><a th:href="@{/deleteHome/{id}(id=${h.homeId})}"><i
 														id="icon-trash" class="bx bx-trash trash"></i></a></button></td>
-										<td><button class="mx-auto"><a
-													th:href="@{/seeHomeInsuranceDetails/{id}(id=${h.homeId})}"><i
-														class="fa-solid fa-ellipsis"></i></a></button></td>
+										<td><button class="mx-auto">
+											<a th:href="@{'/seeHomeInsuranceDetails/' + ${h.homeId} + '/' + ${'admin'}}">
+													<i class="fa-solid fa-ellipsis"></i></a></button></td>
 									</tr>
 								</tbody>
 							</table>
@@ -346,9 +359,9 @@
 
 										<td><button class="mx-auto"><a th:href="@{/deleteCar/{id}(id=${c.id})}"><i
 														id="icon-trash" class="bx bx-trash trash"></i></a></button></td>
-										<td><button class="mx-auto"><a
-													th:href="@{/seeCarInsuranceDetails/{id}(id=${c.id})}"><i
-														class="fa-solid fa-ellipsis"></i></a></button></td>
+										<td><button class="mx-auto">
+											<a sth:href="@{'/seeCarInsuranceDetails/' + ${c.id} + '/' + ${'admin'}}">
+												<i class="fa-solid fa-ellipsis"></i></a></button></td>
 									</tr>
 								</tbody>
 							</table>

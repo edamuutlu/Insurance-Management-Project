@@ -134,12 +134,17 @@ public class CarController {
 				
 	}
 	
-	@GetMapping("/trafficInsuranceCalculate/{carId}")
-	public String trafficInsuranceCalculate(@PathVariable("carId") int carId, Model model) { 
+	@RequestMapping(path = {"/trafficInsuranceCalculate/{carId}", "/trafficInsuranceCalculate/{carId}/{admin}"}, method = RequestMethod.GET)
+	public String trafficInsuranceCalculate(@PathVariable("carId") int carId, @PathVariable(required = false) String admin,Model model) { 
 		Car car = carService.getCarId(carId);
 		CarInsurance insurance = carInsuranceService.getInsuranceByCarId(carId);
 		Customer customer = customerService.getCustomerById(car.getCustomerId());
-		System.out.println(insurance);
+		
+		if(admin == null){
+			model.addAttribute("username", customer.getUsername());
+		}else if(admin.equals("admin")){
+			model.addAttribute("username", "admin");
+		}
 
 		model.addAttribute(customer);
 		model.addAttribute(insurance);
@@ -180,8 +185,8 @@ public class CarController {
 		return new ModelAndView("carList","car",cars);
 	}
 	
-	@GetMapping("/seeCarInsuranceDetails/{id}")
-	public String seeCarInsuranceDetails(@PathVariable("id") int carId, Model model,
+	@RequestMapping(path = {"/seeCarInsuranceDetails/{id}", "/seeCarInsuranceDetails/{id}/{admin}"}, method = RequestMethod.GET)
+	public String seeCarInsuranceDetails(@PathVariable("id") int carId, @PathVariable(required = false) String admin, Model model,
 			RedirectAttributes redirectAttributes) {
 
 		List<CarInsurance> insurances = carInsuranceService.findByStatusAndCarId(1, carId);
@@ -199,6 +204,12 @@ public class CarController {
 			model.addAttribute("insurance", insurances);
 			model.addAttribute("customer", customer);
 			return "seeCarInsuranceDetails";
+		}
+		
+		if(admin == null){
+			model.addAttribute("username", customer.getUsername());
+		}else if(admin.equals("admin")){
+			model.addAttribute("username", "admin");
 		}
 		
 		model.addAttribute("customer", customer);

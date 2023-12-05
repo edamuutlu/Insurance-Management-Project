@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -146,12 +147,18 @@ public class HealthController {
 		return "redirect:/healthInsuranceCalculate/" + insurance.getInsuranceId();
 	}
 
-	@GetMapping("/healthInsuranceCalculate/{insuranceId}")
-	public String healthInsuranceCalculate(@PathVariable("insuranceId") int insuranceId, Model model) {
+	@RequestMapping(path = {"/healthInsuranceCalculate/{insuranceId}", "/healthInsuranceCalculate/{healthInsuranceCalculate}/{admin}"}, method = RequestMethod.GET)
+	public String healthInsuranceCalculate(@PathVariable("insuranceId") int insuranceId, @PathVariable(required = false) String admin, Model model) {
 
 		HealthInsurance insurance = healthInsuranceService.getInsuranceById(insuranceId);
 		Health health = healthService.getHealthById(insurance.getHealthId());
 		Customer customer = customerService.getCustomerById(health.getCustomerId());
+		
+		if(admin == null){
+			model.addAttribute("username", customer.getUsername());
+		}else if(admin.equals("admin")){
+			model.addAttribute("username", "admin");
+		}
 
 		model.addAttribute("health", health);
 		model.addAttribute("insurance", insurance);
@@ -196,8 +203,8 @@ public class HealthController {
 		return new ModelAndView("healthInfoList", "health", healthInfos);
 	}
 
-	@GetMapping("/healthInsuranceEditForm/{insuranceId}")
-	public String healthInsuranceEditForm(@PathVariable("insuranceId") int insuranceId, Model model, RedirectAttributes redirectAttributes) {
+	@RequestMapping(path = {"/healthInsuranceEditForm/{insuranceId}", "/healthInsuranceEditForm/{insuranceId}/{admin}"}, method = RequestMethod.GET)
+	public String healthInsuranceEditForm(@PathVariable("insuranceId") int insuranceId, @PathVariable(required = false) String admin, Model model, RedirectAttributes redirectAttributes) {
 
 		HealthInsurance insurance = healthInsuranceService.getInsuranceById(insuranceId);
 		Health health = healthService.getHealthById(insurance.getHealthId());
@@ -319,9 +326,9 @@ public class HealthController {
 		healthInsuranceService.save(insurance);
 		return "redirect:/seeHealthInsuranceDetails/" + insurance.getHealthId();
 	}
-
-	@GetMapping("/seeHealthInsuranceDetails/{id}")
-	public String seeHealthInsuranceDetails(@PathVariable("id") int healthId, Model model) {
+	
+	@RequestMapping(path = {"/seeHealthInsuranceDetails/{id}", "/seeHealthInsuranceDetails/{id}/{admin}"}, method = RequestMethod.GET)
+	public String seeHealthInsuranceDetails(@PathVariable("id") int healthId, @PathVariable(required = false) String admin ,Model model) {
 
 		List<HealthInsurance> insurances = healthInsuranceService.findByStatusAndHealthId(1, healthId);
 		Health health = healthService.getHealthById(healthId);
@@ -337,6 +344,12 @@ public class HealthController {
 			model.addAttribute("insurance", insurances);
 			model.addAttribute("customer", customer);
 			return "seeHealthInsuranceDetails";
+		}
+		
+		if(admin == null){
+			model.addAttribute("username", customer.getUsername());
+		}else if(admin.equals("admin")){
+			model.addAttribute("username", "admin");
 		}
 
 		model.addAttribute("customer", customer);

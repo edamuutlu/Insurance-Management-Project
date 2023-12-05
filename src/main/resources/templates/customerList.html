@@ -16,7 +16,6 @@
 	<link rel="stylesheet" th:href="@{/css/register.css}" href="src/main/resources/static/css/register.css">
 	<!-- Angularjs -->
 	<script src="js/angular.min.js"></script>
-
 </head>
 
 <body>
@@ -121,12 +120,6 @@
 					<a href="#"><span class="badge text-bg-info">Change KDV Rate</span></a>
 				</div>
 			</div>
-			<div class="alert alert-warning insurance-error d-flex align-items-center" role="alert">
-				<i class='bx bxs-error'></i>
-				<div>
-					An example warning alert with an icon
-				</div>
-			</div>
 			<div class="user-page">
 
 				<!-- User Tablo -->
@@ -144,11 +137,9 @@
 									<th cope="col">Province</th>
 									<th cope="col">District</th>
 									<th scope="col">Insurance Type</th>
-									<th scope="col">Health Info List</th>
-									<th scope="col">Home List</th>
-									<th scope="col">Car List</th>
 									<th scope="col">Update</th>
 									<th scope="col">Delete</th>
+									<th scope="col">See User Details </th>
 								</tr>
 							</thead>
 							<tbody>
@@ -161,22 +152,19 @@
 									<td th:text="${c.lastname}"></td>
 									<td th:text="${c.province}"></td>
 									<td th:text="${c.district}"></td>
-									<td><a th:href="@{/selectType(customerId=${c.customerId})}"><span class="badge text-bg-primary">Add New Insurance</span></a></td>
-									<td><button class="mx-auto"><a
-												th:href="@{/healthInfoList/{customerId}(customerId=${c.customerId})}"><i
-													class="fa-solid fa-heart-circle-plus heart"></i></a></button></td>
-									<td><button class="mx-auto"><a
-												th:href="@{/homeList/{customerId}(customerId=${c.customerId})}"><i
-													class="bx bxs-home home"></i></a></button></td>
-									<td><button class="mx-auto"><a
-												th:href="@{/carList/{customerId}(customerId=${c.customerId})}"><i
-													class="bx bxs-car car"></i></a></button></td>
+									<td><a th:href="@{/selectType(customerId=${c.customerId})}"><span
+												class="badge text-bg-primary">Add New Insurance</span></a></td>
 									<td><button class="mx-auto"><a
 												th:href="@{/editCustomer/{customerId}(customerId=${c.customerId})}"><i
 													class="bx bxs-edit edit"></i></a></button></td>
 									<td><button class="mx-auto"><a
 												th:href="@{/deleteCustomer/{customerId}(customerId=${c.customerId})}"><i
 													class="bx bx-trash trash"></i></a></button></td>
+									<td><button class="mx-auto">
+											<a th:href="@{'/userPage/' + ${c.username} + '/' + ${'admin'}}">
+												<i class='bx bx-dots-horizontal-rounded dots'></i>
+											</a>
+										</button></td>
 								</tr>
 							</tbody>
 						</table>

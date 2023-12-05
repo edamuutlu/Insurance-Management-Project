@@ -45,35 +45,34 @@ import jakarta.validation.Valid;
 public class CustomerController {
 
 	@Autowired
-	CustomerService customerService; 
+	CustomerService customerService;
 
 	@Autowired
 	CarService carService;
-	
+
 	@Autowired
 	HomeService homeService;
-	
+
 	@Autowired
 	HealthService healthService;
-	
+
 	@Autowired
 	CarInsuranceService carInsuranceService;
-	
+
 	@Autowired
 	HomeInsuranceService homeInsuranceService;
-	
+
 	@Autowired
 	HealthInsuranceService healthInsuranceService;
 
 	@Autowired
 	ProvinceService provinceService;
-	
+
 	@Autowired
 	DistrictService districtService;
-	
+
 	@Autowired
 	KdvService kdvService;
-			
 
 	private static final Logger log = LoggerFactory.getLogger(CustomerController.class);
 
@@ -88,21 +87,21 @@ public class CustomerController {
 		model.addAttribute("customerId", customerId);
 		return "home";
 	}
-	
+
 //	@GetMapping("/selectType/{customerId}")
 //	public String selectType(@PathVariable("customerId") int customerId, Model model) {
 //		model.addAttribute("customerId", customerId);
 //		return "home";
 //	}
-	
+
 	@GetMapping("/customerRegister")
 	public String customerRegister(@ModelAttribute Customer customer, Model model) {
-		
+
 		List<Province> getAllProvinces = provinceService.listAll();
 		List<District> getAllDistricts = districtService.listAll();
 
-        model.addAttribute("getAllProvinces", getAllProvinces);
-        model.addAttribute("getAllDistricts", getAllDistricts);
+		model.addAttribute("getAllProvinces", getAllProvinces);
+		model.addAttribute("getAllDistricts", getAllDistricts);
 
 		return "customerRegister";
 	}
@@ -122,44 +121,43 @@ public class CustomerController {
 	@GetMapping("/customerList")
 	public String customerList(Model model) {
 		List<Customer> customerList = customerService.findByStatus(1);
-		
+
 		Kdv carKdv = kdvService.getProductTypeById(1);
 		Kdv homeKdv = kdvService.getProductTypeById(2);
 		Kdv healthKdv = kdvService.getProductTypeById(3);
 		model.addAttribute("carKdv", carKdv);
 		model.addAttribute("homeKdv", homeKdv);
 		model.addAttribute("healthKdv", healthKdv);
-		
-		model.addAttribute("customer",  customerList);
-		
+
+		model.addAttribute("customer", customerList);
+
 		return "customerList";
 	}
-	
+
 	@PostMapping("/saveKdv")
-	public String saveKdv(@RequestParam int kdvRate, @RequestParam int productType) {		
+	public String saveKdv(@RequestParam int kdvRate, @RequestParam int productType) {
 		Kdv kdv = kdvService.getProductTypeById(productType);
 		kdv.setKdvRate(kdvRate);
 		kdvService.save(kdv);
-		return "redirect:/customerList";				
+		return "redirect:/customerList";
 	}
 
 	@PostMapping("/customerRegister")
-	public String customerRegister(@Valid @ModelAttribute Customer customer,
-			BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+	public String customerRegister(@Valid @ModelAttribute Customer customer, BindingResult bindingResult, Model model,
+			RedirectAttributes redirectAttributes) {
 		List<Province> getAllProvinces = provinceService.listAll();
 		List<District> getAllDistricts = districtService.listAll();
-		
+
 		if (bindingResult.hasErrors()) {
 			log.info(">> Customer : {}", customer.toString());
-			
-	        model.addAttribute("getAllProvinces", getAllProvinces);
-	        model.addAttribute("getAllDistricts", getAllDistricts);
-	        
-			
+
+			model.addAttribute("getAllProvinces", getAllProvinces);
+			model.addAttribute("getAllDistricts", getAllDistricts);
+
 			return "customerRegister";
 		}
 
-		// Aynı TC numaralı ve email adresli kullanıcı kontrolü
+		// Aynı TC numaralı, email adresli ve username adlı kullanıcı kontrolü
 		List<Customer> sameTcList = customerService.findByStatusAndTc(1, customer.getTc());
 		List<Customer> sameEmailList = customerService.findByStatusAndEmail(1, customer.getEmail());
 		List<Customer> sameUsernameList = customerService.findByStatusAndUsername(1, customer.getUsername());
@@ -169,18 +167,18 @@ public class CustomerController {
 		boolean showUsernameAlert = !sameUsernameList.isEmpty();
 
 		if (showTcAlert || showEmailAlert || showUsernameAlert) {
-		    model.addAttribute("showTcAlert", showTcAlert);
-		    model.addAttribute("showEmailAlert", showEmailAlert);
-		    model.addAttribute("showUsernameAlert", showUsernameAlert);
-		    model.addAttribute("getAllProvinces", getAllProvinces);
-		    model.addAttribute("getAllDistricts", getAllDistricts);
-		    return "customerRegister";
+			model.addAttribute("showTcAlert", showTcAlert);
+			model.addAttribute("showEmailAlert", showEmailAlert);
+			model.addAttribute("showUsernameAlert", showUsernameAlert);
+			model.addAttribute("getAllProvinces", getAllProvinces);
+			model.addAttribute("getAllDistricts", getAllDistricts);
+			return "customerRegister";
 		} else {
-		    customer.setStatus(1);
-		    customerService.save(customer);
-		    return "redirect:/userPage/" + customer.getUsername();
+			customer.setStatus(1);
+			customerService.save(customer);
+			return "redirect:/userPage/" + customer.getUsername();
 		}
-		
+
 	}
 
 	@PostMapping("/save")
@@ -212,25 +210,27 @@ public class CustomerController {
 		List<Province> getAllProvinces = provinceService.listAll();
 		List<District> getAllDistricts = districtService.listAll();
 
-        model.addAttribute("getAllProvinces", getAllProvinces);
-        model.addAttribute("getAllDistricts", getAllDistricts);
-		
+		model.addAttribute("getAllProvinces", getAllProvinces);
+		model.addAttribute("getAllDistricts", getAllDistricts);
+
 		Customer customer = customerService.getCustomerById(id);
 		model.addAttribute("customer", customer);
 		return "customerEdit";
 	}
 
-	@RequestMapping("/deleteCustomer/{customerId}")
-	public String deleteCustomer(@PathVariable("customerId") int customerId) {
-		
+	@RequestMapping(path = { "/deleteCustomer/{customerId}",
+			"/deleteCustomer/{customerId}/{admin}" }, method = RequestMethod.GET)
+	public String deleteCustomer(@PathVariable("customerId") int customerId,
+			@PathVariable(required = false) String admin, Model model) {
+
 		// Müşterinin varsa araçlarının listelenmemesi için
-		List<Car> cars = carService.findByStatusAndCustomerId(1, customerId); 
+		List<Car> cars = carService.findByStatusAndCustomerId(1, customerId);
 		List<Home> homes = homeService.findByStatusAndCustomerId(1, customerId);
 		List<Health> healthInfos = healthService.findByStatusAndCustomerId(1, customerId);
 		List<CarInsurance> carInsurances = carInsuranceService.findByStatusAndCustomerId(1, customerId);
 		List<HomeInsurance> homeInsurances = homeInsuranceService.findByStatusAndCustomerId(1, customerId);
 		List<HealthInsurance> healthInsurances = healthInsuranceService.findByStatusAndCustomerId(1, customerId);
-		
+
 		for (Car car : cars) {
 			car.setStatus(0);
 			carService.save(car);
@@ -262,7 +262,15 @@ public class CustomerController {
 		Customer customer = customerService.getCustomerById(customerId);
 		customer.setStatus(0);
 		customerService.save(customer);
-		return "redirect:/customerList";
+
+		if (admin == null) {
+			return "home";
+		}
+		// if(admin.equals("admin")){
+		List<Customer> customerList = customerService.findByStatus(1);
+		model.addAttribute("customer", customerList);
+		return "customerList";
+
 	}
 
 }

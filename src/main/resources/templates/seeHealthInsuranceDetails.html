@@ -77,10 +77,10 @@
 		<div class="user-page-main" th:each="c :${customer}">
 			<div class="user-title">
 				<div class="username-settings">
-					<a th:href="@{/userPage/{username}(username=${c.username})}">
+					<a th:href="@{'/userPage/' + ${c.username} + '/' + ${'admin'}}">
 						<span class="badge text-bg-secondary"><i class='bx bx-arrow-back'></i></span>
 					</a>
-					<span class="username-text" th:text="${c.username}"></span>
+					<span class="username-text" th:text="${username}"></span>
 				</div>
 				<form th:action="@{/healthInsuranceEditForm/{insuranceId}(insuranceId=${insuranceId})}" method="get">
 				<button type="submit" class="select-type" data-bs-toggle="modal" data-bs-target="#renewModal"

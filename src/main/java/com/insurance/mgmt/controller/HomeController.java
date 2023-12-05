@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -162,12 +163,18 @@ public class HomeController {
 		return "redirect:/homeInsuranceCalculate/" + home.getHomeId();
 	}
 
-	@GetMapping("/homeInsuranceCalculate/{homeId}")
-	public String homeInsuranceCalculate(@PathVariable("homeId") int homeId, Model model) {
+	@RequestMapping(path = {"/homeInsuranceCalculate/{homeId}", "/homeInsuranceCalculate/{homeId}/{admin}"}, method = RequestMethod.GET)
+	public String homeInsuranceCalculate(@PathVariable("homeId") int homeId, @PathVariable(required = false) String admin, Model model) {
 
 		Home home = homeService.getHomeById(homeId);
 		HomeInsurance insurance = homeInsuranceService.getInsuranceByHomeId(homeId);
 		Customer customer = customerService.getCustomerById(home.getCustomerId());
+		
+		if(admin == null){
+			model.addAttribute("username", customer.getUsername());
+		}else if(admin.equals("admin")){
+			model.addAttribute("username", "admin");
+		}
 
 		model.addAttribute(customer);
 		model.addAttribute("insurance", insurance);
@@ -216,8 +223,8 @@ public class HomeController {
 		return new ModelAndView("homeList", "home", homes);
 	}
 
-	@GetMapping("/seeHomeInsuranceDetails/{id}")
-	public String seeHomeInsuranceDetails(@PathVariable("id") int homeId, Model model,
+	@RequestMapping(path = {"/seeHomeInsuranceDetails/{id}", "/seeHomeInsuranceDetails/{id}/{admin}"}, method = RequestMethod.GET)
+	public String seeHomeInsuranceDetails(@PathVariable("id") int homeId, @PathVariable(required = false) String admin, Model model,
 			RedirectAttributes redirectAttributes) {
 
 		List<HomeInsurance> insurances = homeInsuranceService.findByStatusAndHomeId(1, homeId);
@@ -235,6 +242,12 @@ public class HomeController {
 			model.addAttribute("insurance", insurances);
 			model.addAttribute("customer", customer);
 			return "seeHomeInsuranceDetails";
+		}
+		
+		if(admin == null){
+			model.addAttribute("username", customer.getUsername());
+		}else if(admin.equals("admin")){
+			model.addAttribute("username", "admin");
 		}
 
 		model.addAttribute("customer", customer);

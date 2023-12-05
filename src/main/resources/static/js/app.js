@@ -43,6 +43,10 @@ myApp.controller("homeController", ["$scope", "$http", function($scope) {
 
 }]);
 
+myApp.controller("UserPageController", ["$scope", function($scope) {
+      $scope.isAdmin = isAdmin;
+
+}]);
 
 //myApp.controller("registerCustomerFormController", ["$scope", function($scope) {
 //

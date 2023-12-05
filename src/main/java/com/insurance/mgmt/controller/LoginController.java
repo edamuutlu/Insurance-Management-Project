@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.insurance.mgmt.entity.Car;
@@ -108,8 +110,10 @@ public class LoginController {
 //		return "customerInfo";
 //	}
 
-	@GetMapping("/userPage/{username}")
-	public String userPage(@PathVariable("username") String username, Model model) {
+
+	@RequestMapping(path = {"/userPage/{username}", "/userPage/{username}/{admin}"}, method = RequestMethod.GET)
+	public String userPage(@PathVariable("username") String username, @PathVariable(required = false) String admin , Model model) {
+		
 		Customer customer = customerService.findByUsername(username);
 		List<Health> health = healthService.findByStatusAndCustomerId(1, customer.getCustomerId());
 		List<Home> home = homeService.findByStatusAndCustomerId(1, customer.getCustomerId());
@@ -169,7 +173,14 @@ public class LoginController {
 		model.addAttribute("healthInfoList", healthInfos);
 
 		// HOME
-
+		// eklenecek
+		
+		if(admin == null){
+			model.addAttribute("username", customer.getUsername());
+		}else if(admin.equals("admin")){
+			model.addAttribute("username", "admin");
+		}
+		
 		model.addAttribute("customer", customer);
 		model.addAttribute("health", health);
 		model.addAttribute("home", home);
