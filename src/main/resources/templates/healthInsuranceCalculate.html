@@ -1,23 +1,26 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en" xmlns:th"http://www.thymeLeaf.org">
-
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Offer</title>
-	
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculate</title>
+    <!-- Bootsrapt -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
 		integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-	
+	<!-- İcon -->
+	<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+	<!-- CSS -->
+	<link rel="stylesheet" th:href="@{/css/offer.css}" href="src/main/resources/static/css/offer.css">
+	<!-- Angularjs -->
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
-	
-	<link rel="stylesheet" href="" th:href="@{/css/style.css}">
-
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
-
 <body ng-app="myApp">
-
-	<!--Navbar-->
+     <!--Navbar-->
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid px-5">
           <a class="navbar-brand" href="#">Logo</a>
@@ -53,55 +56,110 @@
         </div>
       </nav>
 	<!--	End Navbar-->
+    <div class="user-page-wrapper">
+      <div class="user-page-main">
+        <div class="pricing-detail-section">
+            <!-- <div class="commom-title d-flex justify-content-center">
+                <h2>Offers</h2>
+            </div> -->
+            <h3 class="common-content">
+			    <span th:text="'Hi ' + ${customer.firstname} + ', '"></span>
+			    <span th:text="'Here is the offer price we have prepared for you!'"></span>
+			</h3>
 
-	<div class="section-header mt-5">
-		<div class="container">
-			<div class="row">
+        </div>
+        <div class="istehr-pricing-detail" id="referans" th:object="${customer}">
+            <div class="container">
+                <div class="row">
+                    <div class="plan-list">
+                        <div class="row">
+                            <div class="col-lg-4 col-md-4">
+                                <div class="free-plan card">
+                                    <div class="card-body price-plans">
+                                        <div class="planImageBackground"><img th:src="@{/img/plan-Intersect.png}" src="/src/main/resources/static/img/plan-Intersect.png" alt=""></div>
+                                        <div class="planImageBackground-hidden"><img th:src="@{/img/hidden-intersect.png}" src="/src/main/resources/static/img/hidden-intersect.png" alt=""></div>
+                                        <div class="planImageCircleLeft"><img th:src="@{/img/Aviva_Logo.png}" src="/src/main/resources/static/img/Aviva_Logo.png" width="150px" alt=""></div>
+                                        <div class="planImageCircleRight"><img th:src="@{/img/plan-circle-bottom.png}" src="/src/main/resources/static/img/plan-circle-bottom.png" alt=""></div>
+                                        <small>Aviva</small>
+                                        <h3 th:text="${insurance.offer + '₺'}"></h3>
+                                        <em>Health Insurance</em>
+                                        <p class="porject-plan"><i class='bx bx-check'></i>Most Comprehensive Offer</p>
+                                        <p class="porject-plan"><i class='bx bx-check'></i>All Authorized Services and Special Services</p>
+                                        <p class="porject-plan"><i class='bx bx-check'></i>Original Glass (Exempt)</p>
+                                        <p class="porject-plan"><i class='bx bx-check'></i>Mini-Repair: Yes</p>
+                                        <p class="porject-plan"><i class='bx bx-check'></i>Roadside Assistance: Yes</p>
+                                        <form th:object="${insurance}" method="post" name="myForm" action="/healthResult">
+                                            <input type="hidden" name="insuranceId" th:value="${insurance.insuranceId}">
+                                            <button type="submit" name="result" value="Accepted" class="btn btn-primary price-plan" >Accept</button>
+                                        </form>
+                                        <p class="planCharges">No hidden Charges</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4">
+                                <div class="free-plan card">
+                                    <div class="card-body price-plans">
+                                        <div class="planImageBackground"><img th:src="@{/img/plan-Intersect.png}" src="/src/main/resources/static/img/plan-Intersect.png" alt=""></div>
+                                        <div class="planImageBackground-hidden"><img th:src="@{/img/hidden-intersect.png}" src="/src/main/resources/static/img/hidden-intersect.png" alt=""></div>
+                                        <div class="planImageCircleLeft"><img th:src="@{/img/Liberty-Mutual-Logo.png}" src="/src/main/resources/static/img/Liberty-Mutual-Logo.png" width="150px" alt=""></div>
+                                        <div class="planImageCircleRight"><img th:src="@{/img/plan-circle-bottom.png}" src="/src/main/resources/static/img/plan-circle-bottom.png" alt=""></div>
+                                        <small>Liberty Mutual</small>
+                                        <h3 th:text="${insurance.offer + '₺'}"></h3>
+                                        <em> Health Insurance </em>
+                                        <p class="porject-plan"><i class='bx bx-check'></i>Most Comprehensive Offer</p>
+                                        <p class="porject-plan"><i class='bx bx-check'></i>All Authorized Services and Special Services</p>
+                                        <p class="porject-plan"><i class='bx bx-check'></i>Original Glass (Exempt)</p>
+                                        <p class="porject-plan"><i class='bx bx-check'></i>Mini-Repair: Yes</p>
+                                        <p class="porject-plan"><i class='bx bx-check'></i>Roadside Assistance: Yes</p>
+                                        <form th:object="${insurance}" method="post" name="myForm" action="/healthResult">
+                                            <input type="hidden" name="insuranceId" th:value="${insurance.insuranceId}">
+                                            <button type="submit" name="result" value="Accepted" class="btn btn-primary price-plan">Accept</button>
+                                        </form>
+                                        <p class="planCharges">No hidden Charges</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4">
+                                <div class="free-plan card">
+                                    <div class="card-body price-plans">
+                                        <div class="planImageBackground"><img th:src="@{/img/plan-Intersect.png}" src="/src/main/resources/static/img/plan-Intersect.png" alt=""></div>
+                                        <div class="planImageBackground-hidden"><img th:src="@{/img/hidden-intersect.png}" src="/src/main/resources/static/img/hidden-intersect.png" alt=""></div>
+                                        <div class="planImageCircleLeft"><img th:src="@{/img/AXA.png}" src="/src/main/resources/static/img/AXA.png" width="150px" alt=""></div>
+                                        <div class="planImageCircleRight"><img th:src="@{/img/plan-circle-bottom.png}" src="/src/main/resources/static/img/plan-circle-bottom.png" alt=""></div>
+                                        <div class="recommended-price">Recommended</div>
+                                        <small>AXA</small>
+                                        <h3 th:text="${insurance.offer + '₺'}"></h3>
+                                        <em> Health Insurance </em>
+                                        <p class="porject-plan"><i class='bx bx-check'></i>Most Comprehensive Offer</p>
+                                        <p class="porject-plan"><i class='bx bx-check'></i>All Authorized Services and Special Services</p>
+                                        <p class="porject-plan"><i class='bx bx-check'></i>Original Glass (Exempt)</p>
+                                        <p class="porject-plan"><i class='bx bx-check'></i>Mini-Repair: Yes</p>
+                                        <p class="porject-plan"><i class='bx bx-check'></i>Roadside Assistance: Yes</p>
+                                        <form th:object="${insurance}" method="post" name="myForm" action="/healthResult">
+                                            <input type="hidden" name="insuranceId" th:value="${insurance.insuranceId}">
+                                            <button type="submit" name="result" value="Accepted" class="btn btn-primary price-plan">Accept</button>
+                                        </form>
+                                        <p class="planCharges">No hidden Charges</p>
+                                    </div>
+                                </div>
+                            </div>                       
+                         </div>
 
-				<div class="col-lg-12">
-					<h1 class="page-header text-center" th:text="${'Hi ' + customer.firstname + ', '}"></h1>
-					<h3 class="text-center">Here is the offer price we have prepared for you!</h3>
-				</div>
+                        <form th:object="${insurance}" method="post" name="myForm" action="/healthResult">
+                         <div class="cancel">
+                                <input type="hidden" name="insuranceId" th:value="${insurance.insuranceId}">
+                                <button type="submit" name="result" value="Canceled" class="btn btn-danger price-plan">Cancel</button>
+                         </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- istehr-pricing-detail end -->
+     </div>
+    </div> 
+    <script src="/js/app.js"></script>
 
-			</div>
-		</div> <!-- /.container -->
-	</div> <!-- /.section-colored -->
-
-
-	<div class="row pricing-table">
-		<div class="col-sm-3 mx-auto">
-			<div class="panel panel-default text-center">
-
-				<div class="panel-heading">
-					<strong>Health Insurance</strong>
-				</div>
-				<div class="panel-body">
-					<h3 class="panel-title price" th:text="${insurance.offer + '₺'}"></h3>
-				</div>
-				<form th:object="${insurance}" method="post" name="myForm" action="/healthResult">
-					<input type="hidden" name="insuranceId" th:value="${insurance.insuranceId}">
-					<ul class="list-group">
-						<li class="list-group-item">Health Coverage</li>
-						<li class="list-group-item">Hospitalization and Surgery</li>
-						<li class="list-group-item">Prescription Medications and Doctor Visits</li>
-						<li class="list-group-item">Dental and Vision Care (Optional)</li>
-						<li class="list-group-item">Discounts for Health Check-ups</li>
-						<li class="list-group-item">
-							<div class="button-group">
-								<button type="submit" name="result" value="Canceled"
-									class="btn reject-btn">Cancel</button>
-								<button type="submit" name="result" value="Accepted"
-									class="btn accept-btn">Accept</button>
-							</div>
-						</li>
-					</ul>
-				</form>
-			</div>
-		</div>
-	</div>
-
-	<!-- Footer -->
-	<footer class="mt-4 py-4">
+    <footer class="py-4">
 		<div class="row container mx-auto pt-4">
 			<div class="footer-one col-lg-3 col-md-5 col-12 mb-3">
 				<img src="img/logo.png" alt="">
@@ -147,25 +205,12 @@
 			</div>
 			<div class="copyright mt-2">
 				<div class="row container mx-auto">
-					<div class="col-lg-4 col-md-6 col-12 text-nowrap mb-2">
+					<div class="col-lg-4 col-md-6 col-12 mb-2">
 						<p>Eda Nur Mutlu eInsurance © 2023. All Rights Reserved</p>
 					</div>
 				</div>
 			</div>
 		</div>
 	</footer>
-
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
-		integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
-		crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-		integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-		crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"
-		integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS"
-		crossorigin="anonymous"></script>
-
-	<script src="/js/app.js"></script>
 </body>
-
 </html>

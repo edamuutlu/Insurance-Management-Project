@@ -1,0 +1,306 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  /* Navber start */
+  /* Navber start */
+}
+@media (max-width: 1000px) {
+  body {
+    overflow: auto;
+  }
+}
+body .navbar {
+  top: 0;
+  left: 0;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+body .navbar .operations {
+  display: flex;
+}
+body .navbar .operations a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  background-color: transparent;
+  font-size: 12px;
+  line-height: 24px;
+  margin-right: 10px;
+  padding: 0 13px;
+  vertical-align: middle;
+  color: #313131;
+  border: 1px solid rgba(49, 49, 49, 0.5019607843);
+  border-radius: 14px;
+  opacity: 0.8;
+  transition: 0.3s;
+}
+body .navbar .operations a:hover {
+  opacity: 1;
+}
+body .navbar .operations a .login-icon {
+  font-size: 20px;
+  color: #ed2d34;
+  margin-right: 5px;
+}
+body .navbar .operations a .register-icon {
+  font-size: 20px;
+  color: #ed9a2d;
+  margin-right: 5px;
+}
+body .navbar-light .navbar-nav .nav-link {
+  padding: 0 20px;
+  color: black;
+  transition: 0.3s ease;
+}
+body .navbar-light .navbar-nav .nav-link:hover {
+  color: coral;
+}
+body .navbar-light .navbar-toggler {
+  outline: none;
+  border: none;
+}
+body .user-page-wrapper {
+  display: flex;
+  justify-content: center;
+  background: webkit-gradient(linear, left bottom, right top, from(#fc2c77), to(#6c4079));
+  background: linear-gradient(to top right, rgba(252, 161, 44, 0.8509803922) 0%, rgba(120, 121, 64, 0.0196078431) 100%);
+  min-height: 101vh;
+  padding-top: 35px;
+}
+body .user-page-wrapper .user-page-main {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  background-color: #fffbf6;
+  border-radius: 15px;
+  width: 95%;
+  height: 100%;
+  margin: 0px auto;
+  padding: 2% 4%;
+}
+@media (max-width: 1000px) {
+  body .user-page-wrapper .user-page-main {
+    padding: 1% 4%;
+  }
+}
+body .user-page-wrapper .user-page-main .istehr-pricing-detail {
+  background: #fffbf6;
+}
+body .user-page-wrapper .user-page-main .istehr-pricing-detail .plan-list .free-plan {
+  border: 1px solid #e7e7e7;
+  background: #fff;
+  border-radius: 10px;
+  position: relative;
+  text-align: center;
+  padding-bottom: 0;
+  transition: all 0.3s ease-out 0s;
+}
+body .user-page-wrapper .user-page-main .istehr-pricing-detail .plan-list .free-plan:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 10px 60px 0 rgba(46, 61, 98, 0.231372549);
+}
+body .user-page-wrapper .user-page-main .istehr-pricing-detail .plan-list .free-plan:hover > .price-plans .planImageBackground {
+  display: none;
+}
+body .user-page-wrapper .user-page-main .istehr-pricing-detail .plan-list .free-plan:hover > .price-plans small {
+  color: #fff;
+}
+body .user-page-wrapper .user-page-main .istehr-pricing-detail .plan-list .free-plan:hover > .price-plans .planImageBackground-hidden {
+  display: block;
+}
+body .user-page-wrapper .user-page-main .istehr-pricing-detail .plan-list .free-plan .card-body.price-plans {
+  position: relative;
+  z-index: 111;
+  background: #fff;
+}
+body .user-page-wrapper .user-page-main .istehr-pricing-detail .plan-list .free-plan .planImageBackground,
+body .user-page-wrapper .user-page-main .istehr-pricing-detail .plan-list .free-plan .planImageBackground-hidden {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transition: all 1.8s ease-out 1.5s;
+}
+body .user-page-wrapper .user-page-main .istehr-pricing-detail .plan-list .free-plan .planImageBackground img,
+body .user-page-wrapper .user-page-main .istehr-pricing-detail .plan-list .free-plan .planImageBackground-hidden img {
+  width: 200px;
+  transition: all 0.8s ease-out 0s;
+}
+body .user-page-wrapper .user-page-main .istehr-pricing-detail .plan-list .free-plan .planImageBackground-hidden {
+  display: none;
+}
+body .user-page-wrapper .user-page-main .istehr-pricing-detail .plan-list .free-plan .planImageCircleLeft {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+}
+body .user-page-wrapper .user-page-main .istehr-pricing-detail .plan-list .free-plan .planImageCircleRight {
+  position: absolute;
+  right: 15px;
+  bottom: 0;
+  z-index: -1;
+}
+body .user-page-wrapper .user-page-main .istehr-pricing-detail .plan-list .free-plan .recommended-price {
+  position: absolute;
+  left: -67px;
+  top: 90px;
+  background: #0eaa00;
+  border-radius: 0 0 10px 10px;
+  transform: rotate(-90deg);
+  font-weight: 600;
+  color: #fff;
+  padding: 5px 15px;
+}
+body .user-page-wrapper .user-page-main .istehr-pricing-detail .plan-list .free-plan small {
+  font-size: 20px;
+  font-weight: 600;
+  display: flex;
+  justify-content: end;
+  color: #3e5463;
+  position: absolute;
+  right: 20px;
+  top: 35px;
+}
+body .user-page-wrapper .user-page-main .istehr-pricing-detail .plan-list .free-plan h3 {
+  font-size: 64px;
+  font-weight: 700;
+  text-align: center;
+  color: #000;
+  margin-top: 145px;
+  margin-bottom: 25px;
+}
+body .user-page-wrapper .user-page-main .istehr-pricing-detail .plan-list .free-plan em {
+  color: #737789;
+  font-size: 16px;
+  font-weight: 400;
+  text-align: center;
+  font-style: normal;
+}
+body .user-page-wrapper .user-page-main .istehr-pricing-detail .plan-list .free-plan .porject-plan {
+  font-weight: 700;
+  text-align: center;
+  padding-top: 15px;
+  color: #424242;
+  margin: auto;
+  max-width: 70%;
+}
+body .user-page-wrapper .user-page-main .istehr-pricing-detail .plan-list .free-plan .porject-plan i {
+  color: #0eaa00;
+  font-size: 15px;
+  font-weight: 900;
+}
+body .user-page-wrapper .user-page-main .istehr-pricing-detail .plan-list .free-plan .porject-plan span {
+  display: block;
+}
+body .user-page-wrapper .user-page-main .istehr-pricing-detail .plan-list .free-plan .price-plan {
+  border: unset;
+  outline: 0;
+  font-weight: 600;
+  padding: 10px 30px;
+  margin-top: 50px;
+  background: #ffb454;
+}
+body .user-page-wrapper .user-page-main .istehr-pricing-detail .plan-list .free-plan .price-plan:hover {
+  background-color: #ff9900;
+}
+body .user-page-wrapper .user-page-main .istehr-pricing-detail .plan-list .free-plan .planCharges {
+  font-weight: 500;
+  text-align: center;
+  color: #424242;
+  margin-top: 20px;
+}
+body .user-page-wrapper .user-page-main .istehr-pricing-detail .plan-list .cancel {
+  padding: 1% 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+body .user-page-wrapper .user-page-main .istehr-pricing-detail .plan-list .cancel .price-plan {
+  width: 15%;
+}
+body .user-page-wrapper .user-page-main .pricing-detail-section {
+  text-align: center;
+}
+body .user-page-wrapper .user-page-main .pricing-detail-section .h3 span {
+  display: block;
+}
+body .user-page-wrapper .user-page-main .pricing-detail-section p {
+  font-size: 16px;
+  font-weight: 400;
+  text-align: center;
+  color: #424242;
+  max-width: 65%;
+  margin: auto;
+}
+body .user-page-wrapper .user-page-main .pricing-detail-section .commom-title h2 {
+  text-align: center;
+  color: #fff;
+  font-size: 23px;
+  line-height: 1.5;
+  font-weight: 600;
+  padding: 6px 30px;
+  background: linear-gradient(275.55deg, #f0950d 0%, #f0860c 100%);
+  border-radius: 50px;
+}
+body .user-page-wrapper .user-page-main .pricing-detail-section .common-content {
+  font-size: 32px;
+  font-weight: 700;
+  text-align: center;
+  margin-top: 5px;
+  margin-bottom: 25px;
+  color: #3b3b3b;
+  line-height: 1.3;
+}
+body .user-page-wrapper .user-page-main .pricing-detail-section .common-content span {
+  display: block;
+}
+body footer {
+  background-color: rgba(15, 15, 15, 0.7960784314);
+}
+body footer h5 {
+  color: #d8d8d8;
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+body footer li {
+  padding-bottom: 4px;
+}
+body footer li a {
+  font-size: 0.8rem;
+  color: #999;
+}
+body footer li a:hover {
+  color: #d8d8d8;
+}
+body footer p {
+  color: #999;
+  font-size: 0.8rem;
+}
+body footer .copyright a {
+  color: black;
+  width: 38px;
+  height: 38px;
+  background-color: white;
+  display: inline-block;
+  text-align: center;
+  line-height: 38px;
+  border-radius: 50%;
+  transition: 0.3 ease;
+  margin: 0 5px;
+}
+body footer .copyright a:hover {
+  color: white;
+  background-color: #fb774b;
+}
+@media (max-width: 767px) {
+  body footer .copyright p {
+    max-width: 30ch;
+    word-wrap: break-word;
+  }
+}/*# sourceMappingURL=fatura.css.map */
