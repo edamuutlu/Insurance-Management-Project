@@ -1,6 +1,7 @@
 package com.insurance.mgmt.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -20,9 +21,13 @@ public interface ICustomerRepository extends JpaRepository<Customer,Integer>{
 	@Query("FROM Customer WHERE status=?1 and email=?2") // ?1 ve ?2 parametrelerin sırasını belirtmektedir
 	List<Customer> findByStatusAndEmail(int status, String email);
 
-	Customer findByUsername(String username);
+	//  Spring Data JPA'nın named parameters özelliği ile :username, method imzasındaki String username parametresine karşılık gelir 
+	@Query("SELECT c FROM Customer c WHERE c.username = :username")
+	Optional<Customer> findByUsername(String username);
 
+	@Query("SELECT c FROM Customer c WHERE c.status = :status AND c.username = :username")
 	List<Customer> findByStatusAndUsername(int status, String username);
+
 
 	
 }

@@ -276,6 +276,7 @@ public class CarController {
 		newInsurance.setStatus(oldInsurance.getStatus());
 		newInsurance.setResult("Accepted");
 		newInsurance.setPeriod(oldInsurance.getPeriod()); 
+		newInsurance.setKdv(kdvRate); 
 		
 		carInsuranceService.save(newInsurance);
 

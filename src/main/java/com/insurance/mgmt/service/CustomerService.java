@@ -1,6 +1,8 @@
 package com.insurance.mgmt.service;
 
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.insurance.mgmt.entity.Customer;
@@ -45,6 +47,7 @@ public class CustomerService {
     }
     
     public Customer findByUsername(String username) {
-		return customerRepository.findByUsername(username);
+	    Optional<Customer> customerOptional = customerRepository.findByUsername(username);
+	    return customerOptional.orElse(null); // Bu, eğer customerOptional içinde bir değer yoksa null döndürecektir.
 	}
 }

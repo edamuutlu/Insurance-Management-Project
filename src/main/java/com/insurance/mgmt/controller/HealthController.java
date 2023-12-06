@@ -147,16 +147,18 @@ public class HealthController {
 		return "redirect:/healthInsuranceCalculate/" + insurance.getInsuranceId();
 	}
 
-	@RequestMapping(path = {"/healthInsuranceCalculate/{insuranceId}", "/healthInsuranceCalculate/{healthInsuranceCalculate}/{admin}"}, method = RequestMethod.GET)
-	public String healthInsuranceCalculate(@PathVariable("insuranceId") int insuranceId, @PathVariable(required = false) String admin, Model model) {
+	@RequestMapping(path = { "/healthInsuranceCalculate/{insuranceId}",
+			"/healthInsuranceCalculate/{healthInsuranceCalculate}/{admin}" }, method = RequestMethod.GET)
+	public String healthInsuranceCalculate(@PathVariable("insuranceId") int insuranceId,
+			@PathVariable(required = false) String admin, Model model) {
 
 		HealthInsurance insurance = healthInsuranceService.getInsuranceById(insuranceId);
 		Health health = healthService.getHealthById(insurance.getHealthId());
 		Customer customer = customerService.getCustomerById(health.getCustomerId());
-		
-		if(admin == null){
+
+		if (admin == null) {
 			model.addAttribute("username", customer.getUsername());
-		}else if(admin.equals("admin")){
+		} else if (admin.equals("admin")) {
 			model.addAttribute("username", "admin");
 		}
 
@@ -203,8 +205,10 @@ public class HealthController {
 		return new ModelAndView("healthInfoList", "health", healthInfos);
 	}
 
-	@RequestMapping(path = {"/healthInsuranceEditForm/{insuranceId}", "/healthInsuranceEditForm/{insuranceId}/{admin}"}, method = RequestMethod.GET)
-	public String healthInsuranceEditForm(@PathVariable("insuranceId") int insuranceId, @PathVariable(required = false) String admin, Model model, RedirectAttributes redirectAttributes) {
+	@RequestMapping(path = { "/healthInsuranceEditForm/{insuranceId}",
+			"/healthInsuranceEditForm/{insuranceId}/{admin}" }, method = RequestMethod.GET)
+	public String healthInsuranceEditForm(@PathVariable("insuranceId") int insuranceId,
+			@PathVariable(required = false) String admin, Model model, RedirectAttributes redirectAttributes) {
 
 		HealthInsurance insurance = healthInsuranceService.getInsuranceById(insuranceId);
 		Health health = healthService.getHealthById(insurance.getHealthId());
@@ -217,7 +221,7 @@ public class HealthController {
 			model.addAttribute("insurance", insurances);
 			return "redirect:/seeHealthInsuranceDetails/" + insurance.getHealthId();
 		}
-		
+
 		LocalDateTime now = LocalDateTime.now();
 		insurance.setEndDate(now.format(formatter));
 		insurance.setResult("Canceled");
@@ -326,9 +330,11 @@ public class HealthController {
 		healthInsuranceService.save(insurance);
 		return "redirect:/seeHealthInsuranceDetails/" + insurance.getHealthId();
 	}
-	
-	@RequestMapping(path = {"/seeHealthInsuranceDetails/{id}", "/seeHealthInsuranceDetails/{id}/{admin}"}, method = RequestMethod.GET)
-	public String seeHealthInsuranceDetails(@PathVariable("id") int healthId, @PathVariable(required = false) String admin ,Model model) {
+
+	@RequestMapping(path = { "/seeHealthInsuranceDetails/{id}",
+			"/seeHealthInsuranceDetails/{id}/{admin}" }, method = RequestMethod.GET)
+	public String seeHealthInsuranceDetails(@PathVariable("id") int healthId,
+			@PathVariable(required = false) String admin, Model model) {
 
 		List<HealthInsurance> insurances = healthInsuranceService.findByStatusAndHealthId(1, healthId);
 		Health health = healthService.getHealthById(healthId);
@@ -345,10 +351,10 @@ public class HealthController {
 			model.addAttribute("customer", customer);
 			return "seeHealthInsuranceDetails";
 		}
-		
-		if(admin == null){
+
+		if (admin == null) {
 			model.addAttribute("username", customer.getUsername());
-		}else if(admin.equals("admin")){
+		} else if (admin.equals("admin")) {
 			model.addAttribute("username", "admin");
 		}
 
