@@ -291,6 +291,7 @@ public class CarController {
 		
 		CarInsurance insurance = carInsuranceService.getInsuranceById(insuranceId);
 		Car car = carService.getCarId(insurance.getCarId());
+		Customer customer = customerService.getCustomerById(car.getCustomerId());
 
 		if (insurance.getResult().equals("Canceled") || insurance.getResult().equals("Expired")) {
 			redirectAttributes.addFlashAttribute("showAlert", true);
@@ -317,6 +318,7 @@ public class CarController {
 		model.addAttribute(kdv);
 		model.addAttribute("insurance", insurance);
 		model.addAttribute(car);
+		model.addAttribute("customer", customer);
 		return "carInsuranceRefund";
 	}
 	

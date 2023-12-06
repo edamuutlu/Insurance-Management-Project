@@ -327,6 +327,8 @@ public class HomeController {
 		
 		HomeInsurance insurance = homeInsuranceService.getInsuranceById(insuranceId);
 		Home home = homeService.getHomeById(insurance.getHomeId());
+		Customer customer = customerService.getCustomerById(home.getCustomerId());
+
 
 		if (insurance.getResult().equals("Canceled") || insurance.getResult().equals("Expired")) {
 			redirectAttributes.addFlashAttribute("showAlert", true);
@@ -353,6 +355,7 @@ public class HomeController {
 		model.addAttribute(kdv);
 		model.addAttribute("insurance", insurance);
 		model.addAttribute(home);
+		model.addAttribute("customer", customer);
 		return "homeInsuranceRefund";
 	}
 

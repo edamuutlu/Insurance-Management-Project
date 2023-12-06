@@ -260,6 +260,116 @@ body .user-page-wrapper .user-page-main .pricing-detail-section .common-content 
 body .user-page-wrapper .user-page-main .pricing-detail-section .common-content span {
   display: block;
 }
+/* refund start */
+body .user-page-wrapper .user-page-main .refund-main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3% 0px;
+}
+body .user-page-wrapper .user-page-main .refund-main .receipt-main {
+  background: #ffffff none repeat scroll 0 0;
+  border-bottom: 12px solid #f7d2a2;
+  border-top: 12px solid #f79d2e;
+  padding: 70px 45px !important;
+  position: relative;
+  box-shadow: 0 1px 21px #acacac;
+  color: #333333;
+}
+body .user-page-wrapper .user-page-main .refund-main .receipt-main p {
+  color: #333333;
+  font-family: open sans;
+  line-height: 1.42857;
+}
+body .user-page-wrapper .user-page-main .refund-main .receipt-main::after {
+  background: #f7d2a2 none repeat scroll 0 0;
+  content: "";
+  height: 5px;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: -13px;
+}
+
+body .user-page-wrapper .user-page-main .refund-main .receipt-main thead th {
+  color: #fff;
+  background: #f79d2e;
+}
+body .user-page-wrapper .user-page-main .refund-main .receipt-main .refund-price {
+  color: #db2329;
+}
+body .user-page-wrapper .user-page-main .refund-main .receipt-main td {
+  padding: 9px 20px !important;
+  font-size: 13px;
+  font-weight: initial !important;
+}
+body .user-page-wrapper .user-page-main .refund-main .receipt-main td p:last-child {
+  margin: 0;
+  padding: 0;
+}
+body .user-page-wrapper .user-page-main .refund-main .receipt-main td h2 {
+  font-size: 16px;
+  margin: 0;
+  text-transform: uppercase;
+}
+body .user-page-wrapper .user-page-main .refund-main .receipt-main .refund-user-details {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+body .user-page-wrapper .user-page-main .refund-main .receipt-main .operations {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+body .user-page-wrapper .user-page-main .refund-main .receipt-main .operations a {
+  margin-right: 5px;
+}
+body .user-page-wrapper .user-page-main .refund-main .refund-right h5 {
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0 0 7px 0;
+}
+body .user-page-wrapper .user-page-main .refund-main .refund-right p {
+  font-size: 12px;
+  margin: 0px;
+}
+body .user-page-wrapper .user-page-main .refund-main .refund-right p i {
+  text-align: center;
+  width: 18px;
+}
+body .user-page-wrapper .user-page-main .refund-main .refund-print {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+body .user-page-wrapper .user-page-main .refund-main .receipt-footer h1 {
+  font-size: 15px;
+  font-weight: 400 !important;
+  margin: 0 !important;
+}
+body .user-page-wrapper .user-page-main .refund-main .refund-header-main {
+  margin: 15px 0;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100%;
+}
+body .user-page-wrapper .user-page-main .refund-main .refund-header-main .company-details {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+body .user-page-wrapper .user-page-main .refund-main .refund-header-main .customer-details {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+body .user-page-wrapper .user-page-main .refund-main #container {
+  background-color: #dcdcdc;
+}
+
+/* refund end */
 body footer {
   background-color: rgba(15, 15, 15, 0.7960784314);
 }

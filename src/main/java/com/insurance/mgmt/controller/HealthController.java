@@ -370,6 +370,7 @@ public class HealthController {
 
 		HealthInsurance insurance = healthInsuranceService.getInsuranceById(insuranceId);
 		Health health = healthService.getHealthById(insurance.getHealthId());
+		Customer customer = customerService.getCustomerById(health.getCustomerId());
 
 		if (insurance.getResult().equals("Canceled") || insurance.getResult().equals("Expired")) {
 			redirectAttributes.addFlashAttribute("showAlert", true);
@@ -396,6 +397,7 @@ public class HealthController {
 		model.addAttribute(kdv);
 		model.addAttribute("insurance", insurance);
 		model.addAttribute(health);
+		model.addAttribute("customer", customer);
 		return "healthInsuranceRefund";
 	}
 
