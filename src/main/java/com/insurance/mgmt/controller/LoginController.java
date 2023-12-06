@@ -23,6 +23,7 @@ import com.insurance.mgmt.entity.HealthInsurance;
 import com.insurance.mgmt.entity.Customer;
 import com.insurance.mgmt.entity.Health;
 import com.insurance.mgmt.entity.Home;
+import com.insurance.mgmt.entity.HomeInsurance;
 import com.insurance.mgmt.service.CarInsuranceService;
 import com.insurance.mgmt.service.CarService;
 import com.insurance.mgmt.service.CustomerService;
@@ -120,17 +121,18 @@ public class LoginController {
 			List<Home> home = homeService.findByStatusAndCustomerId(1, customer.getCustomerId());
 			List<Car> car = carService.findByStatusAndCustomerId(1, customer.getCustomerId());
 
+			//CAR
 			List<CarInsurance> insurances = carInsuranceService.findByStatusAndCustomerIdAndResult(1, customer.getCustomerId(), "Accepted");
 			ArrayList<Car> expiredCars = new ArrayList<>();
 
-			// Poliçenin süresinin bitip bitmediğini kontrol etme
+			// Trafik poliçesinin süresinin bitip bitmediğini kontrol etme
 			LocalDateTime now = LocalDateTime.now();
 			for (CarInsurance insurance : insurances) {
 				LocalDateTime endDateTime = LocalDateTime.parse(insurance.getEndDate(), formatter);
 				if (now.isAfter(endDateTime)) {
 					Car expiredCar = carService.getCarId(insurance.getCarId());
 					expiredCars.add(expiredCar);
-					model.addAttribute("showText", true);
+					model.addAttribute("showCarText", true);
 					insurance.setResult("Expired");
 					carInsuranceService.save(insurance);
 				}
@@ -144,7 +146,7 @@ public class LoginController {
 					customer.getCustomerId(), "Accepted");
 			ArrayList<Health> expiredHealthInsurance = new ArrayList<>();
 
-			// Poliçenin süresinin bitip bitmediğini kontrol etme
+			// Sağlık poliçesinin süresinin bitip bitmediğini kontrol etme
 			for (HealthInsurance insurance : healthInsurances) {
 				LocalDateTime endDateTime = LocalDateTime.parse(insurance.getEndDate(), formatter);
 
@@ -164,6 +166,7 @@ public class LoginController {
 				if (now.isAfter(deadlineDate)) {
 					model.addAttribute("showDeadlineAlert", true);
 					model.addAttribute("healthId", h.getHealthId());
+					System.out.println(h.getHealthId());
 				}
 			}
 
@@ -171,7 +174,25 @@ public class LoginController {
 			model.addAttribute("healthInfoList", healthInfos);
 
 			// HOME
-			// eklenecek
+			List<HomeInsurance> homeInsurances = homeInsuranceService.findByStatusAndCustomerIdAndResult(1, customer.getCustomerId(), "Accepted");
+			ArrayList<Home> expiredHomes = new ArrayList<>();
+
+			// Poliçenin süresinin bitip bitmediğini kontrol etme
+			for (Home h : home) {
+				for (HomeInsurance insurance : homeInsurances) {
+					LocalDateTime endDateTime = LocalDateTime.parse(insurance.getEndDate(), formatter);
+
+					if (now.isAfter(endDateTime)) {
+						expiredHomes.add(h);
+						model.addAttribute("showHomeText", true);
+						insurance.setResult("Expired");
+						homeInsuranceService.save(insurance);
+					}
+				}
+			}
+
+			model.addAttribute("expiredHomes", expiredHomes);
+			model.addAttribute("home", home);
 			
 			if(admin == null){
 				model.addAttribute("username", customer.getUsername());

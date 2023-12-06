@@ -16,9 +16,10 @@
 	<link rel="stylesheet" th:href="@{/css/register.css}" href="src/main/resources/static/css/register.css">
 	<!-- Angularjs -->
 	<script src="js/angular.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
-<body>
+<body ng-app="myApp" ng-controller="rootController">
 	<!--Navbar-->
 	<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
 		<div class="container-fluid px-5">
@@ -112,13 +113,12 @@
 		<div class="user-page-main">
 			<div class="user-title">
 				<div class="username-settings">
-<!--					<a href="user-page.html"><span class="badge text-bg-secondary"><i-->
-<!--								class='bx bx-arrow-back'></i></span></a>-->
+					<a href="user-page.html"><span class="badge text-bg-secondary"><i
+								class='bx bx-arrow-back'></i></span></a>
 					<span class="username-text">Admin</span>
 				</div>
-				<div class="select-type">
-					<a href="#"><span class="badge text-bg-info">Change KDV Rate</span></a>
-					<a href="#"><span class="badge text-bg-danger"><i class='bx bx-log-out'></i> Sign Out</span></a>
+				<div class="select-type" ng-click="openModal()">
+					<span class="badge text-bg-info">Change KDV Rate</span>
 				</div>
 			</div>
 			<div class="user-page">
