@@ -161,6 +161,11 @@ public class HealthController {
 		} else if (admin.equals("admin")) {
 			model.addAttribute("username", "admin");
 		}
+		
+//		if(insurance.getResult() == null) {
+//			insurance.setResult("Canceled");
+//			insurance.save(insurance);
+//		}
 
 		model.addAttribute("health", health);
 		model.addAttribute("insurance", insurance);
