@@ -45,7 +45,8 @@ myApp.controller("homeController", ["$scope", "$http", function($scope) {
 
 myApp.controller("UserPageController", ["$scope", function($scope) {
 	$scope.isAdmin = isAdmin;
-
+}]);
+myApp.controller("UserPageModalController", ["$scope", function($scope) {
 	// Tüm modalların listesi
 	var modals = ["#carModal", "#deadlineModal", "#expiredModal", "#homeModal"];
 	var currentIndex = 0;
@@ -67,9 +68,6 @@ myApp.controller("UserPageController", ["$scope", function($scope) {
         }
     }
 };
-
-
-
 	// İlk modalı aç
 	$scope.showNextModal();
 }]);

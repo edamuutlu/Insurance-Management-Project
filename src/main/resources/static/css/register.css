@@ -78,7 +78,7 @@ body .page-wrapper .wrapper {
   max-width: 680px;
   margin: 0 auto;
   padding-bottom: 5%;
-  padding-top: 1%;
+  padding-top: 5%;
 }
 @media (max-width: 767px) {
   body .page-wrapper .wrapper {
@@ -401,7 +401,7 @@ body .user-page-wrapper {
   background: webkit-gradient(linear, left bottom, right top, from(#fc2c77), to(#6c4079));
   background: linear-gradient(to top right, rgba(252, 161, 44, 0.8509803922) 0%, rgba(120, 121, 64, 0.0196078431) 100%);
   min-height: 100vh;
-  padding-top: 56px;
+  /*padding-top: 56px;*/
 }
 body .user-page-wrapper .user-page-main {
   display: flex;
@@ -411,7 +411,7 @@ body .user-page-wrapper .user-page-main {
   border-radius: 15px;
   width: 95%;
   height: 100%;
-  margin: 10px auto;
+  margin: 30px auto;
   padding: 2% 3%;
 }
 @media (max-width: 1000px) {
@@ -454,6 +454,17 @@ body .user-page-wrapper .user-page-main .user-title .username-settings a span i 
 }
 body .user-page-wrapper .user-page-main .user-title .username-settings a span:hover {
   background-color: #8d98a3 !important;
+}
+body .user-page-wrapper .user-page-main .user-title .username-settings a .text-bg-danger {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+body .user-page-wrapper .user-page-main .user-title .username-settings a .text-bg-danger i {
+  font-size: 20px;
+}
+body .user-page-wrapper .user-page-main .user-title .username-settings a .text-bg-danger:hover {
+  background-color: rgba(255, 0, 0, 0.575) !important;
 }
 body .user-page-wrapper .user-page-main .user-title .select-type span {
   font-size: 14px;

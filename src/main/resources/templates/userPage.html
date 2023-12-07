@@ -63,7 +63,7 @@
 	<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
 		<div class="container-fluid px-5">
 			<a class="navbar-brand" href="#">
-                    <img th:src="@{/img/Happy-logoo.png}" src="/src/main/resources/static/img/Happy-logoo.png" alt="happyLogo" class="rounded img-fluid" style="width: 200px;">
+                    <img th:src="@{/img/Happy-Logo.png}" src="/src/main/resources/static/img/Happy-Logo.png" alt="happyLogo" class="rounded img-fluid" style="width: 200px;">
           	</a>
 			<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
 				data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -111,7 +111,7 @@
 			</script>
 
 			<!-- Car Modal -->
-			<div class="modal fade" id="carModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+			<div class="modal fade" ng-controller="UserPageModalController" id="carModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
 				role="dialog" aria-labelledby="myModalTitle" aria-hidden="true" th:if="${showCarText}">
 				<div class="modal-dialog" role="document">
 					<div class="modal-content">
@@ -212,7 +212,15 @@
 
 
 			<div class="user-title">
-				<span class="username-text" th:text="${username}"></span>
+				<div class="username-settings">
+					<a ng-if="isAdmin == 'admin'" th:href="@{'/customerList'}">
+						<span class="badge text-bg-danger"><i class='bx bx-log-out'></i></span>
+					</a>
+					<a ng-if="isAdmin != 'admin'" th:href="@{'/index'}">
+						<span class="badge text-bg-danger"><i class='bx bx-log-out'></i></span>
+					</a>
+					<span class="username-text" th:text="${username}"></span>
+				</div>
 				<div class="select-type"><a th:href="@{/selectType(customerId=${c.customerId})}"><span
 							class="badge text-bg-primary">Get Insurance Quote</span></a></div>
 			</div>

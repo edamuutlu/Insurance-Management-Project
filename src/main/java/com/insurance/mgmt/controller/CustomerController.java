@@ -193,7 +193,7 @@ public class CustomerController {
 				customer.setStatus(1);
 				customerService.save(customer);
 				model.addAttribute("showTcAlert", false);
-				return "redirect:/customerList";
+				return "redirect:/userPage/" + myCustomer.getUsername();
 			} else if (c.getTc().equals(customer.getTc())) {
 				model.addAttribute("showTcAlert", true);
 				model.addAttribute("customer", customer);
@@ -202,7 +202,7 @@ public class CustomerController {
 		}
 		customer.setStatus(1);
 		customerService.save(customer);
-		return "redirect:/customerList";
+		return "redirect:/userPage/" + myCustomer.getUsername();
 	}
 
 	@RequestMapping("/editCustomer/{customerId}")
