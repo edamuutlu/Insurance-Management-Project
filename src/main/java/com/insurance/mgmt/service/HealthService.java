@@ -33,7 +33,7 @@ public class HealthService {
         return healthRepository.findByStatusAndCustomerId(status, id);
     }
 
-	public List<Health> findByForWhoAndStatus(String forWho, int status) {
-		return healthRepository.findByForWhoAndStatus(forWho, status);
+	public List<Health> findByCustomerIdAndForWhoAndStatus(int customerId, String forWho, int status) {
+		return healthRepository.findByCustomerIdAndForWhoAndStatus(customerId, forWho, status);
 	}
 }

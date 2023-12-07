@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.insurance.mgmt.entity.Company;
 import com.insurance.mgmt.entity.Customer;
 import com.insurance.mgmt.entity.Home;
 import com.insurance.mgmt.entity.HomeInsurance;
@@ -33,6 +34,7 @@ import com.insurance.mgmt.entity.address.District;
 import com.insurance.mgmt.entity.address.Neighbourhood;
 import com.insurance.mgmt.entity.address.Province;
 import com.insurance.mgmt.service.CarInsuranceService;
+import com.insurance.mgmt.service.CompanyService;
 import com.insurance.mgmt.service.CustomerService;
 import com.insurance.mgmt.service.HealthInsuranceService;
 import com.insurance.mgmt.service.HomeInsuranceService;
@@ -74,6 +76,9 @@ public class HomeController {
 
 	@Autowired
 	NeighbourhoodService neighbourhoodService;
+	
+	@Autowired
+	CompanyService companyService;
 
 	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 
@@ -176,6 +181,9 @@ public class HomeController {
 			model.addAttribute("username", "admin");
 		}
 
+		List<Company> companyList = companyService.getAllCompany();
+		model.addAttribute("companyList", companyList);
+		
 		model.addAttribute(customer);
 		model.addAttribute("insurance", insurance);
 		model.addAttribute(home);
@@ -293,6 +301,7 @@ public class HomeController {
 		newInsurance.setOffer(offer);
 		newInsurance.setStatus(oldInsurance.getStatus());
 		newInsurance.setPeriod(oldInsurance.getPeriod()); 
+		newInsurance.setCompanyId(oldInsurance.getCompanyId());
 		homeInsuranceService.save(newInsurance);
 
 		model.addAttribute(customer);
@@ -351,6 +360,12 @@ public class HomeController {
 		homeInsuranceService.save(insurance);
 
 		Kdv kdv = kdvService.getProductTypeById(2);
+		
+		Company company = companyService.findByCompanyId(insurance.getCompanyId());
+		model.addAttribute("company", company);
+		
+		Province province = provinceService.findById(Integer.parseInt(customer.getProvince()));
+		model.addAttribute("province", province.getSehiradi());
 
 		model.addAttribute(kdv);
 		model.addAttribute("insurance", insurance);
@@ -372,12 +387,13 @@ public class HomeController {
 	}
 
 	@PostMapping("/homeResult")
-	public String homeResult(@RequestParam("insuranceId") int insuranceId, @RequestParam("result") String result) {
+	public String homeResult(@RequestParam("insuranceId") int insuranceId, @RequestParam("result") String result, @RequestParam("companyId") int companyId) {
 		
-		HomeInsurance insurance = homeInsuranceService.getInsuranceById(insuranceId);
+		HomeInsurance insurance = homeInsuranceService.getInsuranceById(insuranceId);	
 
 		if (insurance != null) {
 			// result değerine göre result sütununu güncelle
+			insurance.setCompanyId(companyId);
 			insurance.setResult(result);
 
 			// Poliçeyi iptal ettiyse iptal etme tarihi yazdırılmaktadır

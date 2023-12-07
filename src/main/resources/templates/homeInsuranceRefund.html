@@ -79,10 +79,12 @@
                              <div class="refund-header-main">
                                  <div class="col-xs-6 col-sm-6 col-md-6 company-details">
                                      <div class="refund-right">
-                                         <h5>Happy Insurance</h5>
-                                         <p><i class='bx bxs-phone'></i> 05469425471</p>
-                                         <p><i class='bx bxs-envelope'></i> nurieda@gmail.com</p>
-                                         <p><i class='bx bxs-map'></i> TR</p>
+                                         <h5 th:text="${company.name}"></h5>
+                                         <p><i class='bx bxs-phone'></i><span
+												th:text="${company.phoneNumber}">05469425471</span></p>
+                                         <p><i class='bx bxs-envelope'></i><span
+												th:text="${company.email}">nurieda@gmail.com</span></p>
+                                         <p><i class='bx bxs-map'></i><span th:text="${company.country + ', ' + company.city}"></span></p>
                                      </div>
                                  </div>
                                  <div class="col-xs-6 col-sm-6 col-md-6 customer-details">
@@ -90,7 +92,7 @@
                                         <h5 th:text="${customer.firstname + ' ' + customer.lastname}">Customer Name</h5>
                                         <p><b>Mobile :</b> <span th:text="${customer.phoneNumber}">+1 12345-4569</span></p>
                                         <p><b>Email :</b> <span th:text="${customer.email}">customer@gmail.com</span></p>
-                                        <p><b>Address :</b> New York, USA</p>
+                                        <p><b>Address :</b> <span th:text="${province}"></span>, Turkiye</p>
                                     </div>
                                 </div>
                              </div>

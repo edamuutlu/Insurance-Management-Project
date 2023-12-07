@@ -29,15 +29,19 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.insurance.mgmt.entity.Car;
 import com.insurance.mgmt.entity.CarInsurance;
+import com.insurance.mgmt.entity.Company;
 import com.insurance.mgmt.entity.Customer;
 import com.insurance.mgmt.entity.Kdv;
+import com.insurance.mgmt.entity.address.Province;
 import com.insurance.mgmt.jdbcTemplate.DatabaseService;
 import com.insurance.mgmt.service.CarInsuranceService;
 import com.insurance.mgmt.service.CarService;
+import com.insurance.mgmt.service.CompanyService;
 import com.insurance.mgmt.service.CustomerService;
 import com.insurance.mgmt.service.HealthInsuranceService;
 import com.insurance.mgmt.service.HomeInsuranceService;
 import com.insurance.mgmt.service.KdvService;
+import com.insurance.mgmt.service.address.ProvinceService;
 import com.insurance.mgmt.util.CalculateMethods;
 
 import jakarta.validation.Valid;
@@ -64,6 +68,12 @@ public class CarController {
 	
 	@Autowired
 	DatabaseService databaseService;
+	
+	@Autowired
+	CompanyService companyService;
+	
+	@Autowired
+	ProvinceService provinceService;
 		
 	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 	
@@ -146,6 +156,9 @@ public class CarController {
 			model.addAttribute("username", "admin");
 		}
 
+		List<Company> companyList = companyService.getAllCompany();
+		model.addAttribute("companyList", companyList);
+		
 		model.addAttribute(customer);
 		model.addAttribute(insurance);
 		model.addAttribute(car);
@@ -314,6 +327,12 @@ public class CarController {
 		carInsuranceService.save(insurance);
 
 		Kdv kdv = kdvService.getProductTypeById(2);
+		
+		Company company = companyService.findByCompanyId(insurance.getCompanyId());
+		model.addAttribute("company", company);
+		
+		Province province = provinceService.findById(Integer.parseInt(customer.getProvince()));
+		model.addAttribute("province", province.getSehiradi());
 
 		model.addAttribute(kdv);
 		model.addAttribute("insurance", insurance);
@@ -391,11 +410,12 @@ public class CarController {
 	}
 	
 	@PostMapping("/result")
-    public String result(@RequestParam("insuranceId") int insuranceId, @RequestParam("result") String result) {
+    public String result(@RequestParam("insuranceId") int insuranceId, @RequestParam("result") String result, @RequestParam("companyId") int companyId) {
 		CarInsurance insurance = carInsuranceService.getInsuranceById(insuranceId);
 
 		if (insurance != null) {
 			// result değerine göre result sütununu güncelle
+			insurance.setCompanyId(companyId);
 			insurance.setResult(result);
 
 			// Poliçeyi iptal ettiyse iptal etme tarihi yazdırılmaktadır

@@ -25,18 +25,22 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.insurance.mgmt.entity.Company;
 import com.insurance.mgmt.entity.Customer;
 import com.insurance.mgmt.entity.Health;
 import com.insurance.mgmt.entity.HealthInsurance;
 import com.insurance.mgmt.entity.Jobs;
 import com.insurance.mgmt.entity.Kdv;
+import com.insurance.mgmt.entity.address.Province;
 import com.insurance.mgmt.service.CarInsuranceService;
+import com.insurance.mgmt.service.CompanyService;
 import com.insurance.mgmt.service.CustomerService;
 import com.insurance.mgmt.service.HealthInsuranceService;
 import com.insurance.mgmt.service.HealthService;
 import com.insurance.mgmt.service.HomeInsuranceService;
 import com.insurance.mgmt.service.JobsService;
 import com.insurance.mgmt.service.KdvService;
+import com.insurance.mgmt.service.address.ProvinceService;
 import com.insurance.mgmt.util.CalculateMethods;
 
 import jakarta.validation.Valid;
@@ -63,7 +67,13 @@ public class HealthController {
 	KdvService kdvService;
 
 	@Autowired
-	private JobsService jobsService;
+	JobsService jobsService;
+	
+	@Autowired
+	CompanyService companyService;
+	
+	@Autowired
+	ProvinceService provinceService;
 
 	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 
@@ -118,7 +128,7 @@ public class HealthController {
 		insurance.setStatus(1);
 
 		// Aynı kişiye ait sağlık bilgisi kontrolü
-		List<Health> filteredList = healthService.findByForWhoAndStatus(health.getForWho(), 1);
+		List<Health> filteredList = healthService.findByCustomerIdAndForWhoAndStatus(health.getCustomerId(), health.getForWho(), 1);
 
 		if (!filteredList.isEmpty()) {
 			model.addAttribute("showHealthAlert", true);
@@ -166,6 +176,9 @@ public class HealthController {
 //			insurance.setResult("Canceled");
 //			insurance.save(insurance);
 //		}
+		
+		List<Company> companyList = companyService.getAllCompany();
+		model.addAttribute("companyList", companyList);
 
 		model.addAttribute("health", health);
 		model.addAttribute("insurance", insurance);
@@ -398,21 +411,29 @@ public class HealthController {
 		healthInsuranceService.save(insurance);
 
 		Kdv kdv = kdvService.getProductTypeById(3);
+		
+		Company company = companyService.findByCompanyId(insurance.getCompanyId());
+		model.addAttribute("company", company);
+		
+		Province province = provinceService.findById(Integer.parseInt(customer.getProvince()));
+		model.addAttribute("province", province.getSehiradi());
 
 		model.addAttribute(kdv);
 		model.addAttribute("insurance", insurance);
 		model.addAttribute(health);
 		model.addAttribute("customer", customer);
+		model.addAttribute("now", now.format(formatter));
 		return "healthInsuranceRefund";
 	}
 
 	@PostMapping("/healthResult")
-	public String healthResult(@RequestParam("insuranceId") int insuranceId, @RequestParam("result") String result) {
+	public String healthResult(@RequestParam("insuranceId") int insuranceId, @RequestParam("result") String result, @RequestParam("companyId") int companyId) {
 
 		HealthInsurance insurance = healthInsuranceService.getInsuranceById(insuranceId);
 
 		if (insurance != null) {
 			// result değerine göre result sütununu güncelle
+			insurance.setCompanyId(companyId);
 			insurance.setResult(result);
 
 			// Poliçeyi iptal ettiyse iptal etme tarihi yazdırılmaktadır

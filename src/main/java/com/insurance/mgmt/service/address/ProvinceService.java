@@ -1,6 +1,7 @@
 package com.insurance.mgmt.service.address;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,4 +18,9 @@ public class ProvinceService {
 	public List <Province> listAll(){
 		return provinceRepository.findAll();
 	}
+	
+	public Province findById(int provinceId) {
+        Optional<Province> optionalProvince = provinceRepository.findById(provinceId);
+        return optionalProvince.orElse(null); // Eğer nesne varsa nesneyi, yoksa null dönecektir.
+    }
 }

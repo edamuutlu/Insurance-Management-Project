@@ -50,6 +50,9 @@ public class HomeInsurance {
 	
 	@Column(name= "kdv")
 	private int kdv;
+	
+	@Column(name= "company_id")
+	private int companyId;
 
 	public HomeInsurance() {
 		super();
@@ -57,7 +60,8 @@ public class HomeInsurance {
 	}	
 
 	public HomeInsurance(int insuranceId, String insuranceType, int customerId, int homeId, double offer, String result,
-			String startDate, String endDate, int period, int daysDiff, double refund, int status, int kdv) {
+			String startDate, String endDate, int period, int daysDiff, double refund, int status, int kdv,
+			int companyId) {
 		super();
 		this.insuranceId = insuranceId;
 		this.insuranceType = insuranceType;
@@ -72,6 +76,7 @@ public class HomeInsurance {
 		this.refund = refund;
 		this.status = status;
 		this.kdv = kdv;
+		this.companyId = companyId;
 	}
 
 	public int getInsuranceId() {
@@ -178,12 +183,20 @@ public class HomeInsurance {
 		this.kdv = kdv;
 	}
 
+	public int getCompanyId() {
+		return companyId;
+	}
+
+	public void setCompanyId(int companyId) {
+		this.companyId = companyId;
+	}
+
 	@Override
 	public String toString() {
-		return "Insurance [insuranceId=" + insuranceId + ", insuranceType=" + insuranceType + ", customerId="
-				+ customerId +  ", homeId=" + homeId + ", offer=" + offer
-				+ ", result=" + result + ", startDate=" + startDate + ", endDate=" + endDate + ", period=" + period
-				+ ", daysDiff=" + daysDiff + ", refund=" + refund + ", status=" + status + ", kdv=" + kdv + "]";
+		return "HomeInsurance [insuranceId=" + insuranceId + ", insuranceType=" + insuranceType + ", customerId="
+				+ customerId + ", homeId=" + homeId + ", offer=" + offer + ", result=" + result + ", startDate="
+				+ startDate + ", endDate=" + endDate + ", period=" + period + ", daysDiff=" + daysDiff + ", refund="
+				+ refund + ", status=" + status + ", kdv=" + kdv + ", companyId=" + companyId + "]";
 	}
 	
 	

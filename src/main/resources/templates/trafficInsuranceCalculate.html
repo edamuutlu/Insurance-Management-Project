@@ -83,15 +83,16 @@
                                         <div class="planImageCircleLeft"><img th:src="@{/img/Aviva_Logo.png}" src="/src/main/resources/static/img/Aviva_Logo.png" width="150px" alt=""></div>
                                         <div class="planImageCircleRight"><img th:src="@{/img/plan-circle-bottom.png}" src="/src/main/resources/static/img/plan-circle-bottom.png" alt=""></div>
                                         <small>Aviva</small>
-                                        <h3 th:text="${insurance.offer + '₺'}"></h3>
-                                        <em>Car Insurance</em>
+                                        <h3 th:text="${insurance.offer + companyList[0].serviceFee + '₺'}"></h3>
+                                        <em>Traffic Insurance</em>
                                         <p class="porject-plan"><i class='bx bx-check'></i>Most Comprehensive Offer</p>
                                         <p class="porject-plan"><i class='bx bx-check'></i>All Authorized Services and Special Services</p>
                                         <p class="porject-plan"><i class='bx bx-check'></i>Original Glass (Exempt)</p>
                                         <p class="porject-plan"><i class='bx bx-check'></i>Mini-Repair: Yes</p>
                                         <p class="porject-plan"><i class='bx bx-check'></i>Roadside Assistance: Yes</p>
-                                        <form th:object="${insurance}"  method="post" name="myForm" action="/result">
+                                        <form th:object="${insurance}" method="post" name="myForm" action="/result">
                                             <input type="hidden" name="insuranceId" th:value="${insurance.insuranceId}">
+                                            <input type="hidden" name="companyId" value=1>
                                             <button type="submit" name="result" value="Accepted" class="btn btn-primary price-plan" >Accept</button>
                                         </form>
                                         <p class="planCharges">No hidden Charges</p>
@@ -106,15 +107,16 @@
                                         <div class="planImageCircleLeft"><img th:src="@{/img/Liberty-Mutual-Logo.png}" src="/src/main/resources/static/img/Liberty-Mutual-Logo.png" width="150px" alt=""></div>
                                         <div class="planImageCircleRight"><img th:src="@{/img/plan-circle-bottom.png}" src="/src/main/resources/static/img/plan-circle-bottom.png" alt=""></div>
                                         <small>Liberty Mutual</small>
-                                        <h3 th:text="${insurance.offer + '₺'}"></h3>
-                                        <em> Car Insurance </em>
+                                        <h3 th:text="${insurance.offer + companyList[1].serviceFee + '₺'}"></h3>
+                                        <em> Traffic Insurance </em>
                                         <p class="porject-plan"><i class='bx bx-check'></i>Most Comprehensive Offer</p>
                                         <p class="porject-plan"><i class='bx bx-check'></i>All Authorized Services and Special Services</p>
                                         <p class="porject-plan"><i class='bx bx-check'></i>Original Glass (Exempt)</p>
                                         <p class="porject-plan"><i class='bx bx-check'></i>Mini-Repair: Yes</p>
                                         <p class="porject-plan"><i class='bx bx-check'></i>Roadside Assistance: Yes</p>
-                                        <form th:object="${insurance}"  method="post" name="myForm" action="/result">
+                                        <form th:object="${insurance}" method="post" name="myForm" action="/result">
                                             <input type="hidden" name="insuranceId" th:value="${insurance.insuranceId}">
+                                            <input type="hidden" name="companyId" value=2>
                                             <button type="submit" name="result" value="Accepted" class="btn btn-primary price-plan">Accept</button>
                                         </form>
                                         <p class="planCharges">No hidden Charges</p>
@@ -130,15 +132,16 @@
                                         <div class="planImageCircleRight"><img th:src="@{/img/plan-circle-bottom.png}" src="/src/main/resources/static/img/plan-circle-bottom.png" alt=""></div>
                                         <div class="recommended-price">Recommended</div>
                                         <small>AXA</small>
-                                        <h3 th:text="${insurance.offer + '₺'}"></h3>
-                                        <em> Car Insurance </em>
+                                        <h3 th:text="${insurance.offer + companyList[2].serviceFee + '₺'}"></h3>
+                                        <em> Traffic Insurance </em>
                                         <p class="porject-plan"><i class='bx bx-check'></i>Most Comprehensive Offer</p>
                                         <p class="porject-plan"><i class='bx bx-check'></i>All Authorized Services and Special Services</p>
                                         <p class="porject-plan"><i class='bx bx-check'></i>Original Glass (Exempt)</p>
                                         <p class="porject-plan"><i class='bx bx-check'></i>Mini-Repair: Yes</p>
                                         <p class="porject-plan"><i class='bx bx-check'></i>Roadside Assistance: Yes</p>
-                                        <form th:object="${insurance}"  method="post" name="myForm" action="/result">
+                                        <form th:object="${insurance}" method="post" name="myForm" action="/result">
                                             <input type="hidden" name="insuranceId" th:value="${insurance.insuranceId}">
+                                            <input type="hidden" name="companyId" value=3>
                                             <button type="submit" name="result" value="Accepted" class="btn btn-primary price-plan">Accept</button>
                                         </form>
                                         <p class="planCharges">No hidden Charges</p>

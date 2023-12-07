@@ -15,7 +15,7 @@ public interface IHealthRepository  extends JpaRepository<Health,Integer>{
 	@Query("SELECT h FROM Health h WHERE h.status = :status AND h.customerId = :id")
     List<Health> findByStatusAndCustomerId(@Param("status") int status, @Param("id") int id);
 
-    @Query("SELECT h FROM Health h WHERE h.forWho = :forWho AND h.status = :status")
-    List<Health> findByForWhoAndStatus(@Param("forWho") String forWho, @Param("status") int status);
+    @Query("SELECT h FROM Health h WHERE h.customerId = :customerId AND h.forWho = :forWho AND h.status = :status")
+    List<Health> findByCustomerIdAndForWhoAndStatus(@Param("customerId") int customerId, @Param("forWho") String forWho, @Param("status") int status);
 
 }
