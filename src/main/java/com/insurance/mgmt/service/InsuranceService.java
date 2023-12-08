@@ -1,3 +1,27 @@
+package com.insurance.mgmt.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import jakarta.persistence.EntityManager;
+
+@Service
+public class InsuranceService {
+	@Autowired
+    private EntityManager entityManager;
+
+    public List<Object[]> getAllInsurances() {
+        String queryString = "SELECT * FROM car_insurance " +
+                "UNION ALL " +
+                "SELECT * FROM home_insurance " +
+                "UNION ALL " +
+                "SELECT * FROM health_insurance";
+
+        return entityManager.createNativeQuery(queryString).getResultList();
+    }
+}
 /* package com.insurance.mgmt.service;
 
 import java.util.Collections;

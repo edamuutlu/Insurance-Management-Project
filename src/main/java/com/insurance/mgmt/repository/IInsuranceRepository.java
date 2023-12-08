@@ -1,3 +1,23 @@
+package com.insurance.mgmt.repository;
+
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.Repository;
+
+import com.insurance.mgmt.entity.CarInsurance;
+
+import java.util.List;
+
+public interface IInsuranceRepository extends Repository<CarInsurance, Long> {
+
+	@Query(value = "SELECT * FROM car_insurance "
+            + "UNION ALL "
+            + "SELECT * FROM home_insurance "
+            + "UNION ALL "
+            + "SELECT * FROM health_insurance", nativeQuery = true)
+    List<Object[]> getUnionAllResult();
+    
+    
+}
 /*package com.insurance.mgmt.repository;
 
 import java.util.List;
@@ -34,4 +54,5 @@ public interface IInsuranceRepository extends JpaRepository<Insurance,Integer>{
 	List<Insurance> findByStatusAndResultAndHealthId(int status, String result, int healthId);
 	
 	//List<Insurance> findByStatusAndCustomerIdAndResult(int status, int customerId, String result);
+	 
 } */

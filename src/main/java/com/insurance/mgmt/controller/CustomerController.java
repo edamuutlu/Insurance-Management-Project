@@ -1,5 +1,6 @@
 package com.insurance.mgmt.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.insurance.mgmt.entity.Car;
 import com.insurance.mgmt.entity.CarInsurance;
+import com.insurance.mgmt.entity.Company;
 import com.insurance.mgmt.entity.Customer;
 import com.insurance.mgmt.entity.Health;
 import com.insurance.mgmt.entity.HealthInsurance;
@@ -28,13 +30,16 @@ import com.insurance.mgmt.entity.HomeInsurance;
 import com.insurance.mgmt.entity.Kdv;
 import com.insurance.mgmt.entity.address.District;
 import com.insurance.mgmt.entity.address.Province;
+import com.insurance.mgmt.repository.IInsuranceRepository;
 import com.insurance.mgmt.service.CarInsuranceService;
 import com.insurance.mgmt.service.CarService;
+import com.insurance.mgmt.service.CompanyService;
 import com.insurance.mgmt.service.CustomerService;
 import com.insurance.mgmt.service.HealthInsuranceService;
 import com.insurance.mgmt.service.HealthService;
 import com.insurance.mgmt.service.HomeInsuranceService;
 import com.insurance.mgmt.service.HomeService;
+import com.insurance.mgmt.service.InsuranceService;
 import com.insurance.mgmt.service.KdvService;
 import com.insurance.mgmt.service.address.DistrictService;
 import com.insurance.mgmt.service.address.ProvinceService;
@@ -74,6 +79,15 @@ public class CustomerController {
 	@Autowired
 	KdvService kdvService;
 
+	@Autowired
+	CompanyService companyService;
+
+	@Autowired
+	IInsuranceRepository insuranceRepo;
+
+	@Autowired
+	InsuranceService insuranceService;
+
 	private static final Logger log = LoggerFactory.getLogger(CustomerController.class);
 
 	@InitBinder
@@ -110,7 +124,30 @@ public class CustomerController {
 		model.addAttribute("carKdv", carKdv);
 		model.addAttribute("homeKdv", homeKdv);
 		model.addAttribute("healthKdv", healthKdv);
-		
+
+		List<Company> companyList = companyService.getAllCompany();
+		model.addAttribute("company", companyList);
+
+//		insuranceRepo.getUnionAllResult();
+//		System.out.println(insuranceRepo.getUnionAllResult());
+
+		List<Object[]> resultList = insuranceRepo.getUnionAllResult();
+		List<List<Object>> allInsurances = new ArrayList<>();
+
+		for (Object[] row : resultList) {
+		    List<Object> rowData = new ArrayList<>();
+		    for (Object column : row) {
+		        rowData.add(column);
+		    }
+		    allInsurances.add(rowData);
+		}
+
+		model.addAttribute("allInsurances", allInsurances);
+
+
+		// List<Object[]> insurances = insuranceService.getAllInsurances();
+		// System.out.println(insurances);
+
 		model.addAttribute("customer", customerList);
 
 		return "customerList";
@@ -200,8 +237,10 @@ public class CustomerController {
 		return "customerEdit";
 	}
 
-	@RequestMapping(path = { "/deleteCustomer/{customerId}", "/deleteCustomer/{customerId}/{admin}" }, method = RequestMethod.GET)
-	public String deleteCustomer(@PathVariable("customerId") int customerId, @PathVariable(required = false) String admin, Model model) {
+	@RequestMapping(path = { "/deleteCustomer/{customerId}",
+			"/deleteCustomer/{customerId}/{admin}" }, method = RequestMethod.GET)
+	public String deleteCustomer(@PathVariable("customerId") int customerId,
+			@PathVariable(required = false) String admin, Model model) {
 
 		// Müşterinin varsa araçlarının listelenmemesi için
 		List<Car> cars = carService.findByStatusAndCustomerId(1, customerId);
