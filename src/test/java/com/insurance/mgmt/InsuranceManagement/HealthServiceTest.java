@@ -82,16 +82,6 @@ class HealthServiceTest {
     }
 
 	@Test
-    public void testFindByForWhoAndStatus() {
-        when(healthRepository.findByForWhoAndStatus("Person 1", 1)).thenReturn(dummyHealths.subList(0, 1));
-
-        List<Health> result = healthService.findByForWhoAndStatus("Person 1", 1);
-
-        assertEquals(1, result.size());
-        assertEquals("Job 1", result.get(0).getJob());
-    }
-
-	@Test
 	public void testSaveHealth() {
 		Health newHealth = new Health(3, 2, "Job 3", "Person 3", (byte) 0, "160cm", "55kg", (byte) 0, (byte) 0, 1, 6, "01/01/2023 12:00:00");
 

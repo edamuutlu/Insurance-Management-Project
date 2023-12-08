@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -24,7 +23,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.insurance.mgmt.entity.Car;
@@ -171,33 +169,6 @@ public class CarController {
 		return "trafficInsuranceForm";
 	}
 	
-	@GetMapping("/carList/{customerId}")
-	public ModelAndView carList(@PathVariable("customerId") int customerId, Model model) {	
-						
-		List<Car> cars = carService.findByStatusAndCustomerId(1, customerId);
-		List<CarInsurance> insurances = carInsuranceService.findByStatusAndCustomerIdAndResult(1, customerId, "Accepted");
-		ArrayList<Car> expiredCars = new ArrayList<>(); 
-		
-		// Poliçenin süresinin bitip bitmediğini kontrol etme 
-		LocalDateTime now = LocalDateTime.now();
-		for(Car car : cars) {
-			for (CarInsurance insurance : insurances) {
-		    	LocalDateTime endDateTime = LocalDateTime.parse(insurance.getEndDate(), formatter);    		
-		    		
-		    	if (now.isAfter(endDateTime)) {		    		
-		    		expiredCars.add(car);
-		    		model.addAttribute("showText", true);
-		    		insurance.setResult("Expired");
-		    		carInsuranceService.save(insurance);
-		    	}
-			}
-		}
-	    Customer customer = customerService.getCustomerById(customerId);
-	    model.addAttribute("customer",customer);
-	    model.addAttribute("expiredCars", expiredCars);
-		return new ModelAndView("carList","car",cars);
-	}
-	
 	@RequestMapping(path = {"/seeCarInsuranceDetails/{id}", "/seeCarInsuranceDetails/{id}/{admin}"}, method = RequestMethod.GET)
 	public String seeCarInsuranceDetails(@PathVariable("id") int carId, @PathVariable(required = false) String admin, Model model,
 			RedirectAttributes redirectAttributes) {
@@ -230,29 +201,6 @@ public class CarController {
 		model.addAttribute("insurance", insurances);
 		return "seeCarInsuranceDetails";
 	}
-	
-//	@PostMapping("/renewButton/{insuranceId}")
-//	public String renewButton(@PathVariable("insuranceId") int insuranceId, Model model, RedirectAttributes redirectAttributes) {	
-//		CarInsurance oldInsurance = carInsuranceService.getInsuranceById(insuranceId);
-//		Car car = carService.getCarId(oldInsurance.getCarId());
-//		Customer customer = customerService.getCustomerById(car.getCustomerId());
-//
-//		// Devam eden bir sigorta var mı kontrolü
-//		List<CarInsurance> insurances = carInsuranceService.findByStatusAndResultAndCarId(1, "Accepted", oldInsurance.getCarId());
-//		System.out.print(insurances);
-//		if (!insurances.isEmpty()) {
-//			System.out.println("girdi");
-//			redirectAttributes.addFlashAttribute("showText", true);
-//			model.addAttribute("insurance", insurances);
-//			return "redirect:/seeCarInsuranceDetails/" + oldInsurance.getCarId();
-//		}else {
-//			model.addAttribute("showAlertMessage",true);
-//		}
-//		model.addAttribute(customer);
-//		model.addAttribute("insurance", oldInsurance);
-//		model.addAttribute(car);
-//		return "seeCarInsuranceDetails";
-//	}
 	
 	@PostMapping("/renewCarInsurance/{insuranceId}")
 	public String renewCarInsurance(@PathVariable("insuranceId") int insuranceId,
@@ -375,41 +323,6 @@ public class CarController {
 
 		Customer customer = customerService.getCustomerById(car.getCustomerId());
 		return "redirect:/userPage/" + customer.getUsername();
-	}
-	
-	@GetMapping("/trafficInsuranceRefund/{insuranceId}")
-	public String trafficInsuranceRefund(@PathVariable("insuranceId") int insuranceId, Model model, RedirectAttributes redirectAttributes) {		
-		
-		CarInsurance insurance = carInsuranceService.getInsuranceById(insuranceId);
-		Car car = carService.getCarId(insurance.getCarId());
-
-		if (insurance.getResult().equals("Canceled") || insurance.getResult().equals("Expired")) {
-			redirectAttributes.addFlashAttribute("showAlert", true);
-			return "redirect:/seeCarInsuranceDetails/" + insurance.getCarId();
-		}
-		
-		LocalDateTime now = LocalDateTime.now();
-		String end_date = now.format(formatter);
-		LocalDateTime startingDateTime = LocalDateTime.parse(insurance.getStartDate(), formatter);
-		LocalDateTime endDateTime = LocalDateTime.parse(end_date, formatter);
-
-		Duration duration = Duration.between(startingDateTime, endDateTime);
-		int daysDiff = (int) duration.toDays();	
-
-		insurance.setDaysDiff(daysDiff);
-		int remainingDay = insurance.getPeriod() - daysDiff;				
-		double refund = (insurance.getOffer() / insurance.getPeriod()) * remainingDay;
-		insurance.setRefund(refund);
-		model.addAttribute(refund);
-		carInsuranceService.save(insurance);
-		System.out.println(carInsuranceService.getInsuranceById(insuranceId));
-		
-		Kdv kdv = kdvService.getProductTypeById(1);
-
-		model.addAttribute(kdv);
-		model.addAttribute(insurance);
-		model.addAttribute(car);
-		return "trafficInsuranceRefund";
 	}
 	
 	@PostMapping("/result")

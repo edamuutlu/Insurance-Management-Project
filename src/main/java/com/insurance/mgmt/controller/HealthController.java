@@ -3,7 +3,6 @@ package com.insurance.mgmt.controller;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -22,7 +21,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.insurance.mgmt.entity.Company;
@@ -172,11 +170,6 @@ public class HealthController {
 			model.addAttribute("username", "admin");
 		}
 		
-//		if(insurance.getResult() == null) {
-//			insurance.setResult("Canceled");
-//			insurance.save(insurance);
-//		}
-		
 		List<Company> companyList = companyService.getAllCompany();
 		model.addAttribute("companyList", companyList);
 
@@ -184,43 +177,6 @@ public class HealthController {
 		model.addAttribute("insurance", insurance);
 		model.addAttribute("customer", customer);
 		return "healthInsuranceCalculate";
-	}
-
-	@GetMapping("/healthInfoList/{customerId}")
-	public ModelAndView healthInfoList(@PathVariable("customerId") int customerId, Model model) {
-
-		List<Health> healthInfos = healthService.findByStatusAndCustomerId(1, customerId);
-		List<HealthInsurance> insurances = healthInsuranceService.findByStatusAndCustomerIdAndResult(1, customerId,
-				"Accepted");
-		ArrayList<Health> expiredHealthInsurance = new ArrayList<>();
-
-		// Poliçenin süresinin bitip bitmediğini kontrol etme
-		LocalDateTime now = LocalDateTime.now();
-		for (Health health : healthInfos) {
-			for (HealthInsurance insurance : insurances) {
-				LocalDateTime endDateTime = LocalDateTime.parse(insurance.getEndDate(), formatter);
-
-				if (now.isAfter(endDateTime)) {
-					expiredHealthInsurance.add(health);
-					model.addAttribute("showExpiredAlert", true);
-					insurance.setResult("Expired");
-					healthInsuranceService.save(insurance);
-				}
-			}
-		}
-
-		// Sağlık bilgilerini güncelleme süresinin bitip bitmediğini kontrol etme
-		for (Health health : healthInfos) {
-			LocalDateTime deadlineDate = LocalDateTime.parse(health.getDeadline(), formatter);
-
-			if (now.isAfter(deadlineDate)) {
-				model.addAttribute("showDeadlineAlert", true);
-				model.addAttribute("healthId", health.getHealthId());
-			}
-		}
-
-		model.addAttribute("expiredHealthInsurance", expiredHealthInsurance);
-		return new ModelAndView("healthInfoList", "health", healthInfos);
 	}
 
 	@RequestMapping(path = { "/healthInsuranceEditForm/{insuranceId}",
