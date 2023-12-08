@@ -292,6 +292,9 @@ public class CarController {
 		newInsurance.setKdv(kdvRate); 
 		
 		carInsuranceService.save(newInsurance);
+		
+		List<Company> companyList = companyService.getAllCompany();
+		model.addAttribute("companyList", companyList);
 
 		model.addAttribute(customer);
 		model.addAttribute("insurance", newInsurance);

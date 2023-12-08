@@ -310,6 +310,9 @@ public class HealthController {
 		health.setDeadline(deadlineDate.format(formatter));
 		health.setStatus(1);
 		healthService.save(health);
+		
+		List<Company> companyList = companyService.getAllCompany();
+		model.addAttribute("companyList", companyList);
 
 		model.addAttribute("insurance", newInsurance);
 		model.addAttribute("health", health);

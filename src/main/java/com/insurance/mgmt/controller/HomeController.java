@@ -303,6 +303,9 @@ public class HomeController {
 		newInsurance.setPeriod(oldInsurance.getPeriod()); 
 		newInsurance.setCompanyId(oldInsurance.getCompanyId());
 		homeInsuranceService.save(newInsurance);
+		
+		List<Company> companyList = companyService.getAllCompany();
+		model.addAttribute("companyList", companyList);
 
 		model.addAttribute(customer);
 		model.addAttribute("insurance", newInsurance);
@@ -393,7 +396,7 @@ public class HomeController {
 
 		if (insurance != null) {
 			// result değerine göre result sütununu güncelle
-			insurance.setCompanyId(companyId);
+			insurance.setCompanyId(companyId); 
 			insurance.setResult(result);
 
 			// Poliçeyi iptal ettiyse iptal etme tarihi yazdırılmaktadır
