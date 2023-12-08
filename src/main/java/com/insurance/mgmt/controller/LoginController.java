@@ -103,15 +103,6 @@ public class LoginController {
 
 	}
 
-//	@GetMapping("/customerInfo/{username}")
-//	public String customerInfo(@PathVariable("username") String username, Model model) {
-//		List<Customer> customer = customerService.findByStatusAndUsername(1, username);
-//		
-//		model.addAttribute("customer",  customer);
-//		return "customerInfo";
-//	}
-
-
 	@RequestMapping(path = {"/userPage/{username}", "/userPage/{username}/{admin}"}, method = RequestMethod.GET)
 	public String userPage(@PathVariable("username") String username, @PathVariable(required = false) String admin , Model model) {
 

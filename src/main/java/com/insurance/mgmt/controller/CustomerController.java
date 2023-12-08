@@ -88,12 +88,6 @@ public class CustomerController {
 		return "home";
 	}
 
-//	@GetMapping("/selectType/{customerId}")
-//	public String selectType(@PathVariable("customerId") int customerId, Model model) {
-//		model.addAttribute("customerId", customerId);
-//		return "home";
-//	}
-
 	@GetMapping("/customerRegister")
 	public String customerRegister(@ModelAttribute Customer customer, Model model) {
 
@@ -105,18 +99,6 @@ public class CustomerController {
 
 		return "customerRegister";
 	}
-
-//	@GetMapping("/customerRegisterForm")
-//	public String customerRegisterForm(@ModelAttribute Customer customer, Model model) {
-//		
-//		List<Province> getAllProvinces = provinceService.listAll();
-//		List<District> getAllDistricts = districtService.listAll();
-//
-//        model.addAttribute("getAllProvinces", getAllProvinces);
-//        model.addAttribute("getAllDistricts", getAllDistricts);
-//
-//		return "customerRegisterForm";
-//	}
 
 	@GetMapping("/customerList")
 	public String customerList(Model model) {

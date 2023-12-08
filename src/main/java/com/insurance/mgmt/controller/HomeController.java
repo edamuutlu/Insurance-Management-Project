@@ -3,7 +3,6 @@ package com.insurance.mgmt.controller;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import org.slf4j.Logger;
@@ -22,7 +21,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.insurance.mgmt.entity.Company;
@@ -203,32 +201,6 @@ public class HomeController {
 		model.addAttribute("getAllNeighbourhoods", getAllNeighbourhoods);
 		model.addAttribute("customerId", idParam);
 		return "homeInsuranceForm";
-	}
-
-	@GetMapping("/homeList/{customerId}")
-	public ModelAndView homeList(@PathVariable("customerId") int customerId, Model model) {
-
-		List<Home> homes = homeService.findByStatusAndCustomerId(1, customerId);
-		List<HomeInsurance> insurances = homeInsuranceService.findByStatusAndCustomerIdAndResult(1, customerId, "Accepted");
-		ArrayList<Home> expiredHomes = new ArrayList<>();
-
-		// Poliçenin süresinin bitip bitmediğini kontrol etme
-		LocalDateTime now = LocalDateTime.now();
-		for (Home home : homes) {
-			for (HomeInsurance insurance : insurances) {
-				LocalDateTime endDateTime = LocalDateTime.parse(insurance.getEndDate(), formatter);
-
-				if (now.isAfter(endDateTime)) {
-					expiredHomes.add(home);
-					model.addAttribute("showText", true);
-					insurance.setResult("Expired");
-					homeInsuranceService.save(insurance);
-				}
-			}
-		}
-
-		model.addAttribute("expiredHomes", expiredHomes);
-		return new ModelAndView("homeList", "home", homes);
 	}
 
 	@RequestMapping(path = {"/seeHomeInsuranceDetails/{id}", "/seeHomeInsuranceDetails/{id}/{admin}"}, method = RequestMethod.GET)
