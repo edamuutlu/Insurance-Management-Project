@@ -16,10 +16,21 @@ public interface IInsuranceRepository extends Repository<CarInsurance, Long> {
             + "SELECT * FROM health_insurance", nativeQuery = true)
     List<Object[]> getUnionAllResult();
     
-    @Query(value = "SELECT comp.company_id, comp.name, SUM(offer - refund) FROM car_insurance car "
-    		+ "INNER JOIN company comp ON car.company_id = comp.company_id "
+    @Query(value = "SELECT comp.company_id, comp.name, COALESCE(SUM(offer - refund), 0) AS carBalance FROM car_insurance car "
+    		+ "RIGHT JOIN company comp ON car.company_id = comp.company_id "
     		+ "GROUP BY car.company_id,  comp.company_id ", nativeQuery = true)
-    List<Object[]> getAllInsuranceTypeBalance();
+    List<Object[]> getCarInsuranceBalance();
+    
+    @Query(value = "SELECT comp.company_id, comp.name, COALESCE(SUM(offer - refund), 0) AS homeBalance FROM home_insurance home "
+    		+ "RIGHT JOIN company comp ON home.company_id = comp.company_id "
+    		+ "GROUP BY home.company_id,  comp.company_id ", nativeQuery = true)
+    List<Object[]> getHomeInsuranceBalance();
+    
+    @Query(value = "SELECT comp.company_id, comp.name, COALESCE(SUM(offer - refund), 0) AS healthBalance FROM health_insurance health "
+    		+ "RIGHT JOIN company comp ON health.company_id = comp.company_id "
+    		+ "GROUP BY health.company_id,  comp.company_id ", nativeQuery = true)
+    List<Object[]> getHealthInsuranceBalance();
+
 }
 
 

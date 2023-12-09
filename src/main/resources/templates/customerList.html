@@ -114,66 +114,184 @@
 	</script>
 	
 	<!-- Modal -->
-  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5 text-center w-100" id="staticBackdropLabel">Balance Sheet Details</h1>
-          <button type="button" class="btn-close m-0" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <div class="row">
-                <ul class="list-unstyled">
-                  <li class="text-muted"><span class="text-black">Company Name:</span> AXA</li>
-                  <li class="text-muted mt-1"><span class="text-black">Date:</span> April 17 2021</li>
-                </ul>
-                <hr>
-                <div class="col-xl-10">
-                  <p>Car Insurance Total</p>
-                </div>
-                <div class="col-xl-2">
-                  <p class="float-end">$199.00
-                  </p>
-                </div>
-                <hr>
-              </div>
-              <div class="row">
-                <div class="col-xl-10">
-                  <p>Home Insurance Total</p>
-                </div>
-                <div class="col-xl-2">
-                  <p class="float-end">$100.00
-                  </p>
-                </div>
-                <hr>
-              </div>
-              <div class="row">
-                <div class="col-xl-10">
-                  <p>Health Insurance Total</p>
-                </div>
-                <div class="col-xl-2">
-                  <p class="float-end">$10.00
-                  </p>
-                </div>
-                <hr style="border: 2px solid black;">
-              </div>
-              <div class="row text-black">
-        
-                <div class="col-xl-12">
-                  <p class="float-end fw-bold">Total: $10.00
-                  </p>
-                </div>
-                <hr style="border: 2px solid black;">
-              </div>
-            
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Understood</button>
-        </div>
-      </div>
-    </div>
-  </div>
+	  <div class="modal fade" id="staticBackdrop-0" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+	    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+	      <div class="modal-content">
+	        <div class="modal-header">
+	          <h1 class="modal-title fs-5 text-center w-100" id="staticBackdropLabel">Balance Sheet Details</h1>
+	          <button type="button" class="btn-close m-0" data-bs-dismiss="modal" aria-label="Close"></button>
+	        </div>
+	        <div class="modal-body">
+	            <div class="row">
+	                <ul class="list-unstyled">
+	                  <li class="text-muted"><span class="text-black">Company Name: </span><span th:text="${company[0].name}">Aviva</span></li>
+	                  <li class="text-muted mt-1"><span class="text-black">Date: </span><span th:text="${now}"></span></li>
+	                </ul>
+	                <hr>
+	                <div class="col-xl-10">
+	                  <p>Car Insurance Total</p>
+	                </div>
+	                <div class="col-xl-2">
+	                  <p class="float-end" th:text="${carBalances[0][2]}">$199.00
+	                  </p>
+	                </div>
+	                <hr>
+	              </div>
+	              <div class="row">
+	                <div class="col-xl-10">
+	                  <p>Home Insurance Total</p>
+	                </div>
+	                <div class="col-xl-2">
+	                  <p class="float-end" th:text="${homeBalances[0][2]}">$100.00
+	                  </p>
+	                </div>
+	                <hr>
+	              </div>
+	              <div class="row">
+	                <div class="col-xl-10">
+	                  <p>Health Insurance Total</p>
+	                </div>
+	                <div class="col-xl-2">
+	                  <p class="float-end" th:text="${healthBalances[0][2]}">$10.00
+	                  </p>
+	                </div>
+	                <hr style="border: 2px solid black;">
+	              </div>
+	              <div class="row text-black">
+	        
+	                <div class="col-xl-12">
+	                  <p class="float-end fw-bold">Total:  <span th:text="${carBalances[0][2] + homeBalances[0][2] + healthBalances[0][2]}"></span>
+	                  </p>
+	                </div>
+	                <hr style="border: 2px solid black;">
+	              </div>   
+	        </div>
+	        <div class="modal-footer">
+	          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+	          <button type="button" class="btn btn-primary">Understood</button>
+	        </div>
+	      </div>
+	    </div>
+	  </div>
+	  
+	  <!-- Modal -->
+	  <div class="modal fade" id="staticBackdrop-1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+	    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+	      <div class="modal-content">
+	        <div class="modal-header">
+	          <h1 class="modal-title fs-5 text-center w-100" id="staticBackdropLabel">Balance Sheet Details</h1>
+	          <button type="button" class="btn-close m-0" data-bs-dismiss="modal" aria-label="Close"></button>
+	        </div>
+	        <div class="modal-body">
+	            <div class="row">
+	                <ul class="list-unstyled">
+	                  <li class="text-muted"><span class="text-black">Company Name: </span><span th:text="${company[1].name}">Liberty Mutual</span></li>
+	                  <li class="text-muted mt-1"><span class="text-black">Date: </span><span th:text="${now}"></span></li>
+	                </ul>
+	                <hr>
+	                <div class="col-xl-10">
+	                  <p>Car Insurance Total</p>
+	                </div>
+	                <div class="col-xl-2">
+	                  <p class="float-end" th:text="${carBalances[1][2]}">$199.00
+	                  </p>
+	                </div>
+	                <hr>
+	              </div>
+	              <div class="row">
+	                <div class="col-xl-10">
+	                  <p>Home Insurance Total</p>
+	                </div>
+	                <div class="col-xl-2">
+	                  <p class="float-end" th:text="${homeBalances[1][2]}">$100.00
+	                  </p>
+	                </div>
+	                <hr>
+	              </div>
+	              <div class="row">
+	                <div class="col-xl-10">
+	                  <p>Health Insurance Total</p>
+	                </div>
+	                <div class="col-xl-2">
+	                  <p class="float-end" th:text="${healthBalances[1][2]}">$10.00
+	                  </p>
+	                </div>
+	                <hr style="border: 2px solid black;">
+	              </div>
+	              <div class="row text-black">
+	        
+	                <div class="col-xl-12">
+	                  <p class="float-end fw-bold">Total:  <span th:text="${carBalances[1][2] + homeBalances[1][2] + healthBalances[1][2]}"></span></p>
+	                </div>
+	                <hr style="border: 2px solid black;">
+	              </div>   
+	        </div>
+	        <div class="modal-footer">
+	          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+	          <button type="button" class="btn btn-primary">Understood</button>
+	        </div>
+	      </div>
+	    </div>
+	  </div>
+	  
+	  <!-- Modal -->
+	  <div class="modal fade" id="staticBackdrop-2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+	    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+	      <div class="modal-content">
+	        <div class="modal-header">
+	          <h1 class="modal-title fs-5 text-center w-100" id="staticBackdropLabel">Balance Sheet Details</h1>
+	          <button type="button" class="btn-close m-0" data-bs-dismiss="modal" aria-label="Close"></button>
+	        </div>
+	        <div class="modal-body">
+	            <div class="row">
+	                <ul class="list-unstyled">
+	                  <li class="text-muted"><span class="text-black">Company Name: </span><span th:text="${company[2].name}">AXA</span></li>
+	                  <li class="text-muted mt-1"><span class="text-black">Date: </span><span th:text="${now}"></span></li>
+	                </ul>
+	                <hr>
+	                <div class="col-xl-10">
+	                  <p>Car Insurance Total</p>
+	                </div>
+	                <div class="col-xl-2">
+	                  <p class="float-end" th:text="${carBalances[2][2]}">$199.00
+	                  </p>
+	                </div>
+	                <hr>
+	              </div>
+	              <div class="row">
+	                <div class="col-xl-10">
+	                  <p>Home Insurance Total</p>
+	                </div>
+	                <div class="col-xl-2">
+	                  <p class="float-end" th:text="${homeBalances[2][2]}">$100.00
+	                  </p>
+	                </div>
+	                <hr>
+	              </div>
+	              <div class="row">
+	                <div class="col-xl-10">
+	                  <p>Health Insurance Total</p>
+	                </div>
+	                <div class="col-xl-2">
+	                  <p class="float-end" th:text="${healthBalances[2][2]}">$10.00
+	                  </p>
+	                </div>
+	                <hr style="border: 2px solid black;">
+	              </div>
+	              <div class="row text-black">
+	                <div class="col-xl-12">
+	                  <p class="float-end fw-bold">Total:  <span th:text="${carBalances[2][2] + homeBalances[2][2] + healthBalances[2][2]}"></span></p>
+	                </div>
+	                <hr style="border: 2px solid black;">
+	              </div>   
+	        </div>
+	        <div class="modal-footer">
+	          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+	          <button type="button" class="btn btn-primary">Understood</button>
+	        </div>
+	      </div>
+	    </div>
+	  </div>
 
 	<div class="user-page-wrapper">
 		<div class="user-page-main pt-5">
@@ -302,7 +420,7 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr th:each="company :${company}">
+										<tr th:each="company, iterStat :${company}">
 											<td th:text="${company.companyId}"></td>
 											<td th:text="${company.name}"></td>
 											<td th:text="${company.country}"></td>
@@ -311,7 +429,7 @@
 											<td th:text="${company.email}"></td>
 											<td th:text="${company.serviceFee}"></td>
 											<td class="mx-auto px-auto">
-												<button type="button" class="btn btn-primary Balance" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+												<button type="button" class="btn btn-primary Balance" data-bs-toggle="modal" th:data-bs-target="'#staticBackdrop-' + ${iterStat.index}">
 													Balance Sheet Details
 												 </button>
 											</td>

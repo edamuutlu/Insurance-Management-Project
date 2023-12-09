@@ -1,5 +1,7 @@
 package com.insurance.mgmt.controller;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import org.slf4j.Logger;
@@ -87,6 +89,8 @@ public class CustomerController {
 
 	@Autowired
 	InsuranceService insuranceService;
+	
+	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 
 	private static final Logger log = LoggerFactory.getLogger(CustomerController.class);
 
@@ -142,20 +146,49 @@ public class CustomerController {
 
 		model.addAttribute("allInsurances", allInsurances);
 
-		// Sigorta tipine göre şirket bilançosu
-		List<Object[]> getAllInsuranceTypeBalance = insuranceRepo.getAllInsuranceTypeBalance();
-		List<List<Object>> balances = new ArrayList<>();
+		// Sigorta tipine göre şirket bilançoları
+		// Car Balances
+		List<Object[]> getAllCarInsuranceBalance = insuranceRepo.getCarInsuranceBalance();
+		List<List<Object>> carInsuranceBalances = new ArrayList<>();
 
-		for (Object[] row : getAllInsuranceTypeBalance) {
+		for (Object[] row : getAllCarInsuranceBalance) {
 		    List<Object> rowData = new ArrayList<>();
 		    for (Object column : row) {
 		        rowData.add(column);
 		    }
-		    balances.add(rowData);
+		    carInsuranceBalances.add(rowData);
 		}
-		model.addAttribute("balances", balances);
-		System.out.println(balances);
+		model.addAttribute("carBalances", carInsuranceBalances);
+		
+		//Home Balances
+		List<Object[]> getHomeInsuranceBalance = insuranceRepo.getHomeInsuranceBalance();
+		List<List<Object>> homeInsuranceBalances = new ArrayList<>();
 
+		for (Object[] row : getHomeInsuranceBalance) {
+		    List<Object> rowData = new ArrayList<>();
+		    for (Object column : row) {
+		        rowData.add(column);
+		    }
+		    homeInsuranceBalances.add(rowData);
+		}
+		model.addAttribute("homeBalances", homeInsuranceBalances);
+		
+		// Health Balances
+		List<Object[]> getHealthInsuranceBalance = insuranceRepo.getHealthInsuranceBalance();
+		List<List<Object>> healthInsuranceBalances = new ArrayList<>();
+
+		for (Object[] row : getHealthInsuranceBalance) {
+		    List<Object> rowData = new ArrayList<>();
+		    for (Object column : row) {
+		        rowData.add(column);
+		    }
+		    healthInsuranceBalances.add(rowData);
+		}
+		model.addAttribute("healthBalances", healthInsuranceBalances);
+		System.out.println(healthInsuranceBalances);
+
+		LocalDateTime now = LocalDateTime.now();
+		model.addAttribute("now", now.format(formatter));
 		model.addAttribute("customer", customerList);
 		return "customerList";
 	}
