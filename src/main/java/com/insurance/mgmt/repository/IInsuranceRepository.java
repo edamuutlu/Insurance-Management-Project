@@ -16,8 +16,13 @@ public interface IInsuranceRepository extends Repository<CarInsurance, Long> {
             + "SELECT * FROM health_insurance", nativeQuery = true)
     List<Object[]> getUnionAllResult();
     
-    
+    @Query(value = "SELECT comp.company_id, comp.name, SUM(offer - refund) FROM car_insurance car "
+    		+ "INNER JOIN company comp ON car.company_id = comp.company_id "
+    		+ "GROUP BY car.company_id,  comp.company_id ", nativeQuery = true)
+    List<Object[]> getAllInsuranceTypeBalance();
 }
+
+
 /*package com.insurance.mgmt.repository;
 
 import java.util.List;

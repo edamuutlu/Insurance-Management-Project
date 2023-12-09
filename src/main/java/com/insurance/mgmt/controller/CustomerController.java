@@ -128,9 +128,7 @@ public class CustomerController {
 		List<Company> companyList = companyService.getAllCompany();
 		model.addAttribute("company", companyList);
 
-//		insuranceRepo.getUnionAllResult();
-//		System.out.println(insuranceRepo.getUnionAllResult());
-
+		// Sigorta Detayların Hepsini Görüntülemek için
 		List<Object[]> resultList = insuranceRepo.getUnionAllResult();
 		List<List<Object>> allInsurances = new ArrayList<>();
 
@@ -144,12 +142,21 @@ public class CustomerController {
 
 		model.addAttribute("allInsurances", allInsurances);
 
+		// Sigorta tipine göre şirket bilançosu
+		List<Object[]> getAllInsuranceTypeBalance = insuranceRepo.getAllInsuranceTypeBalance();
+		List<List<Object>> balances = new ArrayList<>();
 
-		// List<Object[]> insurances = insuranceService.getAllInsurances();
-		// System.out.println(insurances);
+		for (Object[] row : getAllInsuranceTypeBalance) {
+		    List<Object> rowData = new ArrayList<>();
+		    for (Object column : row) {
+		        rowData.add(column);
+		    }
+		    balances.add(rowData);
+		}
+		model.addAttribute("balances", balances);
+		System.out.println(balances);
 
 		model.addAttribute("customer", customerList);
-
 		return "customerList";
 	}
 

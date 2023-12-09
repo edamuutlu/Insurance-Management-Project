@@ -333,6 +333,8 @@ public class CarController {
 			// result değerine göre result sütununu güncelle
 			insurance.setCompanyId(companyId);
 			insurance.setResult(result);
+			Company company = companyService.findByCompanyId(companyId);
+			insurance.setOffer(insurance.getOffer() + company.getServiceFee());
 
 			// Poliçeyi iptal ettiyse iptal etme tarihi yazdırılmaktadır
 			if (insurance.getResult().equals("Canceled")) {
