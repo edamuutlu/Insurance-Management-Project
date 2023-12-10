@@ -49,9 +49,19 @@ body .navbar .operations a .login-icon {
   color: #ed2d34;
   margin-right: 5px;
 }
+body .navbar .operations a .user-icon {
+  font-size: 20px;
+  color: #ed9a2d;
+  margin-right: 5px;
+}
 body .navbar .operations a .register-icon {
   font-size: 20px;
   color: #ed9a2d;
+  margin-right: 5px;
+}
+body .navbar .operations a .exit-icon {
+  font-size: 20px;
+  color: #bd0000;
   margin-right: 5px;
 }
 body .navbar-light .navbar-nav .nav-link {

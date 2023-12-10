@@ -89,13 +89,13 @@
 				</ul>
 			</div>
 			<div class="operations">
-				<a href="/login">
-					<i class='bx bxs-user-circle login-icon'></i>
-					Login
+				<a th:href="@{'/userPage/' + ${username}}">
+					<i class='bx bxs-user-circle user-icon'></i>
+					<span th:text="${username}"></span>
 				</a>
-				<a href="/customerRegister">
-					<i class='bx bxs-user-plus register-icon'></i>
-					Register
+				<a href="/index">
+					<i class='bx bx-log-out exit-icon'></i>
+					Log Out
 				</a>
 			</div>
 		</div>
