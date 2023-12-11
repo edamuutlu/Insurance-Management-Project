@@ -80,11 +80,11 @@
             </ul>
           </div>
           <div class="operations">
-				<a href="/login">
+				<a th:href="@{'/userPage/' + ${customer.username}}">
 					<i class='bx bxs-user-circle user-icon'></i>
-					<span th:text="${username}"></span>
+					<span th:text="${customer.username}"></span>
 				</a>
-				<a href="/customerRegister">
+				<a href="/index">
 					<i class='bx bx-log-out exit-icon'></i>
 					Log Out
 				</a>

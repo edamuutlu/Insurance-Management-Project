@@ -103,6 +103,8 @@ public class CustomerController {
 	@RequestMapping(path = "/selectType", method = RequestMethod.GET)
 	public String selectType(@RequestParam(value = "customerId", required = false) int customerId, Model model) {
 		model.addAttribute("customerId", customerId);
+		Customer customer = customerService.getCustomerById(customerId);
+		model.addAttribute("customer", customer);
 		return "home";
 	}
 

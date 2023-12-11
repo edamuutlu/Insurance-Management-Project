@@ -166,6 +166,8 @@ public class CarController {
 	@RequestMapping(path = "/trafficInsuranceForm", method = RequestMethod.GET )
 	public String trafficInsuranceForm(@RequestParam(value = "customerId", required = false) int idParam, Model model, @ModelAttribute Car car){
 		model.addAttribute("customerId",idParam);
+		Customer customer = customerService.getCustomerById(idParam);
+		model.addAttribute("customer", customer);
 		return "trafficInsuranceForm";
 	}
 	
@@ -333,8 +335,12 @@ public class CarController {
 			// result değerine göre result sütununu güncelle
 			insurance.setCompanyId(companyId);
 			insurance.setResult(result);
-			Company company = companyService.findByCompanyId(companyId);
-			insurance.setOffer(insurance.getOffer() + company.getServiceFee());
+			if(insurance.getCompanyId() == 0 ) {
+				insurance.setOffer(insurance.getOffer() + 0);		
+			}else {
+				Company company = companyService.findByCompanyId(companyId);
+				insurance.setOffer(insurance.getOffer() + company.getServiceFee());
+			}
 
 			// Poliçeyi iptal ettiyse iptal etme tarihi yazdırılmaktadır
 			if (insurance.getResult().equals("Canceled")) {

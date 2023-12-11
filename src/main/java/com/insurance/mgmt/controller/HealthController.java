@@ -85,8 +85,9 @@ public class HealthController {
 
 	@GetMapping(path = "/healthInsuranceForm")
 	public String healthInsuranceForm(@RequestParam(value = "customerId", required = false) int idParam, Model model) {
-
 		model.addAttribute("customerId", idParam);
+		Customer customer = customerService.getCustomerById(idParam);
+		model.addAttribute("customer", customer);
 		return "healthInsuranceForm";
 	}
 
@@ -186,6 +187,7 @@ public class HealthController {
 
 		HealthInsurance insurance = healthInsuranceService.getInsuranceById(insuranceId);
 		Health health = healthService.getHealthById(insurance.getHealthId());
+		Customer customer = customerService.getCustomerById(insurance.getCustomerId());
 
 		// Devam eden bir sigorta var mı kontrolü
 		List<HealthInsurance> insurances = healthInsuranceService.findByStatusAndResultAndHealthId(1, "Accepted",
@@ -203,6 +205,7 @@ public class HealthController {
 		System.out.print(insurance.getPeriod());
 		System.out.print(health.getJob());
 
+		model.addAttribute("customer", customer);
 		model.addAttribute("insurance", insurance);
 		model.addAttribute("health", health);
 
@@ -394,8 +397,12 @@ public class HealthController {
 			// result değerine göre result sütununu güncelle
 			insurance.setCompanyId(companyId);
 			insurance.setResult(result);
-			Company company = companyService.findByCompanyId(companyId);
-			insurance.setOffer(insurance.getOffer() + company.getServiceFee());
+			if(insurance.getCompanyId() == 0 ) {
+				insurance.setOffer(insurance.getOffer() + 0);		
+			}else {
+				Company company = companyService.findByCompanyId(companyId);
+				insurance.setOffer(insurance.getOffer() + company.getServiceFee());
+			}
 
 			// Poliçeyi iptal ettiyse iptal etme tarihi yazdırılmaktadır
 			if (insurance.getResult().equals("Canceled")) {
