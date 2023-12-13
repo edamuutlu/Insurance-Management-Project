@@ -19,7 +19,7 @@ public interface IHealthInsuranceRepository extends JpaRepository<HealthInsuranc
     @Query("SELECT hi FROM HealthInsurance hi WHERE hi.status = :status AND hi.customerId = :customerId")
     List<HealthInsurance> findByStatusAndCustomerId(@Param("status") int status, @Param("customerId") int customerId);
 
-    @Query("SELECT hi FROM HealthInsurance hi WHERE hi.status = :status AND hi.customerId = :customerId AND hi.result = :result")
+    @Query("SELECT hi FROM HealthInsurance hi WHERE hi.status = :status AND hi.customerId = :customerId AND hi.result LIKE %:result%")
     List<HealthInsurance> findByStatusAndCustomerIdAndResult(@Param("status") int status, @Param("customerId") int customerId, @Param("result") String result);
 
     @Query("SELECT hi FROM HealthInsurance hi WHERE hi.healthId = :healthId")
@@ -28,7 +28,7 @@ public interface IHealthInsuranceRepository extends JpaRepository<HealthInsuranc
     @Query("SELECT hi FROM HealthInsurance hi WHERE hi.status = :status AND hi.healthId = :healthId")
     List<HealthInsurance> findByStatusAndHealthId(@Param("status") int status, @Param("healthId") int healthId);
 
-    @Query("SELECT hi FROM HealthInsurance hi WHERE hi.status = :status AND hi.result = :result AND hi.healthId = :healthId")
+    @Query("SELECT hi FROM HealthInsurance hi WHERE hi.status = :status AND hi.result LIKE %:result% AND hi.healthId = :healthId")
     List<HealthInsurance> findByStatusAndResultAndHealthId(@Param("status") int status, @Param("result") String result, @Param("healthId") int healthId);
 
 }

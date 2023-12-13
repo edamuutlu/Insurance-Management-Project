@@ -19,7 +19,7 @@ public interface IHomeInsuranceRepository extends JpaRepository<HomeInsurance,In
     @Query("SELECT hi FROM HomeInsurance hi WHERE hi.status = :status AND hi.customerId = :customerId")
     List<HomeInsurance> findByStatusAndCustomerId(@Param("status") int status, @Param("customerId") int customerId);
 
-    @Query("SELECT hi FROM HomeInsurance hi WHERE hi.status = :status AND hi.customerId = :customerId AND hi.result = :result")
+    @Query("SELECT hi FROM HomeInsurance hi WHERE hi.status = :status AND hi.customerId = :customerId AND hi.result LIKE %:result%")
     List<HomeInsurance> findByStatusAndCustomerIdAndResult(@Param("status") int status, @Param("customerId") int customerId, @Param("result") String result);
 
     @Query("SELECT hi FROM HomeInsurance hi WHERE hi.homeId = :homeId")
@@ -28,7 +28,7 @@ public interface IHomeInsuranceRepository extends JpaRepository<HomeInsurance,In
     @Query("SELECT hi FROM HomeInsurance hi WHERE hi.status = :status AND hi.homeId = :homeId")
     List<HomeInsurance> findByStatusAndHomeId(@Param("status") int status, @Param("homeId") int homeId);
 
-    @Query("SELECT hi FROM HomeInsurance hi WHERE hi.status = :status AND hi.result = :result AND hi.homeId = :homeId")
+    @Query("SELECT hi FROM HomeInsurance hi WHERE hi.status = :status AND hi.result LIKE %:result% AND hi.homeId = :homeId")
     List<HomeInsurance> findByStatusAndResultAndHomeId(@Param("status") int status, @Param("result") String result, @Param("homeId") int homeId);
 
 }

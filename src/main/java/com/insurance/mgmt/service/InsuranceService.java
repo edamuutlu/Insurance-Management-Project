@@ -1,122 +1,71 @@
 package com.insurance.mgmt.service;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
-
-import jakarta.persistence.EntityManager;
 
 @Service
 public class InsuranceService {
-	@Autowired
-    private EntityManager entityManager;
+	private JdbcTemplate jdbcTemplate;
 
-    public List<Object[]> getAllInsurances() {
-        String queryString = "SELECT * FROM car_insurance " +
-                "UNION ALL " +
-                "SELECT * FROM home_insurance " +
-                "UNION ALL " +
-                "SELECT * FROM health_insurance";
-
-        return entityManager.createNativeQuery(queryString).getResultList();
+    public InsuranceService(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
     }
+
+    public void updateData(int kdv, int productType) {
+        String sql = "UPDATE kdv SET kdv_rate = ? WHERE product_type = ?";
+        jdbcTemplate.update(sql, preparedStatement -> {
+            preparedStatement.setInt(1, kdv);
+            preparedStatement.setInt(2, productType);
+        });
+    }
+    
+    public void deleteCustomerData(int customerId) {
+        String sql = "DELETE FROM customer WHERE customer_id = ?";
+        jdbcTemplate.update(sql, preparedStatement -> {
+            preparedStatement.setInt(1, customerId);
+        });
+    }
+
+    public void deleteCarData(int customerId) {
+        String sql = "DELETE FROM car WHERE customer_id = ?";
+        jdbcTemplate.update(sql, preparedStatement -> {
+            preparedStatement.setInt(1, customerId);
+        });
+    }
+    
+    public void deleteHomeData(int customerId) {
+        String sql = "DELETE FROM home WHERE customer_id = ?";
+        jdbcTemplate.update(sql, preparedStatement -> {
+            preparedStatement.setInt(1, customerId);
+        });
+    }
+    
+    public void deleteHealthData(int customerId) {
+        String sql = "DELETE FROM health WHERE customer_id = ?";
+        jdbcTemplate.update(sql, preparedStatement -> {
+            preparedStatement.setInt(1, customerId);
+        });
+    }
+    
+    public void deleteCarInsuranceData(int customerId) {
+        String sql = "DELETE FROM car_insurance WHERE customer_id = ?";
+        jdbcTemplate.update(sql, preparedStatement -> {
+            preparedStatement.setInt(1, customerId);
+        });
+    }
+    
+    public void deleteHomeInsuranceData(int customerId) {
+        String sql = "DELETE FROM home_insurance WHERE customer_id = ?";
+        jdbcTemplate.update(sql, preparedStatement -> {
+            preparedStatement.setInt(1, customerId);
+        });
+    }
+    
+    public void deleteHealthInsuranceData(int customerId) {
+        String sql = "DELETE FROM health_insurance WHERE customer_id = ?";
+        jdbcTemplate.update(sql, preparedStatement -> {
+            preparedStatement.setInt(1, customerId);
+        });
+    }
+
 }
-/* package com.insurance.mgmt.service;
-
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.insurance.mgmt.entity.Insurance;
-import com.insurance.mgmt.repository.IHealthRepository;
-import com.insurance.mgmt.repository.IInsuranceRepository;
-
-@Service
-public class InsuranceService {
-	@Autowired
-	IInsuranceRepository insuranceRepository;
-	
-	@Autowired
-	IHealthRepository healthRepository;
-	
-	public void save(Insurance insurance) {
-		insuranceRepository.save(insurance);
-	}
-	
-	public List<Insurance> getAllInsurance(){
-		return insuranceRepository.findAll();
-	}
-	
-	public Insurance getInsuranceById(int id) {
-		return insuranceRepository.findById(id).get();
-	}
-	
-	public Insurance getInsuranceByHomeId(int homeId) {
-        Optional<Insurance> optionalInsurance = insuranceRepository.findByHomeId(homeId);
-        return optionalInsurance.orElse(null); // Eğer nesne varsa nesneyi, yoksa null dönecektir.
-    }
-	
-	public Insurance getInsuranceByCarId(int carId) {
-        Optional<Insurance> optionalInsurance = insuranceRepository.findByCarId(carId);
-        return optionalInsurance.orElse(null); // Eğer nesne varsa nesneyi, yoksa null dönecektir.
-    }
-	
-	public List<Insurance> getInsurancesByHomeId(int homeId) {
-	    Optional<Insurance> optionalInsurance = insuranceRepository.findByHomeId(homeId);
-	    return optionalInsurance.map(Collections::singletonList).orElse(Collections.emptyList());
-	}
-
-	public Insurance getInsuranceByHealthId(int healthId) {
-        Optional<Insurance> optionalInsurance = insuranceRepository.findByHealthId(healthId);
-        return optionalInsurance.orElse(null); // Eğer nesne varsa nesneyi, yoksa null dönecektir.
-    }
-	
-	public void deleteById(int id) {
-		insuranceRepository.deleteById(id);
-	}
-	
-	public List<Insurance> findByStatus(int status) {
-        return insuranceRepository.findByStatus(status);
-    }
-
-    public Optional<Insurance> findByHomeId(int homeId) {
-        return insuranceRepository.findByHomeId(homeId);
-    }
-
-    public List<Insurance> findByStatusAndHomeId(int status, int homeId) {
-        return insuranceRepository.findByStatusAndHomeId(status, homeId);
-    }
-    
-    public List<Insurance> findByStatusAndCarId(int status, int carId) {
-        return insuranceRepository.findByStatusAndCarId(status, carId);
-    }
-    
-    public List<Insurance> findByStatusAndCustomerId(int status, int customerId) {
-        return insuranceRepository.findByStatusAndCustomerId(status, customerId);
-    }
-    
-    public List<Insurance> findByStatusAndCustomerIdAndResult(int status, int customerId, String result) {
-        return insuranceRepository.findByStatusAndCustomerIdAndResult(status, customerId, result);
-    }
-
-    public List<Insurance> findByStatusAndResultAndHomeId(int status, String result, int homeId) {
-        return insuranceRepository.findByStatusAndResultAndHomeId(status, result, homeId);
-    }
-    
-    public List<Insurance> findByStatusAndResultAndCarId(int status, String result, int carId) {
-        return insuranceRepository.findByStatusAndResultAndCarId(status, result, carId);
-    }
-
-	public List<Insurance> findByStatusAndHealthId(int status, int healthId) {
-		return insuranceRepository.findByStatusAndHealthId(status, healthId);
-	}
-
-	public List<Insurance> findByStatusAndResultAndHealthId(int status, String result, int healthId) {
-		return insuranceRepository.findByStatusAndResultAndHealthId(status, result, healthId);
-	}
-}
-*/

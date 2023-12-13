@@ -52,7 +52,7 @@
 			<div class="operations">
 				<a th:href="@{'/customerList'}">
 					<i class='bx bxs-user-circle user-icon'></i>
-					<span th:text="${username}"></span>
+					<span th:text="admin"></span>
 				</a>
 				<a href="/index">
 					<i class='bx bx-log-out exit-icon'></i>
@@ -132,7 +132,7 @@
 	                  <p>Car Insurance Total</p>
 	                </div>
 	                <div class="col-xl-2">
-	                  <p class="float-end" th:text="${carBalances[0][2]}">$199.00
+	                  <p class="float-end" th:text="${#numbers.formatDecimal(carBalances[0][2], 1, 'COMMA', 2, 'POINT') + ' ₺'}">$199.00
 	                  </p>
 	                </div>
 	                <hr>
@@ -142,7 +142,7 @@
 	                  <p>Home Insurance Total</p>
 	                </div>
 	                <div class="col-xl-2">
-	                  <p class="float-end" th:text="${homeBalances[0][2]}">$100.00
+	                  <p class="float-end" th:text="${#numbers.formatDecimal(homeBalances[0][2], 1, 'COMMA', 2, 'POINT') + ' ₺'}">$100.00
 	                  </p>
 	                </div>
 	                <hr>
@@ -152,7 +152,7 @@
 	                  <p>Health Insurance Total</p>
 	                </div>
 	                <div class="col-xl-2">
-	                  <p class="float-end" th:text="${healthBalances[0][2]}">$10.00
+	                  <p class="float-end" th:text="${#numbers.formatDecimal(healthBalances[0][2], 1, 'COMMA', 2, 'POINT') + ' ₺'}">$10.00
 	                  </p>
 	                </div>
 	                <hr style="border: 2px solid black;">
@@ -160,7 +160,7 @@
 	              <div class="row text-black">
 	        
 	                <div class="col-xl-12">
-	                  <p class="float-end fw-bold">Total:  <span th:text="${carBalances[0][2] + homeBalances[0][2] + healthBalances[0][2]}"></span>
+	                  <p class="float-end fw-bold">Total:  <span th:text="${#numbers.formatDecimal(carBalances[0][2] + homeBalances[0][2] + healthBalances[0][2], 0, 'COMMA', 2, 'POINT') + ' ₺'}"></span>
 	                  </p>
 	                </div>
 	                <hr style="border: 2px solid black;">
@@ -168,7 +168,6 @@
 	        </div>
 	        <div class="modal-footer">
 	          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-	          <button type="button" class="btn btn-primary">Understood</button>
 	        </div>
 	      </div>
 	    </div>
@@ -193,7 +192,7 @@
 	                  <p>Car Insurance Total</p>
 	                </div>
 	                <div class="col-xl-2">
-	                  <p class="float-end" th:text="${carBalances[1][2]}">$199.00
+	                  <p class="float-end" th:text="${#numbers.formatDecimal(carBalances[1][2], 1, 'COMMA', 2, 'POINT') + ' ₺'}">$199.00
 	                  </p>
 	                </div>
 	                <hr>
@@ -203,7 +202,7 @@
 	                  <p>Home Insurance Total</p>
 	                </div>
 	                <div class="col-xl-2">
-	                  <p class="float-end" th:text="${homeBalances[1][2]}">$100.00
+	                  <p class="float-end" th:text="${#numbers.formatDecimal(homeBalances[1][2], 1, 'COMMA', 2, 'POINT') + ' ₺'}">$100.00
 	                  </p>
 	                </div>
 	                <hr>
@@ -213,7 +212,7 @@
 	                  <p>Health Insurance Total</p>
 	                </div>
 	                <div class="col-xl-2">
-	                  <p class="float-end" th:text="${healthBalances[1][2]}">$10.00
+	                  <p class="float-end" th:text="${#numbers.formatDecimal(healthBalances[1][2], 1, 'COMMA', 2, 'POINT') + ' ₺'}">$10.00
 	                  </p>
 	                </div>
 	                <hr style="border: 2px solid black;">
@@ -221,14 +220,13 @@
 	              <div class="row text-black">
 	        
 	                <div class="col-xl-12">
-	                  <p class="float-end fw-bold">Total:  <span th:text="${carBalances[1][2] + homeBalances[1][2] + healthBalances[1][2]}"></span></p>
+	                  <p class="float-end fw-bold">Total:  <span th:text="${#numbers.formatDecimal(carBalances[1][2] + homeBalances[1][2] + healthBalances[1][2], 0, 'COMMA', 2, 'POINT') + ' ₺'}"></span></p>
 	                </div>
 	                <hr style="border: 2px solid black;">
 	              </div>   
 	        </div>
 	        <div class="modal-footer">
 	          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-	          <button type="button" class="btn btn-primary">Understood</button>
 	        </div>
 	      </div>
 	    </div>
@@ -253,7 +251,7 @@
 	                  <p>Car Insurance Total</p>
 	                </div>
 	                <div class="col-xl-2">
-	                  <p class="float-end" th:text="${carBalances[2][2]}">$199.00
+	                  <p class="float-end" th:text="${#numbers.formatDecimal(carBalances[2][2], 1, 'COMMA', 2, 'POINT') + ' ₺'}">$199.00
 	                  </p>
 	                </div>
 	                <hr>
@@ -263,7 +261,7 @@
 	                  <p>Home Insurance Total</p>
 	                </div>
 	                <div class="col-xl-2">
-	                  <p class="float-end" th:text="${homeBalances[2][2]}">$100.00
+	                  <p class="float-end" th:text="${#numbers.formatDecimal(homeBalances[2][2], 1, 'COMMA', 2, 'POINT') + ' ₺'}">$100.00
 	                  </p>
 	                </div>
 	                <hr>
@@ -273,21 +271,20 @@
 	                  <p>Health Insurance Total</p>
 	                </div>
 	                <div class="col-xl-2">
-	                  <p class="float-end" th:text="${healthBalances[2][2]}">$10.00
+	                  <p class="float-end" th:text="${#numbers.formatDecimal(healthBalances[2][2], 1, 'COMMA', 2, 'POINT') + ' ₺'}">$10.00
 	                  </p>
 	                </div>
 	                <hr style="border: 2px solid black;">
 	              </div>
 	              <div class="row text-black">
 	                <div class="col-xl-12">
-	                  <p class="float-end fw-bold">Total:  <span th:text="${carBalances[2][2] + homeBalances[2][2] + healthBalances[2][2]}"></span></p>
+	                  <p class="float-end fw-bold">Total:  <span th:text="${#numbers.formatDecimal(carBalances[2][2] + homeBalances[2][2] + healthBalances[2][2], 0, 'COMMA', 2, 'POINT') + ' ₺'}"></span></p>
 	                </div>
 	                <hr style="border: 2px solid black;">
 	              </div>   
 	        </div>
 	        <div class="modal-footer">
 	          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-	          <button type="button" class="btn btn-primary">Understood</button>
 	        </div>
 	      </div>
 	    </div>

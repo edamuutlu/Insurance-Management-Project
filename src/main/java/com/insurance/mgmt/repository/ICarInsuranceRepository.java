@@ -19,7 +19,7 @@ public interface ICarInsuranceRepository extends JpaRepository<CarInsurance,Inte
     @Query("SELECT ci FROM CarInsurance ci WHERE ci.status = :status AND ci.customerId = :customerId")
     List<CarInsurance> findByStatusAndCustomerId(@Param("status") int status, @Param("customerId") int customerId);
 
-    @Query("SELECT ci FROM CarInsurance ci WHERE ci.status = :status AND ci.customerId = :customerId AND ci.result = :result")
+    @Query("SELECT ci FROM CarInsurance ci WHERE ci.status = :status AND ci.customerId = :customerId AND ci.result LIKE %:result%")
     List<CarInsurance> findByStatusAndCustomerIdAndResult(@Param("status") int status, @Param("customerId") int customerId, @Param("result") String result);
 
     @Query("SELECT ci FROM CarInsurance ci WHERE ci.carId = :carId")
@@ -28,7 +28,7 @@ public interface ICarInsuranceRepository extends JpaRepository<CarInsurance,Inte
     @Query("SELECT ci FROM CarInsurance ci WHERE ci.status = :status AND ci.carId IN(:carId)")
     List<CarInsurance> findByStatusAndCarId(@Param("status") int status, @Param("carId") int carId);
 
-    @Query("SELECT ci FROM CarInsurance ci WHERE ci.status = :status AND ci.result = :result AND ci.carId = :carId")
+    @Query("SELECT ci FROM CarInsurance ci WHERE ci.status = :status AND ci.result LIKE %:result% AND ci.carId = :carId")
     List<CarInsurance> findByStatusAndResultAndCarId(@Param("status") int status, @Param("result") String result, @Param("carId") int carId);
 
 }

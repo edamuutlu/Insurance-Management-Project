@@ -7,7 +7,7 @@ import com.insurance.mgmt.entity.CarInsurance;
 
 import java.util.List;
 
-public interface IInsuranceRepository extends Repository<CarInsurance, Long> {
+public interface IInsuranceRepository extends Repository<CarInsurance, Long> {	    
 
 	@Query(value = "SELECT * FROM car_insurance "
             + "UNION ALL "

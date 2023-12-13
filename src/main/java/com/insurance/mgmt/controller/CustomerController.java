@@ -21,14 +21,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import com.insurance.mgmt.entity.Car;
-import com.insurance.mgmt.entity.CarInsurance;
 import com.insurance.mgmt.entity.Company;
 import com.insurance.mgmt.entity.Customer;
-import com.insurance.mgmt.entity.Health;
-import com.insurance.mgmt.entity.HealthInsurance;
-import com.insurance.mgmt.entity.Home;
-import com.insurance.mgmt.entity.HomeInsurance;
 import com.insurance.mgmt.entity.Kdv;
 import com.insurance.mgmt.entity.address.District;
 import com.insurance.mgmt.entity.address.Province;
@@ -86,7 +80,7 @@ public class CustomerController {
 
 	@Autowired
 	IInsuranceRepository insuranceRepo;
-
+	
 	@Autowired
 	InsuranceService insuranceService;
 	
@@ -197,9 +191,11 @@ public class CustomerController {
 
 	@PostMapping("/saveKdv")
 	public String saveKdv(@RequestParam int kdvRate, @RequestParam int productType) {
-		Kdv kdv = kdvService.getProductTypeById(productType);
-		kdv.setKdvRate(kdvRate);
-		kdvService.save(kdv);
+		//Kdv kdv = kdvService.getProductTypeById(productType);
+		//kdv.setKdvRate(kdvRate);
+		//kdvService.save(kdv);
+		
+		insuranceService.updateData(kdvRate, productType);
 		return "redirect:/customerList";
 	}
 
@@ -283,7 +279,7 @@ public class CustomerController {
 			"/deleteCustomer/{customerId}/{admin}" }, method = RequestMethod.GET)
 	public String deleteCustomer(@PathVariable("customerId") int customerId,
 			@PathVariable(required = false) String admin, Model model) {
-
+		/*
 		// Müşterinin varsa araçlarının listelenmemesi için
 		List<Car> cars = carService.findByStatusAndCustomerId(1, customerId);
 		List<Home> homes = homeService.findByStatusAndCustomerId(1, customerId);
@@ -291,7 +287,7 @@ public class CustomerController {
 		List<CarInsurance> carInsurances = carInsuranceService.findByStatusAndCustomerId(1, customerId);
 		List<HomeInsurance> homeInsurances = homeInsuranceService.findByStatusAndCustomerId(1, customerId);
 		List<HealthInsurance> healthInsurances = healthInsuranceService.findByStatusAndCustomerId(1, customerId);
-
+		
 		for (Car car : cars) {
 			car.setStatus(0);
 			carService.save(car);
@@ -319,15 +315,20 @@ public class CustomerController {
 			insurance.setStatus(0);
 			healthInsuranceService.save(insurance);
 		}
+		*/
+		
+		insuranceService.deleteCarInsuranceData(customerId);
+		insuranceService.deleteHomeInsuranceData(customerId);
+		insuranceService.deleteHealthInsuranceData(customerId);
+		insuranceService.deleteCarData(customerId);
+		insuranceService.deleteHomeData(customerId);
+		insuranceService.deleteHealthData(customerId);
+		insuranceService.deleteCustomerData(customerId);
 
-		Customer customer = customerService.getCustomerById(customerId);
+		/*Customer customer = customerService.getCustomerById(customerId);
 		customer.setStatus(0);
-		customerService.save(customer);
-
-		if (admin == null) {
-			return "redirect:/index";
-		}
-
+		customerService.save(customer); */
+		
 		List<Customer> customerList = customerService.findByStatus(1);
 		model.addAttribute("customer", customerList);
 		return "redirect:/customerList";
