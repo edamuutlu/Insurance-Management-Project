@@ -28,6 +28,6 @@ public interface ICustomerRepository extends JpaRepository<Customer,Integer>{
 	@Query("SELECT c FROM Customer c WHERE c.status = :status AND c.username = :username")
 	List<Customer> findByStatusAndUsername(int status, String username);
 
-
-	
+	@Query("SELECT c FROM Customer c WHERE c.status = :status GROUP BY c.customerId HAVING c.customerId > 1")
+    List<Customer> findByStatusAndCustomerIdGreaterThan(int status);
 }

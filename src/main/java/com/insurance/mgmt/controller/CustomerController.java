@@ -116,7 +116,8 @@ public class CustomerController {
 
 	@GetMapping("/customerList")
 	public String customerList(Model model) {
-		List<Customer> customerList = customerService.findByStatus(1);
+		//List<Customer> customerList = customerService.findByStatus(1);
+		List<Customer> customerList = customerService.getCustomersWithIdGreaterThanOne(1);
 
 		Kdv carKdv = kdvService.getProductTypeById(1);
 		Kdv homeKdv = kdvService.getProductTypeById(2);

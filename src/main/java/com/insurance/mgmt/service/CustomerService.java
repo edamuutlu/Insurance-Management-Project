@@ -50,4 +50,8 @@ public class CustomerService {
 	    Optional<Customer> customerOptional = customerRepository.findByUsername(username);
 	    return customerOptional.orElse(null); // Bu, eğer customerOptional içinde bir değer yoksa null döndürecektir.
 	}
+    
+    public List<Customer> getCustomersWithIdGreaterThanOne(int status) {
+        return customerRepository.findByStatusAndCustomerIdGreaterThan(status);
+    }
 }
