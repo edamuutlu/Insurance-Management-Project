@@ -171,6 +171,75 @@ body .page-wrapper .wrapper .card .card-body .row .col-2 .input-group .label .wa
   max-width: 20ch;
   word-wrap: break-word;
 }
+body .page-wrapper .wrapper .card .card-body .row .col-2 .input-group .label .warning-pass {
+  font-size: 14px;
+  margin-left: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #e30000;
+  visibility: hidden;
+}
+body .page-wrapper .wrapper .card .card-body .row .col-2 .input-group .label .warning-pass p {
+  margin: 0;
+  padding-left: 3px;
+  font-size: 12px;
+}
+@media (max-width: 767px) {
+  body .page-wrapper .wrapper .card .card-body .row .col-2 .input-group .label .warning-pass {
+    visibility: visible;
+  }
+}
+body .page-wrapper .wrapper .card .card-body .row .col-2 .input-group .label #pswd_info {
+  position: absolute;
+  top: -35%;
+  right: -260px;
+  width: 250px;
+  padding: 15px;
+  background: #fefefe;
+  font-size: 0.875em;
+  border-radius: 5px;
+  box-shadow: 0 1px 3px #ccc;
+  border: 1px solid #ddd;
+}
+body .page-wrapper .wrapper .card .card-body .row .col-2 .input-group .label #pswd_info p {
+  margin: 0 0 10px 0;
+  padding: 0;
+  font-weight: 600;
+  font-size: 15px;
+}
+body .page-wrapper .wrapper .card .card-body .row .col-2 .input-group .label #pswd_info ul {
+  padding-left: 0 !important;
+  margin: 0;
+}
+body .page-wrapper .wrapper .card .card-body .row .col-2 .input-group .label #pswd_info ul li {
+  display: flex;
+  align-items: center;
+  color: #e30000;
+  margin-bottom: 8px;
+}
+body .page-wrapper .wrapper .card .card-body .row .col-2 .input-group .label #pswd_info ul li p {
+  margin: 0;
+  padding-left: 3px;
+  font-size: 12px;
+}
+body .page-wrapper .wrapper .card .card-body .row .col-2 .input-group .label #pswd_info:before {
+  content: "▲";
+  position: absolute;
+  top: 45%;
+  left: -5%;
+  font-size: 14px;
+  line-height: 14px;
+  color: #ddd;
+  text-shadow: none;
+  display: block;
+  rotate: -90deg;
+}
+@media (max-width: 767px) {
+  body .page-wrapper .wrapper .card .card-body .row .col-2 .input-group .label #pswd_info {
+    visibility: hidden;
+  }
+}
 body .page-wrapper .wrapper .card .card-body .row .col-2 .input-group input {
   outline: none;
   margin: 0;
@@ -668,13 +737,19 @@ body .user-page-wrapper .user-page-main .user-page .user-insurances-admin .card 
 body .user-page-wrapper .user-page-main .user-page .user-insurances-admin .card .table td .badge:hover {
   background-color: rgba(13, 110, 253, 0.7411764706) !important;
 }
+body .user-page-wrapper .user-page-main .user-page .user-insurances-admin .card .table .balance-td {
+    font-size: 14px;
+    max-width: 11ch;
+    word-wrap: break-word;
+    text-align: center;
+}
 body .user-page-wrapper .user-page-main .user-page .user-insurances-admin .card .table td .Balance {
     border: none;
     background: #e9880b;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display: inline-block;
     font-size: 14px;
+    width: 75%;
+    font-weight: 500;
     transition: ease 0.3s all;
 }
 body .user-page-wrapper .user-page-main .user-page .user-insurances-admin .card .table td .Balance:hover{
@@ -726,6 +801,39 @@ body .user-page-wrapper .user-page-main .user-page .user-insurances-admin .card 
 }
 body .user-page-wrapper .user-page-main .user-page .user-insurances-admin .card .table th {
   text-align: center;
+}
+body .icon-attention {
+  border: none;
+  padding-bottom: 5px;
+}
+body .icon-attention .icon {
+  font-size: 140px !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  color: #fd5336;
+}
+
+body .modal-body .row h5 {
+  text-align: center;
+  font-size: 23px;
+  font-weight: 600;
+  color: #615959;
+}
+body .modal-body .row p {
+  text-align: center;
+  font-size: 18px;
+  padding-top: 5px;
+  opacity: 0.7;
+}
+
+body .footer-button {
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 0;
 }
 body footer {
   background-color: rgba(15, 15, 15, 0.7960784314);

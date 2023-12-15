@@ -7,6 +7,14 @@ myApp.controller("rootController", ["$scope", "$http", function($scope) {
 	$scope.closeModal = function() {
 		$('#myModal').modal('hide');
 	};
+	$scope.openDeleteModal = function(customerID) {
+		$('#DeleteModal').modal('show');
+		console.log(customerID);
+		var customerId = customerID;
+	};
+	$scope.closeDeleteModal = function() {
+		$('#DeleteModal').modal('hide');
+	};
 
 	$scope.carKdv = carKdv;
 	$scope.homeKdv = homeKdv;

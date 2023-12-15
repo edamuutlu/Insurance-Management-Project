@@ -7,17 +7,18 @@
 	<title>Customer Registration Form</title>
 		<link rel="icon" type="image/x-icon" th:href="@{/img/Happy-favicon.png}" href="/src/main/resources/static/img/Happy-favicon.png">
 
-	<!-- Bootsrapt -->
-	<link rel="stylesheet" href="" th:href="@{/css/bootstrap.min.css}">
-	<!-- İcon -->
-	<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-	<!-- CSS -->
-	<link rel="stylesheet" th:href="@{/css/register.css}" href="src/main/resources/static/css/register.css">
-	<!-- Angularjs -->
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+	 <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- İcon -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <!-- CSS -->
+    <link rel="stylesheet" th:href="@{/css/register.css}" href="src/main/resources/static/css/register.css">
+    <!-- Angularjs -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
 	<!-- jQuery -->
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-	<script th:src="@{/js/custom.js}"></script>
 
 </head>
 
@@ -78,12 +79,12 @@
 										<div class="warning"
 											ng-show="myForm.firstname.$error.required && myForm.firstname.$touched">
 											<i class='bx bxs-error-alt'></i>
-											Required.
+											<p>Required</p>
 										</div>
 										<div class="warning"
 											ng-show="myForm.firstname.$error.pattern && myForm.firstname.$dirty">
 											<i class='bx bxs-error-alt'></i>
-											Only letters can be used.
+											<p>Only letters can be used</p>
 										</div>
 									</label>
 									<input type="text" ng-model="firstname" ng-pattern="/^[a-zA-ZçÇğĞıİöÖşŞüÜ\s]*$/"
@@ -98,12 +99,12 @@
 										<div class="warning"
 											ng-show="myForm.lastname.$error.required && myForm.lastname.$touched">
 											<i class='bx bxs-error-alt'></i>
-											Required.
+											<p>Required</p>
 										</div>
 										<div class="warning"
 											ng-show="myForm.lastname.$error.pattern && myForm.lastname.$dirty">
 											<i class='bx bxs-error-alt'></i>
-											Only letters can be used.
+											<p>Only letters can be used</p>
 										</div>
 									</label>
 									<input type="text" ng-model="lastname" ng-pattern="/^[a-zA-ZçÇğĞıİöÖşŞüÜ\s]*$/"
@@ -120,11 +121,11 @@
 										<div class="txt">T.C.</div>
 										<div class="warning" ng-show="myForm.tc.$error.required && myForm.tc.$touched">
 											<i class='bx bxs-error-alt'></i>
-											Required.
+											<p>Required</p>
 										</div>
 										<div class="warning" ng-show="myForm.tc.$error.pattern && myForm.tc.$dirty">
 											<i class='bx bxs-error-alt'></i>
-											T.C. must have 11 digits.
+											<p>T.C. must have 11 digits</p>
 										</div>
 									</label>
 									<input type="number" ng-model="tc" ng-required="true" class="input-4" id="tc"
@@ -138,7 +139,7 @@
 										<div class="txt">Email</div>
 										<div class="warning" ng-show="myForm.email.$invalid && myForm.email.$touched">
 											<i class='bx bxs-error-alt'></i>
-											Enter a valid email address.
+											<p>Enter a valid email address</p>
 										</div>
 									</label>
 									<input type="email" ng-model="email" ng-required="true" class="input-4" id="email"
@@ -166,11 +167,14 @@
 								<div class="input-group">
 									<label class="label">
 										<div class="txt">Password</div>
-										<div class="warning" ng-show="passwordError">
-											<i class='bx bxs-error-alt'></i>
-											<p>{{ passwordError }}</p>
-										</div>
-										<div class="warning" ng-show="myForm.password.$error.required && myForm.password.$touched">
+										<div class="col-12" id="pswd_info" ng-show="myForm.password.$invalid && myForm.password.$touched || passwordError">
+                                            <p>Password must meet the following requirements:</p>
+                                            <ul>
+                                            <li id="length" class="invalid" ng-show="myForm.password.$invalid && myForm.password.$touched"><i class='bx bxs-error-alt'></i><p>Required</p></li>
+                                            <li id="length" class="invalid" ng-show="passwordError"><i class='bx bxs-error-alt'></i><p>{{ passwordError }}</p></li>
+                                            </ul>
+                                        </div>
+										<div class="warning-pass" ng-show="myForm.password.$error.required && myForm.password.$touched">
 											<i class='bx bxs-error-alt'></i>
 											Required.
 										</div>
@@ -205,11 +209,13 @@
 										<div class="txt">Phone Number</div>
 										<div class="warning"
 											ng-show="myForm.phoneNumber.$error.required && myForm.phoneNumber.$touched">
-											Required.
+											<i class='bx bxs-error-alt'></i>
+											<p>Required</p>
 										</div>
 										<div class="warning"
 											ng-show="myForm.phoneNumber.$error.pattern && myForm.phoneNumber.$dirty">
-											Phone number must have 11 digits.
+											<i class='bx bxs-error-alt'></i>
+											<p>Phone number must have 11 digits.</p>
 										</div>
 									</label>
 									<input type="number" ng-model="phoneNumber" ng-required="true" class="input-4"

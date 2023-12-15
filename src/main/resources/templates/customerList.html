@@ -105,6 +105,29 @@
 			</div>
 		</div>
 	</div>
+	
+	<!--Delete Modal-->
+  <div class="modal fade" id="DeleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header icon-attention">
+          <div class="icon">
+            <i class='bx bx-error-circle'></i>
+          </div>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+              <h5>Are you sure to delete this user?</h5><br>
+              <p>You won't be able to revert this!</p>
+            </div>
+        </div>
+        <div class="modal-footer footer-button">
+          <a th:href="@{/deleteCustomer/{customerId}(customerId=${customerId})}"><button type="button" class="btn btn-primary" data-bs-dismiss="modal">Yes, delete it!</button></a>
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal" ng-click="closeDeleteModal()">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
 	<!-- JavaScript değişkenlerini tanımlamak için Thymeleaf ile inline kod bloğu kullanılmaktadır -->
 	<script th:inline="javascript">
@@ -128,30 +151,30 @@
 	                  <li class="text-muted mt-1"><span class="text-black">Date: </span><span th:text="${now}"></span></li>
 	                </ul>
 	                <hr>
-	                <div class="col-xl-10">
+	                <div class="col-xl-9">
 	                  <p>Car Insurance Total</p>
 	                </div>
-	                <div class="col-xl-2">
+	                <div class="col-xl-3">
 	                  <p class="float-end" th:text="${#numbers.formatDecimal(carBalances[0][2], 1, 'COMMA', 2, 'POINT') + ' ₺'}">$199.00
 	                  </p>
 	                </div>
 	                <hr>
 	              </div>
 	              <div class="row">
-	                <div class="col-xl-10">
+	                <div class="col-xl-9">
 	                  <p>Home Insurance Total</p>
 	                </div>
-	                <div class="col-xl-2">
+	                <div class="col-xl-3">
 	                  <p class="float-end" th:text="${#numbers.formatDecimal(homeBalances[0][2], 1, 'COMMA', 2, 'POINT') + ' ₺'}">$100.00
 	                  </p>
 	                </div>
 	                <hr>
 	              </div>
 	              <div class="row">
-	                <div class="col-xl-10">
+	                <div class="col-xl-9">
 	                  <p>Health Insurance Total</p>
 	                </div>
-	                <div class="col-xl-2">
+	                <div class="col-xl-3">
 	                  <p class="float-end" th:text="${#numbers.formatDecimal(healthBalances[0][2], 1, 'COMMA', 2, 'POINT') + ' ₺'}">$10.00
 	                  </p>
 	                </div>
@@ -188,30 +211,30 @@
 	                  <li class="text-muted mt-1"><span class="text-black">Date: </span><span th:text="${now}"></span></li>
 	                </ul>
 	                <hr>
-	                <div class="col-xl-10">
+	                <div class="col-xl-9">
 	                  <p>Car Insurance Total</p>
 	                </div>
-	                <div class="col-xl-2">
+	                <div class="col-xl-3">
 	                  <p class="float-end" th:text="${#numbers.formatDecimal(carBalances[1][2], 1, 'COMMA', 2, 'POINT') + ' ₺'}">$199.00
 	                  </p>
 	                </div>
 	                <hr>
 	              </div>
 	              <div class="row">
-	                <div class="col-xl-10">
+	                <div class="col-xl-9">
 	                  <p>Home Insurance Total</p>
 	                </div>
-	                <div class="col-xl-2">
+	                <div class="col-xl-3">
 	                  <p class="float-end" th:text="${#numbers.formatDecimal(homeBalances[1][2], 1, 'COMMA', 2, 'POINT') + ' ₺'}">$100.00
 	                  </p>
 	                </div>
 	                <hr>
 	              </div>
 	              <div class="row">
-	                <div class="col-xl-10">
+	                <div class="col-xl-9">
 	                  <p>Health Insurance Total</p>
 	                </div>
-	                <div class="col-xl-2">
+	                <div class="col-xl-3">
 	                  <p class="float-end" th:text="${#numbers.formatDecimal(healthBalances[1][2], 1, 'COMMA', 2, 'POINT') + ' ₺'}">$10.00
 	                  </p>
 	                </div>
@@ -247,30 +270,30 @@
 	                  <li class="text-muted mt-1"><span class="text-black">Date: </span><span th:text="${now}"></span></li>
 	                </ul>
 	                <hr>
-	                <div class="col-xl-10">
+	                <div class="col-xl-9">
 	                  <p>Car Insurance Total</p>
 	                </div>
-	                <div class="col-xl-2">
+	                <div class="col-xl-3">
 	                  <p class="float-end" th:text="${#numbers.formatDecimal(carBalances[2][2], 1, 'COMMA', 2, 'POINT') + ' ₺'}">$199.00
 	                  </p>
 	                </div>
 	                <hr>
 	              </div>
 	              <div class="row">
-	                <div class="col-xl-10">
+	                <div class="col-xl-9">
 	                  <p>Home Insurance Total</p>
 	                </div>
-	                <div class="col-xl-2">
+	                <div class="col-xl-3">
 	                  <p class="float-end" th:text="${#numbers.formatDecimal(homeBalances[2][2], 1, 'COMMA', 2, 'POINT') + ' ₺'}">$100.00
 	                  </p>
 	                </div>
 	                <hr>
 	              </div>
 	              <div class="row">
-	                <div class="col-xl-10">
+	                <div class="col-xl-9">
 	                  <p>Health Insurance Total</p>
 	                </div>
-	                <div class="col-xl-2">
+	                <div class="col-xl-3">
 	                  <p class="float-end" th:text="${#numbers.formatDecimal(healthBalances[2][2], 1, 'COMMA', 2, 'POINT') + ' ₺'}">$10.00
 	                  </p>
 	                </div>
@@ -291,7 +314,7 @@
 	  </div>
 
 	<div class="user-page-wrapper">
-		<div class="user-page-main pt-5">
+		<div class="user-page-main" style="margin: 74px auto;">
 			<div class="user-title">
 				<div class="username-settings">
 					<a th:href="@{'/index'}">
@@ -360,9 +383,8 @@
 											<td><button class="mx-auto"><a
 														th:href="@{/editCustomer/{customerId}(customerId=${c.customerId})}"><i
 															class="bx bxs-edit edit"></i></a></button></td>
-											<td><button class="mx-auto"><a
-														th:href="@{/deleteCustomer/{customerId}(customerId=${c.customerId})}"><i
-															class="bx bx-trash trash"></i></a></button></td>
+											<td><button class="mx-auto" ng-click="openDeleteModal('${c.customerId}')"><a>
+												<i class="bx bx-trash trash"></i></a></button></td>
 											<td><button class="mx-auto">
 													<a th:href="@{'/userPage/' + ${c.username} + '/' + ${'admin'}}">
 														<i class='bx bx-dots-horizontal-rounded dots'></i>
@@ -425,7 +447,7 @@
 											<td th:text="${company.phoneNumber}"></td>
 											<td th:text="${company.email}"></td>
 											<td th:text="${company.serviceFee}"></td>
-											<td class="mx-auto px-auto">
+											<td class="balance-td">
 												<button type="button" class="btn btn-primary Balance" data-bs-toggle="modal" th:data-bs-target="'#staticBackdrop-' + ${iterStat.index}">
 													Balance Sheet Details
 												 </button>
