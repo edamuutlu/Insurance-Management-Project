@@ -38,6 +38,7 @@ import com.insurance.mgmt.service.CompanyService;
 import com.insurance.mgmt.service.CustomerService;
 import com.insurance.mgmt.service.HealthInsuranceService;
 import com.insurance.mgmt.service.HomeInsuranceService;
+import com.insurance.mgmt.service.InsuranceService;
 import com.insurance.mgmt.service.KdvService;
 import com.insurance.mgmt.service.address.ProvinceService;
 import com.insurance.mgmt.util.CalculateMethods;
@@ -72,6 +73,9 @@ public class CarController {
 	
 	@Autowired
 	ProvinceService provinceService;
+	
+	@Autowired
+	InsuranceService insuranceService;
 		
 	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 	
@@ -218,18 +222,21 @@ public class CarController {
 			model.addAttribute("insurance", insurances);
 			return "redirect:/seeCarInsuranceDetails/" + oldInsurance.getCarId();
 		}
+	
+		//LocalDateTime now = LocalDateTime.now();
+		//LocalDateTime endDate = now.plusDays(oldInsurance.getPeriod());
 
-		CarInsurance newInsurance = new CarInsurance();
-		LocalDateTime now = LocalDateTime.now();
-		LocalDateTime endDate = now.plusDays(oldInsurance.getPeriod());
-
-		Kdv kdv = kdvService.getProductTypeById(2);
+		Kdv kdv = kdvService.getProductTypeById(1);
 		int kdvRate = kdv.getKdvRate();
 		LocalDate birthDate = LocalDate.parse(customer.getBirth());
 		LocalDate currentDate = LocalDate.now();
         int age = Period.between(birthDate, currentDate).getYears();
 		double offer = CalculateMethods.calculateCarInsurance(car, age, kdvRate);
 	
+		int lastInsertedId = insuranceService.saveCarInsurance(oldInsurance, kdvRate, offer);
+		CarInsurance newInsurance = carInsuranceService.getInsuranceById(lastInsertedId);
+		/*
+		CarInsurance newInsurance = new CarInsurance();
 		newInsurance.setInsuranceType(oldInsurance.getInsuranceType());
 		newInsurance.setCustomerId(oldInsurance.getCustomerId());
 		newInsurance.setCarId(oldInsurance.getCarId());
@@ -240,8 +247,8 @@ public class CarController {
 		newInsurance.setResult("Accepted");
 		newInsurance.setPeriod(oldInsurance.getPeriod()); 
 		newInsurance.setKdv(kdvRate); 
-		
 		carInsuranceService.save(newInsurance);
+		*/
 		
 		List<Company> companyList = companyService.getAllCompany();
 		model.addAttribute("companyList", companyList);
@@ -279,7 +286,7 @@ public class CarController {
 		model.addAttribute(refund);
 		carInsuranceService.save(insurance);
 
-		Kdv kdv = kdvService.getProductTypeById(2);
+		Kdv kdv = kdvService.getProductTypeById(1);
 		
 		Company company = companyService.findByCompanyId(insurance.getCompanyId());
 		model.addAttribute("company", company);

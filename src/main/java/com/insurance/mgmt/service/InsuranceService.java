@@ -6,7 +6,9 @@ import java.time.format.DateTimeFormatter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
+import com.insurance.mgmt.entity.CarInsurance;
 import com.insurance.mgmt.entity.Health;
+import com.insurance.mgmt.entity.HomeInsurance;
 
 @Service
 public class InsuranceService {
@@ -32,7 +34,40 @@ public class InsuranceService {
        int lastInsertedId = jdbcTemplate.queryForObject("SELECT LAST_INSERT_ID()", int.class); 
        return lastInsertedId;
     }
+    
+    public int saveHomeInsurance(HomeInsurance insurance, int kdvRate, double offer) {
+        String sql = "INSERT INTO home_insurance (insurance_type, customer_id, home_id, company_id, start_date, end_date, days_diff, refund, kdv, period, offer, status) " +
+                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+		LocalDateTime endDate = now.plusDays(insurance.getPeriod());
 
+        jdbcTemplate.update(sql, "Home", insurance.getCustomerId(), insurance.getHomeId(), 0,
+        		now.format(formatter), endDate.format(formatter), 0, 0, kdvRate, insurance.getPeriod(),
+                offer, 1);
+        
+     // Son eklenen kimlik değerini almak için
+       int lastInsertedId = jdbcTemplate.queryForObject("SELECT LAST_INSERT_ID()", int.class); 
+       return lastInsertedId;
+    }
+    
+    public int saveCarInsurance(CarInsurance insurance, int kdvRate, double offer) {
+        String sql = "INSERT INTO car_insurance (insurance_type, customer_id, car_id, company_id, start_date, end_date, days_diff, refund, kdv, period, offer, status) " +
+                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+		LocalDateTime endDate = now.plusDays(insurance.getPeriod());
+
+        jdbcTemplate.update(sql, "Car", insurance.getCustomerId(), insurance.getCarId(), 0,
+        		now.format(formatter), endDate.format(formatter), 0, 0, kdvRate, insurance.getPeriod(),
+                offer, 1);
+        
+     // Son eklenen kimlik değerini almak için
+       int lastInsertedId = jdbcTemplate.queryForObject("SELECT LAST_INSERT_ID()", int.class); 
+       return lastInsertedId;
+    }
 
     public void updateData(int kdv, int productType) {
         String sql = "UPDATE kdv SET kdv_rate = ? WHERE product_type = ?";

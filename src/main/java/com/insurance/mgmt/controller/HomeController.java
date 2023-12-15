@@ -37,6 +37,7 @@ import com.insurance.mgmt.service.CustomerService;
 import com.insurance.mgmt.service.HealthInsuranceService;
 import com.insurance.mgmt.service.HomeInsuranceService;
 import com.insurance.mgmt.service.HomeService;
+import com.insurance.mgmt.service.InsuranceService;
 import com.insurance.mgmt.service.KdvService;
 import com.insurance.mgmt.service.address.DistrictService;
 import com.insurance.mgmt.service.address.NeighbourhoodService;
@@ -77,6 +78,9 @@ public class HomeController {
 	
 	@Autowired
 	CompanyService companyService;
+	
+	@Autowired
+	InsuranceService insuranceService;
 
 	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 
@@ -253,8 +257,8 @@ public class HomeController {
 			return "redirect:/seeHomeInsuranceDetails/" + oldInsurance.getHomeId();
 		}
 
-		LocalDateTime now = LocalDateTime.now();
-		LocalDateTime endDate = now.plusDays(oldInsurance.getPeriod());
+		//LocalDateTime now = LocalDateTime.now();
+		//LocalDateTime endDate = now.plusDays(oldInsurance.getPeriod());
 
 		// Bina inşa yılına göre bina yaşı hesaplanmaktadır
 		int currentYear = Calendar.getInstance().get(Calendar.YEAR);
@@ -265,6 +269,9 @@ public class HomeController {
 		int kdvRate = kdv.getKdvRate();
 		double offer = CalculateMethods.calculateHomeInsurance(home, kdvRate);
 
+		int lastInsertedId = insuranceService.saveHomeInsurance(oldInsurance, kdvRate, offer);
+		HomeInsurance newInsurance = homeInsuranceService.getInsuranceById(lastInsertedId);
+		/*
 		HomeInsurance newInsurance = new HomeInsurance();
 		newInsurance.setInsuranceType(oldInsurance.getInsuranceType());
 		newInsurance.setCustomerId(oldInsurance.getCustomerId());
@@ -277,6 +284,7 @@ public class HomeController {
 		newInsurance.setPeriod(oldInsurance.getPeriod()); 
 		newInsurance.setCompanyId(oldInsurance.getCompanyId());
 		homeInsuranceService.save(newInsurance);
+		*/
 		
 		List<Company> companyList = companyService.getAllCompany();
 		model.addAttribute("companyList", companyList);

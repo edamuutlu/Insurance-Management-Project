@@ -257,7 +257,6 @@ public class HealthController {
 		double offer = CalculateMethods.calculateHealthInsurance(health, kdvRate, riskFactor);
 		
 		int lastInsertedId = insuranceService.saveHealthInsurance(health, kdvRate, offer);
-		System.out.println(lastInsertedId);
 		HealthInsurance newInsurance = healthInsuranceService.getInsuranceById(lastInsertedId);
 		/*
 		 * HealthInsurance newInsurance = new HealthInsurance();
