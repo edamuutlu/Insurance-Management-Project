@@ -179,6 +179,7 @@ body .page-wrapper .wrapper .card .card-body .row .col-2 .input-group .label .wa
   align-items: center;
   color: #e30000;
   visibility: hidden;
+  display: none;
 }
 body .page-wrapper .wrapper .card .card-body .row .col-2 .input-group .label .warning-pass p {
   margin: 0;
@@ -188,6 +189,7 @@ body .page-wrapper .wrapper .card .card-body .row .col-2 .input-group .label .wa
 @media (max-width: 767px) {
   body .page-wrapper .wrapper .card .card-body .row .col-2 .input-group .label .warning-pass {
     visibility: visible;
+    display: flex;
   }
 }
 body .page-wrapper .wrapper .card .card-body .row .col-2 .input-group .label #pswd_info {
@@ -821,7 +823,7 @@ body .modal-body .row h5 {
   font-weight: 600;
   color: #615959;
 }
-body .modal-body .row p {
+body .modal-body .row .warning-p {
   text-align: center;
   font-size: 18px;
   padding-top: 5px;

@@ -178,6 +178,10 @@
 											<i class='bx bxs-error-alt'></i>
 											Required.
 										</div>
+										<div class="warning-pass" ng-show="passwordError">
+											<i class='bx bxs-error-alt'></i>
+											<p>{{ passwordError }}</p>
+										</div>
 									</label>
 									<input type="password" ng-model="password" ng-required="true" id="password"
 										class="input-4" name="password" ng-change="validatePassword()">
