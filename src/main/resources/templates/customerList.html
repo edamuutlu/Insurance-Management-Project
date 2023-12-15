@@ -122,7 +122,7 @@
             </div>
         </div>
         <div class="modal-footer footer-button">
-          <a th:href="@{/deleteCustomer/{customerId}(customerId=${customerId})}"><button type="button" class="btn btn-primary" data-bs-dismiss="modal">Yes, delete it!</button></a>
+          <a id="deleteLink" th:href="@{/deleteCustomer/{customerId}(customerId=${customerId})}"><button type="button" class="btn btn-primary" data-bs-dismiss="modal">Yes, delete it!</button></a>
           <button type="button" class="btn btn-danger" data-bs-dismiss="modal" ng-click="closeDeleteModal()">Cancel</button>
         </div>
       </div>
@@ -383,7 +383,7 @@
 											<td><button class="mx-auto"><a
 														th:href="@{/editCustomer/{customerId}(customerId=${c.customerId})}"><i
 															class="bx bxs-edit edit"></i></a></button></td>
-											<td><button class="mx-auto" ng-click="openDeleteModal('${c.customerId}')"><a>
+											<td><button class="mx-auto" th:onclick="'openDeleteModal(\'' + ${c.customerId} + '\')'"><a>
 												<i class="bx bx-trash trash"></i></a></button></td>
 											<td><button class="mx-auto">
 													<a th:href="@{'/userPage/' + ${c.username} + '/' + ${'admin'}}">
