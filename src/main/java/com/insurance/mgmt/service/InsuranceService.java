@@ -1,7 +1,12 @@
 package com.insurance.mgmt.service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
+
+import com.insurance.mgmt.entity.Health;
 
 @Service
 public class InsuranceService {
@@ -10,6 +15,24 @@ public class InsuranceService {
     public InsuranceService(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
+    
+    public int saveHealthInsurance(Health health, int kdvRate, double offer) {
+        String sql = "INSERT INTO health_insurance (insurance_type, customer_id, health_id, company_id, start_date, end_date, days_diff, refund, kdv, period, offer, status) " +
+                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+		LocalDateTime endDate = now.plusDays(health.getPeriod());
+
+        jdbcTemplate.update(sql, "Health", health.getCustomerId(), health.getHealthId(), 0,
+        		now.format(formatter), endDate.format(formatter), 0, 0, kdvRate, health.getPeriod(),
+                offer, 1);
+        
+     // Son eklenen kimlik değerini almak için
+       int lastInsertedId = jdbcTemplate.queryForObject("SELECT LAST_INSERT_ID()", int.class); 
+       return lastInsertedId;
+    }
+
 
     public void updateData(int kdv, int productType) {
         String sql = "UPDATE kdv SET kdv_rate = ? WHERE product_type = ?";

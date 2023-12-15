@@ -36,6 +36,7 @@ import com.insurance.mgmt.service.CustomerService;
 import com.insurance.mgmt.service.HealthInsuranceService;
 import com.insurance.mgmt.service.HealthService;
 import com.insurance.mgmt.service.HomeInsuranceService;
+import com.insurance.mgmt.service.InsuranceService;
 import com.insurance.mgmt.service.JobsService;
 import com.insurance.mgmt.service.KdvService;
 import com.insurance.mgmt.service.address.ProvinceService;
@@ -72,6 +73,9 @@ public class HealthController {
 	
 	@Autowired
 	ProvinceService provinceService;
+	
+	@Autowired
+	InsuranceService insuranceService;
 
 	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 
@@ -243,7 +247,7 @@ public class HealthController {
 		Customer customer = customerService.getCustomerById(health.getCustomerId());
 
 		LocalDateTime now = LocalDateTime.now();
-		LocalDateTime endDate = now.plusDays(health.getPeriod());
+		//LocalDateTime endDate = now.plusDays(health.getPeriod());
 
 		Kdv kdv = kdvService.getProductTypeById(3);
 		int kdvRate = kdv.getKdvRate();
@@ -251,8 +255,12 @@ public class HealthController {
 		Jobs job = jobsService.getJobById(health.getJob());
 		int riskFactor = job.getRiskFactor();
 		double offer = CalculateMethods.calculateHealthInsurance(health, kdvRate, riskFactor);
-
-		HealthInsurance newInsurance = new HealthInsurance();
+		
+		int lastInsertedId = insuranceService.saveHealthInsurance(health, kdvRate, offer);
+		System.out.println(lastInsertedId);
+		HealthInsurance newInsurance = healthInsuranceService.getInsuranceById(lastInsertedId);
+		/*
+		 * HealthInsurance newInsurance = new HealthInsurance();
 		newInsurance.setInsuranceType("Health");
 		newInsurance.setCustomerId(health.getCustomerId());
 		newInsurance.setHealthId(health.getHealthId());
@@ -263,6 +271,7 @@ public class HealthController {
 		newInsurance.setOffer(offer);
 		newInsurance.setStatus(1);
 		healthInsuranceService.save(newInsurance);
+		*/
 
 		// Sağlık bilgilerinin geçerlilik süresi set edilmektedir
 		LocalDateTime deadlineDate = now.plusDays(30);
