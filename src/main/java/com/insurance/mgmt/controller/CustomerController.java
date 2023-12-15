@@ -142,6 +142,11 @@ public class CustomerController {
 		}
 
 		model.addAttribute("allInsurances", allInsurances);
+		
+		/*DISTINCT ile sigorta tipine göre listelenmek istenirse
+		List<String> productTypes = insuranceRepo.getAllProductType();
+		System.out.println(productTypes);
+		model.addAttribute("productTypes", productTypes);*/
 
 		// Sigorta tipine göre şirket bilançoları
 		// Car Balances
