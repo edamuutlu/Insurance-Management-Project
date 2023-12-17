@@ -31,7 +31,6 @@ import com.insurance.mgmt.entity.Company;
 import com.insurance.mgmt.entity.Customer;
 import com.insurance.mgmt.entity.Kdv;
 import com.insurance.mgmt.entity.address.Province;
-import com.insurance.mgmt.jdbcTemplate.DatabaseService;
 import com.insurance.mgmt.service.CarInsuranceService;
 import com.insurance.mgmt.service.CarService;
 import com.insurance.mgmt.service.CompanyService;
@@ -64,9 +63,6 @@ public class CarController {
 	
 	@Autowired
 	KdvService kdvService;
-	
-	@Autowired
-	DatabaseService databaseService;
 	
 	@Autowired
 	CompanyService companyService;

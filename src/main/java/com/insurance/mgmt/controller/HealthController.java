@@ -137,6 +137,8 @@ public class HealthController {
 			model.addAttribute("showHealthAlert", true);
 			model.addAttribute("customerId", idParam);
 			model.addAttribute("health", health);
+			Customer customer = customerService.getCustomerById(idParam);
+			model.addAttribute("customer", customer);
 
 			return "healthInsuranceForm";
 		}
@@ -223,6 +225,8 @@ public class HealthController {
 	public String healthInsuranceUpdate(@PathVariable("healthId") int healthId, Model model) {
 
 		Health health = healthService.getHealthById(healthId);
+		Customer customer = customerService.getCustomerById(health.getCustomerId());
+		model.addAttribute(customer);
 		model.addAttribute(health);
 
 		List<HealthInsurance> insurances = healthInsuranceService.findByStatusAndResultAndHealthId(1, "Accepted",

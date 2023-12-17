@@ -14,5 +14,6 @@ public interface ICarRepository extends JpaRepository<Car, Integer> {
 	List<Car> findByStatusAndCustomerId(@Param("status") int status, @Param("customerId") int customerId);
 
 	@Query("SELECT c FROM Car c WHERE c.status = :status AND c.plate1 = :plate1 AND c.plate2 = :plate2 AND c.plate3 = :plate3")
-	List<Car> findByStatusAndPlate1AndPlate2AndPlate3(@Param("status") int status, @Param("plate1") int plate1, @Param("plate2") String plate2, @Param("plate3") int plate3);
+	List<Car> findByStatusAndPlate1AndPlate2AndPlate3(@Param("status") int status, @Param("plate1") int plate1, @Param("plate2") String plate2, 
+			@Param("plate3") int plate3);
 }

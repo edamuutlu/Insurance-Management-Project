@@ -90,7 +90,7 @@ public class LoginController {
 		} else if (loggedCustomer.getPassword().equals(customer.getPassword())) {
 			if (loggedCustomer.getUsername().equals("admin")) {
 				model.addAttribute("customer", customerList);
-			    return "redirect:/customerList";
+				return "redirect:/customerList";
 			} else {
 				model.addAttribute("customer", loggedCustomer);
 				// return "redirect:/customerInfo/" + customer.getUsername();
@@ -103,17 +103,19 @@ public class LoginController {
 
 	}
 
-	@RequestMapping(path = {"/userPage/{username}", "/userPage/{username}/{admin}"}, method = RequestMethod.GET)
-	public String userPage(@PathVariable("username") String username, @PathVariable(required = false) String admin , Model model) {
+	@RequestMapping(path = { "/userPage/{username}", "/userPage/{username}/{admin}" }, method = RequestMethod.GET)
+	public String userPage(@PathVariable("username") String username, @PathVariable(required = false) String admin,
+			Model model) {
 
 		Customer customer = customerService.findByUsername(username);
-		if(customer != null) {
+		if (customer != null) {
 			List<Health> health = healthService.findByStatusAndCustomerId(1, customer.getCustomerId());
 			List<Home> home = homeService.findByStatusAndCustomerId(1, customer.getCustomerId());
 			List<Car> car = carService.findByStatusAndCustomerId(1, customer.getCustomerId());
 
-			//CAR
-			List<CarInsurance> insurances = carInsuranceService.findByStatusAndCustomerIdAndResult(1, customer.getCustomerId(), "Accepted");
+			// CAR
+			List<CarInsurance> insurances = carInsuranceService.findByStatusAndCustomerIdAndResult(1,
+					customer.getCustomerId(), "Accepted");
 			ArrayList<Car> expiredCars = new ArrayList<>();
 
 			// Trafik poliçesinin süresinin bitip bitmediğini kontrol etme
@@ -165,38 +167,38 @@ public class LoginController {
 			model.addAttribute("healthInfoList", healthInfos);
 
 			// HOME
-			List<HomeInsurance> homeInsurances = homeInsuranceService.findByStatusAndCustomerIdAndResult(1, customer.getCustomerId(), "Accepted");
+			List<HomeInsurance> homeInsurances = homeInsuranceService.findByStatusAndCustomerIdAndResult(1,
+					customer.getCustomerId(), "Accepted");
 			ArrayList<Home> expiredHomes = new ArrayList<>();
 
 			// Poliçenin süresinin bitip bitmediğini kontrol etme
-			for (Home h : home) {
-				for (HomeInsurance insurance : homeInsurances) {
-					LocalDateTime endDateTime = LocalDateTime.parse(insurance.getEndDate(), formatter);
+			for (HomeInsurance insurance : homeInsurances) {
+				LocalDateTime endDateTime = LocalDateTime.parse(insurance.getEndDate(), formatter);
 
-					if (now.isAfter(endDateTime)) {
-						expiredHomes.add(h);
-						model.addAttribute("showHomeText", true);
-						insurance.setResult("Expired");
-						homeInsuranceService.save(insurance);
-					}
+				if (now.isAfter(endDateTime)) {
+					Home expiredHome = homeService.getHomeById(insurance.getHomeId());
+					expiredHomes.add(expiredHome);
+					model.addAttribute("showHomeText", true);
+					insurance.setResult("Expired");
+					homeInsuranceService.save(insurance);
 				}
 			}
 
 			model.addAttribute("expiredHomes", expiredHomes);
 			model.addAttribute("home", home);
-			
-			if(admin == null){
+
+			if (admin == null) {
 				model.addAttribute("username", customer.getUsername());
-			}else if(admin.equals("admin")){
+			} else if (admin.equals("admin")) {
 				model.addAttribute("username", "admin");
 			}
-			
+
 			model.addAttribute("customer", customer);
 			model.addAttribute("health", health);
 			model.addAttribute("home", home);
 			model.addAttribute("car", car);
 		}
-		
+
 		return "userPage";
 	}
 }

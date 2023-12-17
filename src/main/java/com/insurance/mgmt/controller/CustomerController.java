@@ -26,10 +26,10 @@ import com.insurance.mgmt.entity.Customer;
 import com.insurance.mgmt.entity.Kdv;
 import com.insurance.mgmt.entity.address.District;
 import com.insurance.mgmt.entity.address.Province;
+import com.insurance.mgmt.repository.ICompanyRepository;
 import com.insurance.mgmt.repository.IInsuranceRepository;
 import com.insurance.mgmt.service.CarInsuranceService;
 import com.insurance.mgmt.service.CarService;
-import com.insurance.mgmt.service.CompanyService;
 import com.insurance.mgmt.service.CustomerService;
 import com.insurance.mgmt.service.HealthInsuranceService;
 import com.insurance.mgmt.service.HealthService;
@@ -74,9 +74,9 @@ public class CustomerController {
 
 	@Autowired
 	KdvService kdvService;
-
+	
 	@Autowired
-	CompanyService companyService;
+	ICompanyRepository companyRepository;
 
 	@Autowired
 	IInsuranceRepository insuranceRepo;
@@ -126,7 +126,7 @@ public class CustomerController {
 		model.addAttribute("homeKdv", homeKdv);
 		model.addAttribute("healthKdv", healthKdv);
 
-		List<Company> companyList = companyService.getAllCompany();
+		List<Company> companyList = companyRepository.getAllCompany();
 		model.addAttribute("company", companyList);
 
 		// Sigorta Detayların Hepsini Görüntülemek için

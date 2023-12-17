@@ -24,44 +24,44 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-	<!--	 Car Modal -->
-	<!--		<script>-->
+<!--		 Car Modal -->
+<!--			<script>-->
 
-	<!--			window.onload = function () {-->
-	<!--				$(document).ready(function () {-->
-	<!--					$('#carModal').modal('show');-->
-	<!--				});-->
-	<!--			};-->
+<!--				window.onload = function () {-->
+<!--					$(document).ready(function () {-->
+<!--						$('#carModal').modal('show');-->
+<!--					});-->
+<!--				};-->
 
-	<!--		</script>-->
-	<!--	 Health Modal 	-->
-	<!--	<script>-->
-	<!--	    window.onload = function () {-->
-	<!--	        var myModal = new bootstrap.Modal(document.getElementById('myModal'));-->
-	<!--	        myModal.show(); -->
+<!--			</script>-->
+<!--		 Health Modal 	-->
+<!--		<script>-->
+<!--		    window.onload = function () {-->
+<!--		        var myModal = new bootstrap.Modal(document.getElementById('myModal'));-->
+<!--		        myModal.show(); -->
 
-	<!--	        // İlk modalı göstermek için-->
-	<!--	        $('#expiredModal').modal('show');-->
+<!--		        // İlk modalı göstermek için-->
+<!--		        $('#expiredModal').modal('show');-->
 
-	<!--	        // Diğer modalı göstermek için-->
-	<!--	        $('#deadlineModal').modal('show');-->
-	<!--	    };-->
-	<!--	</script>-->
+<!--		        // Diğer modalı göstermek için-->
+<!--		        $('#deadlineModal').modal('show');-->
+<!--		    };-->
+<!--		</script>-->
 
-	<!--	 Home Modal -->
-	<!--	<script>-->
+<!--		 Home Modal -->
+<!--		<script>-->
 
-	<!--		window.onload = function () {-->
-	<!--			$(document).ready(function () {-->
-	<!--				$('#homeModal').modal('show');-->
-	<!--			});-->
-	<!--		};-->
+<!--			window.onload = function () {-->
+<!--				$(document).ready(function () {-->
+<!--					$('#homeModal').modal('show');-->
+<!--				});-->
+<!--			};-->
 
-	<!--	</script>-->
+<!--		</script>-->
 
 </head>
 
-<body ng-app="myApp" ng-controller="UserPageController">
+<body ng-app="myApp" ng-controller="UserPageModalController">
 	<!--Navbar-->
 	<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
 		<div class="container-fluid px-5">
@@ -114,7 +114,7 @@
 			</script>
 
 			<!-- Car Modal -->
-			<div class="modal fade" ng-controller="UserPageModalController" id="carModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+			<div class="modal fade" id="carModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
 				role="dialog" aria-labelledby="myModalTitle" aria-hidden="true" th:if="${showCarText}">
 				<div class="modal-dialog" role="document">
 					<div class="modal-content">
@@ -215,7 +215,7 @@
 
 
 			<div class="user-title">
-				<div class="username-settings">
+				<div class="username-settings" ng-controller="UserPageController">
 					<a ng-if="isAdmin == 'admin'" th:href="@{'/customerList'}">
 						<span class="badge text-bg-danger"><i class='bx bx-log-out'></i></span>
 					</a>
