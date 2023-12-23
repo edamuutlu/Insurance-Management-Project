@@ -205,6 +205,9 @@
                         <div class="button" type="submit" ng-disabled="myForm.$invalid">
                             <button class="btn btn-submit">Prepare My Offer</button>
                         </div>
+                        <div class="button" type="button" ng-disabled="myForm.$invalid">
+                            <a th:href="@{'/userPage/' + ${customer.username}}" class="btn btn-cancel">Cancel</a>
+                        </div>
                         <!-- alert -->
                         <div th:if="${showPlateAlert}" class="alert alert-warning" role="alert">
                             This license plate number is already registered!

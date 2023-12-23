@@ -21,43 +21,6 @@
 	<!-- Angularjs -->
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-	<script>
-		$(document).ready(function () {
-
-			$("#province").change(function () {
-				var provinceId = $("#province").val();
-				$("#district").empty();
-
-				// İlk olarak "Select District" seçeneğini ekliyoruz
-				var defaultOption = $("<option>").val("").text("Select District*");
-				$("#district").append(defaultOption);
-
-				for (var i = 0; i < districtList.length; i++) {
-					if (districtList[i].sehirid == provinceId) {
-						var option = $("<option>").val(districtList[i].id).text(districtList[i].ilceadi);
-						$("#district").append(option);
-					}
-				}
-			});
-
-			$("#district").change(function () {
-				var districtId = $("#district").val();
-				$("#neighbourhood").empty();
-
-				// İlk olarak "Select Neighbourhood" seçeneğini ekliyoruz
-				var defaultOption = $("<option>").val("").text("Select Neighbourhood*");
-				$("#neighbourhood").append(defaultOption);
-
-				for (var i = 0; i < neighbourhoodList.length; i++) {
-					if (neighbourhoodList[i].ilceId == districtId) {
-						var option = $("<option>").val(neighbourhoodList[i].mahalleId).text(neighbourhoodList[i].mahalleAdi);
-						$("#neighbourhood").append(option);
-					}
-				}
-			});
-		});
-	</script>
 </head>
 
 <body ng-app="myApp" ng-controller="homeInsuranceFormController">
@@ -169,6 +132,11 @@
 							</div>
 						</div>
 						<!-- Province - District - Neighbourhood -->
+						<script th:inline="javascript">
+								var provincesList = /*[[${getAllProvinces}]]*/[];
+								var districtList = /*[[${getAllDistricts}]]*/[];
+								var neighbourhoodList = /*[[${getAllNeighbourhoods}]]*/[];
+						</script>
 						<div class="row">
 							<div class="col-12">
 								<div class="input-group">
@@ -181,34 +149,24 @@
 										</div>
 									</label>
 									<div class="home-group">
-										<select class="form-select" name="province" id="province" ng-model="province"
-											ng-required="true" aria-label="Default select example">
-											<option value="" th:selected="${#fields.hasErrors('province')}">Select
-												Province*
-											</option>
-											<option th:each="province : ${getAllProvinces}" th:value="${province.id}"
-												th:text="${province.sehiradi}"></option>
-										</select>
-										<select class="form-select" name="district" id="district" ng-model="district"
-											ng-required="true" aria-label="Default select example">
-											<option value="" th:selected="${#fields.hasErrors('district')}">Select
-												District*
-											</option>
-										</select>
-										<select class="form-select" name="neighbourhood" id="neighbourhood" ng-model="neighbourhood"
-											ng-required="true" aria-label="Default select example">
-											<option value="" th:selected="${#fields.hasErrors('neighbourhood')}">Select
-												Neighbourhood*
-											</option>
-										</select>
+										<select class="form-select" name="province" id="province" ng-model="province" ng-required="true" 
+											ng-options="province.id as province.sehiradi for province in provincesList track by province.id">
+										        <option value="">Select a Province</option>
+									    </select>
+
+										<select class="form-select" name="district" id="district" ng-model="district" ng-required="true" 
+									            ng-options="district.id as district.ilceadi for district in getDistricts(province) track by district.id">
+									        <option value="">Select a District</option>
+									    </select>
+									    
+										<select class="form-select" name="neighbourhood" id="neighbourhood" ng-model="neighbourhood" ng-required="true" 
+									        ng-options="neighbourhood.mahalleId as neighbourhood.mahalleAdi for neighbourhood in getNeighbourhoods(district) track by neighbourhood.mahalleId">
+									    <option value="">Select a Neighbourhood</option>
+									</select>
+
 									</div>
 								</div>
 							</div>
-							<script th:inline="javascript">
-								var districtList = /*[[${getAllDistricts}]]*/[];
-								var neighbourhoodList = /*[[${getAllNeighbourhoods}]]*/[];
-							</script>
-							
 							<!-- Number - Apartment -->
 							<div class="row">
 								<div class="col-2">
@@ -320,6 +278,9 @@
 							<div class="button" type="submit" ng-disabled="myForm.$invalid">
 								<button class="btn btn-submit">Prepare My Offer</button>
 							</div>
+							<div class="button" type="button" ng-disabled="myForm.$invalid">
+                            <a th:href="@{'/userPage/' + ${customer.username}}" class="btn btn-cancel">Cancel</a>
+                        	</div>
 							<!-- alert -->
 							<div class="alert alert-warning" role="alert" th:if="${showHomeAlert}">
 								This home address is already registered!

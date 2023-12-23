@@ -67,18 +67,6 @@
         <div class="wrapper">
             <div class="card">
                 <div class="card-body">
-                                <div class="username-settings">
-<!-- 					<a ng-if="isAdmin == 'admin'" th:href="@{'/userPage/' + ${c.username} + '/' + ${'admin'}}"> -->
-<!-- 						<span class="badge text-bg-secondary"><i class='bx bx-arrow-back'></i></span> -->
-<!-- 					</a> -->
-<!-- 					<a ng-if="isAdmin != 'admin'" th:href="@{'/userPage/' + ${c.username}}"> -->
-<!-- 						<span class="badge text-bg-secondary"><i class='bx bx-arrow-back'></i></span> -->
-<!-- 					</a> -->
-						<a th:href="@{'/userPage/' + ${customer.username}}">
-							<span class="badge text-bg-secondary"><i class='bx bx-arrow-back'></i></span>
-						</a>
-					<span class="username-text" th:text="${username}"></span>
-				</div>
                     <h2 class="title">Health Insurance Form</h2>
                     <span class="customer-id mb-3">Customer Id: <span th:text="${customerId}"></span></span>
                     <form th:action="@{/healthInfoRegister}" th:object="${health}" method="post" name="myForm" ng-submit="register()">
@@ -232,6 +220,9 @@
                         <!-- Submit -->
                         <div class="button" type="submit" ng-disabled="myForm.$invalid">
                             <button class="btn btn-submit">Prepare My Offer</button>
+                        </div>
+                        <div class="button" type="button" ng-disabled="myForm.$invalid">
+                            <a th:href="@{'/userPage/' + ${customer.username}}" class="btn btn-cancel">Cancel</a>
                         </div>
                         <!-- alert -->
                         <div class="alert alert-warning" role="alert" th:if="${showHealthAlert}">

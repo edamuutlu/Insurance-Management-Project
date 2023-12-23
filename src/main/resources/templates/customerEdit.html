@@ -344,6 +344,9 @@
 						<div class="button">
 							<button class="btn btn-submit">Submit</button>
 						</div>
+						<div class="button" type="button" ng-disabled="myForm.$invalid">
+                            <a th:href="@{'/userPage/' + ${customer.username}}" class="btn btn-cancel">Cancel</a>
+                        	</div>
 						<!-- alert -->
 						<div class="alert alert-warning" role="alert" th:if="${showTcAlert}">This TC number is already registered!</div>
 					</form>

@@ -123,6 +123,49 @@ myApp.controller("homeInsuranceFormController", ["$scope", function($scope) {
 		$scope.msg = "Welcome " + $scope.firstname + "! You have signed in.";
 
 	};
+	
+	$scope.provincesList = provincesList;
+	console.log($scope.provincesList);
+
+	$scope.districtList = districtList;
+	console.log($scope.districtList);
+	
+	$scope.neighbourhoodList = neighbourhoodList;
+	console.log($scope.neighbourhoodList);
+
+	$scope.province;
+	$scope.district;
+	$scope.neighbourhood;
+	// Seçilen il'e ait ilçeleri getirme fonksiyonu
+	$scope.getDistricts = function(province) {
+	    if (!province) {
+	        return []; // Eğer seçilen il yoksa boş bir dizi döndür
+	    }
+	
+	    var filteredDistricts = $scope.districtList.filter(function(district) {
+	        return district.sehirid === province;
+	    });
+	
+	    console.log('Filtered Districts:', filteredDistricts);
+	
+	    return filteredDistricts;
+	};
+	
+	$scope.getNeighbourhoods = function(district) {
+	    if (!district) {
+	        return []; // Eğer seçilen ilçe yoksa boş bir dizi döndür
+	    }
+	
+	    var filteredNeighbourhoods = $scope.neighbourhoodList.filter(function(neighbourhood) {
+	        return neighbourhood.ilceId === district;
+	    });
+	
+	    console.log('Filtered Neighbourhoods:', filteredNeighbourhoods);
+	
+	    return filteredNeighbourhoods;
+	};
+
+
 
 	//Select the Building Type
 	$scope.buildingTypes = ["Reinforced Concrete", "Other Structures"];

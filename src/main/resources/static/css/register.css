@@ -88,7 +88,7 @@ body .page-wrapper .wrapper {
   max-width: 680px;
   margin: 0 auto;
   padding-bottom: 5%;
-  padding-top: 5%;
+  padding-top: 1%;
 }
 @media (max-width: 767px) {
   body .page-wrapper .wrapper {
@@ -454,8 +454,24 @@ body .page-wrapper .wrapper .card .card-body .button .btn-submit {
   width: 100%;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
 }
+body .page-wrapper .wrapper .card .card-body .button .btn-cancel {
+  background: #d71313;
+  border-radius: 5px;
+  color: white;
+  display: inline-block;
+  line-height: 50px;
+  padding: 0 50px;
+  transition: all 0.4s ease;
+  cursor: pointer;
+  font-size: 18px;
+  width: 100%;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+}
 body .page-wrapper .wrapper .card .card-body .button .btn-submit:hover {
   background: #ff9d4c;
+}
+body .page-wrapper .wrapper .card .card-body .button .btn-cancel:hover {
+  background: #ff4c4c;
 }
 body .page-wrapper .wrapper .card .card-body .login__register {
   font-size: 12px;
