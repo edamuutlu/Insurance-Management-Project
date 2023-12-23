@@ -78,10 +78,8 @@ public class InsuranceService {
     }
     
     public void deleteCustomerData(int customerId) {
-        String sql = "DELETE FROM customer WHERE customer_id = ?";
-        jdbcTemplate.update(sql, preparedStatement -> {
-            preparedStatement.setInt(1, customerId);
-        });
+    	String sql = "CALL deleteCustomer(?)";
+    	jdbcTemplate.update(sql, customerId);
     }
 
     public void deleteCarData(int customerId) {

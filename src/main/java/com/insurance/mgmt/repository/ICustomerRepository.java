@@ -23,7 +23,7 @@ public interface ICustomerRepository extends JpaRepository<Customer,Integer>{
 
 	//  Spring Data JPA'nın named parameters özelliği ile :username, method imzasındaki String username parametresine karşılık gelir 
 	@Query("SELECT c FROM Customer c WHERE c.username = :username")
-	Optional<Customer> findByUsername(String username);
+	Optional<Customer> findByUsername(String username); 
 
 	@Query("SELECT c FROM Customer c WHERE c.status = :status AND c.username = :username")
 	List<Customer> findByStatusAndUsername(int status, String username);

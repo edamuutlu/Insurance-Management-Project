@@ -29,9 +29,7 @@ public interface IInsuranceRepository extends Repository<CarInsurance, Long> {
     		+ ") AS all_insurances", nativeQuery = true)
     List<String> getAllProductType();
     
-    @Query(value = "SELECT comp.company_id, comp.name, COALESCE(SUM(offer - refund), 0) AS carBalance FROM car_insurance car "
-    		+ "RIGHT JOIN company comp ON car.company_id = comp.company_id "
-    		+ "GROUP BY car.company_id,  comp.company_id ", nativeQuery = true)
+    @Query(value = "SELECT * FROM car_balance_view", nativeQuery = true)
     List<Object[]> getCarInsuranceBalance();
     
     @Query(value = "SELECT comp.company_id, comp.name, COALESCE(SUM(offer - refund), 0) AS homeBalance FROM home_insurance home "
