@@ -356,6 +356,7 @@ public class HomeController {
 		model.addAttribute("insurance", insurance);
 		model.addAttribute(home);
 		model.addAttribute("customer", customer);
+		model.addAttribute("now", now.format(formatter));
 		return "homeInsuranceRefund";
 	}
 

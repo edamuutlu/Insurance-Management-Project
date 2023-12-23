@@ -294,6 +294,7 @@ public class CarController {
 		model.addAttribute("insurance", insurance);
 		model.addAttribute(car);
 		model.addAttribute("customer", customer);
+		model.addAttribute("now", now.format(formatter));
 		return "carInsuranceRefund";
 	}
 	
