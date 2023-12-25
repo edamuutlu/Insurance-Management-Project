@@ -198,6 +198,10 @@ public class CarController {
 			model.addAttribute("username", "admin");
 		}
 		
+		List<Company> allCompanyList = companyService.getAllCompany();
+		System.out.println(allCompanyList);
+		model.addAttribute("allCompanyList", allCompanyList);
+		
 		model.addAttribute("customer", customer);
 		model.addAttribute("carId", carId);
 		model.addAttribute("insurance", insurances);
