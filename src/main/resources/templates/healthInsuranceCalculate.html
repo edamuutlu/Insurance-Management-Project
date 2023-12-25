@@ -87,11 +87,9 @@
                                         <small>Aviva</small>
                                         <h3 th:text="${insurance.offer + companyList[0].serviceFee + '₺'}"></h3>
                                         <em>Health Insurance</em>
-                                        <p class="porject-plan"><i class='bx bx-check'></i>Most Comprehensive Offer</p>
-                                        <p class="porject-plan"><i class='bx bx-check'></i>All Authorized Services and Special Services</p>
-                                        <p class="porject-plan"><i class='bx bx-check'></i>Original Glass (Exempt)</p>
-                                        <p class="porject-plan"><i class='bx bx-check'></i>Mini-Repair: Yes</p>
-                                        <p class="porject-plan"><i class='bx bx-check'></i>Roadside Assistance: Yes</p>
+                                        <p class="porject-plan"><i class='bx bx-check'></i>Health Coverage</p>
+                                        <p class="porject-plan"><i class='bx bx-check'></i>Hospitalization and Surgery</p>
+                                        <p class="porject-plan"><i class='bx bx-check'></i>Prescription Medications and Doctor Visits</p>
                                         <form th:object="${insurance}" method="post" name="myForm" action="/healthResult">
                                             <input type="hidden" name="insuranceId" th:value="${insurance.insuranceId}">
                                             <input type="hidden" name="companyId" value=1>
@@ -111,11 +109,10 @@
                                         <small>Liberty Mutual</small>
                                         <h3 th:text="${insurance.offer + companyList[1].serviceFee + '₺'}"></h3>
                                         <em> Health Insurance </em>
-                                        <p class="porject-plan"><i class='bx bx-check'></i>Most Comprehensive Offer</p>
-                                        <p class="porject-plan"><i class='bx bx-check'></i>All Authorized Services and Special Services</p>
-                                        <p class="porject-plan"><i class='bx bx-check'></i>Original Glass (Exempt)</p>
-                                        <p class="porject-plan"><i class='bx bx-check'></i>Mini-Repair: Yes</p>
-                                        <p class="porject-plan"><i class='bx bx-check'></i>Roadside Assistance: Yes</p>
+                                        <p class="porject-plan"><i class='bx bx-check'></i>Health Coverage</p>
+                                        <p class="porject-plan"><i class='bx bx-check'></i>Hospitalization and Surgery</p>
+                                        <p class="porject-plan"><i class='bx bx-check'></i>Prescription Medications and Doctor Visits</p>
+                                        <p class="porject-plan"><i class='bx bx-check'></i>Dental and Vision Care (Optional)</p>
                                         <form th:object="${insurance}" method="post" name="myForm" action="/healthResult">
                                             <input type="hidden" name="insuranceId" th:value="${insurance.insuranceId}">
                                             <input type="hidden" name="companyId" value=2>
@@ -136,11 +133,11 @@
                                         <small>AXA</small>
                                         <h3 th:text="${insurance.offer + companyList[2].serviceFee + '₺'}"></h3>
                                         <em> Health Insurance </em>
-                                        <p class="porject-plan"><i class='bx bx-check'></i>Most Comprehensive Offer</p>
-                                        <p class="porject-plan"><i class='bx bx-check'></i>All Authorized Services and Special Services</p>
-                                        <p class="porject-plan"><i class='bx bx-check'></i>Original Glass (Exempt)</p>
-                                        <p class="porject-plan"><i class='bx bx-check'></i>Mini-Repair: Yes</p>
-                                        <p class="porject-plan"><i class='bx bx-check'></i>Roadside Assistance: Yes</p>
+                                        <p class="porject-plan"><i class='bx bx-check'></i>Health Coverage</p>
+                                        <p class="porject-plan"><i class='bx bx-check'></i>Hospitalization and Surgery</p>
+                                        <p class="porject-plan"><i class='bx bx-check'></i>Prescription Medications and Doctor Visits</p>
+                                        <p class="porject-plan"><i class='bx bx-check'></i>Dental and Vision Care (Optional)</p>
+                                        <p class="porject-plan"><i class='bx bx-check'></i>Discounts for Health Check-ups</p>
                                         <form th:object="${insurance}" method="post" name="myForm" action="/healthResult">
                                             <input type="hidden" name="insuranceId" th:value="${insurance.insuranceId}">
                                             <input type="hidden" name="companyId" value=3>

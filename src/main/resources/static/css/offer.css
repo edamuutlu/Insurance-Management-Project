@@ -194,11 +194,11 @@ body .user-page-wrapper .user-page-main .istehr-pricing-detail .plan-list .free-
 }
 body .user-page-wrapper .user-page-main .istehr-pricing-detail .plan-list .free-plan .porject-plan {
   font-weight: 700;
-  text-align: center;
+  text-align: left;
   padding-top: 15px;
   color: #424242;
   margin: auto;
-  max-width: 70%;
+  max-width: 73%;
 }
 body .user-page-wrapper .user-page-main .istehr-pricing-detail .plan-list .free-plan .porject-plan i {
   color: #0eaa00;

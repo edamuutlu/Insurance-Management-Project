@@ -88,11 +88,9 @@
                                         <small>Aviva</small>
                                         <h3 th:text="${insurance.offer + companyList[0].serviceFee + '₺'}"></h3>
                                         <em>Home Insurance</em>
-                                        <p class="porject-plan"><i class='bx bx-check'></i>Most Comprehensive Offer</p>
-                                        <p class="porject-plan"><i class='bx bx-check'></i>All Authorized Services and Special Services</p>
-                                        <p class="porject-plan"><i class='bx bx-check'></i>Original Glass (Exempt)</p>
-                                        <p class="porject-plan"><i class='bx bx-check'></i>Mini-Repair: Yes</p>
-                                        <p class="porject-plan"><i class='bx bx-check'></i>Roadside Assistance: Yes</p>
+                                        <p class="porject-plan"><i class='bx bx-check'></i>Full Home and Belongings Coverage</p>
+                                        <p class="porject-plan"><i class='bx bx-check'></i>Fire, Theft, Natural Disasters</p>
+                                        <p class="porject-plan"><i class='bx bx-check'></i>Temporary Housing during Repairs</p>
                                         <form th:object="${insurance}" method="post" name="myForm" action="/homeResult">
                                             <input type="hidden" name="insuranceId" th:value="${insurance.insuranceId}">
                                             <input type="hidden" name="companyId" value=1>
@@ -112,11 +110,10 @@
                                         <small>Liberty Mutual</small>
                                         <h3 th:text="${insurance.offer + companyList[1].serviceFee + '₺'}"></h3>
                                         <em> Home Insurance </em>
-                                        <p class="porject-plan"><i class='bx bx-check'></i>Most Comprehensive Offer</p>
-                                        <p class="porject-plan"><i class='bx bx-check'></i>All Authorized Services and Special Services</p>
-                                        <p class="porject-plan"><i class='bx bx-check'></i>Original Glass (Exempt)</p>
-                                        <p class="porject-plan"><i class='bx bx-check'></i>Mini-Repair: Yes</p>
-                                        <p class="porject-plan"><i class='bx bx-check'></i>Roadside Assistance: Yes</p>
+                                        <p class="porject-plan"><i class='bx bx-check'></i>Full Home and Belongings Coverage</p>
+                                        <p class="porject-plan"><i class='bx bx-check'></i>Fire, Theft, Natural Disasters</p>
+                                        <p class="porject-plan"><i class='bx bx-check'></i>Temporary Housing during Repairs</p>
+                                        <p class="porject-plan"><i class='bx bx-check'></i>Optional Valuables Coverage</p>
                                         <form th:object="${insurance}" method="post" name="myForm" action="/homeResult">
                                             <input type="hidden" name="insuranceId" th:value="${insurance.insuranceId}">
                                             <input type="hidden" name="companyId" value=2>
@@ -137,11 +134,11 @@
                                         <small>AXA</small>
                                         <h3 th:text="${insurance.offer + companyList[2].serviceFee + '₺'}"></h3>
                                         <em> Home Insurance </em>
-                                        <p class="porject-plan"><i class='bx bx-check'></i>Most Comprehensive Offer</p>
-                                        <p class="porject-plan"><i class='bx bx-check'></i>All Authorized Services and Special Services</p>
-                                        <p class="porject-plan"><i class='bx bx-check'></i>Original Glass (Exempt)</p>
-                                        <p class="porject-plan"><i class='bx bx-check'></i>Mini-Repair: Yes</p>
-                                        <p class="porject-plan"><i class='bx bx-check'></i>Roadside Assistance: Yes</p>
+                                        <p class="porject-plan"><i class='bx bx-check'></i>Full Home and Belongings Coverage</p>
+                                        <p class="porject-plan"><i class='bx bx-check'></i>Fire, Theft, Natural Disasters</p>
+                                        <p class="porject-plan"><i class='bx bx-check'></i>Temporary Housing during Repairs</p>
+                                        <p class="porject-plan"><i class='bx bx-check'></i>Optional Valuables Coverage</p>
+                                        <p class="porject-plan"><i class='bx bx-check'></i>Safety Features Discounts</p>
                                         <form th:object="${insurance}" method="post" name="myForm" action="/homeResult">
                                             <input type="hidden" name="insuranceId" th:value="${insurance.insuranceId}">
                                             <input type="hidden" name="companyId" value=3>
