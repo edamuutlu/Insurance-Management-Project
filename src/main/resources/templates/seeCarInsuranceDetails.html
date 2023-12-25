@@ -60,7 +60,7 @@
 			<div class="operations">
 				<a th:href="@{'/userPage/' + ${username}}">
 					<i class='bx bxs-user-circle user-icon'></i>
-					<span th:text="${username}"></span>
+					<span th:text="${customer.username}"></span>
 				</a>
 				<a href="/index">
 					<i class='bx bx-log-out exit-icon'></i>
@@ -85,36 +85,6 @@
 
 		});
 	</script>
-	<!--			 Renew Car Insurance Modal -->
-<!--			<div class="modal fade" id="renewModal" tabindex="-1" aria-labelledby="renewModalLabel" aria-hidden="true" th:if="${showAlertMessage}">-->
-<!--				<div class="modal-dialog">-->
-<!--					<div class="modal-content">-->
-<!--						<div class="modal-header">-->
-<!--							<h5 class="modal-title" id="renewModalLabel">Renew Car Insurance</h5>-->
-<!--							<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">-->
-<!--								<span aria-hidden="true">&times;</span>-->
-<!--							</button>-->
-<!--						</div>-->
-<!--						<div class="modal-body">-->
-<!--							<form th:action="@{/renewCarInsurance/{insuranceId}(insuranceId=${insuranceId})}" method="post"-->
-<!--								name="periodForm" novalidate>-->
-<!--								<input type="hidden" name="insuranceId" th:value="${insuranceId}" />-->
-<!--								<div class="d-flex justify-content-between mt-3">-->
-<!--									<label style="margin-right: 20px;" for="period">Enter New Period:</label>-->
-<!--									<input type="number" id="period" name="period" class="form-control"-->
-<!--										placeholder="Period*" th:value="${period}" ng-required="true" min="0" max="100">-->
-<!--								</div>-->
-<!--															<p class="error" ng-show="periodForm.period.$invalid && periodForm.period.$touched">Fill out your period.</p>-->
-<!--								<div class="modal-footer">-->
-<!--									<button type="submit" class="btn modal-btn" ng-disabled="periodForm.$invalid">Save-->
-<!--										Changes</button>-->
-<!--								</div>-->
-<!--							</form>-->
-<!--						</div>-->
-<!--					</div>-->
-<!--				</div>-->
-<!--			</div>-->
-
 
 	<div class="user-page-wrapper">
 		<div class="user-page-main" th:each="c :${customer}">
@@ -208,6 +178,7 @@
 									<th scope="col">Insurance Type</th>
 									<th scope="col">Customer Id</th>
 									<th scope="col">Car Id</th>
+									<th scope="col">Company Name</th>
 									<th cope="col">Kdv</th>
 									<th cope="col">Offer</th>
 									<th cope="col">Result</th>
@@ -223,6 +194,7 @@
 									<td th:text="${i.insuranceType}"></td>
 									<td th:text="${i.customerId}"></td>
 									<td th:text="${i.carId}"></td>
+									<td th:text="${allCompanyList[i.companyId].name}"></td>
 									<td th:text="${'% ' + i.kdv}"></td>
 									<td th:text="${i.offer}"></td>
 									<td th:text="${i.result}"></td>
