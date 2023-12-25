@@ -199,7 +199,6 @@ public class CarController {
 		}
 		
 		List<Company> allCompanyList = companyService.getAllCompany();
-		System.out.println(allCompanyList);
 		model.addAttribute("allCompanyList", allCompanyList);
 		
 		model.addAttribute("customer", customer);

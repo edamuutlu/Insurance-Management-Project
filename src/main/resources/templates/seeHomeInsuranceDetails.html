@@ -73,20 +73,6 @@
 	</nav>
 	<!--	End Navbar-->
 
-
-	<!--		<div class="alert alert-warning" role="alert" th:if="${showText}"> An insurance for this house has already been-->
-	<!--			defined! </div>-->
-	<!--		<div class="alert alert-warning" role="alert" th:if="${showAlert}"> An insurance for this house has already been-->
-	<!--			deleted or expired! </div>-->
-	<!--		<div class="alert alert-warning" role="alert" th:if="${showAbsent}"> There is no insurance for this house! </div>-->
-
-	<!--		 Button to trigger the modal -->
-	<!--		<button type="button" class="btn btn-info text-white mb-2"-->
-	<!--			style="background-color: rgb(62, 209, 221); font-size: 17px; padding: 10px 20px;" data-bs-toggle="modal"-->
-	<!--			data-bs-target="#renewModal" id="renewButton">-->
-	<!--			<strong>Renew Home Insurance</strong>-->
-	<!--		</button>-->
-
 			<script th:inline="javascript">
 				document.addEventListener("DOMContentLoaded", function () {
 					var showAbsent = /*[[${showAbsent}]]*/ [];
@@ -97,37 +83,6 @@
 					}
 				});
 			</script>
-
-
-	<!--		 Renew Home Insurance Modal -->
-	<!--		<div class="modal fade" id="renewModal" tabindex="-1" aria-labelledby="renewModalLabel" aria-hidden="true">-->
-	<!--			<div class="modal-dialog">-->
-	<!--				<div class="modal-content">-->
-	<!--					<div class="modal-header">-->
-	<!--						<h5 class="modal-title" id="renewModalLabel">Renew Home Insurance</h5>-->
-	<!--						<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">-->
-	<!--							<span aria-hidden="true">&times;</span>-->
-	<!--						</button>-->
-	<!--					</div>-->
-	<!--					<div class="modal-body">-->
-	<!--						<form th:action="@{/renewHomeInsurance/{insuranceId}(insuranceId=${insuranceId})}" method="post"-->
-	<!--							name="periodForm" novalidate>-->
-	<!--							<input type="hidden" name="insuranceId" th:value="${insuranceId}" />-->
-	<!--							<div class="d-flex justify-content-between mt-3">-->
-	<!--								<label style="margin-right: 20px;" for="period">Enter New Period:</label>-->
-	<!--								<input type="number" id="period" name="period" class="form-control"-->
-	<!--									placeholder="Period*" th:value="${period}" ng-required="true" min="0" max="100">-->
-	<!--							</div>-->
-	<!--														<p class="error" ng-show="periodForm.period.$invalid && periodForm.period.$touched">Fill out your period.</p>-->
-	<!--							<div class="modal-footer">-->
-	<!--								<button type="submit" class="btn modal-btn" ng-disabled="periodForm.$invalid">Save-->
-	<!--									Changes</button>-->
-	<!--							</div>-->
-	<!--						</form>-->
-	<!--					</div>-->
-	<!--				</div>-->
-	<!--			</div>-->
-	<!--		</div>-->
 
 
 	<div class="user-page-wrapper">
@@ -222,6 +177,7 @@
 									<th scope="col">Insurance Type</th>
 									<th scope="col">Customer Id</th>
 									<th scope="col">Home Id</th>
+									<th scope="col">Company Name</th>
 									<th cope="col">Kdv</th>
 									<th cope="col">Offer</th>
 									<th cope="col">Result</th>
@@ -237,6 +193,7 @@
 									<td th:text="${i.insuranceType}"></td>
 									<td th:text="${i.customerId}"></td>
 									<td th:text="${i.homeId}"></td>
+									<td th:text="${allCompanyList[i.companyId].name}"></td>
 									<td th:text="${'% ' + i.kdv}"></td>
 									<td th:text="${i.offer}"></td>
 									<td th:text="${i.result}"></td>

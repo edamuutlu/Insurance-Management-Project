@@ -165,6 +165,7 @@
 									<th scope="col">Insurance Type</th>
 									<th scope="col">Customer Id</th>
 									<th scope="col">Health Id</th>
+									<th scope="col">Company Name</th>
 									<th cope="col">Kdv</th>
 									<th cope="col">Offer</th>
 									<th cope="col">Result</th>
@@ -180,6 +181,7 @@
 									<td th:text="${i.insuranceType}"></td>
 									<td th:text="${i.customerId}"></td>
 									<td th:text="${i.healthId}"></td>
+									<td th:text="${allCompanyList[i.companyId].name}"></td>
 									<td th:text="${'% ' + i.kdv}"></td>
 									<td th:text="${i.offer}"></td>
 									<td th:text="${i.result}"></td>

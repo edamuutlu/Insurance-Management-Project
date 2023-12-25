@@ -235,6 +235,9 @@ public class HomeController {
 		}else if(admin.equals("admin")){
 			model.addAttribute("username", "admin");
 		}
+		
+		List<Company> allCompanyList = companyService.getAllCompany();
+		model.addAttribute("allCompanyList", allCompanyList);
 
 		model.addAttribute("customer", customer);
 		model.addAttribute("homeId", homeId);
