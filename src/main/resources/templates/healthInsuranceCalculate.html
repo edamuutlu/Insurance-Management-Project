@@ -113,6 +113,8 @@
                                         <p class="porject-plan"><i class='bx bx-check'></i>Hospitalization and Surgery</p>
                                         <p class="porject-plan"><i class='bx bx-check'></i>Prescription Medications and Doctor Visits</p>
                                         <p class="porject-plan"><i class='bx bx-check'></i>Dental and Vision Care (Optional)</p>
+                                        <p class="porject-plan"><i class='bx bx-check' style="opacity: 0;"></i></p>
+                                        <p class="porject-plan"><i class='bx bx-check' style="opacity: 0;"></i></p>
                                         <form th:object="${insurance}" method="post" name="myForm" action="/healthResult">
                                             <input type="hidden" name="insuranceId" th:value="${insurance.insuranceId}">
                                             <input type="hidden" name="companyId" value=2>
@@ -138,6 +140,7 @@
                                         <p class="porject-plan"><i class='bx bx-check'></i>Prescription Medications and Doctor Visits</p>
                                         <p class="porject-plan"><i class='bx bx-check'></i>Dental and Vision Care (Optional)</p>
                                         <p class="porject-plan"><i class='bx bx-check'></i>Discounts for Health Check-ups</p>
+                                        <p class="porject-plan"><i class='bx bx-check' style="opacity: 0;"></i></p>
                                         <form th:object="${insurance}" method="post" name="myForm" action="/healthResult">
                                             <input type="hidden" name="insuranceId" th:value="${insurance.insuranceId}">
                                             <input type="hidden" name="companyId" value=3>
